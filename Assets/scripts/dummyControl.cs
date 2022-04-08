@@ -11,6 +11,7 @@ public class dummyControl : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        
     }
 
     // Update is called once per frame
@@ -23,7 +24,7 @@ public class dummyControl : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftControl)){
             controller.Move(direction * Time.deltaTime * movementSpeed * 2.5f);
-            Debug.Log("Sprinting");
+            //Debug.Log("Sprinting");
         }
         else{
             controller.Move(direction * Time.deltaTime * movementSpeed);

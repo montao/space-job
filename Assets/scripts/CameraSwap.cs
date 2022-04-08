@@ -10,12 +10,14 @@ public class CameraSwap : MonoBehaviour
 
     void Start()
     {
-        activeArea = GetComponentInChildren<Collider>();
-        activeCamera = GetComponent<Camera>();
+        activeArea = GetComponent<Collider>();
+        activeCamera = GetComponentInChildren<Camera>();
     }
 
     private void OnTriggerExit(Collider other) {
+        Debug.Log("mmmh");
         if(other.GetComponent<CharacterController>() != null)
+            Debug.Log("charakter");
             activeCamera.enabled = false;
             nextCamera.enabled = true;
     }
