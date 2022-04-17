@@ -31,11 +31,12 @@ public class PlayerSpawnLocation : MonoBehaviour {
         }
     }
 
-    public static void SetPlayersToSpawnLocation(
-            /*string sceneName,
-            LoadSceneMode loadSceneMode,
-            List<ulong> clientsCompleted,
-            List<ulong> clientsTimedOut*/) {
+    public static void SetPlayersToSpawnLocation() {
+        var spawns = FindObjectsOfType<PlayerSpawnLocation>();
+
+        //foreach (var spawn in spawns) {
+        //    spawn.Occupied = false;
+        //}
 
         var avatars = FindObjectsOfType<PlayerAvatar>();
         foreach (var avatar in avatars) {
