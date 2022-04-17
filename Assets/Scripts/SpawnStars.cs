@@ -10,33 +10,38 @@ public class SpawnStars : MonoBehaviour
 
 
 
-    void Start()
-    {
+    void Start(){
         PartSys_go =  Instantiate(prefabStars, transform.position, Quaternion.identity) as GameObject;
     }
 
 
-    IEnumerator Wait()
-    {
+    IEnumerator Wait(){
         
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(5.0f);
     }   
     
     void createNewStars(){
         
 
-        if(Vector3.Distance(PartSys_go.transform.position, transform.position) > 200){
+        if(Vector3.Distance(PartSys_go.transform.position, transform.position) > 300){
+            if(newStars_go = null){
+                newStars_go = Instantiate(prefabStars, transform.position  + new Vector3(200f,200f,200f) , Quaternion.identity) as GameObject;
+            }
 
-            //newStars_go = Instantiate(prefabStars, transform.position /* + new Vector3(100f,100f,100f) */, Quaternion.identity) as GameObject;
+            
             newStars_go = Instantiate(prefabStars, transform.forward , Quaternion.identity) as GameObject;
             StartCoroutine(Wait());
             Destroy(PartSys_go);
+            
             PartSys_go = newStars_go; 
+        } 
+         if(Vector3.Distance(PartSys_go.transform.position, transform.position) > 300){
+                Destroy(PartSys_go);
         } 
         if(PartSys_go == null){
             PartSys_go = newStars_go; 
-        }
-            
+        } 
+    
 
     }
 
