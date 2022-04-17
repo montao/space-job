@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : NetworkBehaviour {
 
@@ -73,6 +74,18 @@ public class PlayerManager : NetworkBehaviour {
             _localPlayer = player;
             _localPlayer.PlayerName = LocalPlayerName;
         }
+    }
+
+    public static void SpawnAvatars(
+            string sceneName,
+            LoadSceneMode loadSceneMode,
+            List<ulong> clientsCompleted,
+            List<ulong> clientsTimedOut) {
+
+        foreach (PersistentPlayer p in PlayerManager.Instance.Players) {
+            p.SpawnAvatar();
+        }
+        PlayerSpawnLocation.SetPlayersToSpawnLocation();
     }
 
 }

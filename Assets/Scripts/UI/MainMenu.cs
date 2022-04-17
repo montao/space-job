@@ -66,12 +66,9 @@ public class MainMenu : MonoBehaviour {
             Debug.LogWarning("Cannot start game as non-host!");
             return;
         }
-        foreach (PersistentPlayer player in PlayerManager.Instance.Players) {
-            player.SpawnAvatar();
-        }
 
         if (host) {
-            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerSpawnLocation.SetPlayersToSpawnLocation;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.SpawnAvatars;
             NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
         }
     }
