@@ -35,12 +35,13 @@ public class PlayerSpawnLocation : MonoBehaviour {
             string sceneName,
             LoadSceneMode loadSceneMode,
             List<ulong> clientsCompleted,
-            List<ulong> clientsTimedOut ) {
+            List<ulong> clientsTimedOut) {
 
         var avatars = FindObjectsOfType<PlayerAvatar>();
         foreach (var avatar in avatars) {
             Transform t = PlayerSpawnLocation.GetSpawn();
             if (t != null) {
+                Debug.Log("Found a nice spawn for " + avatar.name);
                 avatar.transform.position = t.position;
                 avatar.transform.rotation = t.rotation;
             } else {

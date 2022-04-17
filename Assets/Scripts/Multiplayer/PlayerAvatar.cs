@@ -36,6 +36,8 @@ public class PlayerAvatar : NetworkBehaviour {
                 break;
             }
         }
+
+        name = localPlayer.PlayerName;
     }
 
     void Update() {
