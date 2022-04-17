@@ -29,6 +29,9 @@ public class MainMenu : MonoBehaviour {
 
         serverAddress.text = MultiplayerUtil.GetLocalIPAddress();
         ServerAddressChanged();
+
+        playerName.text = SystemInfo.deviceName;
+        PlayerNameChanged();
     }
 
     void Update() {
