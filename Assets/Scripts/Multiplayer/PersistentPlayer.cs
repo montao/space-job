@@ -35,6 +35,12 @@ public class PersistentPlayer : NetworkBehaviour {
         PlayerManager.Instance.RegisterPlayer(this, IsOwner);
     }
 
+    // TODO:  Since this is only called by the host, any setup we do, i.e. setting the `avatar` member
+    // will not be reflected by clients.  To fix this, it'd probably make sense to make `avatar` a
+    // `NetworkObject<NetworkObjectReference>` (https://docs-multiplayer.unity3d.com/netcode/current/api/Unity.Netcode.NetworkObjectReference)
+    // or implement some logic to let each avatar find the corresponsing
+    // PersistentPlayer (or the other way round).  Anyway, I'm going to sleep
+    // now, good night~
     public void SpawnAvatar(Transform spawnLocation) {
         var owner = OwnerClientId;
 
