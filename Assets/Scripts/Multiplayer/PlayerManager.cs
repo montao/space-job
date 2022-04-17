@@ -83,7 +83,7 @@ public class PlayerManager : NetworkBehaviour {
             List<ulong> clientsTimedOut) {
 
         foreach (PersistentPlayer p in PlayerManager.Instance.Players) {
-            p.SpawnAvatar();
+            p.SpawnAvatar(PlayerSpawnLocation.GetSpawn());
         }
         PlayerSpawnLocation.SetPlayersToSpawnLocation();
     }

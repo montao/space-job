@@ -35,10 +35,10 @@ public class PersistentPlayer : NetworkBehaviour {
         PlayerManager.Instance.RegisterPlayer(this, IsOwner);
     }
 
-    public void SpawnAvatar() {
+    public void SpawnAvatar(Transform spawnLocation) {
         var owner = OwnerClientId;
 
-        avatar = GameObject.Instantiate(avatarPrefab).GetComponent<PlayerAvatar>();
+        avatar = GameObject.Instantiate(avatarPrefab, spawnLocation).GetComponent<PlayerAvatar>();
         avatar.GetComponent<NetworkObject>().Spawn();
         avatar.GetComponent<NetworkObject>().ChangeOwnership(owner);
     }
