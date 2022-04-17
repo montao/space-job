@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour {
         playerName.text = SystemInfo.deviceName;
         PlayerNameChanged();
 
-        if (playerName.text == "argon" && serverAddress.text == "192.169.0.199") {
+        if (SystemInfo.deviceName == "argon") {
             serverAddress.text = "192.168.0.10";
             ServerAddressChanged();
         }
