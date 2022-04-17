@@ -67,7 +67,10 @@ public class MainMenu : MonoBehaviour {
             player.SpawnAvatar();
         }
 
-        NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        if (host) {
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerSpawnLocation.SetPlayersToSpawnLocation;
+            NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        }
     }
 
     void OnGUI() {
