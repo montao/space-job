@@ -24,9 +24,9 @@ public class SpawnStars : MonoBehaviour
         
 
         if(Vector3.Distance(PartSys_go.transform.position, transform.position) > 300){
-            if(newStars_go = null){
-                newStars_go = Instantiate(prefabStars, transform.position  + new Vector3(200f,200f,200f) , Quaternion.identity) as GameObject;
-            }
+            /* if(newStars_go = null){
+                newStars_go = Instantiate(prefabStars, transform.position   + new Vector3(200f,200f,200f) , Quaternion.identity) as GameObject;
+            } */
 
             
             newStars_go = Instantiate(prefabStars, transform.forward , Quaternion.identity) as GameObject;
