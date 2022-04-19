@@ -4823,7 +4823,9 @@ MonoBehaviour:
   checkStars: {fileID: 2599997693869889601, guid: 11273fa133acf98b99c6c98edf335831, type: 3}
   maxStars: 10000
   starSize: 2
-  speed: 10
+  speed: 1
+  smooth: 1
+  acceleration: 0.1
   starDistance: 500
 --- !u!95 &2444961672170821756
 Animator:

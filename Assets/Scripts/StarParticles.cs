@@ -14,10 +14,14 @@ public class StarParticles : MonoBehaviour
     private ParticleSystem.Particle[] stars;
     public int maxStars = 100;
     public float starSize = 1.0f;
-
-    public float speed = 0.1f;
-    private float maxSpeed = 100.0f;
-
+    public float speed = 25.0f;
+    public bool smooth = true;
+    public float acceleration = 0.1f;
+    private float actualSpeed = 0.0f; // from 0 to 1
+    private Vector3 lastPosW = new Vector3();
+    private Vector3 lastPosA = new Vector3();
+    private Vector3 lastPosD = new Vector3();
+    private bool movement = false;
     public float starDistance = 10.0f;
 
     private float starDistanceSqr;
@@ -50,30 +54,65 @@ public class StarParticles : MonoBehaviour
     }
 
     void Update() {
+
+        
         for (int i = 0; i < maxStars; i++){
-            if(Input.GetKey(KeyCode.W)){
-                if(speed < maxSpeed){
-                    speed += Time.deltaTime;
+
+            if(movement/* Input.GetKey(KeyCode.W)|Input.GetKey(KeyCode.A)|Input.GetKey(KeyCode.D) */){
+                
+                if(actualSpeed < 0){
+                    actualSpeed += acceleration * Time.deltaTime * 40;
+                } 
+                else actualSpeed = 1.0f;
+                lastPosW = stars[i].position - cam.transform.forward ;
+                lastPosA = stars[i].position + cam.transform.right ;
+                lastPosD = stars[i].position - cam.transform.right ;
+            }
+            else{
+                if(actualSpeed > 0){
+                    actualSpeed -= acceleration * Time.deltaTime * 40;
                 }
-                moveStar = stars[i].position - cam.transform.forward  * speed  * Time.deltaTime ;
+                else actualSpeed = 0.0f;
+            }
+            lastPosA.Normalize();
+            lastPosD.Normalize();
+            lastPosW.Normalize();
+
+            if(Input.GetKey(KeyCode.W)){
+                movement = true;
+                if(smooth){
+                    moveStar = lastPosW  * speed * actualSpeed * Time.deltaTime;
+                }
+                else moveStar = stars[i].position - cam.transform.forward  * speed * Time.deltaTime;
+                transform.Translate(moveStar);
                 stars[i].position = moveStar ;   
-                transform.position = moveStar;             
+                transform.position = moveStar;   
             }
             if(Input.GetKey(KeyCode.A)){
-                moveStar = stars[i].position + cam.transform.right * speed * Time.deltaTime;
-                stars[i].position = moveStar;
-                transform.position = moveStar;    
+                movement = true;
+                if(smooth){
+                    moveStar = lastPosA * speed * actualSpeed * Time.deltaTime;
+                }
+                else moveStar = stars[i].position + cam.transform.right * speed * Time.deltaTime;
+                transform.Translate(moveStar);
+                /* stars[i].position = moveStar;
+                transform.position = moveStar;  */   
             }
             if(Input.GetKey(KeyCode.D)){
-                moveStar = stars[i].position - cam.transform.right * speed * Time.deltaTime;
-                stars[i].position = moveStar;
-                transform.position = moveStar;    
+                movement = true;
+                if(smooth){
+                    moveStar = lastPosD * speed * actualSpeed * Time.deltaTime;
+                }
+                else moveStar = stars[i].position - cam.transform.right * speed * Time.deltaTime;
+                transform.Translate(moveStar);
+                /* stars[i].position = moveStar;
+                transform.position = moveStar;  */   
             }
             if(Input.GetKey(KeyCode.S)){
-                if(speed > 0){
-                    speed -= Time.deltaTime;
-                }
+                movement = true;
+                actualSpeed -= acceleration * Time.deltaTime * 60;  
             }  
+            else movement = false;
 
             /* if(Vector3.Distance(stars[i].position, cam.transform.position)>500){
                 Vector3 newPos = 1 * stars[i].position * Time.deltaTime;
@@ -95,6 +134,11 @@ public class StarParticles : MonoBehaviour
         //Debug.Log(Vector3.Distance(starsystem.transform.position, cam.transform.position));
         
         GetComponent<ParticleSystem>().SetParticles(stars, stars.Length);
+    }
+    void OnGUI() {
+        GUILayout.Box("actual Speed: " + actualSpeed.ToString() );
+        GUILayout.Box("Speed: " + speed.ToString() );
+        
     }
 
 }
