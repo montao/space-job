@@ -1,14 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class LightSwitch : NetworkBehaviour
-{
-    private SphereCollider m_SwitchCollider;
+public class LightSwitch : NetworkBehaviour {
     private NetworkVariable<bool> m_LightStage = new NetworkVariable<bool>(true);
     private bool m_IsInArea = false;
-    
+
     public List<Light> Lights;
 
     public override void OnNetworkSpawn(){
@@ -32,7 +29,6 @@ public class LightSwitch : NetworkBehaviour
     }
     private void Awake() {
         SetLightConditions(m_LightStage.Value);
-        m_SwitchCollider = GetComponent<SphereCollider>();
     }
     private void OnTriggerEnter(Collider other) {
         PlayerAvatar player = other.GetComponent<PlayerAvatar>();
@@ -51,6 +47,6 @@ public class LightSwitch : NetworkBehaviour
     void Update(){  
         if(m_IsInArea && Input.GetKeyDown(KeyCode.E)){
             SwitchServerRpc();
-        }    
+        }
     }
 }
