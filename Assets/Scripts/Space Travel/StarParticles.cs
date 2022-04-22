@@ -6,7 +6,7 @@ using UnityEngine;
 public class StarParticles : MonoBehaviour
 {
     float sensitivity = 0.25f;
-    private Camera cam;
+    public Camera cam;
     private ParticleSystem.Particle[] stars;
     public int maxStars = 100;
     public float starSize = 1.0f;
@@ -22,7 +22,7 @@ public class StarParticles : MonoBehaviour
     private Vector3 moveStar;
 
     void Start() {
-        cam = Camera.main;
+        //cam = Camera.main;
         starDistanceSqr = starDistance * starDistance;
         clippingDistSqr = clippingDist * clippingDist;
         createStars();
