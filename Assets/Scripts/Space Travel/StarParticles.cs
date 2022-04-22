@@ -12,7 +12,7 @@ public class StarParticles : MonoBehaviour
     public float starSize = 1.0f;
 
     public float speed = 0.0f;
-    private float maxSpeed = 25.0f;
+    public float maxSpeed = 100.0f;
 
     public float starDistance = 10.0f;
 

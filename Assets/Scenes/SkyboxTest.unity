@@ -159,22 +159,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 495544454677085878, guid: 824db1d4f515f31a2bef94bb5775dd7a, type: 3}
   m_PrefabInstance: {fileID: 2069520283}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1278677122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1278677121}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1618b8457f0d98cdcae6064ccfab0991, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxStars: 1000
-  starsize: 1
-  starDistance: 100
-  clippingDist: 1
 --- !u!114 &1278677123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,11 +171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e87193917060473888f9f93b39591f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStars: 100
-  starSize: 1
+  maxStars: 500
+  starSize: 3
   speed: 0
-  starDistance: 100
-  clippingDist: 1
+  maxSpeed: 100
+  starDistance: 300
+  clippingDist: 2
 --- !u!1 &1354092576
 GameObject:
   m_ObjectHideFlags: 3
@@ -233,7 +218,6 @@ GameObject:
   - component: {fileID: 1448916035}
   - component: {fileID: 1448916034}
   - component: {fileID: 1448916033}
-  - component: {fileID: 1448916037}
   - component: {fileID: 1448916036}
   m_Layer: 0
   m_Name: Main Camera
@@ -320,22 +304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c8a64a2e72cea9aadf0b35ac9fc900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1448916037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1448916032}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1618b8457f0d98cdcae6064ccfab0991, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxStars: 100
-  starsize: 1
-  starDistance: 10
-  clippingDist: 3
 --- !u!1001 &2069520283
 PrefabInstance:
   m_ObjectHideFlags: 0
