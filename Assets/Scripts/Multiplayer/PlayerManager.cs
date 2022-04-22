@@ -81,7 +81,10 @@ public class PlayerManager : NetworkBehaviour {
             LoadSceneMode loadSceneMode,
             List<ulong> clientsCompleted,
             List<ulong> clientsTimedOut) {
+        SpawnAvatars();
+    }
 
+    public static void SpawnAvatars() {
         foreach (PersistentPlayer p in PlayerManager.Instance.Players) {
             p.SpawnAvatar(PlayerSpawnLocation.GetSpawn());
         }
