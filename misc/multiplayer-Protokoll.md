@@ -11,10 +11,20 @@ your need to overrite the *OnNetworkSpawn()* and *OnNetworkDespawn()* methodes w
 *m_LightStage.OnValueChanged += OnStateChange;* and<br>
 *m_LightStage.OnValueChanged -= OnStateChange;*
 
-This way we the Owner of the player can change the variable
+This way we the Owner of the player can change the variable. *OnStateChange* 
 
 ## 3. Access Server-RPC
 
 use the line
 
 *[ServerRpc(RequireOwnership = false)]*
+
+Before activly manipulating The Value of the state. This way all players are alowed to interakt with it. Afterwords just write the rest of your class how you like.
+
+## 4. Create a Prefab
+
+jeah, just create a gameobject with the script an everything and make a prefab out of that.
+
+## 5. Add to NetworkManager
+
+Go in the networkmanager and add the prefab
