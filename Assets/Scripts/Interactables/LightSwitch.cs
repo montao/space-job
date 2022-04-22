@@ -44,8 +44,8 @@ public class LightSwitch : NetworkBehaviour
     private void OnTriggerExit(Collider other) {
         PlayerAvatar player = other.GetComponent<PlayerAvatar>();
         if(player != null && player.IsOwner){
-            Debug.Log("Local player entered");
-            m_IsInArea = true;
+            Debug.Log("Local player exit");
+            m_IsInArea = false;
         }
     }
     void Update(){  
