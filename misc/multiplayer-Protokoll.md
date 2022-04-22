@@ -11,7 +11,7 @@ your need to overrite the *OnNetworkSpawn()* and *OnNetworkDespawn()* methodes w
 *m_LightStage.OnValueChanged += OnStateChange;* and<br>
 *m_LightStage.OnValueChanged -= OnStateChange;*
 
-This way we the Owner of the player can change the variable. *OnStateChange* 
+This way we the Owner of the player can change the variable. *OnStateChange* will be called when the value of the variable changes.
 
 ## 3. Access Server-RPC
 
