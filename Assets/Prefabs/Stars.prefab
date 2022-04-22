@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 495544454677085876}
   - component: {fileID: 2444961672170821756}
   - component: {fileID: 495544454677085883}
+  - component: {fileID: 5502015460122872783}
   m_Layer: 0
   m_Name: Stars
   m_TagString: Untagged
@@ -4819,13 +4820,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e87193917060473888f9f93b39591f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skybox: {fileID: 8759423613223635432, guid: 93bf4aecf6cc82864aaf4890762a2958, type: 3}
-  checkStars: {fileID: 2599997693869889601, guid: 11273fa133acf98b99c6c98edf335831, type: 3}
   maxStars: 10000
   starSize: 2
   speed: 1
-  smooth: 1
-  acceleration: 0.1
   starDistance: 500
 --- !u!95 &2444961672170821756
 Animator:
@@ -4859,3 +4856,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 300
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5502015460122872783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495544454677085878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1618b8457f0d98cdcae6064ccfab0991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStars: 100
+  starsize: 1
+  starDistance: 10
+  clippingDist: 1
+  clippingDistSqr: 0
