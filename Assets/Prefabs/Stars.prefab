@@ -11,10 +11,7 @@ GameObject:
   - component: {fileID: 495544454677085879}
   - component: {fileID: 495544454677085882}
   - component: {fileID: 495544454677085877}
-  - component: {fileID: 495544454677085876}
-  - component: {fileID: 2444961672170821756}
-  - component: {fileID: 495544454677085883}
-  - component: {fileID: 5502015460122872783}
+  - component: {fileID: 4031392985725686090}
   m_Layer: 0
   m_Name: Stars
   m_TagString: Untagged
@@ -30,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 495544454677085878}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4808,7 +4805,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &495544454677085876
+--- !u!114 &4031392985725686090
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4820,56 +4817,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e87193917060473888f9f93b39591f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStars: 10000
-  starSize: 2
-  speed: 1
-  starDistance: 500
---- !u!95 &2444961672170821756
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 495544454677085878}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!135 &495544454677085883
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 495544454677085878}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 300
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5502015460122872783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 495544454677085878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1618b8457f0d98cdcae6064ccfab0991, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxStars: 100
-  starsize: 1
-  starDistance: 10
-  clippingDist: 1
-  clippingDistSqr: 0
+  cam: {fileID: 0}
+  maxStars: 1000
+  starSize: 0.8
+  speed: 0
+  maxSpeed: 100
+  starDistance: 300
+  clippingDist: 2
