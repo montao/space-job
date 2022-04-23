@@ -29,7 +29,7 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
     public T Value{
         get => m_State.Value;
     }
-    void Update(){  
+    public virtual void Update(){  
         if(m_IsInArea && Input.GetKeyDown(KeyCode.E)){
             Interaction();
         }
