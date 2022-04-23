@@ -53,7 +53,6 @@ public class PlayerAvatar : NetworkBehaviour {
 
     void UpdateNameTag() {
         nameText.text = localPlayer.PlayerName;  // TODO only update when needed?
-
         nameText.gameObject.transform.LookAt(Camera.main.transform.position);
         nameText.gameObject.transform.Rotate(Vector3.up, 180f);  // mirror
     }
