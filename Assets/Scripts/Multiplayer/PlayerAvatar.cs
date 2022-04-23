@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
-using Unity.Collections;
 using TMPro;
 
 [System.Serializable]
@@ -14,30 +11,33 @@ public struct PlayerPos {
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerAvatar : NetworkBehaviour {
 
-    private CharacterController controller;
-    private float movementSpeed = 5f;
-
-    private PersistentPlayer localPlayer;
-
-    private NetworkVariable<PlayerPos> playerPos
+    private NetworkVariable<PlayerPos> m_playerPos
             = new NetworkVariable<PlayerPos>();
+
+    [ServerRpc]
+    public void UpdatePosServerRpc(PlayerPos p) {
+        m_playerPos.Value = p;
+    }
+
+
+    private CharacterController m_controller;
+    private float m_movementSpeed = 5f;
+
+    private PersistentPlayer m_localPlayer;
 
     public TMP_Text nameText;
 
-    void Start() {
-        controller = GetComponent<CharacterController>();
-
-        // var id = OwnerClientId;
-        //localPlayer = client.PlayerObject.GetComponent<PersistentPlayer>();
+    public override void OnNetworkSpawn() {
+        m_controller = GetComponent<CharacterController>();
 
         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
             if (player.OwnerClientId == OwnerClientId) {
-                localPlayer = player;
+                m_localPlayer = player;
                 break;
             }
         }
 
-        name = localPlayer.PlayerName;
+        name = m_localPlayer.PlayerName;
     }
 
     void Update() {
@@ -52,7 +52,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     void UpdateNameTag() {
-        nameText.text = localPlayer.PlayerName;  // TODO only update when needed?
+        nameText.text = m_localPlayer.PlayerName;  // TODO only update when needed?
         nameText.gameObject.transform.LookAt(Camera.main.transform.position);
         nameText.gameObject.transform.Rotate(Vector3.up, 180f);  // mirror
     }
@@ -64,27 +64,21 @@ public class PlayerAvatar : NetworkBehaviour {
         var direction = new Vector3(horizontalInput, 0, verticalInput);
 
         var cameraDirection = Camera.main.transform.rotation;
-        direction = cameraDirection * direction;
+        direction = Vector3.Normalize(cameraDirection * direction);
         direction.y = 0;  // no flying allowed!
 
-        controller.Move(direction * Time.deltaTime * movementSpeed);
+        m_controller.Move(direction * Time.deltaTime * m_movementSpeed);
+        m_controller.transform.LookAt(m_controller.transform.position + direction);
 
         var p = new PlayerPos();
-        p.Position = controller.transform.position;
-        p.Rotation = controller.transform.rotation;
-
-        //playerPos.Value = p;
+        p.Position = m_controller.transform.position;
+        p.Rotation = m_controller.transform.rotation;
         UpdatePosServerRpc(p);
     }
 
     void UpdatePos() {
-        transform.position = playerPos.Value.Position;
-        transform.rotation = playerPos.Value.Rotation;
-    }
-
-    [ServerRpc]
-    public void UpdatePosServerRpc(PlayerPos p) {
-        playerPos.Value = p;
+        transform.position = m_playerPos.Value.Position;
+        transform.rotation = m_playerPos.Value.Rotation;
     }
 
 }
