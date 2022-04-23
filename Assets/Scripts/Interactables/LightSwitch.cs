@@ -4,7 +4,10 @@ using Unity.Netcode;
 
 public class LightSwitch : Interactable<bool> {
     public List<Light> Lights;
-
+    [ServerRpc(RequireOwnership = false)]
+    public void SetServerRpc(bool value){
+        m_State.Value = value;
+    }
     protected override void Interaction(){
         SetLightConditions(!Value);
         SetServerRpc(!Value);

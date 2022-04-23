@@ -4,7 +4,7 @@ using Unity.Netcode;
 
 public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
     private bool m_IsInArea = false;
-    private NetworkVariable<T> m_State = new NetworkVariable<T>();
+    protected NetworkVariable<T> m_State = new NetworkVariable<T>();
     public override void OnNetworkSpawn(){
         m_State.OnValueChanged += OnStateChange;
     }
@@ -12,10 +12,7 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
         m_State.OnValueChanged -= OnStateChange;
     }
     public abstract void OnStateChange(T previous, T current);
-    [ServerRpc(RequireOwnership = false)]
-    public void SetServerRpc(T value){
-        m_State.Value = value;
-    }
+
     private void OnTriggerEnter(Collider other) {
         PlayerAvatar player = other.GetComponent<PlayerAvatar>();
         if(player != null && player.IsOwner){
