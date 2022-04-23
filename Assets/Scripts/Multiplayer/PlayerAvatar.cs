@@ -8,11 +8,19 @@ public struct PlayerPos {
     public Quaternion Rotation;
 }
 
+[System.Serializable]
+public struct Inventory {
+    public ulong primary;
+    public ulong secondary;
+}
+
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerAvatar : NetworkBehaviour {
 
     private NetworkVariable<PlayerPos> m_playerPos
             = new NetworkVariable<PlayerPos>();
+    private NetworkVariable<Inventory> m_inventory
+            = new NetworkVariable<Inventory>();
 
     [ServerRpc]
     public void UpdatePosServerRpc(PlayerPos p) {
