@@ -44,7 +44,6 @@ public class PlayerAvatar : NetworkBehaviour {
                 break;
             }
         }
-
         name = m_localPlayer.PlayerName;
     }
 
@@ -88,5 +87,4 @@ public class PlayerAvatar : NetworkBehaviour {
         transform.position = m_playerPos.Value.Position;
         transform.rotation = m_playerPos.Value.Rotation;
     }
-
 }
