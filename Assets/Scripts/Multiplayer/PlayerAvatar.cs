@@ -8,19 +8,19 @@ public struct PlayerPos {
     public Quaternion Rotation;
 }
 
-[System.Serializable]
-public struct Inventory {
-    public NetworkObjectReference primary;
-    public NetworkObjectReference secondary;
-}
-
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerAvatar : NetworkBehaviour {
 
     private NetworkVariable<PlayerPos> m_playerPos
             = new NetworkVariable<PlayerPos>();
-    private NetworkVariable<Inventory> m_inventory
-            = new NetworkVariable<Inventory>();
+    private NetworkVariable<NetworkObjectReference> m_primaryItem
+            = new NetworkVariable<NetworkObjectReference>();
+    private NetworkVariable<NetworkObjectReference> m_secondaryItem
+            = new NetworkVariable<NetworkObjectReference>();
+
+    public enum Slot {
+        PRIMARY, SECONDARY
+    };
 
     [ServerRpc]
     public void UpdatePosServerRpc(PlayerPos p) {
@@ -74,6 +74,10 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     void ProcessInput() {
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            DropItem(Slot.PRIMARY);
+        }
+
         PerformGroundCheck();
         if (m_isGrounded && m_Velocity.y < 0) {
             m_Velocity.y = -2f;
@@ -104,5 +108,67 @@ public class PlayerAvatar : NetworkBehaviour {
     void UpdatePos() {
         transform.position = m_playerPos.Value.Position;
         transform.rotation = m_playerPos.Value.Rotation;
+    }
+
+    private NetworkObject GetInventoryItem(Slot slot) {
+        NetworkObjectReference reference;
+        if (slot == Slot.PRIMARY) {
+            reference = m_primaryItem.Value;
+        } else {
+            reference = m_secondaryItem.Value;
+        }
+
+        NetworkObject o;
+        if (reference.TryGet(out o)) {
+            return o;
+        }
+        return null;
+    }
+
+    public bool HasInventorySpace(Slot slot) {
+        return GetInventoryItem(slot) == null;
+    }
+
+    public bool HasInventorySpace() {
+        return HasInventorySpace(Slot.PRIMARY) || HasInventorySpace(Slot.SECONDARY);
+    }
+
+    public void AddToInventory(NetworkObject item) {
+        if (HasInventorySpace(Slot.PRIMARY)) {
+            AddToInventory(Slot.PRIMARY, item);
+        } else if (HasInventorySpace(Slot.SECONDARY)) {
+            AddToInventory(Slot.SECONDARY, item);
+        }
+    }
+
+    public void AddToInventory(Slot slot, NetworkObject item) {
+        if (slot == Slot.PRIMARY) {
+            m_primaryItem.Value = item;
+        } else {
+            m_secondaryItem.Value = item;
+        }
+    }
+
+    public void DropItem(Slot slot) {
+        NetworkObjectReference item;
+        if (slot == Slot.PRIMARY) {
+            item = m_primaryItem.Value;
+        } else {
+            item = m_secondaryItem.Value;
+        }
+
+        NetworkObject o;
+        if (!item.TryGet(out o)) {
+            Debug.Log("No item here.");
+        }
+
+        Cup cup = o.GetComponentInChildren<Cup>();
+        cup.DropServerRpc(transform.position);
+
+        if (slot == Slot.PRIMARY) {
+            m_primaryItem = new NetworkVariable<NetworkObjectReference>();
+        } else {
+            m_secondaryItem = new NetworkVariable<NetworkObjectReference>();
+        }
     }
 }

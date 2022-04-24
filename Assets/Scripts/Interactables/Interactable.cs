@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
 public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
-    private bool m_IsInArea = false;
+    protected bool m_IsInArea = false;
     protected NetworkVariable<T> m_State = new NetworkVariable<T>();
     public override void OnNetworkSpawn(){
         m_State.OnValueChanged += OnStateChange;
