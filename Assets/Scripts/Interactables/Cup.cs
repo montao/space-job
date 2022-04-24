@@ -18,8 +18,10 @@ public class Cup : Interactable<int>{
         m_State.Value = IN_WORLD;
     }
 
-    protected override void Interaction(){
-        SetServerRpc((int)(NetworkManager.Singleton.LocalClientId)); // weardes casting thing
+    protected override void Interaction() {
+        PlayerAvatar localPlayer = PlayerManager.Instance.LocalPlayer.Avatar;
+        Debug.Log(localPlayer);
+        SetServerRpc((int) NetworkManager.Singleton.LocalClientId); // weardes casting thing
     }
 
     public override void OnStateChange(int previous, int current){

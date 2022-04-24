@@ -10,8 +10,8 @@ public struct PlayerPos {
 
 [System.Serializable]
 public struct Inventory {
-    public ulong primary;
-    public ulong secondary;
+    public NetworkObjectReference primary;
+    public NetworkObjectReference secondary;
 }
 
 [RequireComponent(typeof(NetworkObject))]
