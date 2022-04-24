@@ -13,6 +13,10 @@ public class Cup : Interactable<bool>{
     private Rigidbody m_Rigidbody;
     private List<Collider> m_AllCollider;
 
+    public void Start() {
+        m_State.Value = true;
+    }
+
     protected override void Interaction(){
         SetServerRpc(false);
     }
