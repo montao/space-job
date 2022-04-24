@@ -18,7 +18,8 @@ public class Cup : Interactable<int>{
 
     public bool pickedUp = false;
 
-    public void Start() {
+    public override void OnNetworkSpawn() {
+        base.OnNetworkSpawn();
         if (IsServer) {
             m_State.Value = IN_WORLD;
         }

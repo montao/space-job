@@ -20,6 +20,7 @@ public class CoffeMachine : Interactable<bool> {
         if(!prevCup || prevCup.GetComponentInChildren<Cup>().isPickedUp()) {
             GameObject freshCup = Instantiate(cupPrefab, machine.GetComponent<Transform>().position, Quaternion.identity);
             freshCup.GetComponent<NetworkObject>().Spawn();
+            freshCup.GetComponentInChildren<Cup>.m_State = Cup.IN_WORLD;
             prevCup = freshCup;
             Debug.Log("new cup");
         }
