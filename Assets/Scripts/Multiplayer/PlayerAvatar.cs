@@ -75,7 +75,11 @@ public class PlayerAvatar : NetworkBehaviour {
 
     void ProcessInput() {
         if (Input.GetKeyDown(KeyCode.Q)) {
-            DropItem(Slot.PRIMARY);
+            if (!HasInventorySpace(Slot.PRIMARY)) {
+                DropItem(Slot.PRIMARY);
+            } else if (!HasInventorySpace(Slot.SECONDARY)) {
+                DropItem(Slot.SECONDARY);
+            }
         }
 
         PerformGroundCheck();
