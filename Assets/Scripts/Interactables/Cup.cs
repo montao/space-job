@@ -8,29 +8,30 @@ using Unity.Netcode;
   Feckn delicious shit, oh no..
   */
 
-public class Cup : Interactable<bool>{
+public class Cup : Interactable<int>{
     private MeshRenderer m_Mesh;
     private Rigidbody m_Rigidbody;
     private List<Collider> m_AllCollider;
+    public const int IN_WORLD = -1;
 
     public void Start() {
-        m_State.Value = true;
+        m_State.Value = IN_WORLD;
     }
 
     protected override void Interaction(){
-        SetServerRpc(false);
+        SetServerRpc((int)(NetworkManager.Singleton.LocalClientId)); // weardes casting thing
     }
 
-    public override void OnStateChange(bool previous, bool current){
+    public override void OnStateChange(int previous, int current){
         if (current != previous) {
             // inWorld changed, i.e. item was dropped or
             // picked up
-            UpdateWorldstate(current);
+            UpdateWorldstate(current == IN_WORLD);
         }
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SetServerRpc(bool value){
+    public void SetServerRpc(int value){
         m_State.Value = value;
     }
 
