@@ -20,9 +20,11 @@ public class StarParticles : MonoBehaviour
     public float clippingDist = 1.0f;
     private float clippingDistSqr;
     private Vector3 moveStar;
+    public bool driving;
 
     void Start() {
         //cam = Camera.main;
+        driving = false;
         starDistanceSqr = starDistance * starDistance;
         clippingDistSqr = clippingDist * clippingDist;
         createStars();
@@ -37,7 +39,14 @@ public class StarParticles : MonoBehaviour
             stars[i].size = starSize;
         }
     }
-
+    public void setDrivingFalse(){
+        driving = false;
+        Debug.Log("not Driving");
+    }
+    public void setDrivingTrue(){
+        driving = true;
+        Debug.Log("Driving");
+    }
     void Update() {
 
 
@@ -47,47 +56,53 @@ public class StarParticles : MonoBehaviour
                 stars[i].position = moveStar ;   
                 transform.position = moveStar; 
             }
-            else speed = 0;
-
-            
-            if(Input.GetKey(KeyCode.W)){
-                if(speed < maxSpeed){
-                    speed += 0.01f * Time.deltaTime;
-                }
-                if(speed == maxSpeed){
-                    speed = maxSpeed;
-                }
-                moveStar = stars[i].position - cam.transform.forward + cam.transform.position * speed * Time.deltaTime;
-                stars[i].position = moveStar ;   
-                transform.position = moveStar; 
-
-                       
-            }
-            if(Input.GetKey(KeyCode.A)){
-                moveStar = stars[i].position + cam.transform.right + cam.transform.position * speed * Time.deltaTime;
-                stars[i].position = moveStar;
-                transform.position = moveStar;    
-            }
-            if(Input.GetKey(KeyCode.D)){
-                moveStar = stars[i].position - cam.transform.right + cam.transform.position * speed * Time.deltaTime;
-                stars[i].position = moveStar;
-                transform.position = moveStar;    
-            }
-            if(Input.GetKey(KeyCode.S)){
-                if(speed > 0){
-                    speed -= 0.01f * Time.deltaTime;
-                }
-            }  
-            if((moveStar - cam.transform.position).sqrMagnitude > starDistanceSqr){
-                Debug.Log("hi");
-                stars[i].position = Random.insideUnitSphere.normalized * starDistance + cam.transform.forward + cam.transform.position;
-            }
-            if((stars[i].position - cam.transform.position).sqrMagnitude <= clippingDistSqr){
-                float visability = (stars[i].position - cam.transform.forward +  cam.transform.position).sqrMagnitude / clippingDistSqr; //clipping distance 100%
-                stars[i].color = new Color(1,1,1,visability);
-                stars[i].size = starSize * visability;
+            else{
+                speed = 0;
+                moveStar = Random.insideUnitSphere * starDistance + cam.transform.position;
             } 
-        } 
+
+            if(driving){
+                if(Input.GetKey(KeyCode.W)){
+                    if(speed < maxSpeed){
+                        speed += 0.01f * Time.deltaTime;
+                    }
+                    if(speed == maxSpeed){
+                        speed = maxSpeed;
+                    }
+                    moveStar = stars[i].position - cam.transform.forward + cam.transform.position * speed * Time.deltaTime;
+                    stars[i].position = moveStar ;   
+                    transform.position = moveStar; 
+
+                        
+                }
+                if(Input.GetKey(KeyCode.A)){
+                    moveStar = stars[i].position + cam.transform.right + cam.transform.position * speed * Time.deltaTime;
+                    stars[i].position = moveStar;
+                    transform.position = moveStar;    
+                }
+                if(Input.GetKey(KeyCode.D)){
+                    moveStar = stars[i].position - cam.transform.right + cam.transform.position * speed * Time.deltaTime;
+                    stars[i].position = moveStar;
+                    transform.position = moveStar;    
+                }
+                if(Input.GetKey(KeyCode.S)){
+                    if(speed > 0){
+                        speed -= 0.01f * Time.deltaTime;
+                    }
+                }  
+                if((moveStar - cam.transform.position).sqrMagnitude > starDistanceSqr){
+                    Debug.Log("hi");
+                    stars[i].position = Random.insideUnitSphere.normalized * starDistance + cam.transform.forward + cam.transform.position;
+                }
+                if((stars[i].position - cam.transform.position).sqrMagnitude <= clippingDistSqr){
+                    float visability = (stars[i].position - cam.transform.forward +  cam.transform.position).sqrMagnitude / clippingDistSqr; //clipping distance 100%
+                    stars[i].color = new Color(1,1,1,visability);
+                    stars[i].size = starSize * visability;
+                } 
+        }
+        
+            
+        }
 
         GetComponent<ParticleSystem>().SetParticles(stars, stars.Length);
     }
