@@ -14,7 +14,7 @@ public class Cup : Interactable<bool>{
     private List<Collider> m_AllCollider;
 
     protected override void Interaction(){
-        SetServerRpc(!Value);
+        SetServerRpc(false);
     }
 
     public override void OnStateChange(bool previous, bool current){
