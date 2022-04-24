@@ -43,10 +43,11 @@ public class StarParticles : MonoBehaviour
 
         for (int i = 0; i < maxStars; i++){
             if(speed > 0){
-                moveStar = stars[i].position - cam.transform.forward * speed * Time.deltaTime;
+                moveStar = stars[i].position - cam.transform.forward + cam.transform.position * speed * Time.deltaTime;
                 stars[i].position = moveStar ;   
                 transform.position = moveStar; 
             }
+            else speed = 0;
 
             
             if(Input.GetKey(KeyCode.W)){
@@ -56,33 +57,33 @@ public class StarParticles : MonoBehaviour
                 if(speed == maxSpeed){
                     speed = maxSpeed;
                 }
-                moveStar = stars[i].position - cam.transform.forward * speed * Time.deltaTime;
+                moveStar = stars[i].position - cam.transform.forward + cam.transform.position * speed * Time.deltaTime;
                 stars[i].position = moveStar ;   
                 transform.position = moveStar; 
 
                        
             }
             if(Input.GetKey(KeyCode.A)){
-                moveStar = stars[i].position + cam.transform.right * speed * Time.deltaTime;
+                moveStar = stars[i].position + cam.transform.right + cam.transform.position * speed * Time.deltaTime;
                 stars[i].position = moveStar;
                 transform.position = moveStar;    
             }
             if(Input.GetKey(KeyCode.D)){
-                moveStar = stars[i].position - cam.transform.right * speed * Time.deltaTime;
+                moveStar = stars[i].position - cam.transform.right + cam.transform.position * speed * Time.deltaTime;
                 stars[i].position = moveStar;
                 transform.position = moveStar;    
             }
             if(Input.GetKey(KeyCode.S)){
                 if(speed > 0){
-                    speed -= 0.1f * Time.deltaTime;
+                    speed -= 0.01f * Time.deltaTime;
                 }
             }  
             if((moveStar - cam.transform.position).sqrMagnitude > starDistanceSqr){
                 Debug.Log("hi");
-                stars[i].position = Random.insideUnitSphere.normalized * starDistance + cam.transform.forward;
+                stars[i].position = Random.insideUnitSphere.normalized * starDistance + cam.transform.forward + cam.transform.position;
             }
             if((stars[i].position - cam.transform.position).sqrMagnitude <= clippingDistSqr){
-                float visability = (stars[i].position - cam.transform.forward).sqrMagnitude / clippingDistSqr; //clipping distance 100%
+                float visability = (stars[i].position - cam.transform.forward +  cam.transform.position).sqrMagnitude / clippingDistSqr; //clipping distance 100%
                 stars[i].color = new Color(1,1,1,visability);
                 stars[i].size = starSize * visability;
             } 
