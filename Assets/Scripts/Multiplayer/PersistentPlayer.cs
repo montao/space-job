@@ -22,11 +22,12 @@ public class PersistentPlayer : NetworkBehaviour {
     [SerializeField]
     private GameObject avatarPrefab;
 
-    private NetworkObjectReference m_Avatar;
+    private NetworkVariable<NetworkObjectReference> m_Avatar
+            = new NetworkVariable<NetworkObjectReference>();
     public PlayerAvatar Avatar {
         get {
             NetworkObject ava;
-            if (m_Avatar.TryGet(out ava)) {
+            if (m_Avatar.Value.TryGet(out ava)) {
                 return ava.GetComponent<PlayerAvatar>();
             }
             return null;
@@ -45,7 +46,7 @@ public class PersistentPlayer : NetworkBehaviour {
         avatarNetworkObject.Spawn();
         avatarNetworkObject.ChangeOwnership(owner);
 
-        m_Avatar = avatarNetworkObject;
+        m_Avatar.Value = avatarNetworkObject;
     }
 
     // Update is called once per frame
