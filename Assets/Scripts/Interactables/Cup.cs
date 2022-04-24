@@ -35,9 +35,10 @@ public class Cup : Interactable<bool>{
     }
 
     private void Awake() {
-        m_AllCollider = new List<Collider>(GetComponents<Collider>());
-        m_Mesh = GetComponent<MeshRenderer>();
-        m_Rigidbody = GetComponent<Rigidbody>();
+        m_AllCollider = new List<Collider>(GetComponentsInParent<Collider>());
+        m_AllCollider.AddRange(GetComponents<Collider>());
+        m_Mesh = GetComponentInParent<MeshRenderer>();
+        m_Rigidbody = GetComponentInParent<Rigidbody>();
     }
 
     public void UpdateWorldstate(bool inWorld){
