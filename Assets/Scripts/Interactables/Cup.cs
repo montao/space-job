@@ -19,7 +19,9 @@ public class Cup : Interactable<int>{
     public bool pickedUp = false;
 
     public void Start() {
-        m_State.Value = IN_WORLD;
+        if (IsServer) {
+            m_State.Value = IN_WORLD;
+        }
     }
 
     protected override void Interaction() {
