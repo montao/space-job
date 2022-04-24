@@ -35,7 +35,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
     public TMP_Text nameText;
 
-    public override void OnNetworkSpawn() {
+    public void Start() {
         m_controller = GetComponent<CharacterController>();
 
         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
