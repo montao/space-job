@@ -14,9 +14,9 @@ public class PlayerAvatar : NetworkBehaviour {
     private NetworkVariable<PlayerPos> m_playerPos
             = new NetworkVariable<PlayerPos>();
     private NetworkVariable<NetworkObjectReference> m_primaryItem
-            = new NetworkVariable<NetworkObjectReference>();
+            = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<NetworkObjectReference> m_secondaryItem
-            = new NetworkVariable<NetworkObjectReference>();
+            = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
 
     public enum Slot {
         PRIMARY, SECONDARY
@@ -166,9 +166,11 @@ public class PlayerAvatar : NetworkBehaviour {
         cup.DropServerRpc(transform.position);
 
         if (slot == Slot.PRIMARY) {
-            m_primaryItem = new NetworkVariable<NetworkObjectReference>();
+            m_primaryItem
+                    = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
         } else {
-            m_secondaryItem = new NetworkVariable<NetworkObjectReference>();
+            m_secondaryItem
+                    = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
         }
     }
 }
