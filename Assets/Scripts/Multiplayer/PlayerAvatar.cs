@@ -30,8 +30,12 @@ public class PlayerAvatar : NetworkBehaviour {
 
     private CharacterController m_controller;
     private float m_movementSpeed = 5f;
-
+    private bool m_isGrounded = false;
+    public Transform groundCheck;
+    public LayerMask groundLayer;
+    public const float GRAVITY = -10f;  //in case of zero gravity this need to change
     private PersistentPlayer m_localPlayer;
+    private Vector3 m_Velocity;
 
     public TMP_Text nameText;
 
@@ -57,7 +61,12 @@ public class PlayerAvatar : NetworkBehaviour {
             }
         }
     }
-
+    public void PerformGroundCheck() {
+        m_isGrounded = Physics.CheckSphere(groundCheck.position,
+                GroundCheck.GROUND_CHECK_RADIUS,
+                groundLayer
+        );
+    }
     void UpdateNameTag() {
         nameText.text = m_localPlayer.PlayerName;  // TODO only update when needed?
         nameText.gameObject.transform.LookAt(Camera.main.transform.position);
@@ -65,6 +74,11 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     void ProcessInput() {
+        PerformGroundCheck();
+        if (m_isGrounded && m_Velocity.y < 0) {
+            m_Velocity.y = -2f;
+        }
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -77,9 +91,13 @@ public class PlayerAvatar : NetworkBehaviour {
         m_controller.Move(direction * Time.deltaTime * m_movementSpeed);
         m_controller.transform.LookAt(m_controller.transform.position + direction);
 
+        m_Velocity.y += GRAVITY * Time.deltaTime;
+        m_controller.Move(m_Velocity * Time.deltaTime);
+
         var p = new PlayerPos();
         p.Position = m_controller.transform.position;
         p.Rotation = m_controller.transform.rotation;
+
         UpdatePosServerRpc(p);
     }
 
