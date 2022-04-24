@@ -542,7 +542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
       propertyPath: m_Name
-      value: charakter (2)
+      value: schaufensterpuppe
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
@@ -670,7 +670,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214c44ce72d5fd67cb9ee35df798cde1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextCamera: {fileID: 0}
 --- !u!4 &201524141
 Transform:
   m_ObjectHideFlags: 0
@@ -1070,7 +1069,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214c44ce72d5fd67cb9ee35df798cde1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextCamera: {fileID: 963194227}
 --- !u!1 &522985549
 GameObject:
   m_ObjectHideFlags: 0
@@ -1658,7 +1656,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214c44ce72d5fd67cb9ee35df798cde1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextCamera: {fileID: 823499529}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2589,7 +2586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
       propertyPath: m_Name
-      value: charakter (1)
+      value: amorstan
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
