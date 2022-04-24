@@ -16,6 +16,8 @@ public class Cup : Interactable<int>{
     private NetworkTransform m_NetTransform;
     public const int IN_WORLD = -1;
 
+    public bool pickedUp = false;
+
     public void Start() {
         m_State.Value = IN_WORLD;
     }
@@ -41,6 +43,7 @@ public class Cup : Interactable<int>{
     }
 
     public override void OnStateChange(int previous, int current){
+
         if (current != previous) {
             // inWorld changed, i.e. item was dropped or
             // picked up
@@ -50,6 +53,7 @@ public class Cup : Interactable<int>{
 
     [ServerRpc(RequireOwnership = false)]
     public void SetServerRpc(int value){
+        pickedUp = true;
         m_State.Value = value;
     }
 
@@ -74,5 +78,9 @@ public class Cup : Interactable<int>{
         m_Mesh.enabled = inWorld;
         m_Rigidbody.isKinematic = !inWorld; // TODO does this work? 
         m_NetTransform.enabled = inWorld;
+    }
+
+    public bool isPickedUp() {
+        return pickedUp;
     }
 }
