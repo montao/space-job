@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Collections;
@@ -24,10 +22,14 @@ public class PersistentPlayer : NetworkBehaviour {
     [SerializeField]
     private GameObject avatarPrefab;
 
-    private PlayerAvatar avatar;
+    private NetworkObjectReference m_Avatar;
     public PlayerAvatar Avatar {
         get {
-            return avatar;
+            NetworkObject ava;
+            if (m_Avatar.TryGet(out ava)) {
+                return ava.GetComponent<PlayerAvatar>();
+            }
+            return null;
         }
     }
 
@@ -35,18 +37,15 @@ public class PersistentPlayer : NetworkBehaviour {
         PlayerManager.Instance.RegisterPlayer(this, IsOwner);
     }
 
-    // TODO:  Since this is only called by the host, any setup we do, i.e. setting the `avatar` member
-    // will not be reflected by clients.  To fix this, it'd probably make sense to make `avatar` a
-    // `NetworkObject<NetworkObjectReference>` (https://docs-multiplayer.unity3d.com/netcode/current/api/Unity.Netcode.NetworkObjectReference)
-    // or implement some logic to let each avatar find the corresponsing
-    // PersistentPlayer (or the other way round).  Anyway, I'm going to sleep
-    // now, good night~
     public void SpawnAvatar(Transform spawnLocation) {
         var owner = OwnerClientId;
 
-        avatar = GameObject.Instantiate(avatarPrefab, spawnLocation).GetComponent<PlayerAvatar>();
-        avatar.GetComponent<NetworkObject>().Spawn();
-        avatar.GetComponent<NetworkObject>().ChangeOwnership(owner);
+        PlayerAvatar avatar = GameObject.Instantiate(avatarPrefab, spawnLocation).GetComponent<PlayerAvatar>();
+        NetworkObject avatarNetworkObject = avatar.GetComponent<NetworkObject>();
+        avatarNetworkObject.Spawn();
+        avatarNetworkObject.ChangeOwnership(owner);
+
+        m_Avatar = avatarNetworkObject;
     }
 
     // Update is called once per frame
