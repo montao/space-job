@@ -11,8 +11,8 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
     public override void OnNetworkDespawn(){
         m_State.OnValueChanged -= OnStateChange;
     }
+    //will be called automatically for every client when new value is given.
     public abstract void OnStateChange(T previous, T current);
-
     private void OnTriggerEnter(Collider other) {
         PlayerAvatar player = other.GetComponent<PlayerAvatar>();
         if(player != null && player.IsOwner){
