@@ -47,6 +47,6 @@ public class Cup : Interactable<int>{
             colli.enabled = inWorld;
         }
         m_Mesh.enabled = inWorld;
-        m_Rigidbody.isKinematic = !inWorld && !IsOwner; // TODO does this work? 
+        m_Rigidbody.isKinematic = !inWorld; // TODO does this work? 
     }
 }
