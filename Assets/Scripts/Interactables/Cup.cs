@@ -20,7 +20,7 @@ public class Cup : Interactable<int>{
 
     protected override void Interaction() {
         PlayerAvatar localPlayer = PlayerManager.Instance.LocalPlayer.Avatar;
-        Debug.Log(localPlayer);
+        Debug.Log("glug " + localPlayer);
         SetServerRpc((int) NetworkManager.Singleton.LocalClientId); // weardes casting thing
     }
 
