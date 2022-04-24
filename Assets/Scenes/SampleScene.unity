@@ -333,6 +333,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: -7346755011133694992, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2411127d739050536b1b386296595f13, type: 2}
     - target: {fileID: -7236621166599643929, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -345,6 +349,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: -6054792096914753119, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 391a6cc892247c04d934becca40d133f, type: 2}
     - target: {fileID: -4464529057356742913, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -369,6 +377,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: -1073095656398320260, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 20b9c401558e35d6981dc1a61fe5bae5, type: 2}
     - target: {fileID: -209419910803467997, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -401,6 +413,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2831065782900121813, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 391a6cc892247c04d934becca40d133f, type: 2}
     - target: {fileID: 2893732053292898577, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -595,6 +611,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2992282045190814458, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2411127d739050536b1b386296595f13, type: 2}
     - target: {fileID: 919132149155446097, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
       propertyPath: m_Name
       value: schaufensterpuppe
@@ -1164,6 +1184,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Animator: {fileID: 0}
+--- !u!114 &506839330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506839328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 330074307
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &510147193
 GameObject:
   m_ObjectHideFlags: 0
