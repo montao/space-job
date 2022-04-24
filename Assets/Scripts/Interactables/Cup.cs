@@ -71,7 +71,7 @@ public class Cup : Interactable<int>{
         m_NetTransform = GetComponentInParent<NetworkTransform>();
     }
 
-    public void UpdateWorldstate(bool inWorld){
+    public void UpdateWorldstate(bool inWorld) {
         foreach(Collider colli in m_AllCollider){
             colli.enabled = inWorld;
         }
