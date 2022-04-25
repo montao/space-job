@@ -74,8 +74,8 @@ public class PlayerAvatar : NetworkBehaviour {
         nameText.gameObject.transform.LookAt(Camera.main.transform.position);
         nameText.gameObject.transform.Rotate(Vector3.up, 180f);  // mirror
     }
-
     void ProcessInput() {
+        //m_PlayerAnimator.SetFloat("speed", 0.1f);
         if (Input.GetKeyDown(KeyCode.Q)) {
             if (!HasInventorySpace(Slot.PRIMARY)) {
                 DropItem(Slot.PRIMARY);
@@ -99,6 +99,12 @@ public class PlayerAvatar : NetworkBehaviour {
         direction.y = 0;  // no flying allowed!
 
         m_controller.Move(direction * Time.deltaTime * m_movementSpeed);
+        if((direction * Time.deltaTime * m_movementSpeed) != Vector3.zero){
+            m_PlayerAnimator.SetFloat("speed", 0.1f);
+        }
+        else{
+            m_PlayerAnimator.SetFloat("speed", 0.0f);
+        }
         m_controller.transform.LookAt(m_controller.transform.position + direction);
 
         m_Velocity.y += GRAVITY * Time.deltaTime;
