@@ -37,6 +37,7 @@ Shader "Unlit/Highlight"
             };
 
             fixed4 _HighlightColor;
+            uint _StripeOffset;
 
             v2f vert (appdata v)
             {
@@ -53,7 +54,7 @@ Shader "Unlit/Highlight"
             {
                 fixed4 col = _HighlightColor;
 
-                uint ypos = uint(i.vertex.y);
+                uint ypos = uint(i.vertex.y) - _StripeOffset;
 
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);

@@ -62,8 +62,8 @@ public class PlayerManager : NetworkBehaviour {
             };
     }
 
-    void Update() {
-
+    void FixedUpdate() {
+        Shader.SetGlobalInt("_StripeOffset", ((int) (Time.fixedTime * 16)) % 64);
     }
 
     public void RegisterPlayer(PersistentPlayer player, bool isLocal) {
