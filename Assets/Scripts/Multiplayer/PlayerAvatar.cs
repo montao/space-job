@@ -112,6 +112,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     void UpdatePos() {
+        //m_PlayerAnimator.SetFloat("speed", 0.1f);
         transform.position = m_playerPos.Value.Position;
         transform.rotation = m_playerPos.Value.Rotation;
     }
