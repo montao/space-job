@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1626546369651843917}
   - component: {fileID: 3311513784143183018}
   - component: {fileID: 7924686732878551286}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Interaction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,6 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 401881de996776f56bc768613896bd50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickedUp: 0
 --- !u!1 &5950505010473834605
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +74,7 @@ GameObject:
   - component: {fileID: 3118651671487317697}
   - component: {fileID: 1621227030513560192}
   - component: {fileID: 4891667782162769255}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Cup
   m_TagString: Untagged
   m_Icon: {fileID: 0}

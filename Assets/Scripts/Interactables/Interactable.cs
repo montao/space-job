@@ -2,6 +2,9 @@ using UnityEngine;
 using Unity.Netcode;
 
 public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
+
+    public static Color HIGHLIGHT_COLOR = new Color(0.6f, 1.0f, 0.6f, 0.7f);
+
     protected bool m_IsInArea = false;
     protected NetworkVariable<T> m_State = new NetworkVariable<T>();
     public override void OnNetworkSpawn(){
@@ -28,9 +31,18 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
     public T Value{
         get => m_State.Value;
     }
+
+    void Start() {
+    }
+
+
     public virtual void Update(){  
         if(m_IsInArea && Input.GetKeyDown(KeyCode.E)){
             Interaction();
         }
+    }
+
+    void OnWillRenderObject() {
+        Shader.SetGlobalColor("_HighlightColor", m_IsInArea ? HIGHLIGHT_COLOR : Color.clear);
     }
 }

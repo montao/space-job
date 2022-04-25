@@ -2,7 +2,7 @@ Shader "Unlit/Highlight"
 {
     Properties
     {
-        _HighlightColor("Color", Color) = (1, 1, 1, 1)
+        //_HighlightColor("Color", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
@@ -47,6 +47,7 @@ Shader "Unlit/Highlight"
                 UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
+
 
             fixed4 frag (v2f i) : SV_Target
             {
