@@ -3,11 +3,14 @@ Shader "Unlit/Highlight"
     Properties
     {
         _HighlightColor("Color", Color) = (1, 1, 1, 1)
-
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Blend SrcAlpha OneMinusSrcAlpha  // Enable transparency
+        Tags {
+            "RenderType" = "Transparent"
+            "Queue" = "Transparent"
+        }
         LOD 100
 
         Pass
@@ -48,9 +51,17 @@ Shader "Unlit/Highlight"
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = _HighlightColor;
+
+                uint ypos = uint(i.vertex.y);
+
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
-                return col;
+
+                if ((ypos >> 2) % 2 == 0) {
+                    return 1.2 * col;
+                } else {
+                    return col;
+                }
             }
             ENDCG
         }
