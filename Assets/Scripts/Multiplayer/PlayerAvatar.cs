@@ -17,7 +17,6 @@ public class PlayerAvatar : NetworkBehaviour {
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<NetworkObjectReference> m_secondaryItem
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
-
     public enum Slot {
         PRIMARY, SECONDARY
     };
@@ -33,6 +32,7 @@ public class PlayerAvatar : NetworkBehaviour {
     private bool m_isGrounded = false;
     public Transform groundCheck;
     public LayerMask groundLayer;
+    private Animator m_PlayerAnimator;
     public const float GRAVITY = -10f;  //in case of zero gravity this need to change
     private PersistentPlayer m_localPlayer;
     private Vector3 m_Velocity;
@@ -41,6 +41,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
     public void Start() {
         m_controller = GetComponent<CharacterController>();
+        m_PlayerAnimator = GetComponent<Animator>();
 
         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
             if (player.OwnerClientId == OwnerClientId) {
@@ -52,6 +53,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     void Update() {
+        //m_PlayerAnimator.SetFloat("speed", 0.1f);
         if (IsClient) {
             UpdateNameTag();
             if (IsOwner) {
