@@ -59,6 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 401881de996776f56bc768613896bd50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Materials:
+  - {fileID: 2100000, guid: 81a3d8fc1ecbe98b9a4d5e960267e448, type: 2}
+  - {fileID: 2100000, guid: 851aa4802535d4aff867b947b99dfe41, type: 2}
   pickedUp: 0
 --- !u!23 &3879000145665301798
 MeshRenderer:

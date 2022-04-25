@@ -8,10 +8,6 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
 
     private MeshRenderer _renderer;
 
-    void Awake() {
-        //_highlightedLayer = LayerMask.NameToLayer("Highlighted");
-    }
-
     void Start() {
         _highlightedLayer = LayerMask.NameToLayer("Highlighted");
         _renderer = GetComponent<MeshRenderer>();

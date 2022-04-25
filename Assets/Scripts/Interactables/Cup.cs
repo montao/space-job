@@ -15,6 +15,7 @@ public class Cup : Interactable<int>{
     private List<Collider> m_AllCollider;
     private NetworkTransform m_NetTransform;
     public const int IN_WORLD = -1;
+    public List<Material> Materials = new List<Material>();
 
     public bool pickedUp = false;
 
@@ -72,6 +73,9 @@ public class Cup : Interactable<int>{
         m_Mesh = GetComponentInParent<MeshRenderer>();
         m_Rigidbody = GetComponentInParent<Rigidbody>();
         m_NetTransform = GetComponentInParent<NetworkTransform>();
+
+        int mat_idx = Random.Range(0, Materials.Count);
+        GetComponent<MeshRenderer>().material = Materials[mat_idx];
     }
 
     public void UpdateWorldstate(bool inWorld) {
@@ -86,4 +90,5 @@ public class Cup : Interactable<int>{
     public bool isPickedUp() {
         return pickedUp;
     }
+
 }
