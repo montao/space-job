@@ -2,7 +2,7 @@ Shader "Unlit/Highlight"
 {
     Properties
     {
-        //_HighlightColor("Color", Color) = (1, 1, 1, 1)
+        _HighlightColor("Color", Color) = (0.6, 1, 0.6, 0.7)
     }
     SubShader
     {
@@ -59,7 +59,7 @@ Shader "Unlit/Highlight"
                 UNITY_APPLY_FOG(i.fogCoord, col);
 
                 if ((ypos >> 2) % 2 == 0) {
-                    return 1.2 * col;
+                    return 1.3 * col;
                 } else {
                     return col;
                 }

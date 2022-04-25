@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 6698109897259661222}
   - component: {fileID: 2866034929572759205}
   - component: {fileID: 2070321527166327747}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: CoffeeMachine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
