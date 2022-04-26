@@ -72,7 +72,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
     void UpdateNameTag() {
         nameText.text = m_localPlayer.PlayerName;  // TODO only update when needed?
-        nameText.gameObject.transform.LookAt(Camera.main.transform.position);
+        nameText.gameObject.transform.LookAt(CameraBrain.Instance.ActiveCameraTransform.position);
         nameText.gameObject.transform.Rotate(Vector3.up, 180f);  // mirror
     }
     void ProcessInput() {
@@ -87,7 +87,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
         var direction = new Vector3(horizontalInput, 0, verticalInput);
 
-        var cameraDirection = Camera.main.transform.rotation;
+        var cameraDirection = CameraBrain.Instance.ActiveCameraTransform.rotation;
         direction = Vector3.Normalize(cameraDirection * direction);
         direction.y = 0;  // no flying allowed!
 
