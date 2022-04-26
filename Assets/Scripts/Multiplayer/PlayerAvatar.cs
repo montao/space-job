@@ -11,7 +11,7 @@ public struct PlayerPos {
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerAvatar : NetworkBehaviour {
     private NetworkVariable<int> m_activeAnimation
-            = new NetworkVariable<int>();
+            = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<PlayerPos> m_playerPos
             = new NetworkVariable<PlayerPos>();
     private NetworkVariable<NetworkObjectReference> m_primaryItem
@@ -54,7 +54,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     void Update() {
-        //m_PlayerAnimator.SetFloat("speed", 0.1f);
+        m_PlayerAnimator.SetInteger("active_animation", m_activeAnimation.Value);
         if (IsClient) {
             UpdateNameTag();
             if (IsOwner) {
@@ -80,11 +80,15 @@ public class PlayerAvatar : NetworkBehaviour {
         if (Input.GetKeyDown(KeyCode.Q)) {
             if (!HasInventorySpace(Slot.PRIMARY)) {
                 DropItem(Slot.PRIMARY);
+                m_activeAnimation.Value = 2;
             } else if (!HasInventorySpace(Slot.SECONDARY)) {
                 DropItem(Slot.SECONDARY);
+                m_activeAnimation.Value = 2;
             }
         }
-
+        if (Input.GetKeyDown(KeyCode.Alpha1)){
+            m_activeAnimation.Value = 3;
+        }
         PerformGroundCheck();
         if (m_isGrounded && m_Velocity.y < 0) {
             m_Velocity.y = -2f;
@@ -101,10 +105,10 @@ public class PlayerAvatar : NetworkBehaviour {
 
         m_controller.Move(direction * Time.deltaTime * m_movementSpeed);
         if((direction * Time.deltaTime * m_movementSpeed) != Vector3.zero){
-            m_PlayerAnimator.SetFloat("speed", 0.1f);
+            m_activeAnimation.Value = 1;
         }
         else{
-            m_PlayerAnimator.SetFloat("speed", 0.0f);
+            m_activeAnimation.Value = 0;
         }
         m_controller.transform.LookAt(m_controller.transform.position + direction);
 
