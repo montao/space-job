@@ -86,9 +86,6 @@ public class PlayerAvatar : NetworkBehaviour {
                 m_activeAnimation.Value = 2;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1)){
-            m_activeAnimation.Value = 3;
-        }
         PerformGroundCheck();
         if (m_isGrounded && m_Velocity.y < 0) {
             m_Velocity.y = -2f;
@@ -119,6 +116,10 @@ public class PlayerAvatar : NetworkBehaviour {
         p.Position = m_controller.transform.position;
         p.Rotation = m_controller.transform.rotation;
 
+        if (Input.GetKeyDown(KeyCode.Alpha1)){
+            m_activeAnimation.Value = 3;
+        }
+        
         UpdatePosServerRpc(p);
     }
 
