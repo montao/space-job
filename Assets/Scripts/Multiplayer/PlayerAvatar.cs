@@ -77,15 +77,6 @@ public class PlayerAvatar : NetworkBehaviour {
     }
     void ProcessInput() {
         //m_PlayerAnimator.SetFloat("speed", 0.1f);
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            if (!HasInventorySpace(Slot.PRIMARY)) {
-                DropItem(Slot.PRIMARY);
-                m_activeAnimation.Value = 2;
-            } else if (!HasInventorySpace(Slot.SECONDARY)) {
-                DropItem(Slot.SECONDARY);
-                m_activeAnimation.Value = 2;
-            }
-        }
         PerformGroundCheck();
         if (m_isGrounded && m_Velocity.y < 0) {
             m_Velocity.y = -2f;
@@ -115,11 +106,21 @@ public class PlayerAvatar : NetworkBehaviour {
         var p = new PlayerPos();
         p.Position = m_controller.transform.position;
         p.Rotation = m_controller.transform.rotation;
+        
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            if (!HasInventorySpace(Slot.PRIMARY)) {
+                m_activeAnimation.Value = 2;
+                DropItem(Slot.PRIMARY);
+            } else if (!HasInventorySpace(Slot.SECONDARY)) {
+                m_activeAnimation.Value = 2;
+                DropItem(Slot.SECONDARY);
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.Alpha1)){
             m_activeAnimation.Value = 3;
         }
-        
+
         UpdatePosServerRpc(p);
     }
 
