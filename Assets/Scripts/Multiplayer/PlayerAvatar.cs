@@ -10,7 +10,8 @@ public struct PlayerPos {
 
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerAvatar : NetworkBehaviour {
-
+    private NetworkVariable<int> m_activeAnimation
+            = new NetworkVariable<int>();
     private NetworkVariable<PlayerPos> m_playerPos
             = new NetworkVariable<PlayerPos>();
     private NetworkVariable<NetworkObjectReference> m_primaryItem
