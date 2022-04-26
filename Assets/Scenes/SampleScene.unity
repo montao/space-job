@@ -2620,63 +2620,6 @@ Transform:
   m_Father: {fileID: 225988767}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1344761474
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2050159869606800057, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
-      propertyPath: m_Name
-      value: Post-process Volume
-      objectReference: {fileID: 0}
-    - target: {fileID: 2050159869606800060, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
-      propertyPath: m_RootOrder
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 2050159869606800060, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2050159869606800060, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2050159869606800060, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2050159869606800060, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2050159869606800060, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2050159869606800060, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2050159869606800060, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2050159869606800060, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2050159869606800060, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2050159869606800060, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d6a57950994d34d9085e917539b7f97f, type: 3}
 --- !u!1 &1345507245
 GameObject:
   m_ObjectHideFlags: 0
@@ -3324,10 +3267,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4891667782162769255, guid: 197d2534998fc0434881b19a103157f7, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 3270914373
-      objectReference: {fileID: 0}
     - target: {fileID: 5950505010473834605, guid: 197d2534998fc0434881b19a103157f7, type: 3}
       propertyPath: m_Name
       value: Cup
@@ -3924,10 +3863,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -7.4
       objectReference: {fileID: 0}
-    - target: {fileID: 2070321527166327747, guid: c26aa29ab31628a779d87a26462c23aa, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: fea574b56afbb65319c371c412abdbd7, type: 2}
     - target: {fileID: 3204839831316497895, guid: c26aa29ab31628a779d87a26462c23aa, type: 3}
       propertyPath: m_Name
       value: CoffeeSet
@@ -4125,6 +4060,10 @@ PrefabInstance:
     - target: {fileID: 8163297081521745328, guid: 4a05141723b086b5c8226935f1759d65, type: 3}
       propertyPath: m_Name
       value: lightswitch
+      objectReference: {fileID: 0}
+    - target: {fileID: 8163297081521745328, guid: 4a05141723b086b5c8226935f1759d65, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a05141723b086b5c8226935f1759d65, type: 3}
