@@ -35,22 +35,35 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
         m_State.OnValueChanged -= OnStateChange;
     }
 
+    private void SetHighlight(bool highlighted) {
+        _renderer.gameObject.layer = highlighted ? _highlightedLayer : _defaultLayer;
+    }
+
     //will be called automatically for every client when new value is given.
     public abstract void OnStateChange(T previous, T current);
     private void OnTriggerEnter(Collider other) {
         PlayerAvatar player = other.GetComponent<PlayerAvatar>();
         if(player != null && player.IsOwner){
             m_IsInArea = true;
-            _renderer.gameObject.layer = _highlightedLayer;
         }
     }
     private void OnTriggerExit(Collider other) {
         PlayerAvatar player = other.GetComponent<PlayerAvatar>();
         if(player != null && player.IsOwner){
             m_IsInArea = false;
-            _renderer.gameObject.layer = _defaultLayer;
         }
     }
+
+    private void OnMouseOver() {
+        SetHighlight(m_IsInArea);
+        if (m_IsInArea && Input.GetButtonDown("Fire1")) {
+            Interaction();
+        }
+    }
+    private void OnMouseExit() {
+        SetHighlight(false);
+    }
+
     protected abstract void Interaction();
     public T Value{
         get => m_State.Value;
@@ -58,8 +71,10 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
 
 
     public virtual void Update(){  
+        /*
         if(m_IsInArea && Input.GetKeyDown(KeyCode.E)){
             Interaction();
         }
+        */
     }
 }

@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 3118651671487317697}
   - component: {fileID: 1621227030513560192}
   - component: {fileID: 4891667782162769255}
+  - component: {fileID: 1484158044408865373}
   m_Layer: 7
   m_Name: Cup
   m_TagString: Untagged
@@ -232,3 +233,15 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &1484158044408865373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5950505010473834605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df80edd7bdd2c85088d678c129d9cf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

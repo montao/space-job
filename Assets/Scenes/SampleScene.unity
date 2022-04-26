@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4117,10 +4117,6 @@ PrefabInstance:
     - target: {fileID: 8163297081521745328, guid: 4a05141723b086b5c8226935f1759d65, type: 3}
       propertyPath: m_Name
       value: lightswitch
-      objectReference: {fileID: 0}
-    - target: {fileID: 8163297081521745328, guid: 4a05141723b086b5c8226935f1759d65, type: 3}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a05141723b086b5c8226935f1759d65, type: 3}
