@@ -24,6 +24,8 @@ public class Cup : Interactable<int>{
         if (IsServer) {
             m_State.Value = IN_WORLD;
         }
+        //int mat_idx = Random.Range(0, Materials.Count);
+        //GetComponent<MeshRenderer>().material = Materials[mat_idx];
     }
 
     protected override void Interaction() {
@@ -73,9 +75,6 @@ public class Cup : Interactable<int>{
         m_Mesh = GetComponentInParent<MeshRenderer>();
         m_Rigidbody = GetComponentInParent<Rigidbody>();
         m_NetTransform = GetComponentInParent<NetworkTransform>();
-
-        int mat_idx = Random.Range(0, Materials.Count);
-        GetComponent<MeshRenderer>().material = Materials[mat_idx];
     }
 
     public void UpdateWorldstate(bool inWorld) {
