@@ -8,6 +8,8 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
 
     private MeshRenderer _renderer;
 
+    private InteractionRange m_InteractionRange;
+
     void Start() {
         _highlightedLayer = LayerMask.NameToLayer("Highlighted");
         _renderer = GetComponent<MeshRenderer>();
@@ -23,6 +25,19 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
         } else {
             Debug.LogWarning("No renderer found for " + gameObject.name);
         }
+
+        m_InteractionRange = GetComponent<InteractionRange>();
+        if (!m_InteractionRange) {
+            m_InteractionRange = GetComponentInChildren<InteractionRange>();
+        }
+        if (m_InteractionRange) {
+            m_InteractionRange.OnRangeTriggerEnter += OnRangeTriggerEnter;
+            m_InteractionRange.OnRangeTriggerExit += OnRangeTriggerExit;
+        } else {
+            Debug.LogWarning("No interactionrange found for " + gameObject.name);
+        }
+
+
     }
 
     protected bool m_IsInArea = false;
@@ -41,13 +56,17 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
 
     //will be called automatically for every client when new value is given.
     public abstract void OnStateChange(T previous, T current);
-    private void OnTriggerEnter(Collider other) {
+
+    // Called by InteractionRange
+    public void OnRangeTriggerEnter(Collider other) {
         PlayerAvatar player = other.GetComponent<PlayerAvatar>();
         if(player != null && player.IsOwner){
             m_IsInArea = true;
         }
     }
-    private void OnTriggerExit(Collider other) {
+
+    // Called by InteractionRange
+    public void OnRangeTriggerExit(Collider other) {
         PlayerAvatar player = other.GetComponent<PlayerAvatar>();
         if(player != null && player.IsOwner){
             m_IsInArea = false;
@@ -55,6 +74,7 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
     }
 
     private void OnMouseOver() {
+        Debug.Log("mouse " + gameObject.name);
         SetHighlight(m_IsInArea);
         if (m_IsInArea && Input.GetButtonDown("Fire1")) {
             Interaction();
