@@ -11,7 +11,11 @@ public class CameraSwap : MonoBehaviour {
             m_Camera = GetComponentInChildren<CinemachineVirtualCamera>();
         }
         if(!InRoom){
-            LookAtPlayer();
+            PlayerManager.Instance.LocalPlayer.OnAvatarChanged += LookAtPlayer;
+        }
+
+        if (!m_Camera) {
+            Debug.LogWarning("No camera found for CameraSwap " + name);
         }
     }
 
@@ -33,10 +37,7 @@ public class CameraSwap : MonoBehaviour {
         }
     }
 
-    public void LookAtPlayer() {
-        PlayerAvatar player = PlayerManager.Instance.LocalPlayer.Avatar;
-        Debug.Log(m_Camera.LookAt);
-        Debug.Log(player,transform);
-        m_Camera.LookAt = player.transform;
+    public void LookAtPlayer(PlayerAvatar avatar) {
+        m_Camera.LookAt = avatar.transform;
     }
 }
