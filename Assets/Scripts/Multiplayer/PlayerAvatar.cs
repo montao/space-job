@@ -166,7 +166,7 @@ public class PlayerAvatar : NetworkBehaviour {
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership=false)]
     public void PlayAnimationServerRpc(int i) {
         m_activeAnimation.Value = i;
         m_PlayerAnimator.SetInteger("active_animation", m_activeAnimation.Value);
