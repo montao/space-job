@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using System.Collections;
 using TMPro;
 
 [System.Serializable]
@@ -26,7 +27,6 @@ public class PlayerAvatar : NetworkBehaviour {
     public void UpdatePosServerRpc(PlayerPos p) {
         m_playerPos.Value = p;
     }
-
 
     private CharacterController m_controller;
     private float m_movementSpeed = 5f;
@@ -56,12 +56,17 @@ public class PlayerAvatar : NetworkBehaviour {
     void Update() {
         m_PlayerAnimator.SetInteger("active_animation", m_activeAnimation.Value);
         if (IsClient) {
-            UpdateNameTag();
             if (IsOwner) {
                 ProcessInput();
             } else {
                 UpdatePos();
             }
+        }
+    }
+
+    void OnGUI() {
+        if (IsClient) {
+            UpdateNameTag();
         }
     }
     public void PerformGroundCheck() {
@@ -71,9 +76,9 @@ public class PlayerAvatar : NetworkBehaviour {
         );
     }
     void UpdateNameTag() {
+        //TODO 
         nameText.text = m_localPlayer.PlayerName;  // TODO only update when needed?
-        nameText.gameObject.transform.LookAt(CameraBrain.Instance.ActiveCameraTransform.position);
-        nameText.gameObject.transform.Rotate(Vector3.up, 180f);  // mirror
+        nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
     }
     void ProcessInput() {
         //m_PlayerAnimator.SetFloat("speed", 0.1f);
