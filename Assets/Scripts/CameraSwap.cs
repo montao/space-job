@@ -10,8 +10,13 @@ public class CameraSwap : MonoBehaviour {
         if(m_Camera == null){
             m_Camera = GetComponentInChildren<CinemachineVirtualCamera>();
         }
-        if(!InRoom){
-            PlayerManager.Instance.LocalPlayer.OnAvatarChanged += LookAtPlayer;
+        if(!InRoom) {
+            PlayerAvatar avatar = PlayerManager.Instance.LocalPlayer.Avatar;
+            if (avatar != null) {
+                LookAtPlayer(avatar);
+            } else {
+                PlayerManager.Instance.LocalPlayer.OnAvatarChanged += LookAtPlayer;
+            }
         }
 
         if (!m_Camera) {
