@@ -62,6 +62,7 @@ public class PlayerAvatar : NetworkBehaviour {
             } else {
                 UpdatePos();
             }
+            UpdateNameTag();
         }
     }
 
@@ -126,7 +127,6 @@ public class PlayerAvatar : NetworkBehaviour {
         }
 
         UpdatePosServerRpc(p);
-        UpdateNameTag();
     }
 
     void UpdatePos() {
