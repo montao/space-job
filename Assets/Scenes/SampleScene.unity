@@ -702,7 +702,7 @@ GameObject:
   - component: {fileID: 162760796}
   - component: {fileID: 162760798}
   - component: {fileID: 162760797}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1309,7 +1309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 518664395}
   - component: {fileID: 518664396}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: desk cam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3046,6 +3046,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7835289414256684431, guid: 44ca72322a78ed02dab928618fd08566, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7835289414517563829, guid: 44ca72322a78ed02dab928618fd08566, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7835289414561354843, guid: 44ca72322a78ed02dab928618fd08566, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -3093,6 +3101,22 @@ PrefabInstance:
     - target: {fileID: 7835289414561354845, guid: 44ca72322a78ed02dab928618fd08566, type: 3}
       propertyPath: m_Name
       value: CamerasInSampleScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 7835289414624380572, guid: 44ca72322a78ed02dab928618fd08566, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7835289414690357478, guid: 44ca72322a78ed02dab928618fd08566, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7835289415317342906, guid: 44ca72322a78ed02dab928618fd08566, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7835289415587228912, guid: 44ca72322a78ed02dab928618fd08566, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7835289414561354842, guid: 44ca72322a78ed02dab928618fd08566, type: 3}
@@ -3569,7 +3593,7 @@ GameObject:
   - component: {fileID: 1889308829}
   - component: {fileID: 1889308831}
   - component: {fileID: 1889308830}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

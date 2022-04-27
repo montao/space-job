@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214c44ce72d5fd67cb9ee35df798cde1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InRoom: 0
 --- !u!1 &7835289414517563829
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7835289414561354843}
   - component: {fileID: 7835289414561354842}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CameraManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214c44ce72d5fd67cb9ee35df798cde1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InRoom: 0
 --- !u!1 &7835289414624380572
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214c44ce72d5fd67cb9ee35df798cde1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InRoom: 0
 --- !u!1 &7835289415317342906
 GameObject:
   m_ObjectHideFlags: 0
