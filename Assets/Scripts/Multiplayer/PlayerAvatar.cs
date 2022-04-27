@@ -169,6 +169,7 @@ public class PlayerAvatar : NetworkBehaviour {
     [ServerRpc]
     public void PlayAnimationServerRpc(int i) {
         m_activeAnimation.Value = i;
+        m_PlayerAnimator.SetInteger("active_animation", m_activeAnimation.Value);
     }
     public void AddToInventory(Slot slot, NetworkObject item) {
         PlayAnimationServerRpc(2);
