@@ -167,6 +167,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     public void AddToInventory(Slot slot, NetworkObject item) {
+        m_activeAnimation.Value = 2;
         if (slot == Slot.PRIMARY) {
             m_primaryItem.Value = item;
         } else {
