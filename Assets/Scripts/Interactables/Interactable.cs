@@ -74,7 +74,6 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
     }
 
     private void OnMouseOver() {
-        Debug.Log("mouse " + gameObject.name);
         SetHighlight(m_IsInArea);
         if (m_IsInArea && Input.GetButtonDown("Fire1")) {
             Interaction();

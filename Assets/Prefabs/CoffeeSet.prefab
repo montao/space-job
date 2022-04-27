@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 8209872270792396307}
   - component: {fileID: 3497484862277832743}
   - component: {fileID: 5714518137910579875}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: InteractionRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 7282646727939671046}
   - component: {fileID: 6498240862344770193}
   - component: {fileID: 8414259931976679225}
+  - component: {fileID: 3723583542887719457}
   m_Layer: 0
   m_Name: CoffeeSet
   m_TagString: Untagged
@@ -249,6 +250,18 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &3723583542887719457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8945683837620701533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df80edd7bdd2c85088d678c129d9cf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8962133848733837344
 GameObject:
   m_ObjectHideFlags: 0

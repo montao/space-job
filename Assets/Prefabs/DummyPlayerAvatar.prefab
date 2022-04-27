@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 672393372111137661}
   - component: {fileID: 1620403913727015807}
   - component: {fileID: 7667764004731485915}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: DummyPlayerAvatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

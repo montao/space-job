@@ -6,8 +6,13 @@ public class InteractionRange : MonoBehaviour {
     public event OnRangeTriggerEventHandler OnRangeTriggerEnter;
     public event OnRangeTriggerEventHandler OnRangeTriggerExit;
 
+    void Start() {
+        if (gameObject.layer != LayerMask.NameToLayer("Ignore Raycast")) {
+            Debug.LogWarning("InteractionRange not on Ignore Raycast layer :(" + gameObject.name);
+        }
+    }
+
     protected void OnTriggerEnter(Collider other) {
-        Debug.Log("boop " + transform.parent.gameObject.name);
         OnRangeTriggerEnter(other);
     }
 
