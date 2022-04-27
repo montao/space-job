@@ -82,7 +82,12 @@ public class Cup : Interactable<int>{
         foreach(Collider colli in m_AllCollider){
             colli.enabled = inWorld;
         }
-        m_Mesh.enabled = inWorld;
+        if (inWorld) {
+            // Disabling the renderer after picking the item up is done by the
+            // playeravatar, because it needs access to the renderer to steal
+            // its mesh and materials
+            m_Mesh.enabled = true;
+        }
         m_Rigidbody.isKinematic = !inWorld; // TODO does this work? 
         m_NetTransform.enabled = inWorld;
     }

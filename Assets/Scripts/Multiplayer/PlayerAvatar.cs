@@ -27,11 +27,12 @@ public class PlayerAvatar : NetworkBehaviour {
         m_playerPos.Value = p;
     }
 
-
     private CharacterController m_controller;
     private float m_movementSpeed = 5f;
     private bool m_isGrounded = false;
     public Transform groundCheck;
+    public Transform dropPoint;
+    public Transform RightHand;
     public LayerMask groundLayer;
     private Animator m_PlayerAnimator;
     public const float GRAVITY = -10f;  //in case of zero gravity this need to change
@@ -50,18 +51,24 @@ public class PlayerAvatar : NetworkBehaviour {
                 break;
             }
         }
-        name = m_localPlayer.PlayerName;
+        name = nameText.text = m_localPlayer.PlayerName;
     }
 
     void Update() {
         m_PlayerAnimator.SetInteger("active_animation", m_activeAnimation.Value);
         if (IsClient) {
-            UpdateNameTag();
             if (IsOwner) {
                 ProcessInput();
             } else {
                 UpdatePos();
             }
+            UpdateNameTag();
+        }
+    }
+
+    void OnGUI() {
+        if (IsClient) {
+            //UpdateNameTag();
         }
     }
     public void PerformGroundCheck() {
@@ -71,9 +78,7 @@ public class PlayerAvatar : NetworkBehaviour {
         );
     }
     void UpdateNameTag() {
-        nameText.text = m_localPlayer.PlayerName;  // TODO only update when needed?
-        nameText.gameObject.transform.LookAt(Camera.main.transform.position);
-        nameText.gameObject.transform.Rotate(Vector3.up, 180f);  // mirror
+        nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
     }
     void ProcessInput() {
         //m_PlayerAnimator.SetFloat("speed", 0.1f);
@@ -87,7 +92,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
         var direction = new Vector3(horizontalInput, 0, verticalInput);
 
-        var cameraDirection = Camera.main.transform.rotation;
+        var cameraDirection = CameraBrain.Instance.ActiveCameraTransform.rotation;
         direction = Vector3.Normalize(cameraDirection * direction);
         direction.y = 0;  // no flying allowed!
 
@@ -161,9 +166,22 @@ public class PlayerAvatar : NetworkBehaviour {
         }
     }
 
+    [ServerRpc(RequireOwnership=false)]
+    public void PlayAnimationServerRpc(int i) {
+        m_activeAnimation.Value = i;
+        m_PlayerAnimator.SetInteger("active_animation", m_activeAnimation.Value);
+    }
     public void AddToInventory(Slot slot, NetworkObject item) {
+        PlayAnimationServerRpc(2);
         if (slot == Slot.PRIMARY) {
             m_primaryItem.Value = item;
+            MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
+            MeshRenderer handRend = RightHand.GetComponent<MeshRenderer>();
+            handRend.materials = itemRend.materials;
+            handRend.GetComponent<MeshFilter>().mesh = itemRend.GetComponent<MeshFilter>().mesh;
+            itemRend.enabled = false;
+            handRend.transform.localScale = new Vector3(1000, 1000, 1000); // TODO fix this
+            handRend.enabled = true;
         } else {
             m_secondaryItem.Value = item;
         }
@@ -173,6 +191,8 @@ public class PlayerAvatar : NetworkBehaviour {
         NetworkObjectReference item;
         if (slot == Slot.PRIMARY) {
             item = m_primaryItem.Value;
+            MeshRenderer handRend = RightHand.GetComponent<MeshRenderer>();
+            handRend.enabled = false;
         } else {
             item = m_secondaryItem.Value;
         }
@@ -183,7 +203,7 @@ public class PlayerAvatar : NetworkBehaviour {
         }
 
         Cup cup = o.GetComponentInChildren<Cup>();
-        cup.DropServerRpc(transform.position);
+        cup.DropServerRpc(dropPoint.position);
 
         if (slot == Slot.PRIMARY) {
             m_primaryItem

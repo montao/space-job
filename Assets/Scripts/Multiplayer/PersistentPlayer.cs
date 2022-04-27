@@ -5,6 +5,9 @@ using Unity.Collections;
 [RequireComponent(typeof(NetworkObject))]
 public class PersistentPlayer : NetworkBehaviour {
 
+    public delegate void OnAvatarChangedDelegate(PlayerAvatar avatar);
+    public OnAvatarChangedDelegate OnAvatarChanged;
+
     private NetworkVariable<FixedString32Bytes> playerName
             = new NetworkVariable<FixedString32Bytes>();
     public string PlayerName {
@@ -38,10 +41,24 @@ public class PersistentPlayer : NetworkBehaviour {
         PlayerManager.Instance.RegisterPlayer(this, IsOwner);
     }
 
+    public void AvatarChanged(NetworkObjectReference previous, NetworkObjectReference current) {
+        if (OnAvatarChanged != null) {
+            OnAvatarChanged(Avatar);
+        }
+    }
+
+    public override void OnNetworkSpawn() {
+        m_Avatar.OnValueChanged += AvatarChanged;
+    }
+
+    public override void OnNetworkDespawn() {
+        m_Avatar.OnValueChanged -= AvatarChanged;
+    }
+
     public void SpawnAvatar(Transform spawnLocation) {
         var owner = OwnerClientId;
 
-        PlayerAvatar avatar = GameObject.Instantiate(avatarPrefab, spawnLocation).GetComponent<PlayerAvatar>();
+        PlayerAvatar avatar = GameObject.Instantiate(avatarPrefab, spawnLocation.position, spawnLocation.rotation).GetComponent<PlayerAvatar>();
         NetworkObject avatarNetworkObject = avatar.GetComponent<NetworkObject>();
         avatarNetworkObject.Spawn();
         avatarNetworkObject.ChangeOwnership(owner);
