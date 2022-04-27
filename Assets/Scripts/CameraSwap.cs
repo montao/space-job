@@ -6,6 +6,7 @@ public class CameraSwap : MonoBehaviour {
 
     void Start() {
         m_Camera = GetComponentInChildren<CinemachineVirtualCamera>();
+        LookAtPlayer();
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -13,7 +14,6 @@ public class CameraSwap : MonoBehaviour {
 
         if (player != null && player.IsOwner && CameraBrain.Instance.ActiveCameraObject != m_Camera.VirtualCameraGameObject) {
             m_Camera.Priority = 20;
-            m_Camera.LookAt = player.transform;
         }
     }
     private void OnTriggerExit(Collider other) {
@@ -21,5 +21,10 @@ public class CameraSwap : MonoBehaviour {
         if (player != null && player.IsOwner) {
             m_Camera.Priority = 10;
         }
+    }
+
+    public void LookAtPlayer() {
+        PlayerAvatar player = PlayerManager.Instance.LocalPlayer.Avatar;
+        m_Camera.LookAt = player.transform;
     }
 }
