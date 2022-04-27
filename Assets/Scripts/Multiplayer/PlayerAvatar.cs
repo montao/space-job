@@ -32,7 +32,7 @@ public class PlayerAvatar : NetworkBehaviour {
     private bool m_isGrounded = false;
     public Transform groundCheck;
     public Transform dropPoint;
-    public Transform RightHand;
+    public Transform LeftHand;
     public LayerMask groundLayer;
     private Animator m_PlayerAnimator;
     public const float GRAVITY = -10f;  //in case of zero gravity this need to change
@@ -176,7 +176,7 @@ public class PlayerAvatar : NetworkBehaviour {
         if (slot == Slot.PRIMARY) {
             m_primaryItem.Value = item;
             MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
-            MeshRenderer handRend = RightHand.GetComponent<MeshRenderer>();
+            MeshRenderer handRend = LeftHand.GetComponent<MeshRenderer>();
             handRend.materials = itemRend.materials;
             handRend.GetComponent<MeshFilter>().mesh = itemRend.GetComponent<MeshFilter>().mesh;
             itemRend.enabled = false;
@@ -191,7 +191,7 @@ public class PlayerAvatar : NetworkBehaviour {
         NetworkObjectReference item;
         if (slot == Slot.PRIMARY) {
             item = m_primaryItem.Value;
-            MeshRenderer handRend = RightHand.GetComponent<MeshRenderer>();
+            MeshRenderer handRend = LeftHand.GetComponent<MeshRenderer>();
             handRend.enabled = false;
         } else {
             item = m_secondaryItem.Value;

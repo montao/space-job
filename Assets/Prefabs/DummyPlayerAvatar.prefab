@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 8107873003833907036}
   - component: {fileID: 4854369936613892638}
   m_Layer: 6
-  m_Name: ItemInRightHand
+  m_Name: ItemInHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,13 +237,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4750582510139245778}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.102, y: 0, z: 0.156}
+  m_LocalRotation: {x: 0.9891, y: -0.07249538, z: -0.0017126733, w: -0.12815173}
+  m_LocalPosition: {x: 0.045, y: 0.034, z: 0.188}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2120637398062567091}
+  m_Father: {fileID: 6436479311186068268}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 14.339, y: 37.224, z: -170.191}
 --- !u!33 &8107873003833907036
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -370,7 +370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 5987355476180094076}
   dropPoint: {fileID: 2608538614130306607}
-  RightHand: {fileID: 2781003508360357061}
+  LeftHand: {fileID: 2781003508360357061}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -728,9 +728,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
---- !u!4 &2120637398062567091 stripped
+--- !u!4 &6436479311186068268 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5271181187010914287, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
+  m_CorrespondingSourceObject: {fileID: -8279290730689992080, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
   m_PrefabInstance: {fileID: 6073380241599654236}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6035459412205833911 stripped
