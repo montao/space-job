@@ -1,6 +1,5 @@
 using UnityEngine;
 using Unity.Netcode;
-using System.Collections;
 using TMPro;
 
 [System.Serializable]
@@ -33,6 +32,7 @@ public class PlayerAvatar : NetworkBehaviour {
     private bool m_isGrounded = false;
     public Transform groundCheck;
     public Transform dropPoint;
+    public Transform RightHand;
     public LayerMask groundLayer;
     private Animator m_PlayerAnimator;
     public const float GRAVITY = -10f;  //in case of zero gravity this need to change
@@ -175,6 +175,13 @@ public class PlayerAvatar : NetworkBehaviour {
         PlayAnimationServerRpc(2);
         if (slot == Slot.PRIMARY) {
             m_primaryItem.Value = item;
+            MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
+            MeshRenderer handRend = RightHand.GetComponent<MeshRenderer>();
+            handRend.materials = itemRend.materials;
+            handRend.GetComponent<MeshFilter>().mesh = itemRend.GetComponent<MeshFilter>().mesh;
+            itemRend.enabled = false;
+            handRend.transform.localScale = new Vector3(1000, 1000, 1000); // TODO fix this
+            handRend.enabled = true;
         } else {
             m_secondaryItem.Value = item;
         }
@@ -184,6 +191,8 @@ public class PlayerAvatar : NetworkBehaviour {
         NetworkObjectReference item;
         if (slot == Slot.PRIMARY) {
             item = m_primaryItem.Value;
+            MeshRenderer handRend = RightHand.GetComponent<MeshRenderer>();
+            handRend.enabled = false;
         } else {
             item = m_secondaryItem.Value;
         }
