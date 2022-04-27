@@ -18,7 +18,7 @@ public class CameraSwap : MonoBehaviour {
     }
     private void OnTriggerExit(Collider other) {
         var player = other.GetComponent<PlayerAvatar>();
-        if (player != null && player.IsOwner && CameraBrain.Instance.ActiveCameraObject != m_Camera.VirtualCameraGameObject) {
+        if (player != null && player.IsOwner) {
             m_Camera.Priority = 10;
         }
     }
