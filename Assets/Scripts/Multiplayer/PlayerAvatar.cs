@@ -32,6 +32,7 @@ public class PlayerAvatar : NetworkBehaviour {
     private float m_movementSpeed = 5f;
     private bool m_isGrounded = false;
     public Transform groundCheck;
+    public Transform dropPoint;
     public LayerMask groundLayer;
     private Animator m_PlayerAnimator;
     public const float GRAVITY = -10f;  //in case of zero gravity this need to change
@@ -187,7 +188,7 @@ public class PlayerAvatar : NetworkBehaviour {
         }
 
         Cup cup = o.GetComponentInChildren<Cup>();
-        cup.DropServerRpc(transform.position);
+        cup.DropServerRpc(dropPoint.position);
 
         if (slot == Slot.PRIMARY) {
             m_primaryItem
