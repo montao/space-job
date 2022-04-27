@@ -50,7 +50,7 @@ public class PlayerAvatar : NetworkBehaviour {
                 break;
             }
         }
-        name = m_localPlayer.PlayerName;
+        name = nameText.text = m_localPlayer.PlayerName;
     }
 
     void Update() {
@@ -66,7 +66,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
     void OnGUI() {
         if (IsClient) {
-            UpdateNameTag();
+            //UpdateNameTag();
         }
     }
     public void PerformGroundCheck() {
@@ -76,8 +76,6 @@ public class PlayerAvatar : NetworkBehaviour {
         );
     }
     void UpdateNameTag() {
-        //TODO 
-        nameText.text = m_localPlayer.PlayerName;  // TODO only update when needed?
         nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
     }
     void ProcessInput() {
@@ -127,6 +125,7 @@ public class PlayerAvatar : NetworkBehaviour {
         }
 
         UpdatePosServerRpc(p);
+        UpdateNameTag();
     }
 
     void UpdatePos() {
