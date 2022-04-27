@@ -17,10 +17,23 @@ public class CameraBrain : MonoBehaviour {
     public CinemachineBrain Brain;
 
     public GameObject ActiveCameraObject {
-        get => Brain.ActiveVirtualCamera.VirtualCameraGameObject;
+        get {
+            if (Brain.ActiveVirtualCamera != null) {
+                return Brain.ActiveVirtualCamera.VirtualCameraGameObject;
+            } else {
+                return null;
+            }
+        }
     }
     public Transform ActiveCameraTransform {
-        get => ActiveCameraObject.transform;
+        get {
+            GameObject cam = ActiveCameraObject;
+            if (cam != null) {
+                return ActiveCameraObject.transform;
+            } else {
+                return gameObject.transform;  // whatever
+            }
+        }
     }
 
     public void LookAt(Transform target) {
