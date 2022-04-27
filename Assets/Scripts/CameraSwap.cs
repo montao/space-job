@@ -35,6 +35,8 @@ public class CameraSwap : MonoBehaviour {
 
     public void LookAtPlayer() {
         PlayerAvatar player = PlayerManager.Instance.LocalPlayer.Avatar;
+        Debug.Log(m_Camera.LookAt);
+        Debug.Log(player,transform);
         m_Camera.LookAt = player.transform;
     }
 }
