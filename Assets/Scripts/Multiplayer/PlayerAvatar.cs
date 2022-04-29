@@ -112,6 +112,10 @@ public class PlayerAvatar : NetworkBehaviour {
         p.Position = m_controller.transform.position;
         p.Rotation = m_controller.transform.rotation;
         
+        if (Input.GetKeyDown(KeyCode.Alpha1)){
+            m_activeAnimation.Value = 3;
+        }
+
         if (Input.GetKeyDown(KeyCode.Q)) {
             if (!HasInventorySpace(Slot.PRIMARY)) {
                 m_activeAnimation.Value = 2;
@@ -120,10 +124,6 @@ public class PlayerAvatar : NetworkBehaviour {
                 m_activeAnimation.Value = 2;
                 DropItem(Slot.SECONDARY);
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1)){
-            m_activeAnimation.Value = 3;
         }
 
         UpdatePosServerRpc(p);
@@ -166,13 +166,13 @@ public class PlayerAvatar : NetworkBehaviour {
         }
     }
 
-    [ServerRpc(RequireOwnership=false)]
+    /*[ServerRpc(RequireOwnership=false)]
     public void PlayAnimationServerRpc(int i) {
         m_activeAnimation.Value = i;
         m_PlayerAnimator.SetInteger("active_animation", m_activeAnimation.Value);
-    }
+    }*/
     public void AddToInventory(Slot slot, NetworkObject item) {
-        PlayAnimationServerRpc(2);
+        //PlayAnimationServerRpc(2);
         if (slot == Slot.PRIMARY) {
             m_primaryItem.Value = item;
             MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
