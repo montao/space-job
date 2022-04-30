@@ -8,11 +8,11 @@ public class PersistentPlayer : NetworkBehaviour {
     public delegate void OnAvatarChangedDelegate(PlayerAvatar avatar);
     public OnAvatarChangedDelegate OnAvatarChanged;
 
-    private NetworkVariable<FixedString32Bytes> playerName
+    private NetworkVariable<FixedString32Bytes> m_PlayerName
             = new NetworkVariable<FixedString32Bytes>();
     public string PlayerName {
         get {
-            return playerName.Value.ToString();
+            return m_PlayerName.Value.ToString();
         }
         set {
             Debug.Log("Name changed");
@@ -23,7 +23,7 @@ public class PersistentPlayer : NetworkBehaviour {
     }
 
     [SerializeField]
-    private GameObject avatarPrefab;
+    private GameObject m_AvatarPrefab;
 
     private NetworkVariable<NetworkObjectReference> m_Avatar
             = new NetworkVariable<NetworkObjectReference>();
@@ -58,7 +58,7 @@ public class PersistentPlayer : NetworkBehaviour {
     public void SpawnAvatar(Transform spawnLocation) {
         var owner = OwnerClientId;
 
-        PlayerAvatar avatar = GameObject.Instantiate(avatarPrefab, spawnLocation.position, spawnLocation.rotation).GetComponent<PlayerAvatar>();
+        PlayerAvatar avatar = GameObject.Instantiate(m_AvatarPrefab, spawnLocation.position, spawnLocation.rotation).GetComponent<PlayerAvatar>();
         NetworkObject avatarNetworkObject = avatar.GetComponent<NetworkObject>();
         avatarNetworkObject.Spawn();
         avatarNetworkObject.ChangeOwnership(owner);
@@ -74,6 +74,6 @@ public class PersistentPlayer : NetworkBehaviour {
     [ServerRpc]
     public void SetNameServerRpc(string name) {
         Debug.Log("SetNameServerRpc " + name);
-        playerName.Value = name;
+        m_PlayerName.Value = name;
     }
 }

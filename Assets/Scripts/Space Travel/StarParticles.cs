@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
 
 public class StarParticles : MonoBehaviour
 {
-    float sensitivity = 0.25f;
+    // float sensitivity = 0.25f; UNUSED -- TODO remove?
     public CinemachineVirtualCamera cam;
     private ParticleSystem.Particle[] stars;
     public int maxStars = 100;
@@ -36,8 +34,10 @@ public class StarParticles : MonoBehaviour
         for(int i = 0; i < maxStars; i++){
             //current particle position around camera (sphere) * distace (inside sphere) * transofrm ( keeps particle around camera)
             stars[i].position = Random.insideUnitSphere * starDistance + cam.transform.position;
+#pragma warning disable CS0618
             stars[i].color = new Color(1,1,1,1);
             stars[i].size = starSize;
+#pragma warning restore CS0618
         }
     }
     public void setDrivingFalse(){
@@ -97,8 +97,10 @@ public class StarParticles : MonoBehaviour
                 }
                 if((stars[i].position - cam.transform.position).sqrMagnitude <= clippingDistSqr){
                     float visability = (stars[i].position - cam.transform.forward +  cam.transform.position).sqrMagnitude / clippingDistSqr; //clipping distance 100%
+#pragma warning disable CS0618
                     stars[i].color = new Color(1,1,1,visability);
                     stars[i].size = starSize * visability;
+#pragma warning restore CS0618
                 } 
         }
         
