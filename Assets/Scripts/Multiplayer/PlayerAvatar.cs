@@ -135,6 +135,21 @@ public class PlayerAvatar : NetworkBehaviour {
         transform.rotation = m_playerPos.Value.Rotation;
     }
 
+    public void ShowInInventory(NetworkObject item) {
+        MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
+        MeshRenderer handRend = LeftHand.GetComponent<MeshRenderer>();
+        handRend.materials = itemRend.materials;
+        handRend.GetComponent<MeshFilter>().mesh = itemRend.GetComponent<MeshFilter>().mesh;
+        itemRend.enabled = false;
+
+        Vector3 handWorldScale = handRend.transform.lossyScale;  // Make overall world scale of object in hand...
+        Vector3 itemWorldScale = item.transform.lossyScale;  // ...match the item's scale.
+        Vector3 scaleBy = Util.DivideElementwise(itemWorldScale, handWorldScale);
+        handRend.transform.localScale = Vector3.Scale(transform.localScale, scaleBy);
+
+        handRend.enabled = true;
+    }
+
     private NetworkObject GetInventoryItem(Slot slot) {
         NetworkObjectReference reference;
         if (slot == Slot.PRIMARY) {
@@ -175,13 +190,7 @@ public class PlayerAvatar : NetworkBehaviour {
         //PlayAnimationServerRpc(2);
         if (slot == Slot.PRIMARY) {
             m_primaryItem.Value = item;
-            MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
-            MeshRenderer handRend = LeftHand.GetComponent<MeshRenderer>();
-            handRend.materials = itemRend.materials;
-            handRend.GetComponent<MeshFilter>().mesh = itemRend.GetComponent<MeshFilter>().mesh;
-            itemRend.enabled = false;
-            handRend.transform.localScale = new Vector3(1000, 1000, 1000); // TODO fix this
-            handRend.enabled = true;
+            ShowInInventory(item);
         } else {
             m_secondaryItem.Value = item;
         }
