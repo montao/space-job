@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 public class Util {
     public static Vector3 DivideElementwise(Vector3 a, Vector3 b) {
@@ -9,5 +8,10 @@ public class Util {
         result.y /= b.y;
         result.z /= b.z;
         return result;
+    }
+
+    public static bool NetworkObjectReferenceIsEmpty(NetworkObjectReference r) {
+        NetworkObject _;
+        return !r.TryGet(out _);
     }
 }

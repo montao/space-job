@@ -70,6 +70,12 @@ public class PlayerAvatar : NetworkBehaviour {
         }
     }
 
+    public override void OnNetworkSpawn() {
+        base.OnNetworkSpawn();
+        m_primaryItem.OnValueChanged += OnPrimaryItemChanged;
+        m_secondaryItem.OnValueChanged += OnSecondaryItemChanged;
+    }
+
     void OnGUI() {
         if (IsClient) {
             //UpdateNameTag();
@@ -156,6 +162,23 @@ public class PlayerAvatar : NetworkBehaviour {
             handRend.enabled = false;
     }
 
+    // Called for both local and other players
+    public void OnPrimaryItemChanged(NetworkObjectReference prev, NetworkObjectReference current) {
+        if (Util.NetworkObjectReferenceIsEmpty(current)) {  // dropped item
+            HideInventorySlot(PrimaryItemDisplay);
+        } else {  // picked up item
+            ShowInInventory(PrimaryItemDisplay, current);
+        }
+    }
+    // Called for both local and other players
+    public void OnSecondaryItemChanged(NetworkObjectReference prev, NetworkObjectReference current) {
+        if (Util.NetworkObjectReferenceIsEmpty(current)) {  // dropped item
+            HideInventorySlot(SecondaryItemDisplay);
+        } else {  // picked up item
+            ShowInInventory(SecondaryItemDisplay, current);
+        }
+    }
+
     private NetworkObject GetInventoryItem(Slot slot) {
         NetworkObjectReference reference;
         if (slot == Slot.PRIMARY) {
@@ -196,10 +219,10 @@ public class PlayerAvatar : NetworkBehaviour {
         //PlayAnimationServerRpc(2);
         if (slot == Slot.PRIMARY) {
             m_primaryItem.Value = item;
-            ShowInInventory(PrimaryItemDisplay, item);
+            ShowInInventory(PrimaryItemDisplay, item);  // optional, client-sided
         } else {
             m_secondaryItem.Value = item;
-            ShowInInventory(SecondaryItemDisplay, item);
+            ShowInInventory(SecondaryItemDisplay, item);  // optional, client-sided
         }
     }
 
@@ -222,11 +245,9 @@ public class PlayerAvatar : NetworkBehaviour {
         cup.DropServerRpc(dropPoint.position);
 
         if (slot == Slot.PRIMARY) {
-            m_primaryItem
-                    = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+            m_primaryItem.Value = new NetworkObjectReference();
         } else {
-            m_secondaryItem
-                    = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+            m_secondaryItem.Value = new NetworkObjectReference();
         }
     }
 }
