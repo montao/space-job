@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Collections;
 
 [RequireComponent(typeof(NetworkObject))]
 public class PersistentPlayer : NetworkBehaviour {
+
+    public delegate void OnAvatarChangedDelegate(PlayerAvatar avatar);
+    public OnAvatarChangedDelegate OnAvatarChanged;
 
     private NetworkVariable<FixedString32Bytes> playerName
             = new NetworkVariable<FixedString32Bytes>();
@@ -24,10 +25,15 @@ public class PersistentPlayer : NetworkBehaviour {
     [SerializeField]
     private GameObject avatarPrefab;
 
-    private PlayerAvatar avatar;
+    private NetworkVariable<NetworkObjectReference> m_Avatar
+            = new NetworkVariable<NetworkObjectReference>();
     public PlayerAvatar Avatar {
         get {
-            return avatar;
+            NetworkObject ava;
+            if (m_Avatar.Value.TryGet(out ava)) {
+                return ava.GetComponent<PlayerAvatar>();
+            }
+            return null;
         }
     }
 
@@ -35,18 +41,29 @@ public class PersistentPlayer : NetworkBehaviour {
         PlayerManager.Instance.RegisterPlayer(this, IsOwner);
     }
 
-    // TODO:  Since this is only called by the host, any setup we do, i.e. setting the `avatar` member
-    // will not be reflected by clients.  To fix this, it'd probably make sense to make `avatar` a
-    // `NetworkObject<NetworkObjectReference>` (https://docs-multiplayer.unity3d.com/netcode/current/api/Unity.Netcode.NetworkObjectReference)
-    // or implement some logic to let each avatar find the corresponsing
-    // PersistentPlayer (or the other way round).  Anyway, I'm going to sleep
-    // now, good night~
+    public void AvatarChanged(NetworkObjectReference previous, NetworkObjectReference current) {
+        if (OnAvatarChanged != null) {
+            OnAvatarChanged(Avatar);
+        }
+    }
+
+    public override void OnNetworkSpawn() {
+        m_Avatar.OnValueChanged += AvatarChanged;
+    }
+
+    public override void OnNetworkDespawn() {
+        m_Avatar.OnValueChanged -= AvatarChanged;
+    }
+
     public void SpawnAvatar(Transform spawnLocation) {
         var owner = OwnerClientId;
 
-        avatar = GameObject.Instantiate(avatarPrefab, spawnLocation).GetComponent<PlayerAvatar>();
-        avatar.GetComponent<NetworkObject>().Spawn();
-        avatar.GetComponent<NetworkObject>().ChangeOwnership(owner);
+        PlayerAvatar avatar = GameObject.Instantiate(avatarPrefab, spawnLocation.position, spawnLocation.rotation).GetComponent<PlayerAvatar>();
+        NetworkObject avatarNetworkObject = avatar.GetComponent<NetworkObject>();
+        avatarNetworkObject.Spawn();
+        avatarNetworkObject.ChangeOwnership(owner);
+
+        m_Avatar.Value = avatarNetworkObject;
     }
 
     // Update is called once per frame

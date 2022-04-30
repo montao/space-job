@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
-using Unity.Collections;
 using TMPro;
 
 [System.Serializable]
@@ -13,79 +10,207 @@ public struct PlayerPos {
 
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerAvatar : NetworkBehaviour {
-
-    private CharacterController controller;
-    private float movementSpeed = 5f;
-
-    private PersistentPlayer localPlayer;
-
-    private NetworkVariable<PlayerPos> playerPos
+    private NetworkVariable<int> m_activeAnimation
+            = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<PlayerPos> m_playerPos
             = new NetworkVariable<PlayerPos>();
+    private NetworkVariable<NetworkObjectReference> m_primaryItem
+            = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<NetworkObjectReference> m_secondaryItem
+            = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+    public enum Slot {
+        PRIMARY, SECONDARY
+    };
+
+    [ServerRpc]
+    public void UpdatePosServerRpc(PlayerPos p) {
+        m_playerPos.Value = p;
+    }
+
+    private CharacterController m_controller;
+    private float m_movementSpeed = 5f;
+    private bool m_isGrounded = false;
+    public Transform groundCheck;
+    public Transform dropPoint;
+    public Transform LeftHand;
+    public LayerMask groundLayer;
+    private Animator m_PlayerAnimator;
+    public const float GRAVITY = -10f;  //in case of zero gravity this need to change
+    private PersistentPlayer m_localPlayer;
+    private Vector3 m_Velocity;
 
     public TMP_Text nameText;
 
-    void Start() {
-        controller = GetComponent<CharacterController>();
-
-        // var id = OwnerClientId;
-        //localPlayer = client.PlayerObject.GetComponent<PersistentPlayer>();
+    public void Start() {
+        m_controller = GetComponent<CharacterController>();
+        m_PlayerAnimator = GetComponent<Animator>();
 
         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
             if (player.OwnerClientId == OwnerClientId) {
-                localPlayer = player;
+                m_localPlayer = player;
                 break;
             }
         }
-
-        name = localPlayer.PlayerName;
+        name = nameText.text = m_localPlayer.PlayerName;
     }
 
     void Update() {
+        m_PlayerAnimator.SetInteger("active_animation", m_activeAnimation.Value);
         if (IsClient) {
-            UpdateNameTag();
             if (IsOwner) {
                 ProcessInput();
             } else {
                 UpdatePos();
             }
+            UpdateNameTag();
         }
     }
 
-    void UpdateNameTag() {
-        nameText.text = localPlayer.PlayerName;  // TODO only update when needed?
-
-        nameText.gameObject.transform.LookAt(Camera.main.transform.position);
-        nameText.gameObject.transform.Rotate(Vector3.up, 180f);  // mirror
+    void OnGUI() {
+        if (IsClient) {
+            //UpdateNameTag();
+        }
     }
-
+    public void PerformGroundCheck() {
+        m_isGrounded = Physics.CheckSphere(groundCheck.position,
+                GroundCheck.GROUND_CHECK_RADIUS,
+                groundLayer
+        );
+    }
+    void UpdateNameTag() {
+        nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+    }
     void ProcessInput() {
+        //m_PlayerAnimator.SetFloat("speed", 0.1f);
+        PerformGroundCheck();
+        if (m_isGrounded && m_Velocity.y < 0) {
+            m_Velocity.y = -2f;
+        }
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
         var direction = new Vector3(horizontalInput, 0, verticalInput);
 
-        var cameraDirection = Camera.main.transform.rotation;
-        direction = cameraDirection * direction;
+        var cameraDirection = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        direction = Vector3.Normalize(cameraDirection * direction);
         direction.y = 0;  // no flying allowed!
 
-        controller.Move(direction * Time.deltaTime * movementSpeed);
+        m_controller.Move(direction * Time.deltaTime * m_movementSpeed);
+        if((direction * Time.deltaTime * m_movementSpeed) != Vector3.zero){
+            m_activeAnimation.Value = 1;
+        }
+        else{
+            m_activeAnimation.Value = 0;
+        }
+        m_controller.transform.LookAt(m_controller.transform.position + direction);
+
+        m_Velocity.y += GRAVITY * Time.deltaTime;
+        m_controller.Move(m_Velocity * Time.deltaTime);
 
         var p = new PlayerPos();
-        p.Position = controller.transform.position;
-        p.Rotation = controller.transform.rotation;
+        p.Position = m_controller.transform.position;
+        p.Rotation = m_controller.transform.rotation;
+        
+        if (Input.GetKeyDown(KeyCode.Alpha1)){
+            m_activeAnimation.Value = 3;
+        }
 
-        //playerPos.Value = p;
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            if (!HasInventorySpace(Slot.PRIMARY)) {
+                m_activeAnimation.Value = 2;
+                DropItem(Slot.PRIMARY);
+            } else if (!HasInventorySpace(Slot.SECONDARY)) {
+                m_activeAnimation.Value = 2;
+                DropItem(Slot.SECONDARY);
+            }
+        }
+
         UpdatePosServerRpc(p);
     }
 
     void UpdatePos() {
-        transform.position = playerPos.Value.Position;
-        transform.rotation = playerPos.Value.Rotation;
+        //m_PlayerAnimator.SetFloat("speed", 0.1f);
+        transform.position = m_playerPos.Value.Position;
+        transform.rotation = m_playerPos.Value.Rotation;
     }
 
-    [ServerRpc]
-    public void UpdatePosServerRpc(PlayerPos p) {
-        playerPos.Value = p;
+    private NetworkObject GetInventoryItem(Slot slot) {
+        NetworkObjectReference reference;
+        if (slot == Slot.PRIMARY) {
+            reference = m_primaryItem.Value;
+        } else {
+            reference = m_secondaryItem.Value;
+        }
+
+        NetworkObject o;
+        if (reference.TryGet(out o)) {
+            return o;
+        }
+        return null;
     }
 
+    public bool HasInventorySpace(Slot slot) {
+        return GetInventoryItem(slot) == null;
+    }
+
+    public bool HasInventorySpace() {
+        return HasInventorySpace(Slot.PRIMARY) || HasInventorySpace(Slot.SECONDARY);
+    }
+
+    public void AddToInventory(NetworkObject item) {
+        if (HasInventorySpace(Slot.PRIMARY)) {
+            AddToInventory(Slot.PRIMARY, item);
+        } else if (HasInventorySpace(Slot.SECONDARY)) {
+            AddToInventory(Slot.SECONDARY, item);
+        }
+    }
+
+    /*[ServerRpc(RequireOwnership=false)]
+    public void PlayAnimationServerRpc(int i) {
+        m_activeAnimation.Value = i;
+        m_PlayerAnimator.SetInteger("active_animation", m_activeAnimation.Value);
+    }*/
+    public void AddToInventory(Slot slot, NetworkObject item) {
+        //PlayAnimationServerRpc(2);
+        if (slot == Slot.PRIMARY) {
+            m_primaryItem.Value = item;
+            MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
+            MeshRenderer handRend = LeftHand.GetComponent<MeshRenderer>();
+            handRend.materials = itemRend.materials;
+            handRend.GetComponent<MeshFilter>().mesh = itemRend.GetComponent<MeshFilter>().mesh;
+            itemRend.enabled = false;
+            handRend.transform.localScale = new Vector3(1000, 1000, 1000); // TODO fix this
+            handRend.enabled = true;
+        } else {
+            m_secondaryItem.Value = item;
+        }
+    }
+
+    public void DropItem(Slot slot) {
+        NetworkObjectReference item;
+        if (slot == Slot.PRIMARY) {
+            item = m_primaryItem.Value;
+            MeshRenderer handRend = LeftHand.GetComponent<MeshRenderer>();
+            handRend.enabled = false;
+        } else {
+            item = m_secondaryItem.Value;
+        }
+
+        NetworkObject o;
+        if (!item.TryGet(out o)) {
+            Debug.Log("No item here.");
+        }
+
+        Cup cup = o.GetComponentInChildren<Cup>();
+        cup.DropServerRpc(dropPoint.position);
+
+        if (slot == Slot.PRIMARY) {
+            m_primaryItem
+                    = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+        } else {
+            m_secondaryItem
+                    = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+        }
+    }
 }
