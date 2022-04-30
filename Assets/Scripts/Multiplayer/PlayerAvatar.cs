@@ -32,7 +32,11 @@ public class PlayerAvatar : NetworkBehaviour {
     private bool m_isGrounded = false;
     public Transform groundCheck;
     public Transform dropPoint;
-    public Transform LeftHand;
+
+    // Places where items are attached
+    public Transform PrimaryItemDisplay;  // left hand
+    public Transform SecondaryItemDisplay;  // back
+
     public LayerMask groundLayer;
     private Animator m_PlayerAnimator;
     public const float GRAVITY = -10f;  //in case of zero gravity this need to change
@@ -135,19 +139,21 @@ public class PlayerAvatar : NetworkBehaviour {
         transform.rotation = m_playerPos.Value.Rotation;
     }
 
-    public void ShowInInventory(NetworkObject item) {
+    private void ShowInInventory(Transform hand, NetworkObject item) {
         MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
-        MeshRenderer handRend = LeftHand.GetComponent<MeshRenderer>();
+        MeshRenderer handRend = hand.GetComponent<MeshRenderer>();
         handRend.materials = itemRend.materials;
         handRend.GetComponent<MeshFilter>().mesh = itemRend.GetComponent<MeshFilter>().mesh;
         itemRend.enabled = false;
 
-        Vector3 handWorldScale = handRend.transform.lossyScale;  // Make overall world scale of object in hand...
-        Vector3 itemWorldScale = item.transform.lossyScale;  // ...match the item's scale.
-        Vector3 scaleBy = Util.DivideElementwise(itemWorldScale, handWorldScale);
-        handRend.transform.localScale = Vector3.Scale(transform.localScale, scaleBy);
+        // Make overall world scale of object in hand match the item's scale.
+        handRend.transform.localScale = Vector3.Scale(transform.localScale, item.transform.lossyScale);
 
         handRend.enabled = true;
+    }
+    private void HideInventorySlot(Transform hand) {
+            MeshRenderer handRend = hand.GetComponent<MeshRenderer>();
+            handRend.enabled = false;
     }
 
     private NetworkObject GetInventoryItem(Slot slot) {
@@ -190,9 +196,10 @@ public class PlayerAvatar : NetworkBehaviour {
         //PlayAnimationServerRpc(2);
         if (slot == Slot.PRIMARY) {
             m_primaryItem.Value = item;
-            ShowInInventory(item);
+            ShowInInventory(PrimaryItemDisplay, item);
         } else {
             m_secondaryItem.Value = item;
+            ShowInInventory(SecondaryItemDisplay, item);
         }
     }
 
@@ -200,10 +207,10 @@ public class PlayerAvatar : NetworkBehaviour {
         NetworkObjectReference item;
         if (slot == Slot.PRIMARY) {
             item = m_primaryItem.Value;
-            MeshRenderer handRend = LeftHand.GetComponent<MeshRenderer>();
-            handRend.enabled = false;
+            HideInventorySlot(PrimaryItemDisplay);
         } else {
             item = m_secondaryItem.Value;
+            HideInventorySlot(SecondaryItemDisplay);
         }
 
         NetworkObject o;
