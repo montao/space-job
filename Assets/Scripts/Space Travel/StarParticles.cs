@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 
 public class StarParticles : MonoBehaviour
 {
     float sensitivity = 0.25f;
-    public Camera cam;
+    public CinemachineVirtualCamera cam;
     private ParticleSystem.Particle[] stars;
     public int maxStars = 100;
     public float starSize = 1.0f;
