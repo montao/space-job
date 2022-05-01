@@ -7,8 +7,11 @@ public class StarParticles : MonoBehaviour
     // float sensitivity = 0.25f; UNUSED -- TODO remove?
     public CinemachineVirtualCamera cam;
     private ParticleSystem.Particle[] stars;
-    public Vector3 moveMapShip;
+    private Vector3 moveMapShip;
     public GameObject smol_ship;
+    private GameObject ship;
+    private MapControl shipOutOfMap;
+    private bool shipOut = false;
     public int maxStars = 100;
     public float starSize = 1.0f;
 
@@ -24,6 +27,9 @@ public class StarParticles : MonoBehaviour
     public bool driving;
 
     void Start() {
+        ship = GameObject.FindGameObjectWithTag("Map");
+        shipOutOfMap = ship.GetComponent<MapControl>();
+
         moveMapShip = smol_ship.transform.position;
         //cam = Camera.main;
         driving = false;
@@ -37,14 +43,12 @@ public class StarParticles : MonoBehaviour
         for(int i = 0; i < maxStars; i++){
             //current particle position around camera (sphere) * distace (inside sphere) * transofrm ( keeps particle around camera)
             stars[i].position = Random.insideUnitSphere * starDistance + cam.transform.position;
-#pragma warning disable CS0618
             stars[i].color = new Color(1,1,1,1);
             stars[i].size = starSize;
-#pragma warning restore CS0618
         }
     }
     void Update() {
-
+        shipOut = shipOutOfMap.outOfMap;
 
         for (int i = 0; i < maxStars; i++){
             if(speed > 0){
@@ -99,11 +103,13 @@ public class StarParticles : MonoBehaviour
                     }
                 }  
             } 
-
-
-
+            if(shipOut){
+                Debug.Log("StartPArt. Ship out");
+                if(speed > 0){
+                        speed = 0;
+                    }
+            }
             if((moveStar - cam.transform.position).sqrMagnitude > starDistanceSqr){
-                Debug.Log("hi");
                 stars[i].position = Random.insideUnitSphere.normalized * starDistance + cam.transform.forward + cam.transform.position;
             }
             if((stars[i].position - cam.transform.position).sqrMagnitude <= clippingDistSqr){
