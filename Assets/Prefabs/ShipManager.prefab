@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7061377893371510624}
   - component: {fileID: 4912015480305189325}
+  - component: {fileID: -4673841838035738812}
   m_Layer: 0
   m_Name: ShipManager
   m_TagString: Untagged
@@ -43,3 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d58abe5c6eec50e685d1f889b0877a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4673841838035738812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9204123625600447561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
