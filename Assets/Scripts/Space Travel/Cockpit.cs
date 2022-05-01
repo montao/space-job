@@ -27,7 +27,7 @@ public class Cockpit : Interactable<bool> {
         cam.Priority = cam_prio;
         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
             //Debug.Log(player.Avatar.name);
-            player.Avatar.GetComponent<CharacterController>().enabled = on;
+            player.Avatar.GetComponent<CharacterController>().enabled = !on;
         }
         star_bool.driving = on;
         cam_front.GetComponent<Movnt>().enabled = on;
@@ -45,14 +45,6 @@ public class Cockpit : Interactable<bool> {
 
     public void SetServerRpc(bool value){
         m_State.Value = value;
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-        if (IsServer){
-            m_State.Value = true;
-        }
     }
 
 }

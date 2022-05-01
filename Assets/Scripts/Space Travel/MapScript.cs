@@ -22,6 +22,4 @@ public class MapScript : Interactable<bool> {
         }
 
     }
-    private void Awake() {
-    }
 }
