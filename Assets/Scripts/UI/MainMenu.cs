@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour {
         playerName.text = SystemInfo.deviceName;
         PlayerNameChanged();
 
-        if (SystemInfo.deviceName == "argon") {
+        if (IsArgon()) {
             serverAddress.text = "192.168.0.10";
             ServerAddressChanged();
         }
@@ -53,12 +53,25 @@ public class MainMenu : MonoBehaviour {
         transport.ConnectionData.ServerListenAddress = ip;
     }
 
+    public bool IsArgon() {
+        return SystemInfo.deviceName == "argon";
+    }
+
     public void StartHost() {
+        if (MultiplayerUtil.GetLocalIPAddress() != serverAddress.text && !IsArgon()) {
+            Debug.LogWarning("Cannot host a game from a different ip address");
+            return;
+        }
         connected = connected || NetworkManager.Singleton.StartHost();
         host = true;
     }
 
     public void StartClient() {
+        if (MultiplayerUtil.GetLocalIPAddress() == serverAddress.text && !IsArgon()) {
+            Debug.LogWarning("Cannot join a game from the same ip address, host instead");
+            return;
+        }
+
         connected = connected || NetworkManager.Singleton.StartClient();
     }
 
