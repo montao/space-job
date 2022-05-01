@@ -12,8 +12,9 @@ public class ShipManager : NetworkBehaviour
     public bool HasPower{
         get => m_Power.Value;
     }
-    protected void OnPowerChange(bool previous, bool current){
-        
+    protected void OnPowerChange(bool _, bool hasPower){
+        LightManager.Instance.SetBackup(!hasPower);
+        LightManager.Instance.SetNormal(hasPower);
     }
     public override void OnNetworkSpawn(){
         m_Power.OnValueChanged += OnPowerChange;
@@ -30,6 +31,11 @@ public class ShipManager : NetworkBehaviour
             Instance = this;
         } else {
             Destroy(this);
+        }
+    }
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.P) && IsServer){
+            TriggerPowerOutageEvent();
         }
     }
 }
