@@ -6596,6 +6596,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 198611133596462929, guid: a1f9cac691a1daf0096f766bad123dd1, type: 3}
+      propertyPath: BackupLights.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 198611133596462929, guid: a1f9cac691a1daf0096f766bad123dd1, type: 3}
       propertyPath: NormalLights.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -6605,6 +6609,14 @@ PrefabInstance:
       objectReference: {fileID: 1302379750}
     - target: {fileID: 198611133596462929, guid: a1f9cac691a1daf0096f766bad123dd1, type: 3}
       propertyPath: BackupLight.Array.data[1]
+      value: 
+      objectReference: {fileID: 349875512}
+    - target: {fileID: 198611133596462929, guid: a1f9cac691a1daf0096f766bad123dd1, type: 3}
+      propertyPath: BackupLights.Array.data[0]
+      value: 
+      objectReference: {fileID: 1302379750}
+    - target: {fileID: 198611133596462929, guid: a1f9cac691a1daf0096f766bad123dd1, type: 3}
+      propertyPath: BackupLights.Array.data[1]
       value: 
       objectReference: {fileID: 349875512}
     - target: {fileID: 198611133596462929, guid: a1f9cac691a1daf0096f766bad123dd1, type: 3}
