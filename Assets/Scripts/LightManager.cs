@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,10 +23,5 @@ public class LightManager : MonoBehaviour
         } else {
             Destroy(this);
         }
-    }
-
-    void Start() {
-        SetNormal(true);
-        SetBackup(false);
     }
 }

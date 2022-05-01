@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
@@ -35,7 +34,12 @@ public class ShipManager : NetworkBehaviour
     }
     private void Update() {
         if(Input.GetKeyDown(KeyCode.P) && IsServer){
-            TriggerPowerOutageEvent();
+            if (HasPower) {
+                TriggerPowerOutageEvent();
+            } else {
+                // Restore power
+                m_Power.Value = true;
+            }
         }
     }
 }
