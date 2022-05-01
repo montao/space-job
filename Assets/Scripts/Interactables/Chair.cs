@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class chair : MonoBehaviour
+public class Chair : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
