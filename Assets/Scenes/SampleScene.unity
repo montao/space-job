@@ -5338,10 +5338,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4891667782162769255, guid: 197d2534998fc0434881b19a103157f7, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 3270914373
-      objectReference: {fileID: 0}
     - target: {fileID: 5950505010473834605, guid: 197d2534998fc0434881b19a103157f7, type: 3}
       propertyPath: m_Name
       value: Cup
