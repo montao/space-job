@@ -25,4 +25,9 @@ public class LightManager : MonoBehaviour
             Destroy(this);
         }
     }
+
+    void Start() {
+        SetNormal(true);
+        SetBackup(false);
+    }
 }
