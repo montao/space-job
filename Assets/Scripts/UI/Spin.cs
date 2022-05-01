@@ -5,7 +5,8 @@ using UnityEngine;
 public class Spin : MonoBehaviour {
     [SerializeField]
     private float speed = 0.2f;
+    
     void FixedUpdate() {
-        transform.Rotate(Vector3.forward, Time.fixedDeltaTime * speed);
+        transform.Rotate(Vector3.up, Time.fixedDeltaTime * speed);
     }
 }
