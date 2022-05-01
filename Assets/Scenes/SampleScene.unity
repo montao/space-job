@@ -6448,6 +6448,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7282646727939671046, guid: c26aa29ab31628a779d87a26462c23aa, type: 3}
+      propertyPath: NeedsPower
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8122224486196019566, guid: c26aa29ab31628a779d87a26462c23aa, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -6595,6 +6599,10 @@ PrefabInstance:
     - target: {fileID: -9192707536910931053, guid: 4a05141723b086b5c8226935f1759d65, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3032784427
+      objectReference: {fileID: 0}
+    - target: {fileID: 2968387533184794386, guid: 4a05141723b086b5c8226935f1759d65, type: 3}
+      propertyPath: NeedsPower
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2968387533184794386, guid: 4a05141723b086b5c8226935f1759d65, type: 3}
       propertyPath: Lights.Array.size
