@@ -7,6 +7,8 @@ public class StarParticles : MonoBehaviour
     // float sensitivity = 0.25f; UNUSED -- TODO remove?
     public CinemachineVirtualCamera cam;
     private ParticleSystem.Particle[] stars;
+    public Vector3 moveMapShip;
+    public GameObject smol_ship;
     public int maxStars = 100;
     public float starSize = 1.0f;
 
@@ -22,6 +24,7 @@ public class StarParticles : MonoBehaviour
     public bool driving;
 
     void Start() {
+        moveMapShip = smol_ship.transform.position;
         //cam = Camera.main;
         driving = false;
         starDistanceSqr = starDistance * starDistance;
@@ -48,6 +51,9 @@ public class StarParticles : MonoBehaviour
                 moveStar = stars[i].position - cam.transform.forward + cam.transform.position * speed * Time.deltaTime;
                 stars[i].position = moveStar ;   
                 transform.position = moveStar; 
+
+                moveMapShip += Vector3.Scale(cam.transform.forward,new Vector3(0.0f,0.0f,-1.0f)) * speed*0.000001f * Time.deltaTime;
+                smol_ship.transform.position = moveMapShip;
             }
             else{
                 speed = 0;
@@ -66,17 +72,26 @@ public class StarParticles : MonoBehaviour
                     stars[i].position = moveStar ;   
                     transform.position = moveStar; 
 
+                    moveMapShip += Vector3.Scale(cam.transform.forward,new Vector3(0.0f,0.0f,-1.0f)) * speed*0.000001f * Time.deltaTime;
+                    smol_ship.transform.position = moveMapShip;
+
                         
                 }
                 if(Input.GetKey(KeyCode.A)){
                     moveStar = stars[i].position + cam.transform.right + cam.transform.position * speed * Time.deltaTime;
                     stars[i].position = moveStar;
-                    transform.position = moveStar;    
+                    transform.position = moveStar;
+
+                    moveMapShip += Vector3.Scale(cam.transform.right,new Vector3(1.0f,0.0f,0.0f)) * speed*0.000001f * Time.deltaTime;
+                    smol_ship.transform.position = moveMapShip;    
                 }
                 if(Input.GetKey(KeyCode.D)){
                     moveStar = stars[i].position - cam.transform.right + cam.transform.position * speed * Time.deltaTime;
                     stars[i].position = moveStar;
-                    transform.position = moveStar;    
+                    transform.position = moveStar;  
+
+                    moveMapShip += Vector3.Scale(cam.transform.right,new Vector3(-1.0f,0.0f,0.0f)) * speed*0.000001f * Time.deltaTime;
+                    smol_ship.transform.position = moveMapShip;  
                 }
                 if(Input.GetKey(KeyCode.S)){
                     if(speed > 0){
