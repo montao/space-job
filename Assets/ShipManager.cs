@@ -9,6 +9,8 @@ public class ShipManager : NetworkBehaviour {
     private NetworkVariable<char> m_Power = new NetworkVariable<char>(HAS_POWER);
     public static ShipManager Instance;
 
+    public static char[] ERROR_CODES = {'2', 'e', (char)0xba, (char)42, '\n'};
+
     public Terminal PowerTerminal;
 
     public bool HasPower{
@@ -22,8 +24,8 @@ public class ShipManager : NetworkBehaviour {
         if (!hasPower) {
             PowerTerminal.DisplayError(
                     "Error:\n0x"
-                    + Convert.ToByte(power ^ 'L').ToString("x2")
-                    + Convert.ToByte(power).ToString("x2")
+                    + Convert.ToByte(power ^ 'L').ToString("x2").ToUpper()
+                    + Convert.ToByte(power).ToString("x2").ToUpper()
             );
         } else {
             PowerTerminal.DisplayError(":3");
@@ -39,7 +41,8 @@ public class ShipManager : NetworkBehaviour {
     }
 
     private void TriggerPowerOutageEvent(){
-        m_Power.Value = 'e';
+        int error_idx = UnityEngine.Random.Range(0, ERROR_CODES.Length - 1);
+        m_Power.Value = ERROR_CODES[error_idx];
     }
     private void Awake() {
         if (Instance == null) {
