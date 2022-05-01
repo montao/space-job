@@ -5,10 +5,12 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
 
     private LayerMask m_HighlightedLayer;
     private LayerMask m_DefaultLayer;
-
     private MeshRenderer m_Renderer;
-
     private InteractionRange m_InteractionRange;
+    public bool NeedsPower = false;
+    protected bool m_IsInArea = false;
+    protected NetworkVariable<T> m_State = new NetworkVariable<T>();
+
 
     void Start() {
         m_HighlightedLayer = LayerMask.NameToLayer("Highlighted");
@@ -40,8 +42,6 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
 
     }
 
-    protected bool m_IsInArea = false;
-    protected NetworkVariable<T> m_State = new NetworkVariable<T>();
 
     public override void OnNetworkSpawn(){
         m_State.OnValueChanged += OnStateChange;
@@ -75,7 +75,7 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
 
     private void OnMouseOver() {
         SetHighlight(m_IsInArea);
-        if (m_IsInArea && Input.GetButtonDown("Fire1")) {
+        if (m_IsInArea && Input.GetButtonDown("Fire1") && (ShipManager.Instance.HasPower || !NeedsPower)) {
             Interaction();
         }
     }
