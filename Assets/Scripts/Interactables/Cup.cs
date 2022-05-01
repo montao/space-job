@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
@@ -15,6 +16,10 @@ public class Cup : Interactable<int>{
     private List<Collider> m_AllCollider;
     private NetworkTransform m_NetTransform;
     public const int IN_WORLD = -1;
+
+    // Cup-Specific
+    private Int32 m_CupMaterialPattern = ~0x42CAFE43;
+    private static int m_CupNumber = 0;
     public List<Material> Materials = new List<Material>();
 
     public bool pickedUp = false;
@@ -74,7 +79,7 @@ public class Cup : Interactable<int>{
         m_Rigidbody = GetComponentInParent<Rigidbody>();
         m_NetTransform = GetComponentInParent<NetworkTransform>();
 
-        int mat_idx = Random.Range(0, Materials.Count);
+        int mat_idx = (m_CupMaterialPattern >> (m_CupNumber++ % 32)) & 1;
         GetComponent<MeshRenderer>().material = Materials[mat_idx];
     }
 

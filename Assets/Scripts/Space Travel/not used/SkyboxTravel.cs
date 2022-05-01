@@ -5,7 +5,7 @@ using UnityEngine;
 public class SkyboxTravel : MonoBehaviour
 {
     public float speed = 0.1f;
-    private float maxSpeed = 100.0f;
+    //private float maxSpeed = 100.0f;
 
     private Camera cam;
 

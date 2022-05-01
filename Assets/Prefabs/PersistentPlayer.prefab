@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6bacd2fb06c4d57a46e7267650fd51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatarPrefab: {fileID: 7462590395471467259, guid: 24e22d09305587a0db146f0a0dcbf603, type: 3}
+  m_AvatarPrefab: {fileID: 7462590395471467259, guid: 24e22d09305587a0db146f0a0dcbf603, type: 3}
 --- !u!114 &8316928298227617112
 MonoBehaviour:
   m_ObjectHideFlags: 0

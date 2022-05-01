@@ -10,13 +10,13 @@ public struct PlayerPos {
 
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerAvatar : NetworkBehaviour {
-    private NetworkVariable<int> m_activeAnimation
+    private NetworkVariable<int> m_ActiveAnimation
             = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
-    private NetworkVariable<PlayerPos> m_playerPos
+    private NetworkVariable<PlayerPos> m_PlayerPos
             = new NetworkVariable<PlayerPos>();
-    private NetworkVariable<NetworkObjectReference> m_primaryItem
+    private NetworkVariable<NetworkObjectReference> m_PrimaryItem
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
-    private NetworkVariable<NetworkObjectReference> m_secondaryItem
+    private NetworkVariable<NetworkObjectReference> m_SecondaryItem
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
     public enum Slot {
         PRIMARY, SECONDARY
@@ -24,38 +24,42 @@ public class PlayerAvatar : NetworkBehaviour {
 
     [ServerRpc]
     public void UpdatePosServerRpc(PlayerPos p) {
-        m_playerPos.Value = p;
+        m_PlayerPos.Value = p;
     }
 
-    private CharacterController m_controller;
-    private float m_movementSpeed = 5f;
-    private bool m_isGrounded = false;
+    private CharacterController m_Controller;
+    private float m_MovementSpeed = 5f;
+    private bool m_IsGrounded = false;
     public Transform groundCheck;
     public Transform dropPoint;
-    public Transform LeftHand;
+
+    // Places where items are attached
+    public Transform PrimaryItemDisplay;  // left hand
+    public Transform SecondaryItemDisplay;  // back
+
     public LayerMask groundLayer;
     private Animator m_PlayerAnimator;
     public const float GRAVITY = -10f;  //in case of zero gravity this need to change
-    private PersistentPlayer m_localPlayer;
+    private PersistentPlayer m_LocalPlayer;
     private Vector3 m_Velocity;
 
     public TMP_Text nameText;
 
     public void Start() {
-        m_controller = GetComponent<CharacterController>();
+        m_Controller = GetComponent<CharacterController>();
         m_PlayerAnimator = GetComponent<Animator>();
 
         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
             if (player.OwnerClientId == OwnerClientId) {
-                m_localPlayer = player;
+                m_LocalPlayer = player;
                 break;
             }
         }
-        name = nameText.text = m_localPlayer.PlayerName;
+        name = nameText.text = m_LocalPlayer.PlayerName;
     }
 
     void Update() {
-        m_PlayerAnimator.SetInteger("active_animation", m_activeAnimation.Value);
+        m_PlayerAnimator.SetInteger("active_animation", m_ActiveAnimation.Value);
         if (IsClient) {
             if (IsOwner) {
                 ProcessInput();
@@ -66,13 +70,19 @@ public class PlayerAvatar : NetworkBehaviour {
         }
     }
 
+    public override void OnNetworkSpawn() {
+        base.OnNetworkSpawn();
+        m_PrimaryItem.OnValueChanged += OnPrimaryItemChanged;
+        m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
+    }
+
     void OnGUI() {
         if (IsClient) {
             //UpdateNameTag();
         }
     }
     public void PerformGroundCheck() {
-        m_isGrounded = Physics.CheckSphere(groundCheck.position,
+        m_IsGrounded = Physics.CheckSphere(groundCheck.position,
                 GroundCheck.GROUND_CHECK_RADIUS,
                 groundLayer
         );
@@ -83,7 +93,7 @@ public class PlayerAvatar : NetworkBehaviour {
     void ProcessInput() {
         //m_PlayerAnimator.SetFloat("speed", 0.1f);
         PerformGroundCheck();
-        if (m_isGrounded && m_Velocity.y < 0) {
+        if (m_IsGrounded && m_Velocity.y < 0) {
             m_Velocity.y = -2f;
         }
 
@@ -96,32 +106,32 @@ public class PlayerAvatar : NetworkBehaviour {
         direction = Vector3.Normalize(cameraDirection * direction);
         direction.y = 0;  // no flying allowed!
 
-        m_controller.Move(direction * Time.deltaTime * m_movementSpeed);
-        if((direction * Time.deltaTime * m_movementSpeed) != Vector3.zero){
-            m_activeAnimation.Value = 1;
+        m_Controller.Move(direction * Time.deltaTime * m_MovementSpeed);
+        if((direction * Time.deltaTime * m_MovementSpeed) != Vector3.zero){
+            m_ActiveAnimation.Value = 1;
         }
         else{
-            m_activeAnimation.Value = 0;
+            m_ActiveAnimation.Value = 0;
         }
-        m_controller.transform.LookAt(m_controller.transform.position + direction);
+        m_Controller.transform.LookAt(m_Controller.transform.position + direction);
 
         m_Velocity.y += GRAVITY * Time.deltaTime;
-        m_controller.Move(m_Velocity * Time.deltaTime);
+        m_Controller.Move(m_Velocity * Time.deltaTime);
 
         var p = new PlayerPos();
-        p.Position = m_controller.transform.position;
-        p.Rotation = m_controller.transform.rotation;
+        p.Position = m_Controller.transform.position;
+        p.Rotation = m_Controller.transform.rotation;
         
         if (Input.GetKeyDown(KeyCode.Alpha1)){
-            m_activeAnimation.Value = 3;
+            m_ActiveAnimation.Value = 3;
         }
 
         if (Input.GetKeyDown(KeyCode.Q)) {
             if (!HasInventorySpace(Slot.PRIMARY)) {
-                m_activeAnimation.Value = 2;
+                m_ActiveAnimation.Value = 2;
                 DropItem(Slot.PRIMARY);
             } else if (!HasInventorySpace(Slot.SECONDARY)) {
-                m_activeAnimation.Value = 2;
+                m_ActiveAnimation.Value = 2;
                 DropItem(Slot.SECONDARY);
             }
         }
@@ -131,16 +141,50 @@ public class PlayerAvatar : NetworkBehaviour {
 
     void UpdatePos() {
         //m_PlayerAnimator.SetFloat("speed", 0.1f);
-        transform.position = m_playerPos.Value.Position;
-        transform.rotation = m_playerPos.Value.Rotation;
+        transform.position = m_PlayerPos.Value.Position;
+        transform.rotation = m_PlayerPos.Value.Rotation;
+    }
+
+    private void ShowInInventory(Transform hand, NetworkObject item) {
+        MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
+        MeshRenderer handRend = hand.GetComponent<MeshRenderer>();
+        handRend.materials = itemRend.materials;
+        handRend.GetComponent<MeshFilter>().mesh = itemRend.GetComponent<MeshFilter>().mesh;
+        itemRend.enabled = false;
+
+        // Make overall world scale of object in hand match the item's scale.
+        handRend.transform.localScale = Vector3.Scale(transform.localScale, item.transform.lossyScale);
+
+        handRend.enabled = true;
+    }
+    private void HideInventorySlot(Transform hand) {
+            MeshRenderer handRend = hand.GetComponent<MeshRenderer>();
+            handRend.enabled = false;
+    }
+
+    // Called for both local and other players
+    public void OnPrimaryItemChanged(NetworkObjectReference prev, NetworkObjectReference current) {
+        if (Util.NetworkObjectReferenceIsEmpty(current)) {  // dropped item
+            HideInventorySlot(PrimaryItemDisplay);
+        } else {  // picked up item
+            ShowInInventory(PrimaryItemDisplay, current);
+        }
+    }
+    // Called for both local and other players
+    public void OnSecondaryItemChanged(NetworkObjectReference prev, NetworkObjectReference current) {
+        if (Util.NetworkObjectReferenceIsEmpty(current)) {  // dropped item
+            HideInventorySlot(SecondaryItemDisplay);
+        } else {  // picked up item
+            ShowInInventory(SecondaryItemDisplay, current);
+        }
     }
 
     private NetworkObject GetInventoryItem(Slot slot) {
         NetworkObjectReference reference;
         if (slot == Slot.PRIMARY) {
-            reference = m_primaryItem.Value;
+            reference = m_PrimaryItem.Value;
         } else {
-            reference = m_secondaryItem.Value;
+            reference = m_SecondaryItem.Value;
         }
 
         NetworkObject o;
@@ -168,33 +212,28 @@ public class PlayerAvatar : NetworkBehaviour {
 
     /*[ServerRpc(RequireOwnership=false)]
     public void PlayAnimationServerRpc(int i) {
-        m_activeAnimation.Value = i;
-        m_PlayerAnimator.SetInteger("active_animation", m_activeAnimation.Value);
+        m_ActiveAnimation.Value = i;
+        m_PlayerAnimator.SetInteger("active_animation", m_ActiveAnimation.Value);
     }*/
     public void AddToInventory(Slot slot, NetworkObject item) {
         //PlayAnimationServerRpc(2);
         if (slot == Slot.PRIMARY) {
-            m_primaryItem.Value = item;
-            MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
-            MeshRenderer handRend = LeftHand.GetComponent<MeshRenderer>();
-            handRend.materials = itemRend.materials;
-            handRend.GetComponent<MeshFilter>().mesh = itemRend.GetComponent<MeshFilter>().mesh;
-            itemRend.enabled = false;
-            handRend.transform.localScale = new Vector3(1000, 1000, 1000); // TODO fix this
-            handRend.enabled = true;
+            m_PrimaryItem.Value = item;
+            ShowInInventory(PrimaryItemDisplay, item);  // optional, client-sided
         } else {
-            m_secondaryItem.Value = item;
+            m_SecondaryItem.Value = item;
+            ShowInInventory(SecondaryItemDisplay, item);  // optional, client-sided
         }
     }
 
     public void DropItem(Slot slot) {
         NetworkObjectReference item;
         if (slot == Slot.PRIMARY) {
-            item = m_primaryItem.Value;
-            MeshRenderer handRend = LeftHand.GetComponent<MeshRenderer>();
-            handRend.enabled = false;
+            item = m_PrimaryItem.Value;
+            HideInventorySlot(PrimaryItemDisplay);
         } else {
-            item = m_secondaryItem.Value;
+            item = m_SecondaryItem.Value;
+            HideInventorySlot(SecondaryItemDisplay);
         }
 
         NetworkObject o;
@@ -206,11 +245,9 @@ public class PlayerAvatar : NetworkBehaviour {
         cup.DropServerRpc(dropPoint.position);
 
         if (slot == Slot.PRIMARY) {
-            m_primaryItem
-                    = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+            m_PrimaryItem.Value = new NetworkObjectReference();
         } else {
-            m_secondaryItem
-                    = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+            m_SecondaryItem.Value = new NetworkObjectReference();
         }
     }
 }

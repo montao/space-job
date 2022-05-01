@@ -3,25 +3,25 @@ using Unity.Netcode;
 
 public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
 
-    private LayerMask _highlightedLayer;
-    private LayerMask _defaultLayer;
+    private LayerMask m_HighlightedLayer;
+    private LayerMask m_DefaultLayer;
 
-    private MeshRenderer _renderer;
+    private MeshRenderer m_Renderer;
 
     private InteractionRange m_InteractionRange;
 
     void Start() {
-        _highlightedLayer = LayerMask.NameToLayer("Highlighted");
-        _renderer = GetComponent<MeshRenderer>();
-        if (!_renderer) {
-            _renderer = GetComponentInChildren<MeshRenderer>();
+        m_HighlightedLayer = LayerMask.NameToLayer("Highlighted");
+        m_Renderer = GetComponent<MeshRenderer>();
+        if (!m_Renderer) {
+            m_Renderer = GetComponentInChildren<MeshRenderer>();
         }
-        if (!_renderer) {
-            _renderer = GetComponentInParent<MeshRenderer>();
+        if (!m_Renderer) {
+            m_Renderer = GetComponentInParent<MeshRenderer>();
         }
 
-        if (_renderer) {
-            _defaultLayer = _renderer.gameObject.layer;
+        if (m_Renderer) {
+            m_DefaultLayer = m_Renderer.gameObject.layer;
         } else {
             Debug.LogWarning("No renderer found for " + gameObject.name);
         }
@@ -51,7 +51,7 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
     }
 
     private void SetHighlight(bool highlighted) {
-        _renderer.gameObject.layer = highlighted ? _highlightedLayer : _defaultLayer;
+        m_Renderer.gameObject.layer = highlighted ? m_HighlightedLayer : m_DefaultLayer;
     }
 
     //will be called automatically for every client when new value is given.
