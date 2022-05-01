@@ -845,6 +845,8 @@ GameObject:
   - component: {fileID: 162760796}
   - component: {fileID: 162760798}
   - component: {fileID: 162760797}
+  - component: {fileID: 162760800}
+  - component: {fileID: 162760799}
   m_Layer: 2
   m_Name: blue desk
   m_TagString: Untagged
@@ -893,6 +895,35 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2289207, y: 1.30192, z: 1.9370912}
   m_Center: {x: -0.114457466, y: -0.15096061, z: 0.08275953}
+--- !u!114 &162760799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162760795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2658257081
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &162760800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162760795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afad223b511824ceb9637bdf5a0af3a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cockpit: {fileID: 0}
 --- !u!1 &185026282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,6 +1594,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stars
       objectReference: {fileID: 0}
+    - target: {fileID: 495544454677085878, guid: 824db1d4f515f31a2bef94bb5775dd7a, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 495544454677085879, guid: 824db1d4f515f31a2bef94bb5775dd7a, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -1611,6 +1646,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1987586651}
+    - target: {fileID: 4031392985725686090, guid: 824db1d4f515f31a2bef94bb5775dd7a, type: 3}
+      propertyPath: driving
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4031392985725686090, guid: 824db1d4f515f31a2bef94bb5775dd7a, type: 3}
       propertyPath: starSize
       value: 3
@@ -2207,7 +2246,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 10240
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 880fdc2e8b6a30c4bb51f5ab31803963, type: 2}
   m_TargetDisplay: 0
@@ -3236,7 +3275,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 12288
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 3ed066afbb68922ec880a06136046f57, type: 2}
   m_TargetDisplay: 0
@@ -4665,7 +4704,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 8704
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 1a129e4a1596e45a8b90664bb7f22b5f, type: 2}
   m_TargetDisplay: 0
@@ -4757,6 +4796,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1744006544 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1246822234137420708, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
+  m_PrefabInstance: {fileID: 85455703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1744006545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744006544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 798665056
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!135 &1744006547
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744006544}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.036389608
+  m_Center: {x: -0.0000000149011425, y: -0.000020043468, z: 0.02638961}
 --- !u!1 &1748602816
 GameObject:
   m_ObjectHideFlags: 0
