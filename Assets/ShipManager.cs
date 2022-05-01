@@ -32,5 +32,4 @@ public class ShipManager : NetworkBehaviour
             Destroy(this);
         }
     }
-
 }
