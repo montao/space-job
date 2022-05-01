@@ -40,14 +40,6 @@ public class StarParticles : MonoBehaviour
 #pragma warning restore CS0618
         }
     }
-    public void setDrivingFalse(){
-        driving = false;
-        Debug.Log("not Driving");
-    }
-    public void setDrivingTrue(){
-        driving = true;
-        Debug.Log("Driving");
-    }
     void Update() {
 
 
@@ -91,19 +83,20 @@ public class StarParticles : MonoBehaviour
                         speed -= 0.01f * Time.deltaTime;
                     }
                 }  
-                if((moveStar - cam.transform.position).sqrMagnitude > starDistanceSqr){
-                    Debug.Log("hi");
-                    stars[i].position = Random.insideUnitSphere.normalized * starDistance + cam.transform.forward + cam.transform.position;
-                }
-                if((stars[i].position - cam.transform.position).sqrMagnitude <= clippingDistSqr){
-                    float visability = (stars[i].position - cam.transform.forward +  cam.transform.position).sqrMagnitude / clippingDistSqr; //clipping distance 100%
-#pragma warning disable CS0618
-                    stars[i].color = new Color(1,1,1,visability);
-                    stars[i].size = starSize * visability;
-#pragma warning restore CS0618
-                } 
-        }
-        
+            } 
+
+
+
+            if((moveStar - cam.transform.position).sqrMagnitude > starDistanceSqr){
+                Debug.Log("hi");
+                stars[i].position = Random.insideUnitSphere.normalized * starDistance + cam.transform.forward + cam.transform.position;
+            }
+            if((stars[i].position - cam.transform.position).sqrMagnitude <= clippingDistSqr){
+                float visability = (stars[i].position - cam.transform.forward +  cam.transform.position).sqrMagnitude / clippingDistSqr; //clipping distance 100%
+                stars[i].color = new Color(1,1,1,visability);
+                stars[i].size = starSize * visability;
+            } 
+            
             
         }
 
