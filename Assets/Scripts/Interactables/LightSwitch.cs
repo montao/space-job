@@ -21,6 +21,13 @@ public class LightSwitch : Interactable<bool> {
             light.gameObject.SetActive(on);
         }
     }
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        if (IsServer){
+            m_State.Value = true;
+        }
+    }
     private void Awake() {
         SetLightConditions(Value);
     }
