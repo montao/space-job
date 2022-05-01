@@ -23,7 +23,7 @@ public class ShipManager : NetworkBehaviour {
 
         if (!hasPower) {
             PowerTerminal.DisplayError(
-                    "Error:\n0x"
+                    "0x"
                     + Convert.ToByte(power ^ 'L').ToString("x2").ToUpper()
                     + Convert.ToByte(power).ToString("x2").ToUpper()
             );
@@ -40,9 +40,12 @@ public class ShipManager : NetworkBehaviour {
         m_Power.OnValueChanged -= OnPowerChange;
     }
 
-    private void TriggerPowerOutageEvent(){
+    public void TriggerPowerOutageEvent(){
         int error_idx = UnityEngine.Random.Range(0, ERROR_CODES.Length - 1);
         m_Power.Value = ERROR_CODES[error_idx];
+    }
+    public void ResolvePowerOutageEvent() {
+        m_Power.Value = HAS_POWER;
     }
     private void Awake() {
         if (Instance == null) {
@@ -57,8 +60,7 @@ public class ShipManager : NetworkBehaviour {
             if (HasPower) {
                 TriggerPowerOutageEvent();
             } else {
-                // Restore power
-                m_Power.Value = HAS_POWER;
+                ResolvePowerOutageEvent();
             }
         }
     }
