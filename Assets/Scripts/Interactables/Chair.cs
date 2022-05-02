@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chair : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class Chair : Interactable<bool>{
+    public override void OnStateChange(bool previous, bool current){
     }
-
-    // Update is called once per frame
-    void Update()
+    protected override void Interaction(){
+    }
+        public override void OnNetworkSpawn()
     {
-        
+        base.OnNetworkSpawn();
+        if (IsServer){
+            m_State.Value = true;
+        }
     }
 }
