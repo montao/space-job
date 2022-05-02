@@ -25,10 +25,11 @@ public class Cockpit : Interactable<bool> {
         GameObject stars = GameObject.FindGameObjectWithTag("Stars");
         star_bool = stars.GetComponent<StarParticles>();
         cam.Priority = cam_prio;
-        foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
+        /* player = PlayerManager.Instance.LocalPlayer.Avatar; */
+        /* foreach (var player in FindObjectsOfType<PersistentPlayer>()) { */
             //Debug.Log(player.Avatar.name);
-            player.Avatar.GetComponent<CharacterController>().enabled = !on;
-        }
+        PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<CharacterController>().enabled = !on;
+        /* } */
         star_bool.driving = on;
         cam_front.GetComponent<Movnt>().enabled = on;
         cam_left.GetComponent<Movnt>().enabled = on;
