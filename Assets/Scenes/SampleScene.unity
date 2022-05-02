@@ -2530,6 +2530,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 3084641025
       objectReference: {fileID: 0}
+    - target: {fileID: 685004159429108661, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1011945260095501603, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
       propertyPath: m_RootOrder
       value: 3
