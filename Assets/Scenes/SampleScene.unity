@@ -978,7 +978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NeedsPower: 0
-  TriggeredAnimation: -1
+  TriggeredAnimation: 4
   map_cam: {fileID: 2066049046}
 --- !u!114 &91123160
 MonoBehaviour:
