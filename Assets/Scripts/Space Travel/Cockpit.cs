@@ -24,12 +24,10 @@ public class Cockpit : Interactable<bool> {
     void SetCockConditions(bool on){
         GameObject stars = GameObject.FindGameObjectWithTag("Stars");
         star_bool = stars.GetComponent<StarParticles>();
-        //if(IsLocalPlayer){
-            cam.Priority = cam_prio;
-            PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<CharacterController>().enabled = !on;
-            if(!on){
+        cam.Priority = cam_prio;
+        PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<CharacterController>().enabled = !on;
+        if(!on){
             cam.Priority = 0;
-            //}
         }
         
         star_bool.driving = on;
