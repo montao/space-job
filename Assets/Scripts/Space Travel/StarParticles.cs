@@ -106,8 +106,8 @@ public class StarParticles : MonoBehaviour
             if(shipOut){
                 Debug.Log("StartPArt. Ship out");
                 if(speed > 0){
-                        speed = 0;
-                    }
+                        speed = 10;
+                }
             }
             if((moveStar - cam.transform.position).sqrMagnitude > starDistanceSqr){
                 stars[i].position = Random.insideUnitSphere.normalized * starDistance + cam.transform.forward + cam.transform.position;
