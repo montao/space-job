@@ -8,7 +8,7 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
     private MeshRenderer m_Renderer;
     private InteractionRange m_InteractionRange;
     public bool NeedsPower = false;
-    public int TriggeredAnimation = -1;
+    public int TriggeredAnimation = 2;
     protected bool m_IsInArea = false;
     protected NetworkVariable<T> m_State = new NetworkVariable<T>();
 
