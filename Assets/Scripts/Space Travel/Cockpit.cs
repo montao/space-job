@@ -24,19 +24,19 @@ public class Cockpit : Interactable<bool> {
     void SetCockConditions(bool on){
         GameObject stars = GameObject.FindGameObjectWithTag("Stars");
         star_bool = stars.GetComponent<StarParticles>();
-        cam.Priority = cam_prio;
-        /* player = PlayerManager.Instance.LocalPlayer.Avatar; */
-        /* foreach (var player in FindObjectsOfType<PersistentPlayer>()) { */
-            //Debug.Log(player.Avatar.name);
-        PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<CharacterController>().enabled = !on;
-        /* } */
+        if(IsLocalPlayer){
+            cam.Priority = cam_prio;
+            PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<CharacterController>().enabled = !on;
+            if(!on){
+            cam.Priority = 0;
+            }
+        }
+        
         star_bool.driving = on;
         cam_front.GetComponent<Movnt>().enabled = on;
         cam_left.GetComponent<Movnt>().enabled = on;
         cam_right.GetComponent<Movnt>().enabled = on;
-        if(!on){
-            cam.Priority = 0;
-        }
+        
         
     }
     public override void OnStateChange(bool previous, bool current){
