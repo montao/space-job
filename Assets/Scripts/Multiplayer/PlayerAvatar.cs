@@ -145,7 +145,6 @@ public class PlayerAvatar : NetworkBehaviour {
 
         UpdatePosServerRpc(p);
     }
-
     void UpdatePos() {
         //m_PlayerAnimator.SetFloat("speed", 0.1f);
         transform.position = m_PlayerPos.Value.Position;
