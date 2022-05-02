@@ -125,7 +125,12 @@ public class PlayerAvatar : NetworkBehaviour {
         p.Rotation = m_Controller.transform.rotation;
         
         if (Input.GetKeyDown(KeyCode.Alpha1)){
+            //armwava dance
             m_ActiveAnimation.Value = 3;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2)){
+            //jumpingjacks
+            m_ActiveAnimation.Value = 5;
         }
 
         if (Input.GetKeyDown(KeyCode.Q)) {
