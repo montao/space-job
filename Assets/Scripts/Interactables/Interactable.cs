@@ -76,6 +76,7 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
         SetHighlight(m_IsInArea);
         if (m_IsInArea && Input.GetButtonDown("Fire1") && (ShipManager.Instance.HasPower || !NeedsPower)) {
             Interaction();
+            PlayerManager.Instance.LocalPlayer.Avatar.SetActiveAnimation(TriggeredAnimation);
         }
     }
     private void OnMouseExit() {

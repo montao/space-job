@@ -21,7 +21,9 @@ public class PlayerAvatar : NetworkBehaviour {
     public enum Slot {
         PRIMARY, SECONDARY
     };
-
+    public void SetActiveAnimation(int animation_index){
+        m_ActiveAnimation.Value = animation_index;
+    }
     [ServerRpc]
     public void UpdatePosServerRpc(PlayerPos p) {
         m_PlayerPos.Value = p;
