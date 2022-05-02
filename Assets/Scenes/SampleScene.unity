@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.040689424, g: 0.24335492, b: 0.31316802, a: 1}
+  m_IndirectSpecularColor: {r: 0.040637374, g: 0.24334216, b: 0.31317982, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -863,13 +863,13 @@ GameObject:
   - component: {fileID: 91123158}
   - component: {fileID: 91123157}
   - component: {fileID: 91123156}
-  - component: {fileID: 91123155}
   - component: {fileID: 91123154}
   - component: {fileID: 91123159}
   - component: {fileID: 91123160}
+  - component: {fileID: 91123155}
   m_Layer: 0
   m_Name: SpaceMap
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -885,21 +885,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.8, y: 1, z: 0.8}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &91123155
-BoxCollider:
+--- !u!114 &91123155
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91123153}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5613dd228d32cd6c79e3571858fd6754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outOfMap: 0
 --- !u!23 &91123156
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1553,6 +1553,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 291227604}
+  - component: {fileID: 291227605}
   m_Layer: 0
   m_Name: MapRoot
   m_TagString: Untagged
@@ -1575,6 +1576,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &291227605
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291227603}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3, z: 5}
+  m_Center: {x: -0.65, y: 0, z: -0.28}
 --- !u!1001 &330985505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2356,7 +2370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4031392985725686090, guid: 824db1d4f515f31a2bef94bb5775dd7a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4031392985725686090, guid: 824db1d4f515f31a2bef94bb5775dd7a, type: 3}
       propertyPath: smol_ship
@@ -7022,9 +7036,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1948314616}
   - component: {fileID: 1948314617}
+  - component: {fileID: 1948314618}
   m_Layer: 0
   m_Name: Ship
-  m_TagString: Untagged
+  m_TagString: MapShip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7094,6 +7109,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!135 &1948314618
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948314615}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.100000024
+  m_Center: {x: 0, y: 0.00000047683716, z: -0.000000022351742}
 --- !u!1 &1967582087
 GameObject:
   m_ObjectHideFlags: 0
