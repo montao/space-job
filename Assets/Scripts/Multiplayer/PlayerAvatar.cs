@@ -132,6 +132,14 @@ public class PlayerAvatar : NetworkBehaviour {
             //jumpingjacks
             m_ActiveAnimation.Value = 5;
         }
+        if (Input.GetKeyDown(KeyCode.Alpha3)){
+            //drink
+            m_ActiveAnimation.Value = 6;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4)){
+            //sit
+            m_ActiveAnimation.Value = 4;
+        }
 
         if (Input.GetKeyDown(KeyCode.Q)) {
             if (!HasInventorySpace(Slot.PRIMARY)) {
