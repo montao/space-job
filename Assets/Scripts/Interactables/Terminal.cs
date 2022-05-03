@@ -38,6 +38,9 @@ public class Terminal : Interactable<FixedString32Bytes> {
 
     public override void OnStateChange(FixedString32Bytes previous, FixedString32Bytes current) {
         UpdateText();
+        if (m_LocalPlayerIsInteracting && !ShipManager.Instance.HasPower) {
+            PlayerManager.Instance.LocalPlayer.Avatar.LockMovement(GetHashCode());
+        }
     }
 
     protected override void Interaction() {
@@ -88,7 +91,7 @@ public class Terminal : Interactable<FixedString32Bytes> {
 
     public override void Update() {
         base.Update();
-        if (m_IsInArea && !ShipManager.Instance.HasPower) {
+        if (m_IsInArea && m_LocalPlayerIsInteracting && !ShipManager.Instance.HasPower) {
             if (Input.GetKeyDown(KeyCode.Return)) {
                 SetEnteredTextServerRpc(m_TextEntered, true);
                 m_TextEntered = "";
