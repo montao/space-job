@@ -11,6 +11,8 @@ public class LightSwitch : Interactable<bool> {
     protected override void Interaction(){
         SetLightConditions(!Value);
         SetServerRpc(!Value);
+
+        
     }
     public override void OnStateChange(bool previous, bool current){
         SetLightConditions(current);
@@ -20,6 +22,7 @@ public class LightSwitch : Interactable<bool> {
         foreach(var light in Lights){
             light.gameObject.SetActive(on);
         }
+        
     }
     public override void OnNetworkSpawn()
     {
