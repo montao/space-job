@@ -10,6 +10,20 @@ public class ShipManager : NetworkBehaviour {
     public static ShipManager Instance;
 
     public static char[] ERROR_CODES = {'2', 'e', (char)0xba, (char)42, '\n'};
+    public static string PowerSolutionCode(char error_code) {
+        return Convert.ToByte((error_code >> 1) ^ 'a').ToString("x2").ToUpper()
+                + Convert.ToByte(error_code | 'B').ToString("x2").ToUpper();
+    }
+    public static string ErrorCodeDisplay(char power) {
+        return Convert.ToByte(power ^ 'L').ToString("x2").ToUpper()
+                + Convert.ToByte(power).ToString("x2").ToUpper();
+    }
+
+    void Start() {
+        foreach(char error_code in ERROR_CODES) {
+            Debug.Log(ErrorCodeDisplay(error_code) + " / " + PowerSolutionCode(error_code));
+        }
+    }
 
     public Terminal PowerTerminal;
 
@@ -22,13 +36,9 @@ public class ShipManager : NetworkBehaviour {
         LightManager.Instance.SetNormal(hasPower);
 
         if (!hasPower) {
-            PowerTerminal.DisplayError(
-                    "0x"
-                    + Convert.ToByte(power ^ 'L').ToString("x2").ToUpper()
-                    + Convert.ToByte(power).ToString("x2").ToUpper()
-            );
+            PowerTerminal.DisplayError("0x" + ErrorCodeDisplay(power));
         } else {
-            PowerTerminal.DisplayError(":3");
+            PowerTerminal.DisplayError("Power:\n100%");
         }
 
     }
@@ -44,7 +54,14 @@ public class ShipManager : NetworkBehaviour {
         int error_idx = UnityEngine.Random.Range(0, ERROR_CODES.Length - 1);
         m_Power.Value = ERROR_CODES[error_idx];
     }
-    public void ResolvePowerOutageEvent() {
+    public void TryResolvePowerOutageEvent(string solution_attempt) {
+        if (solution_attempt == PowerSolutionCode(m_Power.Value)) {
+            ResolvePowerOutageEvent();
+        //} else {
+        //    Debug.Log("nope. got:'" + solution_attempt + "' want:'" + PowerSolutionCode(m_Power.Value) + "'");
+        }
+    }
+    private void ResolvePowerOutageEvent() {
         m_Power.Value = HAS_POWER;
     }
     private void Awake() {
