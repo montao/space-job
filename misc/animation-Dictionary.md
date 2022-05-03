@@ -4,6 +4,6 @@
 - 1: walk
 - 2: interact
 - 3: armwave dance
-- 4: jumping jacks
-- 5: sitting down
+- 4: sitting down
+- 5: jumping jacks
 - 6: drinking
