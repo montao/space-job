@@ -1,5 +1,7 @@
 using UnityEngine;
 using Cinemachine;
+using Unity.Netcode;
+using Unity.Netcode.Samples;
 
 
 public class StarParticles : MonoBehaviour
