@@ -153,10 +153,15 @@ public class PlayerAvatar : NetworkBehaviour {
             if (!HasInventorySpace(Slot.PRIMARY)) {
                 m_ActiveAnimation.Value = 2;
                 DropItem(Slot.PRIMARY);
-            } else if (!HasInventorySpace(Slot.SECONDARY)) {
-                m_ActiveAnimation.Value = 2;
-                DropItem(Slot.SECONDARY);
             }
+        }
+
+        if (Input.mouseScrollDelta.y != 0) {
+            // swap items
+            NetworkObjectReference tmp = m_PrimaryItem.Value;
+            m_PrimaryItem.Value = m_SecondaryItem.Value;
+            m_SecondaryItem.Value = tmp;
+            // ShowInInventory **should** be called automatically, because the networkvariable changed
         }
 
         UpdatePosServerRpc(p);
