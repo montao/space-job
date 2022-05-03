@@ -17,6 +17,8 @@ public class HologramAnimation : NetworkBehaviour
         if (m_HoloAnimator != null) {
             m_HoloAnimator.SetInteger("active", current);
         }
+    }
+
     private void Start() {
         if (IsServer) {
             m_Animation.Value = ActiveAnimation;
