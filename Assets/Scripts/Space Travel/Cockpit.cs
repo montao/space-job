@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using Cinemachine;
@@ -13,12 +11,17 @@ public class Cockpit : Interactable<bool> {
     public int cam_prio;
     private StarParticles star_bool;
 
+    private bool m_LocalPlayerInteracting = false;
 
-    
-
-    protected override void Interaction(){
-        SetServerRpc(!Value);
-        SetCockConditions(!Value);
+    // Called only for the player that triggered the interaction
+    protected override void Interaction() {
+        if (!m_LocalPlayerInteracting && Value) {
+            // cockpit occupied
+            return;
+        }
+        m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
+        SetServerRpc(m_LocalPlayerInteracting);
+        SetCockConditions(m_LocalPlayerInteracting);
     }
 
     void SetCockConditions(bool on){
@@ -38,11 +41,13 @@ public class Cockpit : Interactable<bool> {
         }
         
     }
-    public override void OnStateChange(bool previous, bool current){
-        SetCockConditions(previous);
-    }
-    [ServerRpc(RequireOwnership = false)]
 
+    // Called for all players when the state value changes
+    public override void OnStateChange(bool previous, bool current){
+        //SetCockConditions(previous);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
     public void SetServerRpc(bool value){
         m_State.Value = value;
     }
