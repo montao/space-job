@@ -4,7 +4,7 @@ using Unity.Netcode;
 public class HologramAnimation : NetworkBehaviour
 {
     public int ActiveAnimation;
-    private NetworkVariable<int> m_Animation = new NetworkVariable<int>(); 
+    private NetworkVariable<int> m_Animation = new NetworkVariable<int>(2); 
     private Animator m_HoloAnimator;
     
     public override void OnNetworkSpawn(){
