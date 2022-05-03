@@ -32,6 +32,13 @@ public class AnimationAudio : MonoBehaviour {
         return stepSounds[UnityEngine.Random.Range(0, stepSounds.Length)];
     }
 
+    private void NoHologram(){
+        if(tag != "Hologram"){
+            Step();
+            Take();
+            Clap();
+        }
+    }
 
 
 }

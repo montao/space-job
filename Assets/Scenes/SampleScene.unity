@@ -1840,6 +1840,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hologram (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 378573359032676249, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
+      propertyPath: m_TagString
+      value: Hologram
+      objectReference: {fileID: 0}
     - target: {fileID: 685004159429108658, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 1885203673
@@ -3085,6 +3089,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hologram (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 378573359032676249, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
+      propertyPath: m_TagString
+      value: Hologram
+      objectReference: {fileID: 0}
     - target: {fileID: 685004159429108658, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 1110176240
@@ -3651,6 +3659,10 @@ PrefabInstance:
     - target: {fileID: 378573359032676249, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
       propertyPath: m_Name
       value: Hologram (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 378573359032676249, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
+      propertyPath: m_TagString
+      value: Hologram
       objectReference: {fileID: 0}
     - target: {fileID: 685004159429108658, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -5277,6 +5289,10 @@ PrefabInstance:
     - target: {fileID: 378573359032676249, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
       propertyPath: m_Name
       value: Hologram (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 378573359032676249, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
+      propertyPath: m_TagString
+      value: Hologram
       objectReference: {fileID: 0}
     - target: {fileID: 685004159429108658, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -7473,6 +7489,10 @@ PrefabInstance:
     - target: {fileID: 378573359032676249, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
       propertyPath: m_Name
       value: Hologram (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 378573359032676249, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
+      propertyPath: m_TagString
+      value: Hologram
       objectReference: {fileID: 0}
     - target: {fileID: 685004159429108658, guid: 7090e48a397088589b87fddfc31d63fe, type: 3}
       propertyPath: GlobalObjectIdHash
