@@ -90,4 +90,9 @@ public class PlayerManager : NetworkBehaviour {
         PlayerSpawnLocation.SetPlayersToSpawnLocation();
     }
 
+    public static bool IsLocalPlayerAvatar(Collider collider) {
+        PlayerAvatar player = collider.GetComponent<PlayerAvatar>();
+        return player != null && player.IsOwner;
+    }
+
 }

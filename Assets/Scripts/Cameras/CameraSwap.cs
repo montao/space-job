@@ -1,12 +1,14 @@
-using UnityEngine;
 using Cinemachine;
+using UnityEngine;
 
 public class CameraSwap : MonoBehaviour {
-    private CinemachineVirtualCamera m_Camera;
+    public CinemachineVirtualCamera m_Camera;
     public bool InRoom;
 
     void Start() {
-        m_Camera = GetComponent<CinemachineVirtualCamera>();
+        if(m_Camera == null){
+            m_Camera = GetComponent<CinemachineVirtualCamera>();
+        }
         if(m_Camera == null){
             m_Camera = GetComponentInChildren<CinemachineVirtualCamera>();
         }
@@ -24,25 +26,15 @@ public class CameraSwap : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter(Collider other) {
-        var player = other.GetComponent<PlayerAvatar>();
-        if (player != null && player.IsOwner && CameraBrain.Instance.ActiveCameraObject != m_Camera.VirtualCameraGameObject) {
-            if (InRoom){
-                m_Camera.Priority = 30;
-            }
-            else{
-                m_Camera.Priority = 20;
-            }
-        }
-    }
-    private void OnTriggerExit(Collider other) {
-        var player = other.GetComponent<PlayerAvatar>();
-        if (player != null && player.IsOwner) {
-            m_Camera.Priority = 10;
-        }
-    }
-
     public void LookAtPlayer(PlayerAvatar avatar) {
         m_Camera.LookAt = avatar.transform;
+    }
+
+    public void SwitchTo() {
+        m_Camera.Priority = InRoom ? 30 : 20;
+    }
+
+    public void SwitchAway() {
+        m_Camera.Priority = InRoom ? 5 : 10;
     }
 }

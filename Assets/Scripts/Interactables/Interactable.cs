@@ -6,14 +6,14 @@ public abstract class Interactable<T> : NetworkBehaviour where T : unmanaged {
     private LayerMask m_HighlightedLayer;
     private LayerMask m_DefaultLayer;
     private MeshRenderer m_Renderer;
-    private InteractionRange m_InteractionRange;
+    protected InteractionRange m_InteractionRange;
     public bool NeedsPower = false;
     public int TriggeredAnimation = 2;
     protected bool m_IsInArea = false;
     protected NetworkVariable<T> m_State = new NetworkVariable<T>();
 
 
-    void Start() {
+    public virtual void Start() {
         m_HighlightedLayer = LayerMask.NameToLayer("Highlighted");
         m_Renderer = GetComponent<MeshRenderer>();
         if (!m_Renderer) {
