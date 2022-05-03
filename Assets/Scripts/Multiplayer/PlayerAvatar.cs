@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using TMPro;
@@ -18,6 +19,9 @@ public class PlayerAvatar : NetworkBehaviour {
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<NetworkObjectReference> m_SecondaryItem
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+
+    private List<int> m_MovementLocks = new List<int>();
+
     public enum Slot {
         PRIMARY, SECONDARY
     };
@@ -99,6 +103,10 @@ public class PlayerAvatar : NetworkBehaviour {
             m_Velocity.y = -2f;
         }
 
+        if (MovementLocked) {
+            return;
+        }
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -145,10 +153,15 @@ public class PlayerAvatar : NetworkBehaviour {
             if (!HasInventorySpace(Slot.PRIMARY)) {
                 m_ActiveAnimation.Value = 2;
                 DropItem(Slot.PRIMARY);
-            } else if (!HasInventorySpace(Slot.SECONDARY)) {
-                m_ActiveAnimation.Value = 2;
-                DropItem(Slot.SECONDARY);
             }
+        }
+
+        if (Input.mouseScrollDelta.y != 0) {
+            // swap items
+            NetworkObjectReference tmp = m_PrimaryItem.Value;
+            m_PrimaryItem.Value = m_SecondaryItem.Value;
+            m_SecondaryItem.Value = tmp;
+            // ShowInInventory **should** be called automatically, because the networkvariable changed
         }
 
         UpdatePosServerRpc(p);
@@ -263,5 +276,19 @@ public class PlayerAvatar : NetworkBehaviour {
         } else {
             m_SecondaryItem.Value = new NetworkObjectReference();
         }
+    }
+
+    public void LockMovement(int locker) {
+        if (!m_MovementLocks.Contains(locker)) {
+            m_MovementLocks.Add(locker);
+        }
+    }
+    public void ReleaseMovementLock(int locker) {
+        if (m_MovementLocks.Contains(locker)) {
+            m_MovementLocks.Remove(locker);
+        }
+    }
+    public bool MovementLocked {
+        get => m_MovementLocks.Count > 0;
     }
 }
