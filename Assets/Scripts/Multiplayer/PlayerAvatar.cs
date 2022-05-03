@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using TMPro;
@@ -18,6 +19,9 @@ public class PlayerAvatar : NetworkBehaviour {
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<NetworkObjectReference> m_SecondaryItem
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+
+    private List<int> m_MovementLocks = new List<int>();
+
     public enum Slot {
         PRIMARY, SECONDARY
     };
@@ -97,6 +101,10 @@ public class PlayerAvatar : NetworkBehaviour {
         PerformGroundCheck();
         if (m_IsGrounded && m_Velocity.y < 0) {
             m_Velocity.y = -2f;
+        }
+
+        if (MovementLocked) {
+            return;
         }
 
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -263,5 +271,19 @@ public class PlayerAvatar : NetworkBehaviour {
         } else {
             m_SecondaryItem.Value = new NetworkObjectReference();
         }
+    }
+
+    public void LockMovement(int locker) {
+        if (!m_MovementLocks.Contains(locker)) {
+            m_MovementLocks.Add(locker);
+        }
+    }
+    public void ReleaseMovementLock(int locker) {
+        if (m_MovementLocks.Contains(locker)) {
+            m_MovementLocks.Remove(locker);
+        }
+    }
+    public bool MovementLocked {
+        get => m_MovementLocks.Count > 0;
     }
 }

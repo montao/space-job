@@ -8,6 +8,14 @@ public class Terminal : Interactable<FixedString32Bytes> {
     public TMP_Text Text;
     private string m_ErrorText;
     private string m_TextEntered = "";
+    private bool m_LocalPlayerIsInteracting = false;
+    private CameraSwap m_CameraSwap;
+
+    public override void Start() {
+        base.Start();
+        m_CameraSwap = GetComponent<CameraSwap>();
+        m_InteractionRange.OnRangeTriggerExit += SwitchAwayIfPlayer;
+    }
 
     public static readonly Dictionary<KeyCode, string> KEYCODES = new Dictionary<KeyCode, string>{
         {KeyCode.Alpha0, "0"},
@@ -33,12 +41,34 @@ public class Terminal : Interactable<FixedString32Bytes> {
     }
 
     protected override void Interaction() {
+        m_LocalPlayerIsInteracting = !m_LocalPlayerIsInteracting;
+        if (m_LocalPlayerIsInteracting) {
+            m_CameraSwap.SwitchTo();
+            if (!ShipManager.Instance.HasPower) {
+                // HCI:  Only lock movement when we can interact with the terminal
+                PlayerManager.Instance.LocalPlayer.Avatar.LockMovement(GetHashCode());
+            }
+        } else {
+            PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
+            m_CameraSwap.SwitchAway();
+        }
+    }
+
+    public void SwitchAwayIfPlayer(Collider other) {
+        if(PlayerManager.IsLocalPlayerAvatar(other)){
+            m_CameraSwap.SwitchAway();
+            m_LocalPlayerIsInteracting = false;
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]
     public void SetEnteredTextServerRpc(string text, bool entered) {
         if (entered) {
-            ShipManager.Instance.TryResolvePowerOutageEvent(Value.ToString());
+            if (ShipManager.Instance.TryResolvePowerOutageEvent(Value.ToString())) {
+                // HCI:  Switch away from terminal on successful power restoration
+                PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
+                m_CameraSwap.SwitchAway();
+            }
             m_State.Value = "";
         } else {
             m_State.Value = text;

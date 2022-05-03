@@ -54,11 +54,12 @@ public class ShipManager : NetworkBehaviour {
         int error_idx = UnityEngine.Random.Range(0, ERROR_CODES.Length - 1);
         m_Power.Value = ERROR_CODES[error_idx];
     }
-    public void TryResolvePowerOutageEvent(string solution_attempt) {
+    public bool TryResolvePowerOutageEvent(string solution_attempt) {
         if (solution_attempt == PowerSolutionCode(m_Power.Value)) {
             ResolvePowerOutageEvent();
-        //} else {
-        //    Debug.Log("nope. got:'" + solution_attempt + "' want:'" + PowerSolutionCode(m_Power.Value) + "'");
+            return true;
+        } else {
+            return false;
         }
     }
     private void ResolvePowerOutageEvent() {
