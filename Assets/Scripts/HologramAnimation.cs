@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
@@ -15,13 +14,18 @@ public class HologramAnimation : NetworkBehaviour
         m_Animation.OnValueChanged -= OnStateChange;
     }
     public void OnStateChange(int previous, int current){
-        m_HoloAnimator.SetInteger("active", current);
+        if (m_HoloAnimator != null) {
+            m_HoloAnimator.SetInteger("active", current);
+        }
     }
 
     private void Start() {
+        if (IsServer) {
+            m_Animation.Value = ActiveAnimation;
+        }
         m_HoloAnimator = GetComponent<Animator>();
-    }
-    private void Update() {
-        m_Animation.Value = ActiveAnimation;
+        if (!m_HoloAnimator) {
+            Debug.LogWarning("No Animator component found on Hologram " + gameObject.name);
+        }
     }
 }
