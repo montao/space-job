@@ -87,8 +87,14 @@ public class MainMenu : MonoBehaviour {
 
         if (host) {
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.SpawnAvatars;
-            NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+            if (playerName.text != "Demo") {
+                NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+            }
+            else {
+                NetworkManager.Singleton.SceneManager.LoadScene("ShipScene", LoadSceneMode.Single);
+            }
         }
+        
     }
 
     void OnGUI() {
