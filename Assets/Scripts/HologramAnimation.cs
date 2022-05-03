@@ -3,8 +3,8 @@ using Unity.Netcode;
 
 public class HologramAnimation : NetworkBehaviour
 {
-    public int ActiveAnimation = 0;
-    private NetworkVariable<int> m_Animation = new NetworkVariable<int>(0); 
+    public int ActiveAnimation;
+    private NetworkVariable<int> m_Animation = new NetworkVariable<int>(); 
     private Animator m_HoloAnimator;
     
     public override void OnNetworkSpawn(){
@@ -17,8 +17,6 @@ public class HologramAnimation : NetworkBehaviour
         if (m_HoloAnimator != null) {
             m_HoloAnimator.SetInteger("active", current);
         }
-    }
-
     private void Start() {
         if (IsServer) {
             m_Animation.Value = ActiveAnimation;
