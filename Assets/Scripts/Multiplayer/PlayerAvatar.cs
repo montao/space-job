@@ -28,9 +28,6 @@ public class PlayerAvatar : NetworkBehaviour {
     public enum Slot {
         PRIMARY, SECONDARY
     };
-    public void SetActiveAnimation(int animation_index){
-        m_ActiveAnimation.Value = animation_index;
-    }
     [ServerRpc]
     public void UpdatePosServerRpc(PlayerPos p) {
         m_PlayerPos.Value = p;
@@ -68,7 +65,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     void Update() {
-        m_PlayerAnimator.SetInteger("active_animation", m_ActiveAnimation.Value);
+        //m_PlayerAnimator.SetInteger("active_animation", m_ActiveAnimation.Value);
         if (IsClient) {
             if (IsOwner) {
                 ProcessInput();
@@ -79,10 +76,43 @@ public class PlayerAvatar : NetworkBehaviour {
         }
     }
 
+    public void SetActiveAnimation(int animation_index){
+        Debug.Log("Interaction Animation Triggered: "+ animation_index);
+        m_ActiveAnimation.Value = animation_index;
+        //m_PlayerAnimator.SetInteger("active_animation", animation_index);
+    }
+
+    public void OnAnimationChange(int previous, int current){
+        Debug.Log("old animation: "+ previous + ", new animation:" + current);
+        //m_PlayerAnimator.SetInteger("active_animation", current);
+        if(current == 0){
+            m_PlayerAnimator.SetTrigger("idle");
+        }
+        if(current == 1){
+            m_PlayerAnimator.SetTrigger("walk");
+        }
+        if(current == 2){
+            m_PlayerAnimator.SetTrigger("interact");
+        }
+        if(current == 3){
+            m_PlayerAnimator.SetTrigger("armwave");
+        }
+        if(current == 4){
+            m_PlayerAnimator.SetTrigger("sit");
+        }
+        if(current == 5){
+            m_PlayerAnimator.SetTrigger("jump");
+        }
+        if(current == 6){
+            m_PlayerAnimator.SetTrigger("drink");
+        }
+    }
+
     public override void OnNetworkSpawn() {
         base.OnNetworkSpawn();
         m_PrimaryItem.OnValueChanged += OnPrimaryItemChanged;
         m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
+        m_ActiveAnimation.OnValueChanged += OnAnimationChange;
     }
 
     void OnGUI() {
@@ -100,7 +130,6 @@ public class PlayerAvatar : NetworkBehaviour {
         nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
     }
     void ProcessInput() {
-        //m_PlayerAnimator.SetFloat("speed", 0.1f);
         PerformGroundCheck();
         if (m_IsGrounded && m_Velocity.y < 0) {
             m_Velocity.y = -2f;
