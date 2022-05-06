@@ -22,10 +22,17 @@ public class MainMenu : MonoBehaviour {
     private TMP_InputField serverAddress;
     [SerializeField]
     private TMP_Text lobbyInfo;
+    [SerializeField]
+    private GameObject startClient;
+    [SerializeField]
+    private TMP_Text startClientTMP;
 
     void Start() {
         networkManager = NetworkManager.Singleton;
         transport = networkManager.GetComponentInParent<UnityTransport>();
+        startClient = GameObject.Find("Start Client");
+        startClientTMP = startClient.transform.GetChild(0).GetComponent<TMP_Text>();
+        startClient.SetActive(false);
 
         serverAddress.text = MultiplayerUtil.GetLocalIPAddress();
         ServerAddressChanged();
@@ -64,6 +71,13 @@ public class MainMenu : MonoBehaviour {
         }
         connected = connected || NetworkManager.Singleton.StartHost();
         host = true;
+        StartLobby();
+        if (connected){
+            
+            startClient.SetActive(true);
+            startClientTMP.text = playerName.text + " just hosted a game. Join!";
+            
+        }
     }
 
     public void StartClient() {
@@ -71,8 +85,9 @@ public class MainMenu : MonoBehaviour {
             Debug.LogWarning("Cannot join a game from the same ip address, host instead");
             return;
         }
-
+        
         connected = connected || NetworkManager.Singleton.StartClient();
+        StartLobby();
     }
 
     public void StartGame() {
@@ -89,6 +104,28 @@ public class MainMenu : MonoBehaviour {
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.SpawnAvatars;
             if (playerName.text != "Demo") {
                 NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+            }
+            else {
+                NetworkManager.Singleton.SceneManager.LoadScene("ShipScene", LoadSceneMode.Single);
+            }
+        }
+        
+    }
+
+    public void StartLobby() {
+        if (!connected) {
+            Debug.LogWarning("Cannot join game unless connected!");
+            return;
+        }
+        if (!host) {
+            Debug.LogWarning("Cannot host game as non-host!");
+            return;
+        }
+
+        if (host) {
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.SpawnAvatars;
+            if (playerName.text != "Demo") {
+                NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
             }
             else {
                 NetworkManager.Singleton.SceneManager.LoadScene("ShipScene", LoadSceneMode.Single);
