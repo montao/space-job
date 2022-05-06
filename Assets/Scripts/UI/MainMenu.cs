@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour {
     private UnityTransport transport;
     private bool connected = false;
     private bool host = false;
+    private bool ishosted = false;
 
     [SerializeField]
     private TMP_InputField playerName;
@@ -72,11 +73,24 @@ public class MainMenu : MonoBehaviour {
 
         connected = connected || NetworkManager.Singleton.StartHost();
         host = true;
-        
-        
-        startClient.SetActive(true);
-        startClientTMP.text = playerName.text + " just hosted a game. Join!";
+        ishosted = true;
+        StartLobby();
+        /* startClient.SetActive(true);
+        startClientTMP.text = playerName.text + " just hosted a game. Join!"; */
+    }
 
+    public void Reload() {
+        if (!connected){
+            Debug.LogWarning("no game has been hosted yet!");
+        }
+        if (host){
+            Debug.LogWarning("you just hosted a game!");
+        }
+        if (ishosted){
+            startClient.SetActive(true);
+            startClientTMP.text = playerName.text + " just hosted a game. Join!";
+        }
+        
     }
 
     public void StartClient() {
