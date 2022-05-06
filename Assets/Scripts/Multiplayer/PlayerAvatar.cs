@@ -83,7 +83,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     public void OnAnimationChange(int previous, int current){
-        Debug.Log("old animation: "+ previous + ", new animation:" + current);
+        Debug.Log(m_LocalPlayer.PlayerName + "-> old ani: "+ previous + ", new ani:" + current);
         //m_PlayerAnimator.SetInteger("active_animation", current);
         if(current == 0){
             m_PlayerAnimator.SetTrigger("idle");
