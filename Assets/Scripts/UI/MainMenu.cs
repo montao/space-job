@@ -87,10 +87,16 @@ public class MainMenu : MonoBehaviour {
             Debug.LogWarning("you just hosted a game!");
         }
         if (ishosted){
+            if (MultiplayerUtil.GetLocalIPAddress() == serverAddress.text && !IsArgon()) {
+                Debug.LogWarning("Cannot join a game from the same ip address, host instead");
+                return;
+            }
             startClient.SetActive(true);
             startClientTMP.text = playerName.text + " just hosted a game. Join!";
             connected = connected || NetworkManager.Singleton.StartClient();
         }
+
+
         
     }
 
