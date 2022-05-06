@@ -69,14 +69,17 @@ public class MainMenu : MonoBehaviour {
             Debug.LogWarning("Cannot host a game from a different ip address");
             return;
         }
+
         connected = connected || NetworkManager.Singleton.StartHost();
         host = true;
-        StartLobby();
+        
         if (connected){
+            StartLobby();
             
+        }
+        if (!connected){
             startClient.SetActive(true);
             startClientTMP.text = playerName.text + " just hosted a game. Join!";
-            
         }
     }
 
