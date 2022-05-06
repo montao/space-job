@@ -89,6 +89,7 @@ public class MainMenu : MonoBehaviour {
         if (ishosted){
             startClient.SetActive(true);
             startClientTMP.text = playerName.text + " just hosted a game. Join!";
+            connected = connected || NetworkManager.Singleton.StartClient();
         }
         
     }
@@ -99,7 +100,7 @@ public class MainMenu : MonoBehaviour {
             return;
         }
         
-        connected = connected || NetworkManager.Singleton.StartClient();
+        //connected = connected || NetworkManager.Singleton.StartClient();
         StartLobby();
     }
 
