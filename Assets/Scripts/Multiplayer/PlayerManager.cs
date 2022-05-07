@@ -24,11 +24,12 @@ public class PlayerManager : NetworkBehaviour {
 
     public string LobbyInfo {
         get {
-            string info = _playerCount.Value + "/4: ";
-            int n = 0;
-            foreach (var player in _players) {
+            string info = _players[0].name;
+            /* string info = _playerCount.Value + "/4: ";
+            int n = 0; */
+            /* foreach (var player in _players) {
                 info = info + ((n++ == 0) ? "" : ", ") + player.PlayerName;
-            }
+            } */
             return info;
         }
     }
