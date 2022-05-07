@@ -27,6 +27,8 @@ public class MainMenu : MonoBehaviour {
     private GameObject startClient;
     [SerializeField]
     private TMP_Text startClientTMP;
+    [SerializeField]
+    private string hostName;
 
     void Start() {
         networkManager = NetworkManager.Singleton;
@@ -52,7 +54,7 @@ public class MainMenu : MonoBehaviour {
         if(!host){
             if(ishosted){
                 startClient.SetActive(true);
-            
+                startClientTMP.text = hostName + " just hosted a game. Join!"; 
             }
             
         }
@@ -74,10 +76,6 @@ public class MainMenu : MonoBehaviour {
         return SystemInfo.deviceName == "argon";
     }
 
-    public string HostName(){
-        return PlayerManager.Instance.LobbyInfo;
-    }
-
     public void StartHost() {
         if (MultiplayerUtil.GetLocalIPAddress() != serverAddress.text && !IsArgon()) {
             Debug.LogWarning("Cannot host a game from a different ip address");
@@ -87,7 +85,7 @@ public class MainMenu : MonoBehaviour {
         connected = connected || NetworkManager.Singleton.StartHost();
         host = true;
         ishosted = true;
-        startClientTMP.text = HostName() + " just hosted a game. Join!"; 
+        hostName = playerName.text;
     }
 
     public void Reload() {
