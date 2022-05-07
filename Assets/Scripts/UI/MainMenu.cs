@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour {
     private bool connected = false;
     private bool host = false;
     private bool ishosted = false;
-
+    private bool clientLobby = false;
     [SerializeField]
     private TMP_InputField playerName;
     [SerializeField]
@@ -27,8 +27,8 @@ public class MainMenu : MonoBehaviour {
     private GameObject startClient;
     [SerializeField]
     private TMP_Text startClientTMP;
-    [SerializeField]
-    private string hostName;
+
+    
 
     void Start() {
         networkManager = NetworkManager.Singleton;
@@ -87,7 +87,9 @@ public class MainMenu : MonoBehaviour {
         ishosted = true;
         StartLobby();
     }
-
+    public void ClientLobby(){
+        clientLobby = true;
+    }
     public void Reload() {
         if (MultiplayerUtil.GetLocalIPAddress() == serverAddress.text && !IsArgon()) {
             Debug.LogWarning("Cannot join a game from the same ip address, host instead");
@@ -95,20 +97,16 @@ public class MainMenu : MonoBehaviour {
             return;
         }
 
-        /* connected = connected || NetworkManager.Singleton.StartClient();
+        connected = connected || NetworkManager.Singleton.StartClient();
         ishosted = true;
- */
         
     }
 
     public void StartClient() {
-/*         if (MultiplayerUtil.GetLocalIPAddress() == serverAddress.text && !IsArgon()) {
-            Debug.LogWarning("Cannot join a game from the same ip address, host instead");
-            return;
-        } */
+        if(clientLobby){
+            StartLobby();
+        }
         
-        connected = connected || NetworkManager.Singleton.StartClient();
-        StartLobby();
     }
 
     public void StartGame() {

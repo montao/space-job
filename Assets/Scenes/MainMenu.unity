@@ -1414,7 +1414,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5417853859015936082, guid: 52b39d1a98a636776b62c8f83fe77dae, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartClient
+      value: ClientLobby
       objectReference: {fileID: 0}
     - target: {fileID: 5417853859015936082, guid: 52b39d1a98a636776b62c8f83fe77dae, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -1828,7 +1828,6 @@ MonoBehaviour:
   lobbyInfo: {fileID: 1965666420}
   startClient: {fileID: 0}
   startClientTMP: {fileID: 0}
-  hostName: 
 --- !u!1001 &3580741527752867735
 PrefabInstance:
   m_ObjectHideFlags: 0
