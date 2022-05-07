@@ -161,7 +161,7 @@ public class MainMenu : MonoBehaviour {
     void OnGUI() {
         // TODO only update when needed
         if (connected) {
-            lobbyInfo.text = PlayerManager.Instance.LobbyInfo;
+            lobbyInfo.text = PlayerManager.Instance.LobbyInfo + " just joined!";
         } else {
             lobbyInfo.text = "Not connected";
         }

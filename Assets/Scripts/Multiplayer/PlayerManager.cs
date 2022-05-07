@@ -27,7 +27,7 @@ public class PlayerManager : NetworkBehaviour {
             string info = _playerCount.Value + "/4: ";
             int n = 0;
             foreach (var player in _players) {
-                info = info + ((n++ == 0) ? "" : ", ") + player.PlayerName;
+                info = info + ((n++ == 0) ? "" : "/n") + player.PlayerName;
             }
             return info;
         }
