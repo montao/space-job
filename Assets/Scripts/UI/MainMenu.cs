@@ -88,22 +88,22 @@ public class MainMenu : MonoBehaviour {
         StartLobby();
     }
 
-    public void StartClient() {
+    public void Reload() {
         if (MultiplayerUtil.GetLocalIPAddress() == serverAddress.text && !IsArgon()) {
             Debug.LogWarning("Cannot join a game from the same ip address, host instead");
 
             return;
         }
 
-        connected = connected || NetworkManager.Singleton.StartClient();
-        ishosted = true;   
+        ishosted = true;
+        Debug.Log("Reload");
+        
     }
 
-/*     public void StartClient() {
-        Debug.Log("StartLobby");
-        //StartLobby();
+    public void StartClient() {
+        connected = connected || NetworkManager.Singleton.StartClient();
         
-    } */
+    }
 
     public void StartGame() {
         if (!connected) {
