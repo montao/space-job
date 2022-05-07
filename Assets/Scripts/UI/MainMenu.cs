@@ -48,6 +48,10 @@ public class MainMenu : MonoBehaviour {
     }
 
     void Update() {
+        if(host){
+            startClient.SetActive(true);
+            startClientTMP.text = playerName.text + " just hosted a game. Join!";   
+        }
     }
 
     public void PlayerNameChanged() {
@@ -87,9 +91,9 @@ public class MainMenu : MonoBehaviour {
 
         connected = connected || NetworkManager.Singleton.StartClient();
 
-        startClient.SetActive(true);
+        /* startClient.SetActive(true);
         startClientTMP.text = playerName.text + " just hosted a game. Join!";
-
+ */
         
     }
 
