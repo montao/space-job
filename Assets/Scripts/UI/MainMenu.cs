@@ -32,6 +32,7 @@ public class MainMenu : MonoBehaviour {
     void Start() {
         networkManager = NetworkManager.Singleton;
         transport = networkManager.GetComponentInParent<UnityTransport>();
+        
         startClient = GameObject.Find("Start Client");
         startClientTMP = startClient.transform.GetChild(0).GetComponent<TMP_Text>();
         startClient.SetActive(false);
@@ -78,10 +79,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public string HostName(){
-        if(host){
-            hostName = playerName.text;
-        }
-        return hostName;
+        return PlayerManager.Instance.LocalPlayerName;
     }
 
     public void StartHost() {
@@ -99,6 +97,7 @@ public class MainMenu : MonoBehaviour {
     public void Reload() {
         if (MultiplayerUtil.GetLocalIPAddress() == serverAddress.text && !IsArgon()) {
             Debug.LogWarning("Cannot join a game from the same ip address, host instead");
+
             return;
         }
 
