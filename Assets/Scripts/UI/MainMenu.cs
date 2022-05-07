@@ -75,7 +75,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public string HostName(){
-        return name;
+        return PlayerManager.Instance.LocalPlayerName;
     }
 
     public void StartHost() {
