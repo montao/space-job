@@ -16,6 +16,7 @@ public class MainMenu : MonoBehaviour {
     private bool connected = false;
     private bool host = false;
     private bool ishosted = false;
+    private string hostName;
 
     [SerializeField]
     private TMP_InputField playerName;
@@ -48,9 +49,9 @@ public class MainMenu : MonoBehaviour {
     }
 
     void Update() {
-        if(host){
+        if(!host){
             startClient.SetActive(true);
-            startClientTMP.text = playerName.text + " just hosted a game. Join!"; 
+            startClientTMP.text = hostName + " just hosted a game. Join!"; 
         }
         /* if(ishosted){
             startClient.SetActive(true);
@@ -71,6 +72,13 @@ public class MainMenu : MonoBehaviour {
 
     public bool IsArgon() {
         return SystemInfo.deviceName == "argon";
+    }
+
+    public string HostName(){
+        if(host){
+            hostName = playerName.text;
+        }
+        return hostName;
     }
 
     public void StartHost() {
