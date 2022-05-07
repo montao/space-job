@@ -93,9 +93,7 @@ public class MainMenu : MonoBehaviour {
         connected = connected || NetworkManager.Singleton.StartHost();
         host = true;
         ishosted = true;
-        //StartLobby();
-        /*startClient.SetActive(true);
-        startClientTMP.text = playerName.text + " just hosted a game. Join!" */; 
+        hostName = playerName.text;
     }
 
     public void Reload() {
