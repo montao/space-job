@@ -56,6 +56,7 @@ public class MainMenu : MonoBehaviour {
             }
             
         }
+        Debug.Log(PlayerManager.Instance.Players);
         /* if(ishosted){
             startClient.SetActive(true);
                
@@ -78,7 +79,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public string HostName(){
-        return PlayerManager.Instance.Players[0].name;
+        return " ";/* PlayerManager.Instance.Players[1].name; */
     }
 
     public void StartHost() {
