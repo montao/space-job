@@ -85,6 +85,7 @@ public class MainMenu : MonoBehaviour {
         connected = connected || NetworkManager.Singleton.StartHost();
         host = true;
         ishosted = true;
+        StartLobby();
     }
 
     public void Reload() {
@@ -97,17 +98,14 @@ public class MainMenu : MonoBehaviour {
         connected = connected || NetworkManager.Singleton.StartClient();
         ishosted = true;
 
-        /* startClient.SetActive(true);
-        startClientTMP.text = playerName.text + " just hosted a game. Join!";
- */
         
     }
 
     public void StartClient() {
-        if (MultiplayerUtil.GetLocalIPAddress() == serverAddress.text && !IsArgon()) {
+/*         if (MultiplayerUtil.GetLocalIPAddress() == serverAddress.text && !IsArgon()) {
             Debug.LogWarning("Cannot join a game from the same ip address, host instead");
             return;
-        }
+        } */
         
         //connected = connected || NetworkManager.Singleton.StartClient();
         StartLobby();
