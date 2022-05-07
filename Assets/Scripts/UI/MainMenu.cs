@@ -85,7 +85,7 @@ public class MainMenu : MonoBehaviour {
         connected = connected || NetworkManager.Singleton.StartHost();
         host = true;
         ishosted = true;
-        hostName = PlayerManager.Instance.LocalPlayer.name;
+        hostName = PlayerManager.Instance.LobbyHost;
     }
 
     public void Reload() {
