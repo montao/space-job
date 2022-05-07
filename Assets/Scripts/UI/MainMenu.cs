@@ -95,9 +95,9 @@ public class MainMenu : MonoBehaviour {
             return;
         }
 
-        connected = connected || NetworkManager.Singleton.StartClient();
+        /* connected = connected || NetworkManager.Singleton.StartClient();
         ishosted = true;
-
+ */
         
     }
 
@@ -107,7 +107,7 @@ public class MainMenu : MonoBehaviour {
             return;
         } */
         
-        //connected = connected || NetworkManager.Singleton.StartClient();
+        connected = connected || NetworkManager.Singleton.StartClient();
         StartLobby();
     }
 
