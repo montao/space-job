@@ -97,12 +97,14 @@ public class MainMenu : MonoBehaviour {
             return;
         }
 
-        connected = connected || NetworkManager.Singleton.StartClient();
+        
         ishosted = true;
+        Debug.Log("Reload");
         
     }
 
     public void StartClient() {
+        connected = connected || NetworkManager.Singleton.StartClient();
         StartLobby();
         
     }
