@@ -103,9 +103,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void StartClient() {
-        if(clientLobby){
-            StartLobby();
-        }
+        StartLobby();
         
     }
 
