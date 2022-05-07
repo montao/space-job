@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour {
     private bool connected = false;
     private bool host = false;
     private bool ishosted = false;
-    private string hostName;
+    private string hostName = "default ";
 
     [SerializeField]
     private TMP_InputField playerName;
@@ -50,8 +50,11 @@ public class MainMenu : MonoBehaviour {
 
     void Update() {
         if(!host){
-            startClient.SetActive(true);
+            if(ishosted){
+                startClient.SetActive(true);
             startClientTMP.text = hostName + " just hosted a game. Join!"; 
+            }
+            
         }
         /* if(ishosted){
             startClient.SetActive(true);
