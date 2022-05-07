@@ -52,15 +52,11 @@ public class MainMenu : MonoBehaviour {
         if(!host){
             if(ishosted){
                 startClient.SetActive(true);
-            startClientTMP.text = HostName() + " just hosted a game. Join!"; 
+            
             }
             
         }
-        Debug.Log(PlayerManager.Instance.Players);
-        /* if(ishosted){
-            startClient.SetActive(true);
-               
-        } */
+
     }
 
     public void PlayerNameChanged() {
@@ -79,7 +75,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public string HostName(){
-        return " ";/* PlayerManager.Instance.Players[1].name; */
+        return name;
     }
 
     public void StartHost() {
@@ -91,6 +87,7 @@ public class MainMenu : MonoBehaviour {
         connected = connected || NetworkManager.Singleton.StartHost();
         host = true;
         ishosted = true;
+        startClientTMP.text = HostName() + " just hosted a game. Join!"; 
     }
 
     public void Reload() {
