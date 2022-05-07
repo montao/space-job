@@ -80,20 +80,15 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void Reload() {
+        if (MultiplayerUtil.GetLocalIPAddress() == serverAddress.text && !IsArgon()) {
+            Debug.LogWarning("Cannot join a game from the same ip address, host instead");
+            return;
+        }
+
         connected = connected || NetworkManager.Singleton.StartClient();
-        if (!connected){
-            Debug.LogWarning("no game has been hosted yet!");
-        }
-        if (host){
-            Debug.LogWarning("you just hosted a game!");
-        }
-        if (ishosted){
 
-            startClient.SetActive(true);
-            startClientTMP.text = playerName.text + " just hosted a game. Join!";
-            
-        }
-
+        startClient.SetActive(true);
+        startClientTMP.text = playerName.text + " just hosted a game. Join!";
 
         
     }
