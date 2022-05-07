@@ -27,7 +27,10 @@ public class PlayerManager : NetworkBehaviour {
             string info = _playerCount.Value + "/4: ";
             int n = 0;
             foreach (var player in _players) {
-                info = info + ((n++ == 0) ? "" : "> ") + player.PlayerName + " just joined! \n";
+                if(_playerCount.Value == 1){
+                    info = _playerCount.Value + "/4: " + player.PlayerName + " just hosted! \n";
+                }
+                info = _playerCount.Value + "/4: " /* info + ((n++ == 0) ? "" : "> ") */ + player.PlayerName + " just joined! \n";
             }
             return info;
         }
