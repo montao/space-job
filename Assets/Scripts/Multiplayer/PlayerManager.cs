@@ -32,12 +32,6 @@ public class PlayerManager : NetworkBehaviour {
             return info;
         }
     }
-    public string LobbyHost {
-        get {
-            string host = _players[0].Avatar.name;
-            return host;
-        }
-    }
 
     void Awake() {
         if (Instance == null) {
