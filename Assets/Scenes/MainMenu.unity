@@ -252,7 +252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5417853859015936084, guid: 52b39d1a98a636776b62c8f83fe77dae, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5417853859015936085, guid: 52b39d1a98a636776b62c8f83fe77dae, type: 3}
       propertyPath: m_Pivot.x
@@ -284,7 +284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5417853859015936085, guid: 52b39d1a98a636776b62c8f83fe77dae, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 240
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 5417853859015936085, guid: 52b39d1a98a636776b62c8f83fe77dae, type: 3}
       propertyPath: m_SizeDelta.y
@@ -324,7 +324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5417853859015936085, guid: 52b39d1a98a636776b62c8f83fe77dae, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -235
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 5417853859015936085, guid: 52b39d1a98a636776b62c8f83fe77dae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1386,7 +1386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5417853859015936082, guid: 52b39d1a98a636776b62c8f83fe77dae, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5417853859015936082, guid: 52b39d1a98a636776b62c8f83fe77dae, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1707,7 +1707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5417853859015936084, guid: 52b39d1a98a636776b62c8f83fe77dae, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5417853859015936085, guid: 52b39d1a98a636776b62c8f83fe77dae, type: 3}
       propertyPath: m_Pivot.x
@@ -1826,8 +1826,9 @@ MonoBehaviour:
   playerName: {fileID: 700412569}
   serverAddress: {fileID: 515255598}
   lobbyInfo: {fileID: 1965666420}
-  startClient: {fileID: 0}
+  hostGame: {fileID: 0}
   startClientTMP: {fileID: 0}
+  startHostTMP: {fileID: 0}
 --- !u!1001 &3580741527752867735
 PrefabInstance:
   m_ObjectHideFlags: 0

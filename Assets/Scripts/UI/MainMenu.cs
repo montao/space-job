@@ -24,9 +24,13 @@ public class MainMenu : MonoBehaviour {
     [SerializeField]
     private TMP_Text lobbyInfo;
     [SerializeField]
+    private GameObject hostGame;
     private GameObject startClient;
     [SerializeField]
     private TMP_Text startClientTMP;
+    private GameObject startHost;
+    [SerializeField]
+    private TMP_Text startHostTMP;
 
     
 
@@ -34,6 +38,13 @@ public class MainMenu : MonoBehaviour {
         networkManager = NetworkManager.Singleton;
         transport = networkManager.GetComponentInParent<UnityTransport>();
         
+        hostGame = GameObject.Find("Start Host");
+        hostGame.SetActive(true);
+
+        startHost = GameObject.Find("Start Game");
+        startHostTMP = startHost.transform.GetChild(0).GetComponent<TMP_Text>();
+        startHost.SetActive(false);
+
         startClient = GameObject.Find("Start Client");
         startClientTMP = startClient.transform.GetChild(0).GetComponent<TMP_Text>();
         startClient.SetActive(false);
@@ -57,6 +68,11 @@ public class MainMenu : MonoBehaviour {
                 startClientTMP.text = " Game has been hosted. Join!"; 
             }
             
+        }
+        if(host){
+            hostGame.SetActive(false);
+            startHost.SetActive(true);
+            startHostTMP.text = "Start Lobby!"; 
         }
 
     }
@@ -85,7 +101,6 @@ public class MainMenu : MonoBehaviour {
         connected = connected || NetworkManager.Singleton.StartHost();
         host = true;
         ishosted = true;
-        StartLobby();
     }
 
     public void Reload() {
@@ -136,7 +151,7 @@ public class MainMenu : MonoBehaviour {
             return;
         }
 
-        if (host | ishosted ) {
+        if (host) {
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.SpawnAvatars;
             if (playerName.text != "Demo") {
                 NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
