@@ -102,7 +102,6 @@ public class MainMenu : MonoBehaviour {
 
     public void StartClient() {
         connected = connected || NetworkManager.Singleton.StartClient();
-        
     }
 
     public void StartGame() {
@@ -137,7 +136,7 @@ public class MainMenu : MonoBehaviour {
             return;
         }
 
-        if (host) {
+        if (host | ishosted ) {
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.SpawnAvatars;
             if (playerName.text != "Demo") {
                 NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
