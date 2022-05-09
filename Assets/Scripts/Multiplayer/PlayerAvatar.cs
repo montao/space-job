@@ -53,13 +53,10 @@ public class PlayerAvatar : NetworkBehaviour {
     private Vector3 m_Velocity;
 
     public TMP_Text nameText;
-    public PlayerReady playerReady;
-    public GameObject notReady;
-    public GameObject ready;
+    public TMP_Text statusText;
 
     public void Start() {
-        notReady.SetActive(false);
-        ready.SetActive(false);
+
         m_Controller = GetComponent<CharacterController>();
         m_PlayerAnimator = GetComponent<Animator>();
 
@@ -70,6 +67,7 @@ public class PlayerAvatar : NetworkBehaviour {
             }
         }
         name = nameText.text = m_LocalPlayer.PlayerName;
+        statusText.text = m_LocalPlayer.PlayerStatus;
     }
 
     void Update() {
@@ -105,8 +103,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
     void UpdateNameTag() {
         nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
-        ready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
-        notReady.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        statusText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
     }
     void ProcessInput() {
         //m_PlayerAnimator.SetFloat("speed", 0.1f);

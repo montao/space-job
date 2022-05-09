@@ -10,6 +10,9 @@ public class PersistentPlayer : NetworkBehaviour {
 
     private NetworkVariable<FixedString32Bytes> m_PlayerName
             = new NetworkVariable<FixedString32Bytes>();
+
+    private NetworkVariable<FixedString32Bytes> m_PlayerStatus
+            = new NetworkVariable<FixedString32Bytes>();
     public string PlayerName {
         get {
             return m_PlayerName.Value.ToString();
@@ -19,6 +22,16 @@ public class PersistentPlayer : NetworkBehaviour {
             if (IsOwner) {
                 SetNameServerRpc(value);
             }
+        }
+    }
+
+    public string PlayerStatus {
+        get {
+            return m_PlayerStatus.Value.ToString();
+        }
+        set {
+            Debug.Log("Status changes");
+
         }
     }
 

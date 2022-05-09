@@ -7,30 +7,34 @@ using TMPro;
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerReady : NetworkBehaviour {
     private PlayerAvatar player;
-    public bool ready = false;
     public bool notReady = false;
 
     void Start() {
         player = PlayerManager.Instance.LocalPlayer.Avatar;
+        
         notReady = true;
         
     }
 
+    public void PlayerStatusChanged() {
+        if(notReady){
+
+            player.statusText.text = "Not Ready";
+            Debug.Log("not ready");
+        }
+        if(!notReady){
+            player.statusText.color = Color.green;
+            player.statusText.text = "Ready";
+            Debug.Log("ready"); 
+        }
+    }
+
 
     public void Ready(){
-        ready = true;
         notReady = false;
     }
 
     void Update(){
-        if(notReady){
-            player.notReady.SetActive(true);
-            Debug.Log("not ready");
-        }
-        if(ready){
-            player.notReady.SetActive(false);
-            player.ready.SetActive(true);
-            Debug.Log("ready"); 
-        }
+        PlayerStatusChanged();
     }
 }

@@ -8,6 +8,7 @@ public class PlayerManager : NetworkBehaviour {
     public static PlayerManager Instance;
 
     public string LocalPlayerName = "";
+    public string LocalPlayerStatus = "";
 
     private NetworkVariable<int> _playerCount =
             new NetworkVariable<int>(1);
@@ -72,6 +73,7 @@ public class PlayerManager : NetworkBehaviour {
             player.gameObject.transform.rotation = transform.rotation;
             _localPlayer = player;
             _localPlayer.PlayerName = LocalPlayerName;
+            _localPlayer.PlayerStatus = LocalPlayerStatus;
         }
     }
 

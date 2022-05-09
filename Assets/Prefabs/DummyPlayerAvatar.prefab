@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 5059271216723665206}
   - component: {fileID: 1310216913157477382}
   m_Layer: 6
-  m_Name: NotReady
+  m_Name: PlayerStatus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -525,7 +525,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7560611265196225740
 RectTransform:
   m_ObjectHideFlags: 0
@@ -727,9 +727,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   nameText: {fileID: 8939025460541712738}
-  playerReady: {fileID: 1784498891785977409, guid: a339225bb65c91b0bbd73dae924999da, type: 3}
-  notReady: {fileID: 2516736626263197235}
-  ready: {fileID: 4836143967828051366}
+  statusText: {fileID: 1310216913157477382}
 --- !u!222 &7404256255760437957
 CanvasRenderer:
   m_ObjectHideFlags: 0
