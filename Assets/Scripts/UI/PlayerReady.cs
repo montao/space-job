@@ -35,6 +35,12 @@ public class PlayerReady : NetworkBehaviour {
     }
 
     void Update(){
-        PlayerStatusChanged();
+        foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
+            if (player.OwnerClientId == OwnerClientId) {
+                PlayerStatusChanged();
+                break;
+            }
+        }
+        
     }
 }
