@@ -16,15 +16,14 @@ public class PlayerReady : NetworkBehaviour {
         
     }
 
-    public void PlayerStatusChanged() {
+    void PlayerStatus() {
         if(notReady){
 
-            player.statusText.text = "Not Ready";
+            player.ChangeStatus("Not Ready", Color.red);
             Debug.Log("not ready");
         }
         if(!notReady){
-            player.statusText.color = Color.green;
-            player.statusText.text = "Ready";
+            player.ChangeStatus("Ready", Color.green);
             Debug.Log("ready"); 
         }
     }
@@ -37,7 +36,7 @@ public class PlayerReady : NetworkBehaviour {
     void Update(){
         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
             if (player.OwnerClientId == OwnerClientId) {
-                PlayerStatusChanged();
+                PlayerStatus();
                 break;
             }
         }

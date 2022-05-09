@@ -258,6 +258,8 @@ public class PlayerAvatar : NetworkBehaviour {
         }
     }
 
+
+
     /*[ServerRpc(RequireOwnership=false)]
     public void PlayAnimationServerRpc(int i) {
         m_ActiveAnimation.Value = i;
@@ -297,6 +299,11 @@ public class PlayerAvatar : NetworkBehaviour {
         } else {
             m_SecondaryItem.Value = new NetworkObjectReference();
         }
+    }
+
+    public void ChangeStatus(string status, Color colour){
+        statusText.color = colour;
+        statusText.text = status;
     }
 
     public void LockMovement(int locker) {
