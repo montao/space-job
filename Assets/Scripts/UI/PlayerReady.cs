@@ -17,15 +17,18 @@ public class PlayerReady : NetworkBehaviour {
     }
 
     void PlayerStatus() {
-        if(notReady){
+        if(player.IsSpawned){
+            if(notReady){
 
-            player.ChangeStatus("Not Ready", Color.red);
-            Debug.Log("not ready");
+                player.ChangeStatus("Not Ready", Color.red);
+                Debug.Log("not ready");
+            }
+            if(!notReady){
+                player.ChangeStatus("Ready", Color.green);
+                Debug.Log("ready"); 
+            }
         }
-        if(!notReady){
-            player.ChangeStatus("Ready", Color.green);
-            Debug.Log("ready"); 
-        }
+        
     }
 
 
