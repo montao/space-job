@@ -31,6 +31,9 @@ public class PersistentPlayer : NetworkBehaviour {
         }
         set {
             Debug.Log("Status changes");
+            if (IsOwner) {
+                SetStatusServerRpc(value);
+            }
 
         }
     }
@@ -88,5 +91,10 @@ public class PersistentPlayer : NetworkBehaviour {
     public void SetNameServerRpc(string name) {
         Debug.Log("SetNameServerRpc " + name);
         m_PlayerName.Value = name;
+    }
+    [ServerRpc]
+    public void SetStatusServerRpc(string status) {
+        Debug.Log("SetNameServerRpc " + status);
+        m_PlayerStatus.Value = status;
     }
 }
