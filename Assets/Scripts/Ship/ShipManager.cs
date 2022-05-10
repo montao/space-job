@@ -23,6 +23,9 @@ public class ShipManager : NetworkBehaviour {
         foreach(char error_code in ERROR_CODES) {
             Debug.Log(ErrorCodeDisplay(error_code) + " / " + PowerSolutionCode(error_code));
         }
+        if(PowerTerminal == null){
+            Debug.Log("no PowerTerminal");
+        }
     }
 
     public Terminal PowerTerminal;
@@ -35,11 +38,13 @@ public class ShipManager : NetworkBehaviour {
         LightManager.Instance.SetBackup(!hasPower);
         LightManager.Instance.SetNormal(hasPower);
 
-        if (!hasPower) {
-            PowerTerminal.DisplayError("0x" + ErrorCodeDisplay(power));
-        } else {
-            PowerTerminal.DisplayError("Power:\n100%");
-        }
+        if(PowerTerminal != null){   
+            if (!hasPower) {
+                PowerTerminal.DisplayError("0x" + ErrorCodeDisplay(power));
+            } else {
+                PowerTerminal.DisplayError("Power:\n100%");
+            }
+        } 
 
     }
     public override void OnNetworkSpawn(){
