@@ -20,6 +20,7 @@ public class PlayerAvatar : NetworkBehaviour {
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<NetworkObjectReference> m_SecondaryItem
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> ready = new NetworkVariable<bool>();
 
     private List<int> m_MovementLocks = new List<int>();
 
@@ -53,10 +54,10 @@ public class PlayerAvatar : NetworkBehaviour {
     private Vector3 m_Velocity;
 
     public TMP_Text nameText;
-    public TMP_Text statusText;
+    public GameObject isready;
+    public GameObject notready;
 
     public void Start() {
-
         m_Controller = GetComponent<CharacterController>();
         m_PlayerAnimator = GetComponent<Animator>();
 
@@ -79,7 +80,17 @@ public class PlayerAvatar : NetworkBehaviour {
                 UpdatePos();
             }
             UpdateNameTag();
+            if(ready.Value){
+                isready.SetActive(true);
+                notready.SetActive(false);
+            }
+            if(!ready.Value){
+                isready.SetActive(false);
+                notready.SetActive(true);
+            }
         }
+
+
         
 
     }
@@ -104,7 +115,8 @@ public class PlayerAvatar : NetworkBehaviour {
     }
     void UpdateNameTag() {
         nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
-        statusText.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        isready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        notready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
     }
     void ProcessInput() {
         //m_PlayerAnimator.SetFloat("speed", 0.1f);
@@ -193,7 +205,6 @@ public class PlayerAvatar : NetworkBehaviour {
         transform.position = m_PlayerPos.Value.Position;
         transform.rotation = m_PlayerPos.Value.Rotation;
     }
-
     private void ShowInInventory(Transform hand, NetworkObject item) {
         MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
         MeshRenderer handRend = hand.GetComponent<MeshRenderer>();

@@ -18,12 +18,8 @@ public class PlayerReady : Interactable<bool> {
         SetPlayerConditions(m_LocalPlayerInteracting); 
     }
     void SetPlayerConditions(bool on){
-        TMP_Text status =
-        PlayerManager.Instance.LocalPlayer.Avatar.statusText ;
-        if(on){
-            status.GetComponent<TMP_Text>().text = "Ready";
-            status.GetComponent<TMP_Text>().color = Color.green;
-        }
+        PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = on;
+
         //PlayerManager.Instance.LocalPlayer.Avatar.notready.SetActive(!on);
     }
     public override void OnStateChange(bool previous, bool current){
@@ -35,9 +31,9 @@ public class PlayerReady : Interactable<bool> {
         m_State.Value = value;
     }
 
-/*     private void Awake() {
+   /*  private void Awake() {
         SetPlayerConditions(Value);
-    } */
+    }  */
 
 
 }
