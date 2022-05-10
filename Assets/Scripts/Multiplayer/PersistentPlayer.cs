@@ -25,19 +25,6 @@ public class PersistentPlayer : NetworkBehaviour {
         }
     }
 
-    public string PlayerStatus {
-        get {
-            return m_PlayerStatus.Value.ToString();
-        }
-        set {
-            Debug.Log("Status changes");
-            if (IsOwner) {
-                SetStatusServerRpc(value);
-            }
-
-        }
-    }
-
     [SerializeField]
     private GameObject m_AvatarPrefab;
 
@@ -92,9 +79,5 @@ public class PersistentPlayer : NetworkBehaviour {
         Debug.Log("SetNameServerRpc " + name);
         m_PlayerName.Value = name;
     }
-    [ServerRpc]
-    public void SetStatusServerRpc(string status) {
-        Debug.Log("SetNameServerRpc " + status);
-        m_PlayerStatus.Value = status;
-    }
+
 }

@@ -67,7 +67,6 @@ public class PlayerAvatar : NetworkBehaviour {
             }
         }
         name = nameText.text = m_LocalPlayer.PlayerName;
-        statusText.text = m_LocalPlayer.PlayerStatus;
     }
 
     void Update() {
@@ -75,6 +74,7 @@ public class PlayerAvatar : NetworkBehaviour {
         if (IsClient) {
             if (IsOwner) {
                 ProcessInput();
+                
             } else {
                 UpdatePos();
             }
@@ -90,6 +90,7 @@ public class PlayerAvatar : NetworkBehaviour {
         m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
     }
 
+
     void OnGUI() {
         if (IsClient) {
             //UpdateNameTag();
@@ -103,7 +104,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
     void UpdateNameTag() {
         nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
-        statusText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        statusText.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
     }
     void ProcessInput() {
         //m_PlayerAnimator.SetFloat("speed", 0.1f);
@@ -299,11 +300,6 @@ public class PlayerAvatar : NetworkBehaviour {
         } else {
             m_SecondaryItem.Value = new NetworkObjectReference();
         }
-    }
-
-    public void ChangeStatus(string status, Color colour){
-        statusText.color = colour;
-        statusText.text = status;
     }
 
     public void LockMovement(int locker) {

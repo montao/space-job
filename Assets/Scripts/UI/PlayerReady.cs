@@ -4,45 +4,39 @@ using UnityEngine;
 using Unity.Netcode;
 using TMPro;
 
-[RequireComponent(typeof(NetworkObject))]
-public class PlayerReady : NetworkBehaviour {
-    private PlayerAvatar player;
-    public bool notReady = false;
+public class PlayerReady : Interactable<bool> {
+    PlayerAvatar player;
+    private bool m_LocalPlayerInteracting = false;
 
-    void Start() {
-        player = PlayerManager.Instance.LocalPlayer.Avatar;
-        
-        notReady = true;
-        
-    }
-
-    void PlayerStatus() {
-        if(player.IsSpawned){
-            if(notReady){
-
-                player.ChangeStatus("Not Ready", Color.red);
-                Debug.Log("not ready");
-            }
-            if(!notReady){
-                player.ChangeStatus("Ready", Color.green);
-                Debug.Log("ready"); 
-            }
+    protected override void Interaction(){
+/*         if (!m_LocalPlayerInteracting && Value) {
+            // cockpit occupied
+            return;
         }
-        
+        m_LocalPlayerInteracting = !m_LocalPlayerInteracting; */
+        SetServerRpc(!Value);
+        SetPlayerConditions(!Value);
     }
-
-
-    public void Ready(){
-        notReady = false;
-    }
-
-    void Update(){
-        foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
-            if (player.OwnerClientId == OwnerClientId) {
-                PlayerStatus();
-                break;
-            }
+    void SetPlayerConditions(bool on){
+        GameObject status = GameObject.FindGameObjectWithTag("Status");
+        if(on){
+            status.GetComponent<TMP_Text>().text = "Ready";
+            status.GetComponent<TMP_Text>().color = Color.green;
         }
-        
+        //PlayerManager.Instance.LocalPlayer.Avatar.notready.SetActive(!on);
     }
+    public override void OnStateChange(bool previous, bool current){
+        //SetPlayerConditions(current);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetServerRpc(bool value){
+        m_State.Value = value;
+    }
+
+    private void Awake() {
+        SetPlayerConditions(Value);
+    }
+
+
 }

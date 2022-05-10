@@ -73,7 +73,6 @@ public class PlayerManager : NetworkBehaviour {
             player.gameObject.transform.rotation = transform.rotation;
             _localPlayer = player;
             _localPlayer.PlayerName = LocalPlayerName;
-            _localPlayer.PlayerStatus = LocalPlayerStatus;
         }
     }
 
