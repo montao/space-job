@@ -18,7 +18,8 @@ public class PlayerReady : Interactable<bool> {
         SetPlayerConditions(m_LocalPlayerInteracting); 
     }
     void SetPlayerConditions(bool on){
-        GameObject status = GameObject.FindGameObjectWithTag("Status");
+        TMP_Text status =
+        PlayerManager.Instance.LocalPlayer.Avatar.statusText ;
         if(on){
             status.GetComponent<TMP_Text>().text = "Ready";
             status.GetComponent<TMP_Text>().color = Color.green;
