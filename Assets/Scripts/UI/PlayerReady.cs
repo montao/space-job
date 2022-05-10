@@ -9,13 +9,14 @@ public class PlayerReady : Interactable<bool> {
     private bool m_LocalPlayerInteracting = false;
 
     protected override void Interaction(){
-/*         if (!m_LocalPlayerInteracting && Value) {
+        Debug.Log("interaction");
+        /* if (!m_LocalPlayerInteracting && Value) {
             // cockpit occupied
             return;
         }
-        m_LocalPlayerInteracting = !m_LocalPlayerInteracting; */
-        SetServerRpc(!Value);
-        SetPlayerConditions(!Value);
+        m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
+        SetServerRpc(m_LocalPlayerInteracting);
+        SetPlayerConditions(m_LocalPlayerInteracting); */
     }
     void SetPlayerConditions(bool on){
         GameObject status = GameObject.FindGameObjectWithTag("Status");
@@ -34,9 +35,9 @@ public class PlayerReady : Interactable<bool> {
         m_State.Value = value;
     }
 
-    private void Awake() {
+/*     private void Awake() {
         SetPlayerConditions(Value);
-    }
+    } */
 
 
 }
