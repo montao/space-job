@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using Cinemachine;
 using TMPro;
 
 public class PlayerReady : Interactable<bool> {
     PlayerAvatar player;
     private bool m_LocalPlayerInteracting = false;
+    public GameObject canvas;
+    public CinemachineVirtualCamera cam;
 
     protected override void Interaction(){
         if (!m_LocalPlayerInteracting && Value) {
@@ -19,6 +22,8 @@ public class PlayerReady : Interactable<bool> {
     }
     void SetPlayerConditions(bool on){
         PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = on;
+        cam.Priority = 100;
+        canvas.SetActive(true);
 
         //PlayerManager.Instance.LocalPlayer.Avatar.notready.SetActive(!on);
     }
