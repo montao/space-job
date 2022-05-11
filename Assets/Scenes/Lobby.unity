@@ -5193,7 +5193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 923122501327423445}
   m_Layer: 2
-  m_Name: DummyPlayerAvatar
+  m_Name: charakter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

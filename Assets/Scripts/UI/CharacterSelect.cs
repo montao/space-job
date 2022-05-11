@@ -45,9 +45,17 @@ public class CharacterSelect : MonoBehaviour
 
     public void Select(){
         PlayerPrefs.SetInt("CharacterSelected", index);
-        PlayerManager.Instance.transform.Find("charakter").gameObject.SetActive(false);
-/*         characterList[index].transform.parent =
-        PlayerManager.Instance.LocalPlayer.transform; */
+        var characters = GameObject.FindGameObjectsWithTag("CharacterList");
+        Debug.Log(characters[0].name);
+        for(int i = 0; i< characters[0].transform.childCount; i++){
+            if(characterList[index].name == characters[0].transform.GetChild(i).name){
+                characters[0].transform.GetChild(i).gameObject.SetActive(true);
+                /* PlayerManager.Instance.LocalPlayer.GetComponent<Animator>().avatar =; */
+            }
+            else characters[0].transform.GetChild(i).gameObject.SetActive(false);
+        }
+        
+    
         canvas.SetActive(false);
         cam.Priority = 0;
     }
