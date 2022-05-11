@@ -23,7 +23,7 @@ public class PlayerReady : Interactable<bool> {
     void SetPlayerConditions(bool on){
         PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = on;
         cam.Priority = 100;
-        /* canvas.SetActive(true); */
+        canvas.SetActive(true);
 
         //PlayerManager.Instance.LocalPlayer.Avatar.notready.SetActive(!on);
     }
