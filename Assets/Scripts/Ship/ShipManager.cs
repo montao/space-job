@@ -157,21 +157,23 @@ public class ShipManager : NetworkBehaviour {
         
         CheckWinCondition();
 
-        if (Input.GetKey(KeyCode.UpArrow)){
-            m_Speed.Value += 0.1f;
-        }
-        if (Input.GetKey(KeyCode.DownArrow)){
-            if(m_Speed.Value >= 0f){
-                m_Speed.Value -= 0.1f;
+        if (IsServer) {
+            if (Input.GetKey(KeyCode.UpArrow)){
+                m_Speed.Value += 0.1f;
             }
-        }
-        if (Input.GetKey(KeyCode.LeftArrow)){
-            m_Rotation.Value += 1f;
-        }
-        if (Input.GetKey(KeyCode.RightArrow)){
-            m_Rotation.Value -= 1f;
-        }
+            if (Input.GetKey(KeyCode.DownArrow)){
+                if(m_Speed.Value >= 0f){
+                    m_Speed.Value -= 0.1f;
+                }
+            }
+            if (Input.GetKey(KeyCode.LeftArrow)){
+                m_Rotation.Value += 1f;
+            }
+            if (Input.GetKey(KeyCode.RightArrow)){
+                m_Rotation.Value -= 1f;
+            }
 
-        UpdatePosition(Time.deltaTime);
+            UpdatePosition(Time.deltaTime);
+        }
     }
 }
