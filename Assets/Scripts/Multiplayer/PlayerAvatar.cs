@@ -80,7 +80,8 @@ public class PlayerAvatar : NetworkBehaviour {
                 UpdatePos();
             }
             UpdateNameTag();
-            if(ready.Value){
+            
+        }if(ready.Value){
                 isready.SetActive(true);
                 notready.SetActive(false);
             }
@@ -88,7 +89,6 @@ public class PlayerAvatar : NetworkBehaviour {
                 isready.SetActive(false);
                 notready.SetActive(true);
             }
-        }
 
 
         
