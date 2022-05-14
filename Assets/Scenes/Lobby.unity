@@ -1885,7 +1885,7 @@ Transform:
   m_Children:
   - {fileID: 1459571738}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &704504433
 PrefabInstance:
@@ -3638,7 +3638,7 @@ MonoBehaviour:
   NeedsPower: 0
   TriggeredAnimation: 2
   canvas: {fileID: 1746268533}
-  cam: {fileID: 699562239}
+  cam: {fileID: 1304583822}
 --- !u!135 &1621411779
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3826,7 +3826,7 @@ RectTransform:
   - {fileID: 853998984}
   - {fileID: 238024031}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

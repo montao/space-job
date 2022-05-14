@@ -5,7 +5,7 @@ using Unity.Netcode;
 using Cinemachine;
 using TMPro;
 
-public class PlayerReady : Interactable<bool> {
+public class PlayerReadyTerminal : Interactable<bool> {
     PlayerAvatar player;
     private bool m_LocalPlayerInteracting = false;
     public GameObject canvas;
