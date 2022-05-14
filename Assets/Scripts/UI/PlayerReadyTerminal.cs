@@ -5,18 +5,20 @@ using Unity.Netcode;
 using Cinemachine;
 using TMPro;
 
-public class PlayerReadyTerminal : Interactable<bool> {
+public class PlayerReady : Interactable<bool> {
     PlayerAvatar player;
     private bool m_LocalPlayerInteracting = false;
     public GameObject canvas;
     public CinemachineVirtualCamera cam;
 
     protected override void Interaction(){
-        SetPlayerConditions(!Value); 
-    }
-   [ServerRpc(RequireOwnership = false)]
-    public void SetServerRpc(bool value){
-        m_State.Value = value;
+        if (!m_LocalPlayerInteracting && Value) {
+            // cockpit occupied
+            return;
+        }
+        m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
+        SetServerRpc(m_LocalPlayerInteracting);
+        SetPlayerConditions(m_LocalPlayerInteracting); 
     }
     void SetPlayerConditions(bool on){
         PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = on;
@@ -29,7 +31,9 @@ public class PlayerReadyTerminal : Interactable<bool> {
         //SetPlayerConditions(current);
     }
 
-
+    public void SetServerRpc(bool value){
+        m_State.Value = value;
+    }
 
    /*  private void Awake() {
         SetPlayerConditions(Value);

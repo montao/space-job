@@ -23,7 +23,7 @@ public class PlayerAvatar : NetworkBehaviour {
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<NetworkObjectReference> m_SecondaryItem
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<bool> ready = new NetworkVariable<bool>(default, default, NetworkVariableWritePermission.Server);
+    public NetworkVariable<bool> ready = new NetworkVariable<bool>(default, default, NetworkVariableWritePermission.Owner);
 
     private List<int> m_MovementLocks = new List<int>();
 
