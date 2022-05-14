@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class CharacterSelect : MonoBehaviour
-{
-    // Start is called before the first frame update
+public class CharacterSelect : MonoBehaviour {
     private GameObject[] characterList;
     private int index;
     public GameObject canvas;
@@ -49,7 +47,7 @@ public class CharacterSelect : MonoBehaviour
         Debug.Log(characters[0].name);
         for(int i = 0; i< characters[0].transform.childCount; i++){
             if(characterList[index].name == characters[0].transform.GetChild(i).name){
-                characters[0].transform.GetChild(i).gameObject.SetActive(true);
+                PlayerManager.Instance.LocalPlayer.Avatar.SetActiveCharacter(i);
                 /* PlayerManager.Instance.LocalPlayer.GetComponent<Animator>().avatar =; */
             }
             else characters[0].transform.GetChild(i).gameObject.SetActive(false);

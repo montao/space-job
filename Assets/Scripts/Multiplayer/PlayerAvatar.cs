@@ -14,6 +14,9 @@ public struct PlayerPos {
 public class PlayerAvatar : NetworkBehaviour {
     private NetworkVariable<int> m_ActiveAnimation
             = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<int> m_ActiveCharacter
+            = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
+    
     private NetworkVariable<PlayerPos> m_PlayerPos
             = new NetworkVariable<PlayerPos>();
     private NetworkVariable<NetworkObjectReference> m_PrimaryItem
@@ -29,6 +32,7 @@ public class PlayerAvatar : NetworkBehaviour {
     public enum Slot {
         PRIMARY, SECONDARY
     };
+
     public void SetActiveAnimation(int animation_index){
         m_ActiveAnimation.Value = animation_index;
     }
@@ -46,6 +50,8 @@ public class PlayerAvatar : NetworkBehaviour {
     // Places where items are attached
     public Transform PrimaryItemDisplay;  // left hand
     public Transform SecondaryItemDisplay;  // back
+
+    public CharacterSelect chara_select;
 
     public LayerMask groundLayer;
     private Animator m_PlayerAnimator;
@@ -82,23 +88,40 @@ public class PlayerAvatar : NetworkBehaviour {
             UpdateNameTag();
             
         }if(ready.Value){
-                isready.SetActive(true);
-                notready.SetActive(false);
-            }
-            if(!ready.Value){
-                isready.SetActive(false);
-                notready.SetActive(true);
-            }
+            isready.SetActive(true);
+            notready.SetActive(false);
+        }
+        if(!ready.Value){
+            isready.SetActive(false);
+            notready.SetActive(true);
+        }
+    }
 
+    public void SetActiveCharacter(int characterIndex) {
+        m_ActiveCharacter.Value = characterIndex;
+    }
 
-        
-
+    public void OnCharacterChanged(int previous, int current) {
+        var characters = GameObject.FindGameObjectsWithTag("CharacterList");
+        if(current == 0){
+            characters[0].transform.GetChild(0).gameObject.SetActive(true);
+        }
+        if(current == 1){
+            characters[0].transform.GetChild(1).gameObject.SetActive(true);
+        }
+        if(current == 2){
+            characters[0].transform.GetChild(2).gameObject.SetActive(true);
+        }
+        if(current == 3){
+            characters[0].transform.GetChild(3).gameObject.SetActive(true);
+        }
     }
 
     public override void OnNetworkSpawn() {
         base.OnNetworkSpawn();
         m_PrimaryItem.OnValueChanged += OnPrimaryItemChanged;
         m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
+        m_ActiveCharacter.OnValueChanged += OnCharacterChanged;
     }
 
 
