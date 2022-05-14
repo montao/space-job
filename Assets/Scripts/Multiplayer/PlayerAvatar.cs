@@ -16,6 +16,23 @@ public struct PlayerPos {
 
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerAvatar : NetworkBehaviour {
+    [ServerRpc]
+    public void UpdatePosServerRpc(PlayerPos p) {
+        m_PlayerPos.Value = p;
+    }
+    public enum Slot {
+        PRIMARY, SECONDARY
+    };
+    public const float GRAVITY = -10f;  //in case of zero gravity this need to change
+    public Transform groundCheck;
+    public Transform dropPoint;
+    public Transform PrimaryItemDisplay;  // left hand
+    public Transform SecondaryItemDisplay;  // back
+    public LayerMask groundLayer;
+    public TMP_Text nameText;
+    public Material normalMaterial;
+    public Material transparentMaterial;
+
     private NetworkVariable<int> m_ActiveAnimation
             = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<PlayerPos> m_PlayerPos
@@ -34,37 +51,18 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     private List<int> m_MovementLocks = new List<int>();
-
     private Coroutine m_SpeedBoostCoroutine = null;
-
-    public enum Slot {
-        PRIMARY, SECONDARY
-    };
-    [ServerRpc]
-    public void UpdatePosServerRpc(PlayerPos p) {
-        m_PlayerPos.Value = p;
-    }
-
     private CharacterController m_Controller;
     private float m_MovementSpeed = 5f;
     private bool m_IsGrounded = false;
-    public Transform groundCheck;
-    public Transform dropPoint;
 
     // Places where items are attached
-    public Transform PrimaryItemDisplay;  // left hand
-    public Transform SecondaryItemDisplay;  // back
-
-    public LayerMask groundLayer;
     private Animator m_PlayerAnimator;
-    public const float GRAVITY = -10f;  //in case of zero gravity this need to change
     private PersistentPlayer m_LocalPlayer;
     private Vector3 m_Velocity;
     private SkinnedMeshRenderer m_PlayerMesh;
-    public TMP_Text nameText;
-    public Material normalMaterial;
-    public Material transparentMaterial;
-    
+    [SerializeField]
+    private float m_LungCapacity = 1f;
 
     public void Start() {
         m_Controller = GetComponent<CharacterController>();
@@ -74,6 +72,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
     void Update() {
         //m_PlayerAnimator.SetInteger("active_animation", m_ActiveAnimation.Value);
+        OxygenRegulation(Time.deltaTime);
         if (IsClient) {
             if (IsOwner) {
                 ProcessInput();
@@ -89,6 +88,20 @@ public class PlayerAvatar : NetworkBehaviour {
         m_Controller.enabled = false;
         transform.SetPositionAndRotation(target.position, target.rotation);
         m_Controller.enabled = prev_controller_enabled;
+    }
+    public void OxygenRegulation(float delta_time){
+        float oxygen = ((m_LungCapacity - 0.01f + (0.02f* m_CurrentRoom.RoomOxygen)));
+        if(oxygen <= 0f){
+            m_LungCapacity = 0f;
+            Debug.Log("Your Chocking");
+        }
+        else if(oxygen >= 1f){
+            m_LungCapacity = 1f;
+        }
+        else{
+            m_LungCapacity = oxygen;
+            Debug.Log("palyer Oxygen:" + m_LungCapacity + "\n room: " + m_CurrentRoom.Name + ",Ox-Level: " + m_CurrentRoom.RoomOxygen);
+        }
     }
 
     public void SetActiveAnimation(int animation_index) {
@@ -236,6 +249,18 @@ public class PlayerAvatar : NetworkBehaviour {
             if (!HasInventorySpace(Slot.PRIMARY)) {
                 m_ActiveAnimation.Value = 2;
                 DropItem(Slot.PRIMARY);
+            }
+        }
+
+        if (Input.GetKey(KeyCode.Alpha9)){
+            if(CurrentRoom.RoomOxygen < 1f){
+                CurrentRoom.RoomOxygen = CurrentRoom.RoomOxygen + 0.1f;
+            }
+        }
+
+        if (Input.GetKey(KeyCode.Alpha0)){
+            if(CurrentRoom.RoomOxygen > 0f){
+                CurrentRoom.RoomOxygen = CurrentRoom.RoomOxygen - 0.1f;
             }
         }
 
