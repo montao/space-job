@@ -31,6 +31,7 @@ public class PlayerReady : Interactable<bool> {
         //SetPlayerConditions(current);
     }
 
+    [ServerRpc(RequireOwnership = false)]
     public void SetServerRpc(bool value){
         m_State.Value = value;
     }
