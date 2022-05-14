@@ -12,13 +12,13 @@ public class PlayerReadyTerminal : Interactable<bool> {
     public CinemachineVirtualCamera cam;
 
     protected override void Interaction(){
-        if (!m_LocalPlayerInteracting && Value) {
+        /* if (!m_LocalPlayerInteracting && Value) {
             // cockpit occupied
             return;
-        }
+        } */
         m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
-        SetServerRpc(m_LocalPlayerInteracting);
-        SetPlayerConditions(m_LocalPlayerInteracting); 
+        SetServerRpc(Value/* m_LocalPlayerInteracting */);
+        SetPlayerConditions(Value/* m_LocalPlayerInteracting */); 
     }
     void SetPlayerConditions(bool on){
         PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = on;
