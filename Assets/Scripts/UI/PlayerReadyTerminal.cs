@@ -14,6 +14,10 @@ public class PlayerReadyTerminal : Interactable<bool> {
     protected override void Interaction(){
         SetPlayerConditions(!Value); 
     }
+   [ServerRpc(RequireOwnership = false)]
+    public void SetServerRpc(bool value){
+        m_State.Value = value;
+    }
     void SetPlayerConditions(bool on){
         PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = on;
         cam.Priority = 100;
