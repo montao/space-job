@@ -13,6 +13,7 @@ public class InteractableTerminal : InteractableBase
         m_CameraSwap = GetComponent<CameraSwap>();
         m_TargetCanvas = GetComponentInChildren<Canvas>();
         Display.transform.SetParent(m_TargetCanvas.transform, false);
+        
     }
     // Start is called before the first frame update
     protected override void Interaction(){

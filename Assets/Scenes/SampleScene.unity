@@ -12960,7 +12960,7 @@ MonoBehaviour:
   NeedsPower: 0
   HidePlayer: 0
   TriggeredAnimation: 2
-  display: {fileID: 1104573006}
+  Display: {fileID: 1104573006}
 --- !u!114 &7976549802667798285
 MonoBehaviour:
   m_ObjectHideFlags: 0
