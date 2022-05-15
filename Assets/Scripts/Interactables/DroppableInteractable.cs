@@ -5,10 +5,10 @@ using Unity.Netcode;
 using Unity.Netcode.Components;
 
 public class DroppableInteractable : Interactable<int>{
-    private MeshRenderer m_Mesh;
-    private Rigidbody m_Rigidbody;
-    private List<Collider> m_AllCollider;
-    private NetworkTransform m_NetTransform;
+    protected MeshRenderer m_Mesh;
+    protected Rigidbody m_Rigidbody;
+    protected List<Collider> m_AllCollider;
+    protected NetworkTransform m_NetTransform;
     public const int IN_WORLD = -1;
     public bool pickedUp = false;
 
@@ -29,32 +29,8 @@ public class DroppableInteractable : Interactable<int>{
         }
     }
 
-    protected override void Interaction()
-    {
-        PlayerAvatar localPlayer = PlayerManager.Instance.LocalPlayer.Avatar;
+    protected override void Interaction(){}
 
-        if (!localPlayer.HasInventorySpace()) {
-            Debug.Log("Full of stuff");
-            return;
-        }
-
-        m_IsInArea = false;
-        localPlayer.AddToInventory(GetComponentInParent<NetworkObject>());
-
-        SetServerRpc((int) NetworkManager.Singleton.LocalClientId);
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void SetServerRpc(int value){
-        pickedUp = true;
-        m_State.Value = value;
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void DropServerRpc(Vector3 position) {
-        GetComponentInParent<Rigidbody>().position = position;
-        m_State.Value = IN_WORLD;
-    }
 
     public override void OnStateChange(int previous, int current)
     {
