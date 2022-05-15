@@ -4,7 +4,7 @@ using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 
-public class DroppableInteractable : Interactable<int>{
+public abstract class DroppableInteractable : Interactable<int>{
     protected MeshRenderer m_Mesh;
     protected Rigidbody m_Rigidbody;
     protected List<Collider> m_AllCollider;
@@ -13,13 +13,6 @@ public class DroppableInteractable : Interactable<int>{
     public bool pickedUp = false;
 
 //----------------------------------------------------------------------------------------------
-    private void Awake() {
-        m_AllCollider = new List<Collider>(GetComponentsInParent<Collider>());
-        m_AllCollider.AddRange(GetComponents<Collider>());
-        m_Mesh = GetComponentInParent<MeshRenderer>();
-        m_Rigidbody = GetComponentInParent<Rigidbody>();
-        m_NetTransform = GetComponentInParent<NetworkTransform>();
-    }
 
     public override void OnNetworkSpawn()
     {
@@ -29,8 +22,30 @@ public class DroppableInteractable : Interactable<int>{
         }
     }
 
-    protected override void Interaction(){}
+    [ServerRpc(RequireOwnership = false)]
+    public void SetServerRpc(int value){
+        pickedUp = true;
+        m_State.Value = value;
+    }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void DropServerRpc(Vector3 position) {
+        GetComponentInParent<Rigidbody>().position = position;
+        m_State.Value = IN_WORLD;
+    }
+
+
+    protected override void Interaction(){
+        PlayerAvatar localPlayer = PlayerManager.Instance.LocalPlayer.Avatar;
+
+        if (!localPlayer.HasInventorySpace()) {
+            Debug.Log("Full of stuff");
+            return;
+        }
+
+        m_IsInArea = false;
+        localPlayer.AddToInventory(GetComponentInParent<NetworkObject>());
+    }
 
     public override void OnStateChange(int previous, int current)
     {

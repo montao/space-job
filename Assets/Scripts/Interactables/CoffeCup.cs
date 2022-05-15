@@ -9,6 +9,8 @@ public class CoffeCup : DroppableInteractable{
     private static int m_CupNumber = 0;
     public List<Material> Materials = new List<Material>();
 
+
+// this would be always the same, so maybe it can be shorten?
 //----------------------------------------------------------------------------------------------
     private void Awake() {
         m_AllCollider = new List<Collider>(GetComponentsInParent<Collider>());
@@ -21,30 +23,9 @@ public class CoffeCup : DroppableInteractable{
         GetComponent<MeshRenderer>().material = Materials[mat_idx];
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void SetServerRpc(int value){
-        pickedUp = true;
-        m_State.Value = value;
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void DropServerRpc(Vector3 position) {
-        GetComponentInParent<Rigidbody>().position = position;
-        m_State.Value = IN_WORLD;
-    }
-
     protected override void Interaction()
     {
-        PlayerAvatar localPlayer = PlayerManager.Instance.LocalPlayer.Avatar;
-
-        if (!localPlayer.HasInventorySpace()) {
-            Debug.Log("Full of stuff");
-            return;
-        }
-
-        m_IsInArea = false;
-        localPlayer.AddToInventory(GetComponentInParent<NetworkObject>());
-
+        base.Interaction();
         SetServerRpc((int) NetworkManager.Singleton.LocalClientId);
     }
 //----------------------------------------------------------------------------------------------

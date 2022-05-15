@@ -100,6 +100,7 @@ public class PlayerAvatar : NetworkBehaviour {
         }
         else{
             m_LungCapacity = oxygen;
+            Debug.Log(delta_time);
             Debug.Log("palyer Oxygen:" + m_LungCapacity + "\n room: " + m_CurrentRoom.Name + ",Ox-Level: " + m_CurrentRoom.RoomOxygen);
         }
     }
@@ -397,7 +398,7 @@ public class PlayerAvatar : NetworkBehaviour {
             Debug.Log("No item here.");
         }
 
-        Cup cup = o.GetComponentInChildren<Cup>();
+        DroppableInteractable cup = o.GetComponentInChildren<DroppableInteractable>();
         cup.DropServerRpc(dropPoint.position);
 
         if (slot == Slot.PRIMARY) {
