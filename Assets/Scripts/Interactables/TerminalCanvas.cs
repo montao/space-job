@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class TerminalCanvas : MonoBehaviour {
 
     private GraphicRaycaster m_RayCaster;
+    public Transform StuffKeeper;
 
     public void Awake() {
         m_RayCaster = GetComponent<GraphicRaycaster>();
