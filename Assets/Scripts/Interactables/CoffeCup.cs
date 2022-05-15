@@ -28,6 +28,7 @@ public class CoffeCup : DroppableInteractable{
         base.Interaction();
         SetServerRpc((int) NetworkManager.Singleton.LocalClientId);
     }
+    
 //----------------------------------------------------------------------------------------------
 
     public override int SelfInteraction(PlayerAvatar avatar) {
