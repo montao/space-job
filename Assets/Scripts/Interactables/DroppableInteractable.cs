@@ -11,6 +11,7 @@ public abstract class DroppableInteractable : Interactable<int>{
     protected NetworkTransform m_NetTransform;
     public const int IN_WORLD = -1;
     public bool pickedUp = false;
+    public float velocity;
 
 //----------------------------------------------------------------------------------------------
 
