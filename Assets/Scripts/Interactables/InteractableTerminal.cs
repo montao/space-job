@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InteractableTerminal : InteractableBase
@@ -19,6 +17,7 @@ public class InteractableTerminal : InteractableBase
     protected override void Interaction(){
         m_LocalPlayerIsInteracting = !m_LocalPlayerIsInteracting;
         Display.SetInteractableEnable(m_LocalPlayerIsInteracting);
+        GetComponent<Collider>().enabled = !m_LocalPlayerIsInteracting;
         if (m_LocalPlayerIsInteracting) {
             m_CameraSwap.SwitchTo();
             if (!ShipManager.Instance.HasPower) {
