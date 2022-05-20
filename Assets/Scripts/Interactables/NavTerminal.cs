@@ -62,8 +62,9 @@ public class NavTerminal : Interactable<int> {
     public override void Update() {
         base.Update();
         DisplayText("Position: " + ShipManager.Instance.GetShipPosition()+
-                    "\n Speed: " + ShipManager.Instance.GetShipSpeed()+ 
-                    " ,Angle: " + ShipManager.Instance.GetShipAngle()+
-                    "\n Dist: " + ShipManager.Instance.GetDistantToWin());
+                    "\n Speed: " + System.Math.Round(ShipManager.Instance.GetShipSpeed(), 2)+ 
+                    " (" +         System.Math.Round(ShipManager.Instance.GetTargetShipSpeed()) + ")" + 
+                    " ,Angle: " +  System.Math.Round(ShipManager.Instance.GetShipAngle(), 1)+
+                    "\n Dist: " +  System.Math.Round(ShipManager.Instance.GetDistantToWin(), 2));
     }
 }

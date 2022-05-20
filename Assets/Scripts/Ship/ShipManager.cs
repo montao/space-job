@@ -4,13 +4,14 @@ using UnityEngine;
 using Unity.Netcode;
 
 public class ShipManager : NetworkBehaviour {
-    public List<Room> Rooms = new List<Room>();
+    public static ShipManager Instance;
+    private ShipSteering m_Steering;
 
+    public List<Room> Rooms = new List<Room>();
     public const char HAS_POWER = '\0';
 
     private NetworkVariable<float> m_Oxygen = new NetworkVariable<float>(1f);
     private NetworkVariable<char> m_Power = new NetworkVariable<char>(HAS_POWER);
-    public static ShipManager Instance;
     private NetworkVariable<Vector2> m_Position = new NetworkVariable<Vector2>(new Vector2(512f, 512f));
     private NetworkVariable<float> m_Rotation = new NetworkVariable<float>(0f);
     private NetworkVariable<float> m_Speed = new NetworkVariable<float>(0f);
@@ -29,6 +30,7 @@ public class ShipManager : NetworkBehaviour {
 
     void Start() {
         m_Map = GetComponent<Map>();
+        m_Steering = GetComponent<ShipSteering>();
         /*
         foreach(char error_code in ERROR_CODES) {
             Debug.Log(ErrorCodeDisplay(error_code) + " / " + PowerSolutionCode(error_code));
@@ -65,7 +67,10 @@ public class ShipManager : NetworkBehaviour {
     }
 
     public float GetShipSpeed(){
-        return m_Speed.Value;
+        return m_Steering.GetSpeed();
+    }
+    public float GetTargetShipSpeed(){
+        return m_Steering.GetTargetSpeed();
     }
     public float GetShipAngle(){
         return m_Rotation.Value;

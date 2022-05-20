@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(ShipManager))]
 public class ShipSteering : MonoBehaviour {
@@ -16,11 +17,34 @@ public class ShipSteering : MonoBehaviour {
         TRANSLATE_FORWARD,
         TRANSLATE_BACKWARD,
     }
+    private bool[] m_ThrusterStates;
+
+    void Awake() {
+        m_ThrusterStates = new bool[Enum.GetValues(typeof(Thruster)).Length];
+    }
+
+    public bool GetThrusterState(Thruster t) {
+        return m_ThrusterStates[(int)t];
+    }
+    public void SetThrusterState(Thruster t, bool state) {
+        m_ThrusterStates[(int)t] = state;
+    }
 
     public static readonly float TRANSLATION_ACCELERATION = 0.1f;
     public static readonly float ROTATION_ACCELERATION = 0.15f;
 
-    public void FireThruster(Thruster thruster, float delta_time) {
+    private void ApplyAllActiveThrusters(float delta_time) {
+        string active = "";
+        foreach (Thruster thruster in Enum.GetValues(typeof(Thruster))) {
+            if (GetThrusterState(thruster)) {
+                ApplyThruster(thruster, delta_time);
+                active += thruster + " ";
+            }
+        }
+        Debug.Log("Active Thrusters: " + active);
+    }
+
+    private void ApplyThruster(Thruster thruster, float delta_time) {
         switch(thruster) {
             case Thruster.TRANSLATE_FORWARD:
                 m_Velocity += new Vector3(1, 0, 0) * TRANSLATION_ACCELERATION * delta_time;
@@ -35,6 +59,7 @@ public class ShipSteering : MonoBehaviour {
                 m_AngularVelocity -= ROTATION_ACCELERATION * delta_time;
                 break;
             default:
+                Debug.LogError("Thruster " + thruster + " not implemented yet");
                 break;
         };
     }
@@ -42,17 +67,15 @@ public class ShipSteering : MonoBehaviour {
     void Update() {
         float delta = Time.deltaTime;
 
-        // Thrusters set up velocities
+        // Set Thruster States
         Debug_MoveWithKeys(delta);
 
-        // go towards set speed
         float target_x_velocity = m_TargetVelocityForwardSteps[m_TargetVelocityIdx];
-        if (m_Velocity.x < target_x_velocity) {
-            FireThruster(Thruster.TRANSLATE_FORWARD, delta);
-        }
-        if (m_Velocity.x > target_x_velocity) {
-            FireThruster(Thruster.TRANSLATE_BACKWARD, delta);
-        }
+        SetThrusterState(Thruster.TRANSLATE_FORWARD, m_Velocity.x < target_x_velocity);
+        SetThrusterState(Thruster.TRANSLATE_BACKWARD, m_Velocity.x > target_x_velocity);
+
+        // apply thrusters to set velocity
+        ApplyAllActiveThrusters(delta);
 
         // rotate
         ShipManager.Instance.Rotate(m_AngularVelocity);
@@ -63,24 +86,36 @@ public class ShipSteering : MonoBehaviour {
     }
 
     public void ChangeTargetVelocity(bool up) {
-        int delta = up ? 1 : -1;
-        m_TargetVelocityIdx = Mathf.Clamp(m_TargetVelocityIdx += delta, 0, m_TargetVelocityForwardSteps.Length - 1);
-
-        Debug.Log("Target fwd velocity: " + m_TargetVelocityForwardSteps[m_TargetVelocityIdx]);
+        int delta_idx = up ? 1 : -1;
+        m_TargetVelocityIdx = Mathf.Clamp(m_TargetVelocityIdx += delta_idx, 0, m_TargetVelocityForwardSteps.Length - 1);
+    }
+    public float GetTargetSpeed() {
+        return m_TargetVelocityForwardSteps[m_TargetVelocityIdx];
+    }
+    public float GetSpeed() {
+        return Vector3.Magnitude((Vector2)m_Velocity);
     }
 
     private void Debug_MoveWithKeys(float delta_time) {
+
         if (Input.GetKeyDown(KeyCode.I)) {
             ChangeTargetVelocity(up: true);
         }
         if (Input.GetKeyDown(KeyCode.K)) {
             ChangeTargetVelocity(up: false);
         }
-        if (Input.GetKey(KeyCode.J)) {
-            FireThruster(Thruster.ROTATE_LEFT, delta_time);
+
+        if (Input.GetKeyDown(KeyCode.J)) {
+            SetThrusterState(Thruster.ROTATE_LEFT, true);
         }
-        if (Input.GetKey(KeyCode.L)) {
-            FireThruster(Thruster.ROTATE_RIGHT, delta_time);
+        if (Input.GetKeyUp(KeyCode.J)) {
+            SetThrusterState(Thruster.ROTATE_LEFT, false);
+        }
+        if (Input.GetKeyDown(KeyCode.L)) {
+            SetThrusterState(Thruster.ROTATE_RIGHT, true);
+        }
+        if (Input.GetKeyUp(KeyCode.L)) {
+            SetThrusterState(Thruster.ROTATE_RIGHT, false);
         }
     }
 }
