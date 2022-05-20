@@ -15,6 +15,7 @@ public class InteractableTerminal : InteractableBase
     }
     // Start is called before the first frame update
     protected override void Interaction(){
+        NeedsPower = !m_LocalPlayerIsInteracting;  // always allow exiting terminal
         m_LocalPlayerIsInteracting = !m_LocalPlayerIsInteracting;
         Display.SetInteractableEnable(m_LocalPlayerIsInteracting);
         GetComponent<Collider>().enabled = !m_LocalPlayerIsInteracting;

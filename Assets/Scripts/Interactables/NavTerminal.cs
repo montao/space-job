@@ -41,16 +41,17 @@ public class NavTerminal : Interactable<int> {
             return;
         }
 
-        //Debug.Log("StateChange!" + current + ShipManager.Instance.GetShipPosition());
         if (current == NOT_OCCUPIED) {
             if (prev == (int)NetworkManager.Singleton.LocalClientId) {
                 PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
                 m_CameraSwap.SwitchAway();
+                NeedsPower = true;
             }
         } else {
             if (current == (int)NetworkManager.Singleton.LocalClientId) {
                 m_CameraSwap.SwitchTo();
                 PlayerManager.Instance.LocalPlayer.Avatar.LockMovement(GetHashCode());
+                NeedsPower = false;  // allow exit
             }
         }
     }
