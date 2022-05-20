@@ -70,7 +70,7 @@ public class ShipManager : NetworkBehaviour {
     public float GetShipAngle(){
         return m_Rotation.Value;
     }
-    public Vector2 GetShipPosition (){
+    public Vector2 GetShipPosition(){
         return m_Position.Value;
     }
 
@@ -93,6 +93,13 @@ public class ShipManager : NetworkBehaviour {
     [ServerRpc(RequireOwnership = false)]
     public void AccillerateAngleServerRpc(float angle){
         m_Rotation.Value = m_Rotation.Value + angle;
+    }
+
+    public void Rotate(float delta_angle) {
+        m_Rotation.Value += delta_angle;
+    }
+    public void Move(Vector2 delta_pos) {
+        m_Position.Value += delta_pos;
     }
 
     public void TriggerPowerOutageEvent(){
@@ -120,12 +127,12 @@ public class ShipManager : NetworkBehaviour {
         }
     }
 
-    private void UpdatePosition(float delta_time){
+    private void UpdatePosition() {
 
-        float angle = m_Rotation.Value*(Mathf.PI/180f);
-        Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+        // float angle = m_Rotation.Value*(Mathf.PI/180f);
+        // Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
-        m_Position.Value = m_Position.Value + (direction * m_Speed.Value * delta_time);
+        // m_Position.Value = m_Position.Value + (direction * m_Speed.Value * delta_time);
 
         MapState state = m_Map.GetState(m_Position.Value);
         if (state.ev == Event.POWER_OUTAGE) {
@@ -173,7 +180,7 @@ public class ShipManager : NetworkBehaviour {
                 m_Rotation.Value -= 1f;
             }
 
-            UpdatePosition(Time.deltaTime);
+            UpdatePosition();
         }
     }
 }
