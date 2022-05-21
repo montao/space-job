@@ -16,6 +16,8 @@ public class EventManager : MonoBehaviour{
     [Range(0,1)]
     private float risk;
 
+    private Vector2 m_LastSpaceEventCoords = new Vector2(1, 1) * -10000;
+
     private void Start() {
         StartCoroutine(DiceRollCorutine());
     }
@@ -28,9 +30,11 @@ public class EventManager : MonoBehaviour{
     }
 
     public void DiceRoll(){
-        MapState state = m_Map.GetState(ShipManager.Instance.GetShipPosition());
-        if(state.spaceEvent == Event.POWER_OUTAGE){
+        var ship_pos = ShipManager.Instance.GetShipPosition();
+        MapState state = m_Map.GetState(ship_pos);
+        if(Vector2.Distance(m_LastSpaceEventCoords, ship_pos) > 1 && state.spaceEvent == Event.POWER_OUTAGE){
             ShipManager.Instance.TriggerPowerOutageEvent();
+            m_LastSpaceEventCoords = ship_pos;
         }        
         
         float hull_breach_dice = Random.value;
