@@ -1,14 +1,11 @@
+using Unity.Netcode;
 using UnityEngine;
 using System;
 
-[RequireComponent(typeof(ShipManager))]
-public class ShipSteering : MonoBehaviour {
+[RequireComponent(typeof(ShipManager), typeof(NetworkObject))]
+public class ShipSteering : NetworkBehaviour {
 
-    private Vector3 m_Velocity;  // z ignored, but using Vector3 for ez rotation~
-    private float[] m_TargetVelocityForwardSteps = {-1, 0, 1, 5, 10};
-    private int m_TargetVelocityIdx = 1;
-    private float m_AngularVelocity;
-
+    public static readonly float[] TARGET_VELOCITY_STEPS = {-1, 0, 1, 5, 10};
     public enum Thruster {
         ROTATE_LEFT,
         ROTATE_RIGHT,
@@ -17,7 +14,13 @@ public class ShipSteering : MonoBehaviour {
         TRANSLATE_FORWARD,
         TRANSLATE_BACKWARD,
     }
+
+    // z ignored, but using Vector3 for ez rotation~
+    private NetworkVariable<Vector3> m_Velocity = new NetworkVariable<Vector3>();
+    private NetworkVariable<int> m_TargetVelocityIdx = new NetworkVariable<int>(1);
+    private NetworkVariable<float> m_AngularVelocity = new NetworkVariable<float>(0);
     private bool[] m_ThrusterStates;
+
 
     void Awake() {
         m_ThrusterStates = new bool[Enum.GetValues(typeof(Thruster)).Length];
@@ -26,8 +29,24 @@ public class ShipSteering : MonoBehaviour {
     public bool GetThrusterState(Thruster t) {
         return m_ThrusterStates[(int)t];
     }
-    public void SetThrusterState(Thruster t, bool state) {
+
+    [ServerRpc(RequireOwnership=false)]
+    public void SetThrusterStateServerRpc(Thruster t, bool state) {
         m_ThrusterStates[(int)t] = state;
+    }
+ 
+    [ServerRpc(RequireOwnership=false)]
+    public void ChangeTargetVelocityServerRpc(bool up) {
+        int delta_idx = up ? 1 : -1;
+        m_TargetVelocityIdx.Value = Mathf.Clamp(m_TargetVelocityIdx.Value += delta_idx, 0, TARGET_VELOCITY_STEPS.Length - 1);
+    }
+
+    public float GetTargetSpeed() {
+        return TARGET_VELOCITY_STEPS[m_TargetVelocityIdx.Value];
+    }
+
+    public float GetSpeed() {
+        return Vector3.Magnitude((Vector2)m_Velocity.Value);
     }
 
     public static readonly float TRANSLATION_ACCELERATION = 0.1f;
@@ -47,16 +66,16 @@ public class ShipSteering : MonoBehaviour {
     private void ApplyThruster(Thruster thruster, float delta_time) {
         switch(thruster) {
             case Thruster.TRANSLATE_FORWARD:
-                m_Velocity += new Vector3(1, 0, 0) * TRANSLATION_ACCELERATION * delta_time;
+                m_Velocity.Value += new Vector3(1, 0, 0) * TRANSLATION_ACCELERATION * delta_time;
                 break;
             case Thruster.TRANSLATE_BACKWARD:
-                m_Velocity -=  new Vector3(1, 0, 0) * TRANSLATION_ACCELERATION * delta_time;
+                m_Velocity.Value -=  new Vector3(1, 0, 0) * TRANSLATION_ACCELERATION * delta_time;
                 break;
             case Thruster.ROTATE_LEFT:
-                m_AngularVelocity += ROTATION_ACCELERATION * delta_time;
+                m_AngularVelocity.Value += ROTATION_ACCELERATION * delta_time;
                 break;
             case Thruster.ROTATE_RIGHT:
-                m_AngularVelocity -= ROTATION_ACCELERATION * delta_time;
+                m_AngularVelocity.Value -= ROTATION_ACCELERATION * delta_time;
                 break;
             default:
                 Debug.LogError("Thruster " + thruster + " not implemented yet");
@@ -65,57 +84,52 @@ public class ShipSteering : MonoBehaviour {
     }
 
     void Update() {
+        // Set Thruster States
+        Debug_MoveWithKeys(Time.deltaTime);
+        if (IsServer) {
+            UpdateServerside();
+        }
+    }
+
+    // Server-side only
+    void UpdateServerside() {
         float delta = Time.deltaTime;
 
-        // Set Thruster States
-        Debug_MoveWithKeys(delta);
-
-        float target_x_velocity = m_TargetVelocityForwardSteps[m_TargetVelocityIdx];
-        SetThrusterState(Thruster.TRANSLATE_FORWARD, m_Velocity.x < target_x_velocity);
-        SetThrusterState(Thruster.TRANSLATE_BACKWARD, m_Velocity.x > target_x_velocity);
+        float target_x_velocity = TARGET_VELOCITY_STEPS[m_TargetVelocityIdx.Value];
+        SetThrusterStateServerRpc(Thruster.TRANSLATE_FORWARD, m_Velocity.Value.x < target_x_velocity);
+        SetThrusterStateServerRpc(Thruster.TRANSLATE_BACKWARD, m_Velocity.Value.x > target_x_velocity);
 
         // apply thrusters to set velocity
         ApplyAllActiveThrusters(delta);
 
         // rotate
-        ShipManager.Instance.Rotate(m_AngularVelocity);
+        ShipManager.Instance.Rotate(m_AngularVelocity.Value);
 
         // translate
         Quaternion rot = Quaternion.AngleAxis(ShipManager.Instance.GetShipAngle(), Vector3.forward);
-        ShipManager.Instance.Move(rot * m_Velocity);
-    }
-
-    public void ChangeTargetVelocity(bool up) {
-        int delta_idx = up ? 1 : -1;
-        m_TargetVelocityIdx = Mathf.Clamp(m_TargetVelocityIdx += delta_idx, 0, m_TargetVelocityForwardSteps.Length - 1);
-    }
-    public float GetTargetSpeed() {
-        return m_TargetVelocityForwardSteps[m_TargetVelocityIdx];
-    }
-    public float GetSpeed() {
-        return Vector3.Magnitude((Vector2)m_Velocity);
+        ShipManager.Instance.Move(rot * m_Velocity.Value);
     }
 
     private void Debug_MoveWithKeys(float delta_time) {
 
         if (Input.GetKeyDown(KeyCode.I)) {
-            ChangeTargetVelocity(up: true);
+            ChangeTargetVelocityServerRpc(up: true);
         }
         if (Input.GetKeyDown(KeyCode.K)) {
-            ChangeTargetVelocity(up: false);
+            ChangeTargetVelocityServerRpc(up: false);
         }
 
         if (Input.GetKeyDown(KeyCode.J)) {
-            SetThrusterState(Thruster.ROTATE_LEFT, true);
+            SetThrusterStateServerRpc(Thruster.ROTATE_LEFT, true);
         }
         if (Input.GetKeyUp(KeyCode.J)) {
-            SetThrusterState(Thruster.ROTATE_LEFT, false);
+            SetThrusterStateServerRpc(Thruster.ROTATE_LEFT, false);
         }
         if (Input.GetKeyDown(KeyCode.L)) {
-            SetThrusterState(Thruster.ROTATE_RIGHT, true);
+            SetThrusterStateServerRpc(Thruster.ROTATE_RIGHT, true);
         }
         if (Input.GetKeyUp(KeyCode.L)) {
-            SetThrusterState(Thruster.ROTATE_RIGHT, false);
+            SetThrusterStateServerRpc(Thruster.ROTATE_RIGHT, false);
         }
     }
 }
