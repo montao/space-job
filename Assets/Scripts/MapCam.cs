@@ -1,8 +1,11 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MapCam : MonoBehaviour {
 
     public GameObject BreadcrumbPrefab;
+    private Queue<GameObject> m_Breadcrumbs = new Queue<GameObject>();
+    public static readonly int MAX_BREADCRUMB_COUNT = 30;
 
     // (-MaxValue, -MaxValue) => (0, 0) on map,
     // (+MaxValue, +MaxValue) => (1024, 1024) on map,
@@ -65,6 +68,14 @@ public class MapCam : MonoBehaviour {
     }
 
     public void DropBreadcrumb(Vector2 pos) {
-        Instantiate(BreadcrumbPrefab, Convert3(pos, m_ShipIcon.transform.position.y), BreadcrumbPrefab.transform.rotation);
+        GameObject crumb = Instantiate(
+                BreadcrumbPrefab,
+                Convert3(pos, m_ShipIcon.transform.position.y),
+                BreadcrumbPrefab.transform.rotation
+        );
+        m_Breadcrumbs.Enqueue(crumb);
+        if (m_Breadcrumbs.Count > MAX_BREADCRUMB_COUNT) {
+            Destroy(m_Breadcrumbs.Dequeue());
+        }
     }
 }
