@@ -19,7 +19,9 @@ public class ShipSteering : NetworkBehaviour {
     private NetworkVariable<Vector3> m_Velocity = new NetworkVariable<Vector3>();
     private NetworkVariable<int> m_TargetVelocityIdx = new NetworkVariable<int>(1);
     private NetworkVariable<float> m_AngularVelocity = new NetworkVariable<float>(0);
-    private bool[] m_ThrusterStates;
+    private bool[] m_ThrusterStates;  // kept up-to-date server-side only
+    // updated server-side to reflect m_ThrusterStates:
+    private NetworkVariable<int> m_ThrusterStatesNetwork = new NetworkVariable<int>(0);
 
 
     void Awake() {
@@ -27,12 +29,17 @@ public class ShipSteering : NetworkBehaviour {
     }
 
     public bool GetThrusterState(Thruster t) {
-        return m_ThrusterStates[(int)t];
+        return (m_ThrusterStatesNetwork.Value & (1 << (int)t)) != 0;
     }
 
     [ServerRpc(RequireOwnership=false)]
     public void SetThrusterStateServerRpc(Thruster t, bool state) {
         m_ThrusterStates[(int)t] = state;
+        if (state) {
+            m_ThrusterStatesNetwork.Value |= (1 << (int)t);
+        } else {
+            m_ThrusterStatesNetwork.Value &= ~(1 << (int)t);
+        }
     }
  
     [ServerRpc(RequireOwnership=false)]
@@ -46,7 +53,7 @@ public class ShipSteering : NetworkBehaviour {
     }
 
     public float GetSpeed() {
-        return Vector3.Magnitude((Vector2)m_Velocity.Value);
+        return m_Velocity.Value.x;
     }
 
     public static readonly float TRANSLATION_ACCELERATION = 0.1f;
