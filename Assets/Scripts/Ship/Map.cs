@@ -1,8 +1,10 @@
 using UnityEngine;
 
 public struct MapState {
-    public float risk;  // red
+    public float risk; // red
+    public Event spaceEvent; //represented green
     // TODO Biomes (blue)
+
 }
 
 public class Map : MonoBehaviour {
@@ -19,9 +21,13 @@ public class Map : MonoBehaviour {
     public MapState GetState(Vector2 pos) {
         MapState state = new MapState();
         if (pos.x < 0 || pos.y < 0 || pos.x > 1024 || pos.y > 1024) {
+            state.spaceEvent = Event.COSMIC_HORROR;
             state.risk = 1;
         } else {
             Color color = MapTexture.GetPixel(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y));
+            if(color.g >= 0.5){
+                state.spaceEvent = Event.POWER_OUTAGE;
+            }
             state.risk = color.r;
         }
         return state;
