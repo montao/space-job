@@ -17,7 +17,7 @@ public class Map : MonoBehaviour {
     public Texture2D IngameMapTexture;
 
     [SerializeField]
-    private float m_MinimapZoom = 6f;
+    private MapCam m_MapCam;
 
     void Start() {
         GenerateMap();
@@ -49,5 +49,9 @@ public class Map : MonoBehaviour {
             }
         }
         IngameMapTexture.Apply();
+    }
+
+    public void DropBreadcrumb(Vector2 pos) {
+        m_MapCam.DropBreadcrumb(pos);
     }
 }

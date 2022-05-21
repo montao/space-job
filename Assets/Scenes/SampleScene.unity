@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.040689424, g: 0.24331626, b: 0.3131782, a: 1}
+  m_IndirectSpecularColor: {r: 0.040637374, g: 0.24334216, b: 0.31317982, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14367,6 +14367,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 2784718386
       objectReference: {fileID: 0}
+    - target: {fileID: 1047239872381265899, guid: 6a45d708ab572ca109168fe3970b24d5, type: 3}
+      propertyPath: m_MapCam
+      value: 
+      objectReference: {fileID: 8923283348998870023}
     - target: {fileID: 4912015480305189325, guid: 6a45d708ab572ca109168fe3970b24d5, type: 3}
       propertyPath: PowerTerminal
       value: 
@@ -15588,6 +15592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2391d74dea070b7b9f60538aa06c3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BreadcrumbPrefab: {fileID: 1389658904143917809, guid: 0d50d9f347bd39c9a99cc648834901c7, type: 3}
   m_ShipIcon: {fileID: 2337733062481560545}
   m_FlagIcon: {fileID: 2688548985880971537}
   m_DirectionIcon: {fileID: 559004689}

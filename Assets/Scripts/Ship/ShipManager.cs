@@ -15,10 +15,16 @@ public class ShipManager : NetworkBehaviour {
     private NetworkVariable<Vector2> m_Position = new NetworkVariable<Vector2>(new Vector2(512f, 512f));
     private NetworkVariable<float> m_Rotation = new NetworkVariable<float>(0f);
     private NetworkVariable<float> m_Speed = new NetworkVariable<float>(0f);
+    private NetworkVariable<float> m_Odometer = new NetworkVariable<float>(0f);
+    private float m_DistSinceLastBreadcrumb = 0;
     private Map m_Map;
     private NetworkVariable<Vector2> m_Destination = new NetworkVariable<Vector2>(new Vector2(84f, 155f));
     private float m_DistanceToWin;
+
+    public Terminal PowerTerminal;
+
     public static char[] ERROR_CODES = {'2', 'e', (char)0xba, (char)42, '\n'};
+
     public static string PowerSolutionCode(char error_code) {
         return Convert.ToByte((error_code >> 1) ^ 'a').ToString("x2").ToUpper()
                 + Convert.ToByte(error_code | 'B').ToString("x2").ToUpper();
@@ -38,13 +44,9 @@ public class ShipManager : NetworkBehaviour {
         */
     }
 
-    public Terminal PowerTerminal;
-
     public bool HasPower{
         get => m_Power.Value == HAS_POWER;
     }
-
-
 
     protected void OnPowerChange(char _, char power){
         bool hasPower = power == HAS_POWER;
@@ -108,6 +110,13 @@ public class ShipManager : NetworkBehaviour {
     }
     public void Move(Vector2 delta_pos) {
         m_Position.Value += delta_pos;
+        m_Odometer.Value += Vector3.Magnitude(delta_pos);
+        m_DistSinceLastBreadcrumb += Vector3.Magnitude(delta_pos);
+
+        if (m_DistSinceLastBreadcrumb > Mathf.Lerp(8, 64, GetShipSpeed()/ShipSteering.MAX_TRANSLATION_VELOCITY)) {
+            m_Map.DropBreadcrumb(GetShipPosition());
+            m_DistSinceLastBreadcrumb = 0;
+        }
     }
 
     public void TriggerPowerOutageEvent(){
@@ -127,6 +136,7 @@ public class ShipManager : NetworkBehaviour {
         m_Power.Value = HAS_POWER;
         Rooms[0].RoomOxygen = 1;
     }
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
