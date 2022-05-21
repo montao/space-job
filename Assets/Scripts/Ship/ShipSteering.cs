@@ -5,10 +5,10 @@ using System;
 [RequireComponent(typeof(ShipManager), typeof(NetworkObject))]
 public class ShipSteering : NetworkBehaviour {
 
-    public static readonly float TRANSLATION_ACCELERATION = 0.1f;
+    public static readonly float TRANSLATION_ACCELERATION = 5.0f;
     public static readonly float ROTATION_ACCELERATION = 2.0f;
-    public static readonly float[] TARGET_VELOCITY_STEPS = {-0.1f, 0, 0.1f, 1.0f, 2.0f};
-    public static readonly float MAX_TRANSLATION_VELOCITY = 2.0f;
+    public static readonly float[] TARGET_VELOCITY_STEPS = {-1f, 0, 1f, 5f, 10f, 20f};
+    public static readonly float MAX_TRANSLATION_VELOCITY = 20f;
     public static readonly float MAX_ABS_ANGULAR_VELOCITY = 30.0f;
 
     public enum Thruster {
@@ -126,7 +126,7 @@ public class ShipSteering : NetworkBehaviour {
 
         // translate
         Quaternion rot = Quaternion.AngleAxis(ShipManager.Instance.GetShipAngle(), Vector3.forward);
-        ShipManager.Instance.Move(rot * m_Velocity.Value);
+        ShipManager.Instance.Move(rot * m_Velocity.Value * delta);
     }
 
     private void Debug_MoveWithKeys(float delta_time) {
