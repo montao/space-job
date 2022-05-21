@@ -34,15 +34,7 @@ public class ShipManager : NetworkBehaviour {
                 + Convert.ToByte(power).ToString("x2").ToUpper();
     }
 
-    void Start() {
-        m_Map = GetComponent<Map>();
-        m_Steering = GetComponent<ShipSteering>();
-        /*
-        foreach(char error_code in ERROR_CODES) {
-            Debug.Log(ErrorCodeDisplay(error_code) + " / " + PowerSolutionCode(error_code));
-        }
-        */
-    }
+
 
     public bool HasPower{
         get => m_Power.Value == HAS_POWER;
@@ -148,6 +140,9 @@ public class ShipManager : NetworkBehaviour {
         } else {
             Destroy(this);
         }
+
+        m_Map = GetComponent<Map>();
+        m_Steering = GetComponent<ShipSteering>();
     }
 
     private void UpdatePosition() {
@@ -157,7 +152,7 @@ public class ShipManager : NetworkBehaviour {
 
         // m_Position.Value = m_Position.Value + (direction * m_Speed.Value * delta_time);
 
-        MapState state = m_Map.GetState(m_Position.Value);
+        MapState state = m_Map.GetState(m_Position.Value); 
         
     }
 

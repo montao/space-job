@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum Event {
@@ -8,11 +9,23 @@ public enum Event {
 }
 
 public class EventManager : MonoBehaviour{
+    public static EventManager Instance;
     [SerializeField]
     private Map m_Map;
     [SerializeField]
     [Range(0,1)]
     private float risk;
+
+    private void Start() {
+        StartCoroutine(DiceRollCorutine());
+    }
+
+    IEnumerator DiceRollCorutine() {
+        while(true){
+            DiceRoll();
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
 
     public void DiceRoll(){
         MapState state = m_Map.GetState(ShipManager.Instance.GetShipPosition());
