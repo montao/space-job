@@ -105,4 +105,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Map: {fileID: 1047239872381265899}
-  risk: 0.5
+  risk: 1
