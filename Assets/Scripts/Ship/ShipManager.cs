@@ -158,6 +158,7 @@ public class ShipManager : NetworkBehaviour {
         // m_Position.Value = m_Position.Value + (direction * m_Speed.Value * delta_time);
 
         MapState state = m_Map.GetState(m_Position.Value);
+        
     }
 
 
