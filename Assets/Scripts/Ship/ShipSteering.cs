@@ -6,7 +6,7 @@ using System;
 public class ShipSteering : NetworkBehaviour {
 
     public static readonly float TRANSLATION_ACCELERATION = 0.1f;
-    public static readonly float ROTATION_ACCELERATION = 0.15f;
+    public static readonly float ROTATION_ACCELERATION = 2.0f;
     public static readonly float[] TARGET_VELOCITY_STEPS = {-0.1f, 0, 0.1f, 1.0f, 2.0f};
     public static readonly float MAX_TRANSLATION_VELOCITY = 2.0f;
     public static readonly float MAX_ABS_ANGULAR_VELOCITY = 30.0f;
@@ -107,7 +107,6 @@ public class ShipSteering : NetworkBehaviour {
         Debug_MoveWithKeys(Time.deltaTime);
         if (IsServer) {
             UpdateServerside();
-            Debug.Log(m_Velocity.Value);
         }
     }
 
@@ -123,7 +122,7 @@ public class ShipSteering : NetworkBehaviour {
         ApplyAllActiveThrusters(delta);
 
         // rotate
-        ShipManager.Instance.Rotate(m_AngularVelocity.Value);
+        ShipManager.Instance.Rotate(m_AngularVelocity.Value * delta);
 
         // translate
         Quaternion rot = Quaternion.AngleAxis(ShipManager.Instance.GetShipAngle(), Vector3.forward);
