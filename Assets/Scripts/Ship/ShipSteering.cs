@@ -73,7 +73,7 @@ public class ShipSteering : NetworkBehaviour {
                 active += thruster + " ";
             }
         }
-        Debug.Log("Active Thrusters: " + active);
+        //Debug.Log("Active Thrusters: " + active);
     }
 
     private void ApplyThruster(Thruster thruster, float delta_time) {

@@ -93,15 +93,15 @@ public class PlayerAvatar : NetworkBehaviour {
         float oxygen = ((m_LungCapacity - 0.01f + (0.02f* m_CurrentRoom.RoomOxygen)));
         if(oxygen <= 0f){
             m_LungCapacity = 0f;
-            Debug.Log("Your Chocking");
+            //Debug.Log("Your Chocking");
         }
         else if(oxygen >= 1f){
             m_LungCapacity = 1f;
         }
         else{
             m_LungCapacity = oxygen;
-            Debug.Log(delta_time);
-            Debug.Log("palyer Oxygen:" + m_LungCapacity + "\n room: " + m_CurrentRoom.Name + ",Ox-Level: " + m_CurrentRoom.RoomOxygen);
+            //Debug.Log(delta_time);
+            //Debug.Log("palyer Oxygen:" + m_LungCapacity + "\n room: " + m_CurrentRoom.Name + ",Ox-Level: " + m_CurrentRoom.RoomOxygen);
         }
     }
 
