@@ -75,6 +75,9 @@ public class ShipManager : NetworkBehaviour {
     public float GetShipAngle(){
         return m_Rotation.Value;
     }
+    public float GetShipAngleSpeed(){
+        return m_Steering.GetAngularSpeed();
+    }
     public Vector2 GetShipPosition(){
         return m_Position.Value;
     }

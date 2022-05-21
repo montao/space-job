@@ -63,8 +63,9 @@ public class NavTerminal : Interactable<int> {
         base.Update();
         DisplayText("Position: " + ShipManager.Instance.GetShipPosition()+
                     "\n Speed: " + System.Math.Round(ShipManager.Instance.GetShipSpeed(), 2) + " nly/h" + 
-                    " (" +         System.Math.Round(ShipManager.Instance.GetTargetShipSpeed()) + " nly/h)" + 
-                    " ,Angle: " +  System.Math.Round(ShipManager.Instance.GetShipAngle(), 1) + " deg/s"+
+                    " (" +         System.Math.Round(ShipManager.Instance.GetTargetShipSpeed(), 1) + " nly/h)" + 
+                    " ,Angle: " +  System.Math.Round(ShipManager.Instance.GetShipAngle(), 0) + " deg"+
+                    " (" +  System.Math.Round(ShipManager.Instance.GetShipAngleSpeed(), 2) + " deg/s)"+
                     "\n Dist: " +  System.Math.Round(ShipManager.Instance.GetDistantToWin(), 2) + " nly"
                     );
     }

@@ -5,7 +5,12 @@ using System;
 [RequireComponent(typeof(ShipManager), typeof(NetworkObject))]
 public class ShipSteering : NetworkBehaviour {
 
-    public static readonly float[] TARGET_VELOCITY_STEPS = {-1, 0, 1, 5, 10};
+    public static readonly float TRANSLATION_ACCELERATION = 0.1f;
+    public static readonly float ROTATION_ACCELERATION = 0.15f;
+    public static readonly float[] TARGET_VELOCITY_STEPS = {-0.1f, 0, 0.1f, 1.0f, 2.0f};
+    public static readonly float MAX_TRANSLATION_VELOCITY = 2.0f;
+    public static readonly float MAX_ABS_ANGULAR_VELOCITY = 30.0f;
+
     public enum Thruster {
         ROTATE_LEFT,
         ROTATE_RIGHT,
@@ -56,8 +61,9 @@ public class ShipSteering : NetworkBehaviour {
         return m_Velocity.Value.x;
     }
 
-    public static readonly float TRANSLATION_ACCELERATION = 0.1f;
-    public static readonly float ROTATION_ACCELERATION = 0.15f;
+    public float GetAngularSpeed() {
+        return m_AngularVelocity.Value;
+    }
 
     private void ApplyAllActiveThrusters(float delta_time) {
         string active = "";
@@ -88,6 +94,12 @@ public class ShipSteering : NetworkBehaviour {
                 Debug.LogError("Thruster " + thruster + " not implemented yet");
                 break;
         };
+
+        // enforce max velocities
+        if (Vector3.Magnitude(m_Velocity.Value) > MAX_TRANSLATION_VELOCITY) {
+            m_Velocity.Value = Vector3.Normalize(m_Velocity.Value) * MAX_TRANSLATION_VELOCITY;
+        }
+        m_AngularVelocity.Value = Mathf.Clamp(m_AngularVelocity.Value, -MAX_ABS_ANGULAR_VELOCITY, +MAX_ABS_ANGULAR_VELOCITY);
     }
 
     void Update() {
@@ -95,6 +107,7 @@ public class ShipSteering : NetworkBehaviour {
         Debug_MoveWithKeys(Time.deltaTime);
         if (IsServer) {
             UpdateServerside();
+            Debug.Log(m_Velocity.Value);
         }
     }
 
