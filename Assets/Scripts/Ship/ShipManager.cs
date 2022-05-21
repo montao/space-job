@@ -114,9 +114,14 @@ public class ShipManager : NetworkBehaviour {
         m_DistSinceLastBreadcrumb += Vector3.Magnitude(delta_pos);
 
         if (m_DistSinceLastBreadcrumb > Mathf.Lerp(8, 64, GetShipSpeed()/ShipSteering.MAX_TRANSLATION_VELOCITY)) {
-            m_Map.DropBreadcrumb(GetShipPosition());
+            DropBreadcrumbClientRpc(GetShipPosition());
             m_DistSinceLastBreadcrumb = 0;
         }
+    }
+
+    [ClientRpc]
+    public void DropBreadcrumbClientRpc(Vector2 ship_pos) {
+        m_Map.DropBreadcrumb(ship_pos);
     }
 
     public void TriggerPowerOutageEvent(){
