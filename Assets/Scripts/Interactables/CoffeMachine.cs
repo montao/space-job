@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
@@ -9,6 +8,9 @@ public class CoffeMachine : Interactable<bool> {
    
     protected override void Interaction(){
         SetServerRpc(!Value);
+        if (PlayerAvatar.IsHolding<PipeWrench>()) {
+            transform.localScale = transform.localScale * 1.6f;
+        }
     }
 
     public override void OnStateChange(bool previous, bool current) {

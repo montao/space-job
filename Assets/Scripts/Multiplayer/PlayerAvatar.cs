@@ -436,4 +436,8 @@ public class PlayerAvatar : NetworkBehaviour {
         m_PlayerAnimator.speed = 1f;
         m_SpeedBoostCoroutine = null;
     }
+
+    public static bool IsHolding<T>() where T: DroppableInteractable {
+        return PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).GetComponentInChildren<T>() != null;
+    }
 }
