@@ -8,7 +8,7 @@ public class SpaceCamera : MonoBehaviour {
         m_Camera = GetComponent<Camera>();
     }
 
-    void FixedUpdate() {
+    void LateUpdate() {
         transform.rotation = CameraBrain.Instance.OutputCamera.transform.rotation;
         m_Camera.fieldOfView = CameraBrain.Instance.OutputCamera.fieldOfView;
     }
