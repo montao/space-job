@@ -3690,7 +3690,7 @@ GameObject:
   - component: {fileID: 874680944}
   - component: {fileID: 874680946}
   - component: {fileID: 874680945}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9155,6 +9155,7 @@ GameObject:
   - component: {fileID: 919132147541684871}
   - component: {fileID: 919132147541684870}
   - component: {fileID: 919132147541684872}
+  - component: {fileID: 919132147541684873}
   m_Layer: 0
   m_Name: simpleFlashlight
   m_TagString: Untagged
@@ -9249,6 +9250,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f615e5296314307ba9cb96af9dfff720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NeedsPower: 0
+  HidePlayer: 0
+  TriggeredAnimation: 2
+  pickedUp: 0
+  velocity: 0
+--- !u!114 &919132147541684873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147541684869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 602788075
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &919132149106003462
 GameObject:
   m_ObjectHideFlags: 0
