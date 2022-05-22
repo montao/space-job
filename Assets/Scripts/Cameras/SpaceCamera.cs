@@ -9,7 +9,12 @@ public class SpaceCamera : MonoBehaviour {
     }
 
     void LateUpdate() {
-        transform.rotation = CameraBrain.Instance.OutputCamera.transform.rotation;
+        Quaternion ship_rotation = default;
+        if (ShipManager.Instance) {
+            var angle = ShipManager.Instance.GetShipAngle();
+            ship_rotation = Quaternion.Euler(0, angle, 0);
+        }
+        transform.rotation = ship_rotation * CameraBrain.Instance.OutputCamera.transform.rotation;
         m_Camera.fieldOfView = CameraBrain.Instance.OutputCamera.fieldOfView;
     }
 }
