@@ -103,7 +103,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
     public void OnCharacterChanged(int previous, int current) {
         var characters = GameObject.FindGameObjectsWithTag("CharacterList");
-        if(m_LocalPlayer){
+        if(IsClient){
             
             if(current == 0){
                 SetActiveCharacter(current);
