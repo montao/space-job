@@ -116,7 +116,7 @@ public class PlayerAvatar : NetworkBehaviour {
             if(current == 3){
                 characters[0].transform.GetChild(3).gameObject.SetActive(true);
             }
-            characters[previous].transform.GetChild(0).gameObject.SetActive(false);
+            //characters[previous].transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
