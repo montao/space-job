@@ -50,7 +50,7 @@ public class CharacterSelect : MonoBehaviour {
                 PlayerManager.Instance.LocalPlayer.Avatar.SetActiveCharacter(i);
                 /* PlayerManager.Instance.LocalPlayer.GetComponent<Animator>().avatar =; */
             }
-            else characters[0].transform.GetChild(i).gameObject.SetActive(false);
+            //else characters[0].transform.GetChild(i).gameObject.SetActive(false);
         }
         
     
