@@ -103,17 +103,20 @@ public class PlayerAvatar : NetworkBehaviour {
 
     public void OnCharacterChanged(int previous, int current) {
         var characters = GameObject.FindGameObjectsWithTag("CharacterList");
-        if(current == 0){
-            characters[0].transform.GetChild(0).gameObject.SetActive(true);
-        }
-        if(current == 1){
-            characters[0].transform.GetChild(1).gameObject.SetActive(true);
-        }
-        if(current == 2){
-            characters[0].transform.GetChild(2).gameObject.SetActive(true);
-        }
-        if(current == 3){
-            characters[0].transform.GetChild(3).gameObject.SetActive(true);
+        if(m_LocalPlayer){
+            if(current == 0){
+                characters[0].transform.GetChild(0).gameObject.SetActive(true);
+            }
+            if(current == 1){
+                characters[0].transform.GetChild(1).gameObject.SetActive(true);
+            }
+            if(current == 2){
+                characters[0].transform.GetChild(2).gameObject.SetActive(true);
+            }
+            if(current == 3){
+                characters[0].transform.GetChild(3).gameObject.SetActive(true);
+            }
+            characters[previous].transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
