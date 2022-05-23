@@ -104,9 +104,7 @@ public class PlayerAvatar : NetworkBehaviour {
     public void OnCharacterChanged(int previous, int current) {
         var characters = GameObject.FindGameObjectsWithTag("CharacterList");
         if(IsOwner){
-            
             if(current == 0){
-                SetActiveCharacter(current);
                 characters[0].transform.GetChild(0).gameObject.SetActive(true);
             }
             if(current == 1){
@@ -118,8 +116,10 @@ public class PlayerAvatar : NetworkBehaviour {
             if(current == 3){
                 characters[0].transform.GetChild(3).gameObject.SetActive(true);
             }
-            characters[0].transform.GetChild(previous).gameObject.SetActive(false);
         }
+        
+        characters[0].transform.GetChild(previous).gameObject.SetActive(false);
+
     }
 
     public override void OnNetworkSpawn() {
