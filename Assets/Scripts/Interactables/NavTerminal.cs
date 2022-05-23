@@ -41,16 +41,17 @@ public class NavTerminal : Interactable<int> {
             return;
         }
 
-        //Debug.Log("StateChange!" + current + ShipManager.Instance.GetShipPosition());
         if (current == NOT_OCCUPIED) {
             if (prev == (int)NetworkManager.Singleton.LocalClientId) {
                 PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
                 m_CameraSwap.SwitchAway();
+                NeedsPower = true;
             }
         } else {
             if (current == (int)NetworkManager.Singleton.LocalClientId) {
                 m_CameraSwap.SwitchTo();
                 PlayerManager.Instance.LocalPlayer.Avatar.LockMovement(GetHashCode());
+                NeedsPower = false;  // allow exit
             }
         }
     }
@@ -61,8 +62,11 @@ public class NavTerminal : Interactable<int> {
     public override void Update() {
         base.Update();
         DisplayText("Position: " + ShipManager.Instance.GetShipPosition()+
-                    "\n Speed: " + ShipManager.Instance.GetShipSpeed()+ 
-                    " ,Angle: " + ShipManager.Instance.GetShipAngle()+
-                    "\n Dist: " + ShipManager.Instance.GetDistantToWin());
+                    "\n Speed: " + System.Math.Round(ShipManager.Instance.GetShipSpeed(), 2) + " nly/h" + 
+                    " (" +         System.Math.Round(ShipManager.Instance.GetTargetShipSpeed(), 1) + " nly/h)" + 
+                    " ,Angle: " +  System.Math.Round(ShipManager.Instance.GetShipAngle(), 0) + " deg"+
+                    " (" +  System.Math.Round(ShipManager.Instance.GetShipAngleSpeed(), 2) + " deg/s)"+
+                    "\n Dist: " +  System.Math.Round(ShipManager.Instance.GetDistantToWin(), 2) + " nly"
+                    );
     }
 }

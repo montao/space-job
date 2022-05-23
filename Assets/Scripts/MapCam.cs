@@ -1,6 +1,12 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MapCam : MonoBehaviour {
+
+    public GameObject BreadcrumbPrefab;
+    private Queue<GameObject> m_Breadcrumbs = new Queue<GameObject>();
+    public static readonly int MAX_BREADCRUMB_COUNT = 30;
+
     // (-MaxValue, -MaxValue) => (0, 0) on map,
     // (+MaxValue, +MaxValue) => (1024, 1024) on map,
     private static readonly float m_MaxValue = 5.0f;
@@ -11,15 +17,22 @@ public class MapCam : MonoBehaviour {
     private Transform m_FlagIcon;
     [SerializeField]
     private Transform m_DirectionIcon;
+    
     private MeshRenderer m_DirectionIconRenderer;
 
     void Start() {
         m_DirectionIconRenderer = m_DirectionIcon.gameObject.GetComponentInChildren<MeshRenderer>();
     }
 
+    // map pos -> unity world pos
     private static float Convert(float map_pos) {
         float unclamped = ((map_pos - 512.0f) / 512.0f) * m_MaxValue;
         return Mathf.Clamp(unclamped, -2 * m_MaxValue, 2 * m_MaxValue);
+    }
+    private static Vector3 Convert3(Vector2 map_pos, float y) {
+        float x = Convert(map_pos.x);
+        float z = Convert(map_pos.y);
+        return new Vector3(x, y, z);
     }
 
     // Update is called once per frame
@@ -28,10 +41,7 @@ public class MapCam : MonoBehaviour {
             return;
         }
         Vector2 ship_pos = ShipManager.Instance.GetShipPosition();
-        float x = Convert(ship_pos.x);
-        float y = transform.position.y;
-        float z = Convert(ship_pos.y);
-        transform.position = new Vector3(x, y, z);
+        transform.position = Convert3(ship_pos, transform.position.y);
 
         m_ShipIcon.localRotation = Quaternion.Euler(0, 0, ShipManager.Instance.GetShipAngle());
 
@@ -45,11 +55,7 @@ public class MapCam : MonoBehaviour {
 
     void UpdateGoal() {
         Vector2 goal_pos = ShipManager.Instance.GetGoal();
-        float x = Convert(goal_pos.x);
-        float y = m_ShipIcon.transform.position.y;
-        float z = Convert(goal_pos.y);
-
-        m_FlagIcon.position = new Vector3(x, y, z);
+        m_FlagIcon.position = Convert3(goal_pos, m_ShipIcon.transform.position.y);
 
         Vector2 target_direction = (ShipManager.Instance.GetGoal() - ShipManager.Instance.GetShipPosition());
 
@@ -59,5 +65,17 @@ public class MapCam : MonoBehaviour {
         float angle_rad = Angle(target_direction);
         m_DirectionIcon.localRotation = Quaternion.Euler(0, 0, angle_rad * 180f/Mathf.PI);
 
+    }
+
+    public void DropBreadcrumb(Vector2 pos) {
+        GameObject crumb = Instantiate(
+                BreadcrumbPrefab,
+                Convert3(pos, m_ShipIcon.transform.position.y),
+                BreadcrumbPrefab.transform.rotation
+        );
+        m_Breadcrumbs.Enqueue(crumb);
+        if (m_Breadcrumbs.Count > MAX_BREADCRUMB_COUNT) {
+            Destroy(m_Breadcrumbs.Dequeue());
+        }
     }
 }
