@@ -25,7 +25,7 @@ public class PlayerReadyButton : Interactable<bool> {
 
     }
     void SetReadyConditions(bool ready){
-        int readyCouter = 0;
+        /* int readyCouter = 0;
         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
             if(IsOwner){
                 if (PlayerManager.Instance.LocalPlayer.Avatar.ready.Value) {
@@ -34,7 +34,7 @@ public class PlayerReadyButton : Interactable<bool> {
                 }
             }
             
-        }
+        } */
         Debug.Log("ready counter: " + readyCouter + " Player Counter: " + PlayerManager.Instance.Players.Count);
     }
 
