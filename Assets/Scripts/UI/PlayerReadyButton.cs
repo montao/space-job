@@ -18,7 +18,7 @@ public class PlayerReadyButton : Interactable<bool> {
         SetPlayerConditions(m_LocalPlayerInteracting); 
         foreach (var player in PlayerManager.Instance.Players) {
             if(player.Avatar.ready.Value){
-                PlayerManager.Instance.PlayersReady++;
+                PlayerManager.Instance.PlayersReady.Value++;
             }
         }  
         /* SetReadyConditions(m_LocalPlayerInteracting); */
@@ -44,8 +44,8 @@ public class PlayerReadyButton : Interactable<bool> {
 
     public override void Update() {
         base.Update();
-        Debug.Log("ready counter: " + PlayerManager.Instance.PlayersReady + " Player Counter: " + PlayerManager.Instance.Players.Count);
-        if(PlayerManager.Instance.PlayersReady == PlayerManager.Instance.Players.Count){
+        Debug.Log("ready counter: " + PlayerManager.Instance.PlayersReady.Value + " Player Counter: " + PlayerManager.Instance.Players.Count);
+        if(PlayerManager.Instance.PlayersReady.Value == PlayerManager.Instance.Players.Count){
             if(IsServer) {
                 NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
             }

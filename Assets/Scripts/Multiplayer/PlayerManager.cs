@@ -9,16 +9,19 @@ public class PlayerManager : NetworkBehaviour {
 
     public string LocalPlayerName = "";
     public string LocalPlayerStatus = "";
-    private int m_PlayersReady = 0;
-    public int PlayersReady{
+    //private int m_PlayersReady = 0;
+/*     public int PlayersReady{
         get => m_PlayersReady;
         set {
             m_PlayersReady = value;
         }
-    }
+    } */
 
     private NetworkVariable<int> m_PlayerCount =
             new NetworkVariable<int>(1);
+
+    public NetworkVariable<int> PlayersReady =
+            new NetworkVariable<int>(3, default, NetworkVariableWritePermission.Owner);
 
     private List<PersistentPlayer> m_Players;
     public List<PersistentPlayer> Players {
