@@ -8968,6 +8968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a6aff4f342516f5d8e8690c049bc7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doofprefab: {fileID: 5519585612222790138, guid: 6ac64921f83b462f69196c9298af06a6, type: 3}
   Name: Red
   Doors:
   - {fileID: 1376198743}
@@ -9774,6 +9775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a6aff4f342516f5d8e8690c049bc7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doofprefab: {fileID: 5519585612222790138, guid: 6ac64921f83b462f69196c9298af06a6, type: 3}
   Name: Blue
   Doors:
   - {fileID: 1376198743}
