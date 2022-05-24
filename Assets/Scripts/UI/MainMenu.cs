@@ -3,6 +3,7 @@ using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Runtime;
 
 /*
  * TODO separate out the connection stuff
@@ -49,11 +50,11 @@ public class MainMenu : MonoBehaviour {
     }
 
     public bool IsArgon() {
-        return SystemInfo.deviceName == "argon";
+        return SystemInfo.deviceName == "argon" && System.Environment.GetEnvironmentVariable("GOOSE") == "y";
     }
 
     public void StartHost() {
-        if (MultiplayerUtil.GetLocalIPAddress() != serverAddress.text && !IsArgon()) {
+        if (MultiplayerUtil.GetLocalIPAddress() != serverAddress.text) {
             Debug.LogWarning("Cannot host a game from a different ip address");
             return;
         }
