@@ -16,7 +16,7 @@ public class PlayerReadyButton : Interactable<bool> {
         
     [ServerRpc(RequireOwnership = false)]
     public void IncReadyServerRpc(){
-        PlayersReady.Value = PlayersReady.Value++;
+        PlayersReady.Value = PlayersReady.Value + 1;
     }
     [ServerRpc(RequireOwnership = false)]
     public void ResReadyServerRpc(){
@@ -24,10 +24,12 @@ public class PlayerReadyButton : Interactable<bool> {
     }
 
     protected override void Interaction(){
+        Debug.Log("hey" + PlayersReady.Value);
         m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
         SetServerRpc(m_LocalPlayerInteracting);
         SetPlayerConditions(m_LocalPlayerInteracting);
         IncReadyServerRpc();  
+        Debug.Log("hey" + PlayersReady.Value);
         /* SetReadyConditions(m_LocalPlayerInteracting); */
 
     }
