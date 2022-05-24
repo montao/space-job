@@ -61,4 +61,6 @@ public class CharacterSelect : MonoBehaviour {
         canvas.SetActive(false);
         cam.Priority = 0;
     }
+
+
 }

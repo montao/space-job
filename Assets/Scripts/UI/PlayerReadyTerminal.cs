@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class PlayerReadyTerminal : Interactable<bool> {
@@ -24,7 +25,15 @@ public class PlayerReadyTerminal : Interactable<bool> {
         PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = on;
         cam.Priority = 100;
         canvas.SetActive(true);
+        int readyCouter = 0;
 
+        foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
+            if (PlayerManager.Instance.LocalPlayer.Avatar.ready.Value) {
+                readyCouter++;
+               
+            }
+        }
+        if(readyCouter == PlayerManager.Instance.Players.Count)  NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
         //PlayerManager.Instance.LocalPlayer.Avatar.notready.SetActive(!on);
     }
     public override void OnStateChange(bool previous, bool current){
@@ -35,6 +44,8 @@ public class PlayerReadyTerminal : Interactable<bool> {
     public void SetServerRpc(bool value){
         m_State.Value = value;
     }
+
+
 
    /*  private void Awake() {
         SetPlayerConditions(Value);
