@@ -8,6 +8,7 @@ using TMPro;
 
 public class PlayerReadyButton : Interactable<bool> {
     PlayerAvatar player;
+    private int readyCounter = 0;
     private bool m_LocalPlayerInteracting = false;
 
     protected override void Interaction(){
@@ -20,25 +21,24 @@ public class PlayerReadyButton : Interactable<bool> {
     void SetPlayerConditions(bool on){
         PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = on;   
         
-        /* if(readyCouter == PlayerManager.Instance.Players.Count)  NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single); */
+        /* if(readyCounter == PlayerManager.Instance.Players.Count)  NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single); */
 
     }
     void SetReadyConditions(bool ready){
-        int readyCouter = 0;
         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
             if(IsOwner){
                 if (PlayerManager.Instance.LocalPlayer.Avatar.ready.Value) {
-                    readyCouter++;
+                    readyCounter++;
                
                 }
             }
             
         } 
-        Debug.Log("ready counter: " + readyCouter + " Player Counter: " + PlayerManager.Instance.Players.Count);
+        Debug.Log("ready counter: " + readyCounter + " Player Counter: " + PlayerManager.Instance.Players.Count);
     }
 
     void FixedUpdate() {
-        if(readyCouter >= PlayerManager.Instance.Players.Count)  NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        if(readyCounter >= PlayerManager.Instance.Players.Count)  NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
     }
     public override void OnStateChange(bool previous, bool current){
         //SetPlayerConditions(current);
