@@ -45,7 +45,9 @@ public class Room : NetworkBehaviour {
 
     private void FixedUpdate() {
         if (IsServer) {
-            float new_oxygen = m_RoomOxygen.Value - m_HullBreaches.Count * Time.fixedDeltaTime * 0.02f;
+            float new_oxygen = m_RoomOxygen.Value;
+            new_oxygen -= m_HullBreaches.Count * Time.fixedDeltaTime * 0.03f;
+            new_oxygen += Time.fixedDeltaTime * 0.01f;
             m_RoomOxygen.Value = Mathf.Clamp(new_oxygen, 0f, 1f);
         }
     }
@@ -62,10 +64,13 @@ public class Room : NetworkBehaviour {
         Transform location = Util.RandomChoice(m_HullBreachSpawnLocations);
         m_HullBreachSpawnLocations.Remove(location);
         GameObject breach = Instantiate(EventManager.Instance.HullBreachPrefab, location.position, location.rotation);
+        breach.GetComponent<NetworkObject>().Spawn();
+        breach.GetComponent<HullBreachInstance>().Setup(this);
         m_HullBreaches.Add(breach);
     }
 
     public void HullBreachResolved(HullBreachInstance breach) {
-        m_HullBreachSpawnLocations.Add(breach.transform);
+        m_HullBreaches.Remove(breach.gameObject);
+        m_HullBreachSpawnLocations.Add(breach.transform);  // location availble again
     }
 }
