@@ -32,6 +32,7 @@ public class PlayerAvatar : NetworkBehaviour {
     public TMP_Text nameText;
     public Material normalMaterial;
     public Material transparentMaterial;
+    public Transform CameraLookAt;
 
     private NetworkVariable<int> m_ActiveAnimation
             = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
@@ -68,6 +69,9 @@ public class PlayerAvatar : NetworkBehaviour {
     private float m_LungCapacity = 1f;
 
     public void Start() {
+        if (CameraLookAt == null) {
+            CameraLookAt = transform;
+        }
         m_Controller = GetComponent<CharacterController>();
         m_PlayerAnimator = GetComponent<Animator>();
         m_PlayerMesh = GetComponentInChildren<SkinnedMeshRenderer>();

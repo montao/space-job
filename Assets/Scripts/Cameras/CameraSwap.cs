@@ -37,7 +37,7 @@ public class CameraSwap : MonoBehaviour {
     }
 
     public void LookAtPlayer(PlayerAvatar avatar) {
-        m_Camera.LookAt = avatar.transform;
+        m_Camera.LookAt = avatar.CameraLookAt.transform;
     }
 
     public void SwitchTo() {
