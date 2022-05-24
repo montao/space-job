@@ -20,9 +20,6 @@ public class PlayerManager : NetworkBehaviour {
     private NetworkVariable<int> m_PlayerCount =
             new NetworkVariable<int>(1);
 
-    public NetworkVariable<int> PlayersReady =
-            new NetworkVariable<int>(3, default, NetworkVariableWritePermission.Owner);
-
     private List<PersistentPlayer> m_Players;
     public List<PersistentPlayer> Players {
         get => m_Players;
