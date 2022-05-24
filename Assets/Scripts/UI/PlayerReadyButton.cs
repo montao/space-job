@@ -34,11 +34,12 @@ public class PlayerReadyButton : Interactable<bool> {
             }
             
         } 
-        Debug.Log("ready counter: " + readyCouter + " Player Counter: " + PlayerManager.Instance.Players.Count);
     }
 
-    void FixedUpdate() {
+    void Update() {
         if(readyCouter >= PlayerManager.Instance.Players.Count)  NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        Debug.Log("ready counter: " + readyCouter + " Player Counter: " + PlayerManager.Instance.Players.Count);
+
     }
     public override void OnStateChange(bool previous, bool current){
         //SetPlayerConditions(current);
