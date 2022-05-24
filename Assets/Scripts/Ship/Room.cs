@@ -44,10 +44,17 @@ public class Room : NetworkBehaviour {
     }
 
     private void FixedUpdate() {
-        // m_RoomOxygen -= m_HullBreaches.Count * Time.fixedTimeDelta;
+        if (IsServer) {
+            float new_oxygen = m_RoomOxygen.Value - m_HullBreaches.Count * Time.fixedDeltaTime * 0.02f;
+            m_RoomOxygen.Value = Mathf.Clamp(new_oxygen, 0f, 1f);
+        }
     }
 
     public void SpawnHullBreach(EventParameters.HullBreachSize size) {
+        if (!IsServer) {
+            Debug.LogWarning("SpawnHullBreach should only be called on server!");
+            return;
+        }
         if (m_HullBreachSpawnLocations.Count == 0) {
             Debug.Log("You're in luck(?), there's no places to spawn hull breaches in " + name);
             return;
