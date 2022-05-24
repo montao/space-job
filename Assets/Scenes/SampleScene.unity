@@ -1516,7 +1516,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 283405471}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -12123,6 +12123,10 @@ PrefabInstance:
       propertyPath: m_MapCam
       value: 
       objectReference: {fileID: 8923283348998870023}
+    - target: {fileID: 4912015480305189325, guid: 6a45d708ab572ca109168fe3970b24d5, type: 3}
+      propertyPath: WinCanvas
+      value: 
+      objectReference: {fileID: 283405474}
     - target: {fileID: 4912015480305189325, guid: 6a45d708ab572ca109168fe3970b24d5, type: 3}
       propertyPath: PowerTerminal
       value: 
