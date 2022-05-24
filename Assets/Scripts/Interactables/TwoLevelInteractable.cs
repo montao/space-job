@@ -26,6 +26,7 @@ public class TwoLevelInteractable : Interactable<int> {
             m_State.Value = NOT_OCCUPIED;
         }
         m_NeedsPowerInitial = NeedsPower;
+        SetSecondaryButtonsActive(false);
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -66,6 +67,7 @@ public class TwoLevelInteractable : Interactable<int> {
     }
 
     private void SetSecondaryButtonsActive(bool active) {
+        Debug.Log("Secondary: " + active);
         foreach (var button in m_Buttons) {
             button.CanInteract = active;
         }
