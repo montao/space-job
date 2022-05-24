@@ -97,6 +97,7 @@ public class PlayerAvatar : NetworkBehaviour {
         m_Controller.enabled = prev_controller_enabled;
     }
     public void OxygenRegulation(float delta_time){
+        if (m_CurrentRoom == null) return;
         float oxygen = ((m_LungCapacity - 0.01f + (0.02f* m_CurrentRoom.RoomOxygen)));
         if(oxygen <= 0f){
             m_LungCapacity = 0f;
