@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
@@ -15,15 +16,19 @@ namespace EventParameters {
     }
 }
 
-public class EventManager : MonoBehaviour{
+public class EventManager : MonoBehaviour {
     public static EventManager Instance;
     [SerializeField]
     private Map m_Map;
     private float risk = 0.02f;
 
+    [SerializeField]
+    private List<Transform> m_HullBreachLocations = new List<Transform>();
+
     private Vector2 m_LastSpaceEventCoords = new Vector2(1, 1) * -10000;
 
-    private void Start() {
+    // Called by ShipManager, and only if current user is hosting
+    public void StartDiceRollCoroutine() {
         StartCoroutine(DiceRollCorutine());
     }
 

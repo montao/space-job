@@ -142,6 +142,12 @@ public class ShipManager : NetworkBehaviour {
         m_Steering = GetComponent<ShipSteering>();
     }
 
+    private void Start() {
+        if (IsServer) {
+            GetComponent<EventManager>().StartDiceRollCoroutine();
+        }
+    }
+
     private void UpdatePosition() {
 
         // float angle = m_Rotation.Value*(Mathf.PI/180f);
