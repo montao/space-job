@@ -82,6 +82,10 @@ public class PlayerAvatar : NetworkBehaviour {
         m_Controller = GetComponent<CharacterController>();
         m_PlayerAnimator = GetComponent<Animator>();
         m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
+        
+    }
+    private void Awake() {
+        DontDestroyOnLoad(this.gameObject);
     }
 
     void Update() {
@@ -116,6 +120,7 @@ public class PlayerAvatar : NetworkBehaviour {
         m_CharacterList.transform.GetChild(previous).gameObject.SetActive(false);
         m_CharacterList.transform.GetChild(current).gameObject.SetActive(true);
         m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
+        DontDestroyOnLoad(m_CharacterList);
     }
 
     public void Teleport(Transform target) {
