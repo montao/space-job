@@ -1373,7 +1373,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Return To Lobby
+  m_text: Try another!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5bc7c323c2cb202c9b92d6ad31867e99, type: 2}
   m_sharedMaterial: {fileID: 3691657298897300434, guid: 5bc7c323c2cb202c9b92d6ad31867e99, type: 2}
@@ -6504,7 +6504,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1391696208}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4912015480305189325, guid: 6a45d708ab572ca109168fe3970b24d5, type: 3}
+        m_TargetAssemblyTypeName: ShipManager, Assembly-CSharp
+        m_MethodName: StartNewGameServerRpc
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1391696208
 MonoBehaviour:
   m_ObjectHideFlags: 0
