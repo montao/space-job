@@ -6505,7 +6505,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4912015480305189325, guid: 6a45d708ab572ca109168fe3970b24d5, type: 3}
+      - m_Target: {fileID: 6853141304906646794}
         m_TargetAssemblyTypeName: ShipManager, Assembly-CSharp
         m_MethodName: StartNewGameServerRpc
         m_Mode: 1
@@ -12193,27 +12193,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a45d708ab572ca109168fe3970b24d5, type: 3}
---- !u!1 &6853141304906646794 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9204123625600447561, guid: 6a45d708ab572ca109168fe3970b24d5, type: 3}
+--- !u!114 &6853141304906646794 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4912015480305189325, guid: 6a45d708ab572ca109168fe3970b24d5, type: 3}
   m_PrefabInstance: {fileID: 6853141304906646793}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6853141304906646795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6853141304906646794}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d58abe5c6eec50e685d1f889b0877a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3287346479
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!4 &6892684638237088529
 Transform:
   m_ObjectHideFlags: 0
