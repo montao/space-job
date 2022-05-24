@@ -15,11 +15,17 @@ public class PlayerReadyButton : Interactable<bool> {
         m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
         SetServerRpc(m_LocalPlayerInteracting);
         SetPlayerConditions(m_LocalPlayerInteracting); 
-        SetReadyConditions(m_LocalPlayerInteracting);
+        foreach (var player in PlayerManager.Instance.Players) {
+            if(player.Avatar.ready.Value){
+                PlayerManager.Instance.PlayersReady++;
+            }
+        }  
+        /* SetReadyConditions(m_LocalPlayerInteracting); */
 
     }
     void SetPlayerConditions(bool on){
-        PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = on;   
+        PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = on;  
+        
         
         /* if(readyCouter == PlayerManager.Instance.Players.Count)  NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single); */
 
@@ -28,7 +34,7 @@ public class PlayerReadyButton : Interactable<bool> {
 /*         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
             if(IsOwner){
                 if (PlayerManager.Instance.LocalPlayer.Avatar.ready.Value) { */
-            PlayerManager.Instance.PlayersReady++;
+        /* PlayerManager.Instance.PlayersReady++; */
       /*           }
             }
             
