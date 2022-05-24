@@ -5,7 +5,6 @@ using TMPro;
 
 [RequireComponent(typeof(BoxCollider))]
 public class Room : NetworkBehaviour {
-    public GameObject doofprefab;
     public string Name;
     public List<Door> Doors = new List<Door>();
     [SerializeField]
@@ -64,7 +63,7 @@ public class Room : NetworkBehaviour {
         }
         Transform location = Util.RandomChoice(m_HullBreachSpawnLocations);
         m_HullBreachSpawnLocations.Remove(location);
-        GameObject breach = Instantiate(doofprefab, location.position, location.rotation);
+        GameObject breach = Instantiate(EventManager.Instance.HullBreachPrefab, location.position, location.rotation);
         breach.GetComponent<NetworkObject>().Spawn();
         breach.GetComponent<HullBreachInstance>().Setup(this, location);
         m_HullBreaches.Add(breach);
