@@ -685,6 +685,36 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!1 &104591268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 104591269}
+  m_Layer: 0
+  m_Name: hullbork red
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &104591269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104591268}
+  m_LocalRotation: {x: -0.000000059604645, y: -0.000000059604645, z: -0.00000032782555, w: -1}
+  m_LocalPosition: {x: -0.3132, y: -65.03, z: 0.0308}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1452630129}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &162760795
 GameObject:
   m_ObjectHideFlags: 0
@@ -6466,7 +6496,8 @@ Transform:
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: 12.514, y: 24.51, z: -21.3}
   m_LocalScale: {x: 18.3896, y: 0.22941935, z: 7.0492296}
-  m_Children: []
+  m_Children:
+  - {fileID: 104591269}
   m_Father: {fileID: 1317775380}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
@@ -7221,6 +7252,36 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5950505010473834605, guid: 197d2534998fc0434881b19a103157f7, type: 3}
   m_PrefabInstance: {fileID: 1607687717}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1611164201
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1611164202}
+  m_Layer: 0
+  m_Name: hullbork blu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1611164202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611164201}
+  m_LocalRotation: {x: 5.684342e-14, y: 5.684342e-14, z: -0.70710665, w: 0.707107}
+  m_LocalPosition: {x: -0.3731, y: -13.3, z: 0.066}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1971011215}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &1626910208
 GameObject:
   m_ObjectHideFlags: 0
@@ -8267,7 +8328,8 @@ Transform:
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: 7.9039197, y: 28.556927, z: -11.688446}
   m_LocalScale: {x: 18.3896, y: 0.22941935, z: 7.0492296}
-  m_Children: []
+  m_Children:
+  - {fileID: 1611164202}
   m_Father: {fileID: 1748602817}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
@@ -8911,6 +8973,8 @@ MonoBehaviour:
   - {fileID: 1376198743}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_HullBreachSpawnLocations:
+  - {fileID: 104591269}
 --- !u!114 &109288114392039072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9715,6 +9779,8 @@ MonoBehaviour:
   - {fileID: 1376198743}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_HullBreachSpawnLocations:
+  - {fileID: 1611164202}
 --- !u!4 &2300495598306140667
 Transform:
   m_ObjectHideFlags: 0

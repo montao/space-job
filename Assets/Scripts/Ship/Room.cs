@@ -15,6 +15,10 @@ public class Room : NetworkBehaviour {
     }
     private TMP_Text m_RoomDisplay;
 
+    [SerializeField]
+    private List<Transform> m_HullBreachSpawnLocations = new List<Transform>();
+    private List<GameObject> m_HullBreaches = new List<GameObject>();
+
     void Awake() {
         ShipManager.Instance.Rooms.Add(this);
         foreach (Door door in Doors) {
@@ -39,4 +43,22 @@ public class Room : NetworkBehaviour {
         DisplayText("Oxygen Capacity: " + RoomOxygen);
     }
 
+    private void FixedUpdate() {
+        // m_RoomOxygen -= m_HullBreaches.Count * Time.fixedTimeDelta;
+    }
+
+    public void SpawnHullBreach(EventParameters.HullBreachSize size) {
+        if (m_HullBreachSpawnLocations.Count == 0) {
+            Debug.Log("You're in luck(?), there's no places to spawn hull breaches in " + name);
+            return;
+        }
+        Transform location = Util.RandomChoice(m_HullBreachSpawnLocations);
+        m_HullBreachSpawnLocations.Remove(location);
+        GameObject breach = Instantiate(EventManager.Instance.HullBreachPrefab, location.position, location.rotation);
+        m_HullBreaches.Add(breach);
+    }
+
+    public void HullBreachResolved(HullBreachInstance breach) {
+        m_HullBreachSpawnLocations.Add(breach.transform);
+    }
 }

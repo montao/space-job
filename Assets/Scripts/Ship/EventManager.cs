@@ -22,10 +22,17 @@ public class EventManager : MonoBehaviour {
     private Map m_Map;
     private float risk = 0.02f;
 
-    [SerializeField]
-    private List<Transform> m_HullBreachLocations = new List<Transform>();
-
     private Vector2 m_LastSpaceEventCoords = new Vector2(1, 1) * -10000;
+
+    public GameObject HullBreachPrefab;
+
+    void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(this);
+        }
+    }
 
     // Called by ShipManager, and only if current user is hosting
     public void StartDiceRollCoroutine() {
