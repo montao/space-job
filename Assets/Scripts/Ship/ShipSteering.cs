@@ -10,6 +10,7 @@ public class ShipSteering : NetworkBehaviour {
     public static readonly float[] TARGET_VELOCITY_STEPS = {-1f, 0, 1f, 5f, 10f, 20f};
     public static readonly float MAX_TRANSLATION_VELOCITY = 20f;
     public static readonly float MAX_ABS_ANGULAR_VELOCITY = 30.0f;
+    public static readonly float EPSILON = 0.05f;
 
     public enum Thruster {
         ROTATE_LEFT,
@@ -121,8 +122,8 @@ public class ShipSteering : NetworkBehaviour {
         float delta = Time.deltaTime;
 
         float target_x_velocity = TARGET_VELOCITY_STEPS[m_TargetVelocityIdx.Value];
-        SetThrusterStateServerRpc(Thruster.TRANSLATE_FORWARD, m_Velocity.Value.x < target_x_velocity);
-        SetThrusterStateServerRpc(Thruster.TRANSLATE_BACKWARD, m_Velocity.Value.x > target_x_velocity);
+        SetThrusterStateServerRpc(Thruster.TRANSLATE_FORWARD, m_Velocity.Value.x < target_x_velocity - EPSILON);
+        SetThrusterStateServerRpc(Thruster.TRANSLATE_BACKWARD, m_Velocity.Value.x > target_x_velocity + EPSILON);
 
         // apply thrusters to set velocity
         ApplyAllActiveThrusters(delta);
