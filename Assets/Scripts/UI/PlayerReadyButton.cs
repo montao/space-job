@@ -8,7 +8,6 @@ using TMPro;
 
 public class PlayerReadyButton : Interactable<bool> {
 
-    private NetworkObject IsServer;
     PlayerAvatar player;
     private bool m_LocalPlayerInteracting = false;
     //int readyCouter = 0;
