@@ -25,14 +25,14 @@ public class PlayerReadyButton : Interactable<bool> {
 
     }
     void SetReadyConditions(bool ready){
-        foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
+/*         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
             if(IsOwner){
-                if (PlayerManager.Instance.LocalPlayer.Avatar.ready.Value) {
-                    PlayerManager.Instance.PlayersReady++;
-                }
+                if (PlayerManager.Instance.LocalPlayer.Avatar.ready.Value) { */
+            PlayerManager.Instance.PlayersReady++;
+      /*           }
             }
             
-        } 
+        } */ 
     }
 
     public override void Update() {
