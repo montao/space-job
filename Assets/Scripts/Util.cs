@@ -11,6 +11,13 @@ public class Util {
         return result;
     }
 
+    public static Vector2 RandomVec2(float min, float max) {
+        return new Vector2(
+            Random.Range(min, max),
+            Random.Range(min, max)
+        );
+    }
+
     public static float Frac(float a) {
         return a - (int)a;
     }

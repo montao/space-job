@@ -158,4 +158,7 @@ public class ShipSteering : NetworkBehaviour {
             SetThrusterStateServerRpc(Thruster.ROTATE_RIGHT, false);
         }
     }
+
+    public void ShutdownThrusters() {
+    }
 }

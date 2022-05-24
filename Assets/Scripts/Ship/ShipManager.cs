@@ -19,12 +19,14 @@ public class ShipManager : NetworkBehaviour {
     private NetworkVariable<float> m_Rotation = new NetworkVariable<float>(0f);
     private NetworkVariable<float> m_Speed = new NetworkVariable<float>(0f);
     private NetworkVariable<float> m_Odometer = new NetworkVariable<float>(0f);
+    private NetworkVariable<bool> m_Won = new NetworkVariable<bool>(false);
     private float m_DistSinceLastBreadcrumb = 0;
     private Map m_Map;
     private NetworkVariable<Vector2> m_Destination = new NetworkVariable<Vector2>(new Vector2(84f, 155f));
     private float m_DistanceToWin;
 
     public Terminal PowerTerminal;
+    public Canvas WinCanvas;
 
     public static char[] ERROR_CODES = {'2', 'e', (char)0xba, (char)42, '\n'};
 
@@ -55,12 +57,18 @@ public class ShipManager : NetworkBehaviour {
         }
 
     }
+    protected void OnWinChange(bool prev, bool current) {
+        WinCanvas.enabled = current;
+    }
     public override void OnNetworkSpawn(){
         m_Power.OnValueChanged += OnPowerChange;
+        m_Won.OnValueChanged += OnWinChange;
         OnPowerChange(HAS_POWER, HAS_POWER);
+        OnWinChange(false, false);
     }
     public override void OnNetworkDespawn(){
         m_Power.OnValueChanged -= OnPowerChange;
+        m_Won.OnValueChanged -= OnWinChange;
     }
 
     public float GetShipSpeed(){
@@ -164,7 +172,9 @@ public class ShipManager : NetworkBehaviour {
     private void CheckWinCondition(){
         m_DistanceToWin = (m_Destination.Value - m_Position.Value).magnitude; 
         if (m_DistanceToWin <= 5){
-            Debug.Log("Hey you won");
+            if (IsServer) {
+                m_Won.Value = true;
+            }
         } 
     }
 
@@ -206,5 +216,18 @@ public class ShipManager : NetworkBehaviour {
 
             UpdatePosition();
         }
+    }
+
+    [ServerRpc(RequireOwnership=false)]
+    public void StartNewGameServerRpc() {
+        m_Won.Value = false;
+        Vector2 ship_pos = Util.RandomVec2(256, 1024-256);
+        Vector2 destination;
+        do {
+            destination = Util.RandomVec2(256, 1024-256);
+        } while(Vector2.Distance(ship_pos, destination) < 32);
+        SetGoal(destination);
+        m_Position.Value = ship_pos;
+        m_Rotation.Value = 0;
     }
 }
