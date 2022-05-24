@@ -12,6 +12,10 @@ public struct PlayerPos {
 
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerAvatar : NetworkBehaviour {
+
+    [SerializeField]
+    private GameObject m_CharacterList;
+
     private NetworkVariable<int> m_ActiveAnimation
             = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<int> m_ActiveCharacter
@@ -102,23 +106,20 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     public void OnCharacterChanged(int previous, int current) {
-        var characters = GameObject.FindGameObjectsWithTag("CharacterList");
-        if(IsOwner){
-            if(current == 0){
-                characters[0].transform.GetChild(0).gameObject.SetActive(true);
-            }
-            if(current == 1){
-                characters[0].transform.GetChild(1).gameObject.SetActive(true);
-            }
-            if(current == 2){
-                characters[0].transform.GetChild(2).gameObject.SetActive(true);
-            }
-            if(current == 3){
-                characters[0].transform.GetChild(3).gameObject.SetActive(true);
-            }
+        if(current == 0){
+            m_CharacterList.transform.GetChild(0).gameObject.SetActive(true);
+        }
+        if(current == 1){
+            m_CharacterList.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        if(current == 2){
+            m_CharacterList.transform.GetChild(2).gameObject.SetActive(true);
+        }
+        if(current == 3){
+            m_CharacterList.transform.GetChild(3).gameObject.SetActive(true);
         }
         
-        characters[0].transform.GetChild(previous).gameObject.SetActive(false);
+        m_CharacterList.transform.GetChild(previous).gameObject.SetActive(false);
 
     }
 
