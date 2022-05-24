@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Unity.Netcode;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public struct PlayerPos {
@@ -82,6 +83,12 @@ public class PlayerAvatar : NetworkBehaviour {
         m_Controller = GetComponent<CharacterController>();
         m_PlayerAnimator = GetComponent<Animator>();
         m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
+
+        if( SceneManager.GetActiveScene().name != "Lobby"){
+            isready.SetActive(false);
+            notready.SetActive(false);
+        }
+        Debug.Log(SceneManager.GetActiveScene().name);
         
     }
     private void Awake() {
@@ -100,14 +107,23 @@ public class PlayerAvatar : NetworkBehaviour {
             }
             UpdateNameTag();
             
-        }if(ready.Value){
-            isready.SetActive(true);
+        }
+        if( SceneManager.GetActiveScene().name == "Lobby"){
+            if(ready.Value){
+                isready.SetActive(true);
+                notready.SetActive(false);
+            }
+            if(!ready.Value){
+                isready.SetActive(false);
+                notready.SetActive(true);
+            }
+        }
+        else {
+            isready.SetActive(false);
             notready.SetActive(false);
         }
-        if(!ready.Value){
-            isready.SetActive(false);
-            notready.SetActive(true);
-        }
+
+        
     }
 
     public void SetActiveCharacter(int characterIndex) {
