@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Whiteboard : InteractableBase {
+public class Whiteboard : RangedInteractableBase {
     private CameraSwap m_CameraSwap;
     private bool m_LocalPlayerLookingAt = false;
 

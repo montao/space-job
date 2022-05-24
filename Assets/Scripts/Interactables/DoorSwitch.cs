@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class DoorSwitch : InteractableBase
-{
+public class DoorSwitch : RangedInteractableBase {
     public Door ConnectedDoor;
     protected override void Interaction(){
         ConnectedDoor.SetRoomStatusServerRpc();

@@ -1,6 +1,6 @@
 using Unity.Netcode;
 
-public abstract class Interactable<T> : InteractableBase where T : unmanaged {
+public abstract class Interactable<T> : RangedInteractableBase where T : unmanaged {
 
     protected NetworkVariable<T> m_State = new NetworkVariable<T>();
 

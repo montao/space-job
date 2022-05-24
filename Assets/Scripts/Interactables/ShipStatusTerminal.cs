@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ShipStatusTerminal : InteractableBase {
+public class ShipStatusTerminal : RangedInteractableBase {
 
     private CameraSwap m_CameraSwap;
     private bool m_LocalPlayerLookingAt = false;

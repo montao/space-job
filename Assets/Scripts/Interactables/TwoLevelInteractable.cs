@@ -1,15 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
-using TMPro;
 
-// Single-User Terminal
-public class NavTerminal : Interactable<int> {
+/**
+ * An interactable with child interactables.
+ */
+[RequireComponent(typeof(CameraSwap))]
+public class TwoLevelInteractable : Interactable<int> {
 
     public static readonly int NOT_OCCUPIED = -1;
 
-    public TMP_Text Text;
+    // Will be active iff local player is interacting with the NavTerminal
+    [SerializeField]
+    private List<InteractableBase> m_SecondaryInteractables;
 
     private CameraSwap m_CameraSwap;
+
+    private bool m_NeedsPowerInitial;
 
     public override void Start() {
         base.Start();
@@ -18,11 +25,11 @@ public class NavTerminal : Interactable<int> {
         if (IsServer) {
             m_State.Value = NOT_OCCUPIED;
         }
+        m_NeedsPowerInitial = NeedsPower;
     }
 
     [ServerRpc(RequireOwnership = false)]
     public void TryToggleOccupiedServerRpc(int playerId) {
-        Debug.Log("Hello!" + playerId);
         if (Value == NOT_OCCUPIED) {  // no one at terminal
             m_State.Value = playerId;
         } else if (Value == playerId) {  // player left terminal
@@ -42,31 +49,25 @@ public class NavTerminal : Interactable<int> {
         }
 
         if (current == NOT_OCCUPIED) {
-            if (prev == (int)NetworkManager.Singleton.LocalClientId) {
+            if (prev == (int)NetworkManager.Singleton.LocalClientId) { // local player left terminal
                 PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
                 m_CameraSwap.SwitchAway();
-                NeedsPower = true;
+                NeedsPower = m_NeedsPowerInitial;
+                SetSecondaryInteractablesActive(false);
             }
         } else {
-            if (current == (int)NetworkManager.Singleton.LocalClientId) {
+            if (current == (int)NetworkManager.Singleton.LocalClientId) { // local player entered terminal
                 m_CameraSwap.SwitchTo();
                 PlayerManager.Instance.LocalPlayer.Avatar.LockMovement(GetHashCode());
                 NeedsPower = false;  // allow exit
+                SetSecondaryInteractablesActive(true);
             }
         }
     }
 
-    public void DisplayText(string text) {
-        Text.text = text;
-    }
-    public override void Update() {
-        base.Update();
-        DisplayText("Position: " + ShipManager.Instance.GetShipPosition()+
-                    "\n Speed: " + System.Math.Round(ShipManager.Instance.GetShipSpeed(), 2) + " nly/h" + 
-                    " (" +         System.Math.Round(ShipManager.Instance.GetTargetShipSpeed(), 1) + " nly/h)" + 
-                    " ,Angle: " +  System.Math.Round(ShipManager.Instance.GetShipAngle(), 0) + " deg"+
-                    " (" +  System.Math.Round(ShipManager.Instance.GetShipAngleSpeed(), 2) + " deg/s)"+
-                    "\n Dist: " +  System.Math.Round(ShipManager.Instance.GetDistantToWin(), 2) + " nly"
-                    );
+    private void SetSecondaryInteractablesActive(bool active) {
+        foreach (var interactable in m_SecondaryInteractables) {
+            interactable.gameObject.SetActive(active);
+        }
     }
 }

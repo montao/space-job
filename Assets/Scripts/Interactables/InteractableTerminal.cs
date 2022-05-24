@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InteractableTerminal : InteractableBase
+public class InteractableTerminal : RangedInteractableBase
 {
     public TerminalCanvas Display;
     private Canvas m_TargetCanvas;
