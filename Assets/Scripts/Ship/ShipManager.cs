@@ -22,7 +22,7 @@ public class ShipManager : NetworkBehaviour {
     private NetworkVariable<bool> m_Won = new NetworkVariable<bool>(false);
     private float m_DistSinceLastBreadcrumb = 0;
     private Map m_Map;
-    private NetworkVariable<Vector2> m_Destination = new NetworkVariable<Vector2>(new Vector2(512f, 500f/*84f, 155f*/));
+    private NetworkVariable<Vector2> m_Destination = new NetworkVariable<Vector2>(new Vector2(84f, 155f));
     private float m_DistanceToWin;
 
     public Terminal PowerTerminal;
