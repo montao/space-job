@@ -9,13 +9,12 @@ using TMPro;
 public class PlayerReadyButton : Interactable<bool> {
     PlayerAvatar player;
     private bool m_LocalPlayerInteracting = false;
-    int readyCouter = 0;
 
     protected override void Interaction(){
         m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
         SetServerRpc(m_LocalPlayerInteracting);
         SetPlayerConditions(m_LocalPlayerInteracting); 
-        readyCouter++;
+        SetReadyConditions(Value);
 
     }
     void SetPlayerConditions(bool on){
@@ -25,7 +24,7 @@ public class PlayerReadyButton : Interactable<bool> {
 
     }
     void SetReadyConditions(bool ready){
-        /* int readyCouter = 0;
+        int readyCouter = 0;
         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
             if(IsOwner){
                 if (PlayerManager.Instance.LocalPlayer.Avatar.ready.Value) {
@@ -34,7 +33,7 @@ public class PlayerReadyButton : Interactable<bool> {
                 }
             }
             
-        } */
+        } 
         Debug.Log("ready counter: " + readyCouter + " Player Counter: " + PlayerManager.Instance.Players.Count);
     }
 
