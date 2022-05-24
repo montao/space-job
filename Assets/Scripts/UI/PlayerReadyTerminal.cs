@@ -17,8 +17,8 @@ public class PlayerReadyTerminal : Interactable<bool> {
             return;
         } */
         m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
-        SetServerRpc(Value/* m_LocalPlayerInteracting */);
-        SetPlayerConditions(Value/* m_LocalPlayerInteracting */); 
+        SetServerRpc(/* Value */m_LocalPlayerInteracting);
+        SetPlayerConditions(/* Value */m_LocalPlayerInteracting); 
     }
     void SetPlayerConditions(bool on){
         PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = on;
