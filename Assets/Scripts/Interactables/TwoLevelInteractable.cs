@@ -72,4 +72,13 @@ public class TwoLevelInteractable : Interactable<int> {
             button.CanInteract = active;
         }
     }
+
+    public override void Update() {
+        base.Update();
+        if (m_State.Value == (int)NetworkManager.Singleton.LocalClientId) { // local player at terminal
+            if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f || Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f) {
+                TryToggleOccupiedServerRpc((int)NetworkManager.Singleton.LocalClientId);
+            }
+        }
+    }
 }
