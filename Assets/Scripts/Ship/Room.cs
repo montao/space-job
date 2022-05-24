@@ -65,12 +65,12 @@ public class Room : NetworkBehaviour {
         m_HullBreachSpawnLocations.Remove(location);
         GameObject breach = Instantiate(EventManager.Instance.HullBreachPrefab, location.position, location.rotation);
         breach.GetComponent<NetworkObject>().Spawn();
-        breach.GetComponent<HullBreachInstance>().Setup(this);
+        breach.GetComponent<HullBreachInstance>().Setup(this, location);
         m_HullBreaches.Add(breach);
     }
 
-    public void HullBreachResolved(HullBreachInstance breach) {
+    public void HullBreachResolved(HullBreachInstance breach, Transform freed_up_spawn_location) {
         m_HullBreaches.Remove(breach.gameObject);
-        m_HullBreachSpawnLocations.Add(breach.transform);  // location availble again
+        m_HullBreachSpawnLocations.Add(freed_up_spawn_location);  // location availble again
     }
 }
