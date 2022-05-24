@@ -91,9 +91,7 @@ public class PlayerAvatar : NetworkBehaviour {
         Debug.Log(SceneManager.GetActiveScene().name);
         
     }
-    private void Awake() {
-        DontDestroyOnLoad(this.gameObject);
-    }
+    
 
     void Update() {
         //m_PlayerAnimator.SetInteger("active_animation", m_ActiveAnimation.Value);
@@ -136,7 +134,6 @@ public class PlayerAvatar : NetworkBehaviour {
         m_CharacterList.transform.GetChild(previous).gameObject.SetActive(false);
         m_CharacterList.transform.GetChild(current).gameObject.SetActive(true);
         m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
-        DontDestroyOnLoad(m_CharacterList);
     }
 
     public void Teleport(Transform target) {

@@ -38,6 +38,10 @@ public class PersistentPlayer : NetworkBehaviour {
         }
     }
 
+    private void Awake() {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     void Start() {
         PlayerManager.Instance.RegisterPlayer(this, IsOwner);
 
