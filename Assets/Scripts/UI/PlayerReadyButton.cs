@@ -18,11 +18,16 @@ public class PlayerReadyButton : Interactable<bool> {
     public void IncReadyServerRpc(){
         PlayersReady.Value = PlayersReady.Value++;
     }
+    [ServerRpc(RequireOwnership = false)]
+    public void ResReadyServerRpc(){
+        PlayersReady.Value = 0;
+    }
 
     protected override void Interaction(){
         m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
         SetServerRpc(m_LocalPlayerInteracting);
-        SetPlayerConditions(m_LocalPlayerInteracting); 
+        SetPlayerConditions(m_LocalPlayerInteracting);
+        ResReadyServerRpc();
         foreach (var player in PlayerManager.Instance.Players) {
             if(player.Avatar.ready.Value){
                 IncReadyServerRpc();
@@ -32,7 +37,7 @@ public class PlayerReadyButton : Interactable<bool> {
 
     }
     void SetPlayerConditions(bool on){
-        PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = on;  
+        PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = !PlayerManager.Instance.LocalPlayer.Avatar.ready.Value;  
         
         
         /* if(readyCouter == PlayerManager.Instance.Players.Count)  NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single); */
