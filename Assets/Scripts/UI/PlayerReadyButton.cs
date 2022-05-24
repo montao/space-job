@@ -15,8 +15,8 @@ public class PlayerReadyButton : Interactable<bool> {
         new NetworkVariable<int>(0);    
         
     [ServerRpc(RequireOwnership = false)]
-    public void SetReadyServerRpc(int value){
-        PlayersReady.Value = value;
+    public void IncReadyServerRpc(){
+        PlayersReady.Value = PlayersReady.Value++;
     }
 
     protected override void Interaction(){
@@ -25,7 +25,7 @@ public class PlayerReadyButton : Interactable<bool> {
         SetPlayerConditions(m_LocalPlayerInteracting); 
         foreach (var player in PlayerManager.Instance.Players) {
             if(player.Avatar.ready.Value){
-                SetReadyServerRpc(PlayersReady.Value++);
+                IncReadyServerRpc();
             }
         }  
         /* SetReadyConditions(m_LocalPlayerInteracting); */
