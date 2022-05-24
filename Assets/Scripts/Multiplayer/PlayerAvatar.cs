@@ -6,6 +6,10 @@ using TMPro;
 
 [System.Serializable]
 public struct PlayerPos {
+    public PlayerPos(Vector3 _Position, Quaternion _Rotation){
+        Position = _Position;
+        Rotation = _Rotation;
+    }
     public Vector3 Position;
     public Quaternion Rotation;
 }
@@ -15,6 +19,22 @@ public class PlayerAvatar : NetworkBehaviour {
 
     [SerializeField]
     private GameObject m_CharacterList;
+    [ServerRpc]
+    public void UpdatePosServerRpc(PlayerPos p) {
+        m_PlayerPos.Value = p;
+    }
+    public enum Slot {
+        PRIMARY, SECONDARY
+    };
+    public const float GRAVITY = -10f;  //in case of zero gravity this need to change
+    public Transform groundCheck;
+    public Transform dropPoint;
+    public Transform PrimaryItemDisplay;  // left hand
+    public Transform SecondaryItemDisplay;  // back
+    public LayerMask groundLayer;
+    public TMP_Text nameText;
+    public Material normalMaterial;
+    public Material transparentMaterial;
 
     private NetworkVariable<int> m_ActiveAnimation
             = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
@@ -29,59 +49,44 @@ public class PlayerAvatar : NetworkBehaviour {
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> ready = new NetworkVariable<bool>(default, default, NetworkVariableWritePermission.Owner);
 
+    private Room m_CurrentRoom = null;
+    public Room CurrentRoom {
+        get => m_CurrentRoom;
+        set {
+            m_CurrentRoom = value;
+        }
+    }
+
     private List<int> m_MovementLocks = new List<int>();
-
     private Coroutine m_SpeedBoostCoroutine = null;
-
-    public enum Slot {
-        PRIMARY, SECONDARY
-    };
-
-    public void SetActiveAnimation(int animation_index){
-        m_ActiveAnimation.Value = animation_index;
-    }
-    [ServerRpc]
-    public void UpdatePosServerRpc(PlayerPos p) {
-        m_PlayerPos.Value = p;
-    }
-
     private CharacterController m_Controller;
     private float m_MovementSpeed = 5f;
     private bool m_IsGrounded = false;
-    public Transform groundCheck;
-    public Transform dropPoint;
+    [SerializeField]
+    [Range(0f,100f)]
+    private float m_health = 100f;
 
     // Places where items are attached
-    public Transform PrimaryItemDisplay;  // left hand
-    public Transform SecondaryItemDisplay;  // back
-
-    public CharacterSelect chara_select;
-
-    public LayerMask groundLayer;
     private Animator m_PlayerAnimator;
-    public const float GRAVITY = -10f;  //in case of zero gravity this need to change
     private PersistentPlayer m_LocalPlayer;
     private Vector3 m_Velocity;
 
-    public TMP_Text nameText;
     public GameObject isready;
     public GameObject notready;
+    public CharacterSelect chara_select;
+    private MeshRenderer m_PlayerMesh;
+    [SerializeField]
+    private float m_LungCapacity = 1f;
 
     public void Start() {
         m_Controller = GetComponent<CharacterController>();
         m_PlayerAnimator = GetComponent<Animator>();
-
-        foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
-            if (player.OwnerClientId == OwnerClientId) {
-                m_LocalPlayer = player;
-                break;
-            }
-        }
-        name = nameText.text = m_LocalPlayer.PlayerName;
+        m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
     }
 
     void Update() {
-        m_PlayerAnimator.SetInteger("active_animation", m_ActiveAnimation.Value);
+        //m_PlayerAnimator.SetInteger("active_animation", m_ActiveAnimation.Value);
+        OxygenRegulation(Time.deltaTime);
         if (IsClient) {
             if (IsOwner) {
                 ProcessInput();
@@ -109,19 +114,59 @@ public class PlayerAvatar : NetworkBehaviour {
         // Debug.Log(name + ": Character model changed from " + previous + " to " + current);
 
         m_CharacterList.transform.GetChild(previous).gameObject.SetActive(false);
+        m_CharacterList.transform.GetChild(current).gameObject.SetActive(true);
+        m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
+    }
+
+    public void Teleport(Transform target) {
+        bool prev_controller_enabled = m_Controller.enabled;
+        m_Controller.enabled = false;
+        transform.SetPositionAndRotation(target.position, target.rotation);
+        m_Controller.enabled = prev_controller_enabled;
+    }
+    public void OxygenRegulation(float delta_time){
+        if (m_CurrentRoom == null) {
+            return;
+        }
+        float oxygen = ((m_LungCapacity - 0.01f + (0.02f* m_CurrentRoom.RoomOxygen)));
+        m_LungCapacity = Mathf.Clamp(oxygen, 0f, 1f);
+        //Debug.Log(delta_time);
+        //Debug.Log("palyer Oxygen:" + m_LungCapacity + "\n room: " + m_CurrentRoom.Name + ",Ox-Level: " + m_CurrentRoom.RoomOxygen);
+    }
+
+    public void SetActiveAnimation(int animation_index) {
+        //Debug.Log("Interaction Animation Triggered: "+ animation_index);
+        m_ActiveAnimation.Value = animation_index;
+        //m_PlayerAnimator.SetInteger("active_animation", animation_index);
+    }
+
+    public void OnAnimationChange(int previous, int current){
+        if (!m_PlayerAnimator) {
+            return;  // bye
+        }
+        //Debug.Log(m_LocalPlayer.PlayerName + "-> old ani: "+ previous + ", new ani:" + current);
+        //m_PlayerAnimator.SetInteger("active_animation", current);
         if(current == 0){
-            m_CharacterList.transform.GetChild(0).gameObject.SetActive(true);
+            m_PlayerAnimator.SetTrigger("idle");
         }
         if(current == 1){
-            m_CharacterList.transform.GetChild(1).gameObject.SetActive(true);
+            m_PlayerAnimator.SetTrigger("walk");
         }
         if(current == 2){
-            m_CharacterList.transform.GetChild(2).gameObject.SetActive(true);
+            m_PlayerAnimator.SetTrigger("interact");
         }
         if(current == 3){
-            m_CharacterList.transform.GetChild(3).gameObject.SetActive(true);
+            m_PlayerAnimator.SetTrigger("armwave");
         }
-        
+        if(current == 4){
+            m_PlayerAnimator.SetTrigger("sit");
+        }
+        if(current == 5){
+            m_PlayerAnimator.SetTrigger("jump");
+        }
+        if(current == 6){
+            m_PlayerAnimator.SetTrigger("drink");
+        }
     }
 
     public override void OnNetworkSpawn() {
@@ -129,6 +174,38 @@ public class PlayerAvatar : NetworkBehaviour {
         m_PrimaryItem.OnValueChanged += OnPrimaryItemChanged;
         m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
         m_ActiveCharacter.OnValueChanged += OnCharacterChanged;
+        m_ActiveAnimation.OnValueChanged += OnAnimationChange;
+        Debug.Log("[PlayerAvatar/OnNetworkSpawn] PlayerAvatar spanwed " + name + " owned by " + OwnerClientId);
+        Setup();
+    }
+
+    public void Setup() {
+        // Setup for all players
+        foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
+            if (player.OwnerClientId == OwnerClientId) {
+                m_LocalPlayer = player;
+                break;
+            }
+        }
+        if (m_LocalPlayer == null) {
+            Debug.LogWarning("Player object not found for '" + name + "'");
+            return;
+        }
+
+        name = m_LocalPlayer.PlayerName;
+        nameText.text = m_LocalPlayer.PlayerName;
+
+        Debug.Log("Found persistentplayer object " + m_LocalPlayer.name + " for avatar " + name + " Owner? " + IsOwner);
+
+        // Setup for local player
+        if (IsOwner) {
+            CameraSwap.UpdateLookAt(this);
+        }
+
+        // more setup
+        OnPrimaryItemChanged(m_PrimaryItem.Value, m_PrimaryItem.Value);
+        OnSecondaryItemChanged(m_SecondaryItem.Value, m_SecondaryItem.Value);
+        OnAnimationChange(m_ActiveAnimation.Value, m_ActiveAnimation.Value);
     }
 
 
@@ -149,7 +226,6 @@ public class PlayerAvatar : NetworkBehaviour {
         notready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
     }
     void ProcessInput() {
-        //m_PlayerAnimator.SetFloat("speed", 0.1f);
         PerformGroundCheck();
         if (m_IsGrounded && m_Velocity.y < 0) {
             m_Velocity.y = -2f;
@@ -187,10 +263,12 @@ public class PlayerAvatar : NetworkBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha1)){
             //armwava dance
             m_ActiveAnimation.Value = 3;
+            //HidePlayer(true);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2)){
             //jumpingjacks
             m_ActiveAnimation.Value = 5;
+            //HidePlayer(false);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3)){
             //drink
@@ -205,6 +283,18 @@ public class PlayerAvatar : NetworkBehaviour {
             if (!HasInventorySpace(Slot.PRIMARY)) {
                 m_ActiveAnimation.Value = 2;
                 DropItem(Slot.PRIMARY);
+            }
+        }
+
+        if (Input.GetKey(KeyCode.Alpha9)){
+            if(CurrentRoom.RoomOxygen < 1f){
+                CurrentRoom.RoomOxygen = CurrentRoom.RoomOxygen + 0.1f;
+            }
+        }
+
+        if (Input.GetKey(KeyCode.Alpha0)){
+            if(CurrentRoom.RoomOxygen > 0f){
+                CurrentRoom.RoomOxygen = CurrentRoom.RoomOxygen - 0.1f;
             }
         }
 
@@ -235,6 +325,16 @@ public class PlayerAvatar : NetworkBehaviour {
         transform.position = m_PlayerPos.Value.Position;
         transform.rotation = m_PlayerPos.Value.Rotation;
     }
+
+    public void HidePlayer(bool on){
+        if(on){
+            m_PlayerMesh.sharedMaterial = transparentMaterial;
+        }
+        else{
+            m_PlayerMesh.sharedMaterial = normalMaterial;
+        }
+    }
+
     private void ShowInInventory(Transform hand, NetworkObject item) {
         MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
         MeshRenderer handRend = hand.GetComponent<MeshRenderer>();
@@ -269,7 +369,7 @@ public class PlayerAvatar : NetworkBehaviour {
         }
     }
 
-    private NetworkObject GetInventoryItem(Slot slot) {
+    public NetworkObject GetInventoryItem(Slot slot) {
         NetworkObjectReference reference;
         if (slot == Slot.PRIMARY) {
             reference = m_PrimaryItem.Value;
@@ -333,7 +433,7 @@ public class PlayerAvatar : NetworkBehaviour {
             Debug.Log("No item here.");
         }
 
-        Cup cup = o.GetComponentInChildren<Cup>();
+        DroppableInteractable cup = o.GetComponentInChildren<DroppableInteractable>();
         cup.DropServerRpc(dropPoint.position);
 
         if (slot == Slot.PRIMARY) {
@@ -370,5 +470,9 @@ public class PlayerAvatar : NetworkBehaviour {
         m_MovementSpeed = speed_prev;
         m_PlayerAnimator.speed = 1f;
         m_SpeedBoostCoroutine = null;
+    }
+
+    public static bool IsHolding<T>() where T: DroppableInteractable {
+        return PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).GetComponentInChildren<T>() != null;
     }
 }

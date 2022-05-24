@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Runtime;
 
 /*
  * TODO separate out the connection stuff
@@ -12,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour {
 
     private NetworkManager networkManager;
-    private UnityTransport transport;
+    private UnityTransport m_Transport;
     private bool connected = false;
     private bool host = false;
     private bool ishosted = false;
@@ -36,7 +35,7 @@ public class MainMenu : MonoBehaviour {
 
     void Start() {
         networkManager = NetworkManager.Singleton;
-        transport = networkManager.GetComponentInParent<UnityTransport>();
+        m_Transport = networkManager.GetComponentInParent<UnityTransport>();
         
         hostGame = GameObject.Find("Start Host");
         hostGame.SetActive(true);
@@ -84,23 +83,27 @@ public class MainMenu : MonoBehaviour {
 
     public void ServerAddressChanged() {
         string ip = serverAddress.text;
-        transport.ConnectionData.Address = ip;
-        transport.ConnectionData.ServerListenAddress = ip;
+        m_Transport.ConnectionData.Address = ip;
+        m_Transport.ConnectionData.ServerListenAddress = ip;
     }
 
     public bool IsArgon() {
-        return SystemInfo.deviceName == "argon";
+        return SystemInfo.deviceName == "argon" && System.Environment.GetEnvironmentVariable("GOOSE") == "y";
     }
 
     public void StartHost() {
-        if (MultiplayerUtil.GetLocalIPAddress() != serverAddress.text && !IsArgon()) {
+        if (MultiplayerUtil.GetLocalIPAddress() != serverAddress.text) {
             Debug.LogWarning("Cannot host a game from a different ip address");
             return;
         }
 
         connected = connected || NetworkManager.Singleton.StartHost();
-        host = true;
-        ishosted = true;
+        if (connected) {
+            host = true;
+            ishosted = true;
+        } else {
+            m_Transport.Shutdown();
+        }
     }
 
     public void Reload() {
@@ -117,6 +120,10 @@ public class MainMenu : MonoBehaviour {
 
     public void StartClient() {
         connected = connected || NetworkManager.Singleton.StartClient();
+
+        if (!connected) {
+            m_Transport.Shutdown();
+        }
     }
 
     public void StartGame() {
@@ -130,7 +137,7 @@ public class MainMenu : MonoBehaviour {
         }
 
         if (host) {
-            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.SpawnAvatars;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.Instance.StartShip;
             if (playerName.text != "Demo") {
                 NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
             }
@@ -152,7 +159,7 @@ public class MainMenu : MonoBehaviour {
         }
 
         if (host) {
-            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.SpawnAvatars;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.Instance.StartShip;
             if (playerName.text != "Demo") {
                 NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
             }

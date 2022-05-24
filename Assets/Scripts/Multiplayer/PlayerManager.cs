@@ -10,24 +10,24 @@ public class PlayerManager : NetworkBehaviour {
     public string LocalPlayerName = "";
     public string LocalPlayerStatus = "";
 
-    private NetworkVariable<int> _playerCount =
+    private NetworkVariable<int> m_PlayerCount =
             new NetworkVariable<int>(1);
 
-    private List<PersistentPlayer> _players;
+    private List<PersistentPlayer> m_Players;
     public List<PersistentPlayer> Players {
-        get => _players;
+        get => m_Players;
     }
 
-    private PersistentPlayer _localPlayer;
+    private PersistentPlayer m_LocalPlayer;
     public PersistentPlayer LocalPlayer {
-        get => _localPlayer;
+        get => m_LocalPlayer;
     }
 
     public string LobbyInfo {
         get {
-            string info = _playerCount.Value + "/4: ";
+            string info = m_PlayerCount.Value + "/4: ";
             int n = 0;
-            foreach (var player in _players) {
+            foreach (var player in m_Players) {
                 info =((n++ == 0) ? "" : info) +  player.PlayerName + " just joined! \n";
             }
             return info;
@@ -42,22 +42,58 @@ public class PlayerManager : NetworkBehaviour {
         }
         DontDestroyOnLoad(this);
 
-        _players = new List<PersistentPlayer>();
+        m_Players = new List<PersistentPlayer>();
+    }
+
+    // Set to true after the ship scene is loaded
+    private bool m_InGame = false;
+    public bool InGame {
+        get => m_InGame;
     }
 
     void Start() {
         NetworkManager.Singleton.OnClientConnectedCallback +=
             (id) => {
                 if (IsServer) {
-                    Debug.Log("New player " + id);
-                    _playerCount.Value++;
+                    m_PlayerCount.Value++;
+
+                    NetworkObject po = NetworkManager.Singleton.ConnectedClients[id].PlayerObject;
+                    PersistentPlayer player = po.GetComponent<PersistentPlayer>();
+
+                    if (m_InGame) {  // player joined in-progress game
+                        Debug.Log("Persistenplayer spawned? " + player.IsSpawned);
+                        player.SpawnAvatar(PlayerSpawnLocation.GetSpawn());  // TODO spawn as dead in medbay
+                        Debug.Log("Persistenplayer spawned? " + player.IsSpawned);
+                    }
+
+                    Debug.Log("Connect: " + player.PlayerName);
                 }
             };
 
         NetworkManager.Singleton.OnClientDisconnectCallback +=
             (id) => {
                 if (IsServer) {
-                    _playerCount.Value--;
+                    m_PlayerCount.Value--;
+                    NetworkObject po = NetworkManager.Singleton.ConnectedClients[id].PlayerObject;
+                    PersistentPlayer player = po.GetComponent<PersistentPlayer>();
+                    PlayerAvatar avatar = player.Avatar;
+
+                    // disown
+                    po.ChangeOwnership(OwnerClientId);
+                    avatar.GetComponent<NetworkObject>().ChangeOwnership(OwnerClientId);
+
+                    if (!avatar.HasInventorySpace(PlayerAvatar.Slot.PRIMARY)) {
+                        avatar.DropItem(PlayerAvatar.Slot.PRIMARY);
+                    }
+                    if (!avatar.HasInventorySpace(PlayerAvatar.Slot.SECONDARY)) {
+                        avatar.DropItem(PlayerAvatar.Slot.SECONDARY);
+                    }
+
+                    // destroy
+                    po.ChangeOwnership(id);
+                    avatar.GetComponent<NetworkObject>().ChangeOwnership(id);
+
+                    Debug.Log("Disconnect: " + player.PlayerName);
                 }
             };
     }
@@ -67,20 +103,23 @@ public class PlayerManager : NetworkBehaviour {
     }
 
     public void RegisterPlayer(PersistentPlayer player, bool isLocal) {
-        _players.Add(player);
+        m_Players.Add(player);
+        Debug.Log("Registered Player '" + player.PlayerName + "'");
         if (isLocal) {
             player.gameObject.transform.position = transform.position;
             player.gameObject.transform.rotation = transform.rotation;
-            _localPlayer = player;
-            _localPlayer.PlayerName = LocalPlayerName;
+            m_LocalPlayer = player;
+            m_LocalPlayer.PlayerName = LocalPlayerName;
         }
     }
 
-    public static void SpawnAvatars(
+    public void StartShip(
             string sceneName,
             LoadSceneMode loadSceneMode,
             List<ulong> clientsCompleted,
             List<ulong> clientsTimedOut) {
+
+        m_InGame = true;
         SpawnAvatars();
     }
 

@@ -16,6 +16,20 @@ public class CameraBrain : MonoBehaviour {
 
     public CinemachineBrain Brain;
 
+    public ICinemachineCamera ActiveCamera {
+        get {
+            if (Brain.ActiveVirtualCamera != null) {
+                return Brain.ActiveVirtualCamera;
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public Camera OutputCamera {
+        get => Brain.OutputCamera;
+    }
+
     public GameObject ActiveCameraObject {
         get {
             if (Brain.ActiveVirtualCamera != null) {

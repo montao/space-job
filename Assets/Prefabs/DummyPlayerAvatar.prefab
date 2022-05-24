@@ -983,19 +983,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CharacterList: {fileID: 882870206865439736}
-  ready:
-    m_InternalValue: 0
   groundCheck: {fileID: 5987355476180094076}
   dropPoint: {fileID: 2608538614130306607}
   PrimaryItemDisplay: {fileID: 2781003508360357061}
   SecondaryItemDisplay: {fileID: 3486877119432998455}
-  chara_select: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
   nameText: {fileID: 8939025460541712738}
+  normalMaterial: {fileID: 2100000, guid: 391a6cc892247c04d934becca40d133f, type: 2}
+  transparentMaterial: {fileID: 2100000, guid: 55a1ebda3c1d0ec63a6143342c575ead, type: 2}
+  ready:
+    m_InternalValue: 0
+  m_health: 100
   isready: {fileID: 2516736626263197235}
   notready: {fileID: 3596736054757866448}
+  chara_select: {fileID: 0}
+  m_LungCapacity: 1
 --- !u!222 &7404256255760437957
 CanvasRenderer:
   m_ObjectHideFlags: 0

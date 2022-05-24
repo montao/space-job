@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
@@ -9,6 +8,9 @@ public class CoffeMachine : Interactable<bool> {
    
     protected override void Interaction(){
         SetServerRpc(!Value);
+        if (PlayerAvatar.IsHolding<PipeWrench>()) {
+            transform.localScale = transform.localScale * 1.6f;
+        }
     }
 
     public override void OnStateChange(bool previous, bool current) {
@@ -17,10 +19,10 @@ public class CoffeMachine : Interactable<bool> {
     public void SetServerRpc(bool value){
         m_State.Value = value;
 
-        if(!prevCup || prevCup.GetComponentInChildren<Cup>().isPickedUp()) {
+        if(!prevCup || prevCup.GetComponentInChildren<CoffeCup>().isPickedUp()) {
             GameObject freshCup = Instantiate(cupPrefab, machine.GetComponent<Transform>().position, Quaternion.identity);
             freshCup.GetComponent<NetworkObject>().Spawn();
-            freshCup.GetComponentInChildren<Cup>().pickedUp = false;
+            freshCup.GetComponentInChildren<CoffeCup>().pickedUp = false;
             prevCup = freshCup;
             Debug.Log("new cup");
         }
