@@ -3,6 +3,7 @@ using Unity.Netcode;
 using System.Collections.Generic;
 using TMPro;
 
+[RequireComponent(typeof(BoxCollider))]
 public class Room : NetworkBehaviour {
     public string Name;
     public List<Door> Doors = new List<Door>();
