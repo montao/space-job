@@ -127,6 +127,10 @@ public class ShipManager : NetworkBehaviour {
         Rooms[0].RoomOxygen = 1;
     }
 
+    public void TriggerHullBreachEvent(EventParameters.HullBreachSize size) {
+        Debug.Log("Hull gone :(");
+    }
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -165,6 +169,10 @@ public class ShipManager : NetworkBehaviour {
                 ResolvePowerOutageEvent();
             }
         }
+        if(Input.GetKeyDown(KeyCode.U) && IsServer){
+            TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
+        }
+
         if (Input.GetKeyDown(KeyCode.O)) {
             foreach (Room room in Rooms) {
                 Debug.Log(room.Name + ": " + room.RoomOxygen);
