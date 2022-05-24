@@ -9,6 +9,13 @@ public class PlayerManager : NetworkBehaviour {
 
     public string LocalPlayerName = "";
     public string LocalPlayerStatus = "";
+    private int m_PlayersReady = 0;
+    public int PlayersReady{
+        get => m_PlayersReady;
+        set {
+            m_PlayersReady = value;
+        }
+    }
 
     private NetworkVariable<int> m_PlayerCount =
             new NetworkVariable<int>(1);
