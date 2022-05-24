@@ -27,12 +27,7 @@ public class PlayerReadyButton : Interactable<bool> {
         m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
         SetServerRpc(m_LocalPlayerInteracting);
         SetPlayerConditions(m_LocalPlayerInteracting);
-        ResReadyServerRpc();
-        foreach (var player in PlayerManager.Instance.Players) {
-            if(player.Avatar.ready.Value){
-                IncReadyServerRpc();
-            }
-        }  
+        IncReadyServerRpc();  
         /* SetReadyConditions(m_LocalPlayerInteracting); */
 
     }
