@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO remove class
 public class ControllPanel : RangedInteractableBase
 {
     [SerializeField]
@@ -10,10 +11,10 @@ public class ControllPanel : RangedInteractableBase
 
     protected override void Interaction(){
         if(!stearing){
-            ShipManager.Instance.AccillerateSpeedServerRpc(accaleration);
+            // ShipManager.Instance.AccillerateSpeedServerRpc(accaleration);
         }
         else{
-            ShipManager.Instance.AccillerateAngleServerRpc(accaleration);
+            // ShipManager.Instance.AccillerateAngleServerRpc(accaleration);
         }
     }
 }

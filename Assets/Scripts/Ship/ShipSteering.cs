@@ -39,12 +39,19 @@ public class ShipSteering : NetworkBehaviour {
 
     [ServerRpc(RequireOwnership=false)]
     public void SetThrusterStateServerRpc(Thruster t, bool state) {
+        Debug.Log("Setting thruster " + t + " to " + state);
         m_ThrusterStates[(int)t] = state;
         if (state) {
             m_ThrusterStatesNetwork.Value |= (1 << (int)t);
         } else {
             m_ThrusterStatesNetwork.Value &= ~(1 << (int)t);
         }
+    }
+
+    [ServerRpc(RequireOwnership=false)]
+    public void ToggleThrusterStateServerRpc(Thruster t) {
+        bool current = m_ThrusterStates[(int)t];
+        SetThrusterStateServerRpc(t, !current);
     }
  
     [ServerRpc(RequireOwnership=false)]

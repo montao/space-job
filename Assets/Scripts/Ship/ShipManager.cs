@@ -6,6 +6,9 @@ using Unity.Netcode;
 public class ShipManager : NetworkBehaviour {
     public static ShipManager Instance;
     private ShipSteering m_Steering;
+    public ShipSteering Steering {
+        get => m_Steering;
+    }
 
     public List<Room> Rooms = new List<Room>();
     public const char HAS_POWER = '\0';
@@ -85,16 +88,6 @@ public class ShipManager : NetworkBehaviour {
     }
     public Vector2 GetGoal(){
         return m_Destination.Value;
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void AccillerateSpeedServerRpc(float speed){
-        m_Speed.Value = m_Speed.Value + speed;
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void AccillerateAngleServerRpc(float angle){
-        m_Rotation.Value = m_Rotation.Value + angle;
     }
 
     public void Rotate(float delta_angle) {

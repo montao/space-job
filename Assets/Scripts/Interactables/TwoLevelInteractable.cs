@@ -12,7 +12,7 @@ public class TwoLevelInteractable : Interactable<int> {
 
     // Will be active iff local player is interacting with the NavTerminal
     [SerializeField]
-    private List<InteractableBase> m_SecondaryInteractables;
+    private List<SecondaryButton> m_Buttons;
 
     private CameraSwap m_CameraSwap;
 
@@ -53,21 +53,21 @@ public class TwoLevelInteractable : Interactable<int> {
                 PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
                 m_CameraSwap.SwitchAway();
                 NeedsPower = m_NeedsPowerInitial;
-                SetSecondaryInteractablesActive(false);
+                SetSecondaryButtonsActive(false);
             }
         } else {
             if (current == (int)NetworkManager.Singleton.LocalClientId) { // local player entered terminal
                 m_CameraSwap.SwitchTo();
                 PlayerManager.Instance.LocalPlayer.Avatar.LockMovement(GetHashCode());
                 NeedsPower = false;  // allow exit
-                SetSecondaryInteractablesActive(true);
+                SetSecondaryButtonsActive(true);
             }
         }
     }
 
-    private void SetSecondaryInteractablesActive(bool active) {
-        foreach (var interactable in m_SecondaryInteractables) {
-            interactable.gameObject.SetActive(active);
+    private void SetSecondaryButtonsActive(bool active) {
+        foreach (var button in m_Buttons) {
+            button.CanInteract = active;
         }
     }
 }
