@@ -54,7 +54,7 @@ public class PlayerAvatar : NetworkBehaviour {
     private List<int> m_MovementLocks = new List<int>();
     private Coroutine m_SpeedBoostCoroutine = null;
     private CharacterController m_Controller;
-    private float m_MovementSpeed = 5f;
+    private float m_MovementSpeed = 3f;
     private bool m_IsGrounded = false;
     [SerializeField]
     [Range(0f,100f)]
