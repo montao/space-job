@@ -19,7 +19,7 @@ public class PlayerAvatar : NetworkBehaviour {
     private NetworkVariable<int> m_ActiveAnimation
             = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<int> m_ActiveCharacter
-            = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
+            = new NetworkVariable<int>(3, default, NetworkVariableWritePermission.Owner);
     
     private NetworkVariable<PlayerPos> m_PlayerPos
             = new NetworkVariable<PlayerPos>();
@@ -106,6 +106,9 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     public void OnCharacterChanged(int previous, int current) {
+        // Debug.Log(name + ": Character model changed from " + previous + " to " + current);
+
+        m_CharacterList.transform.GetChild(previous).gameObject.SetActive(false);
         if(current == 0){
             m_CharacterList.transform.GetChild(0).gameObject.SetActive(true);
         }
@@ -119,8 +122,6 @@ public class PlayerAvatar : NetworkBehaviour {
             m_CharacterList.transform.GetChild(3).gameObject.SetActive(true);
         }
         
-        m_CharacterList.transform.GetChild(previous).gameObject.SetActive(false);
-
     }
 
     public override void OnNetworkSpawn() {
