@@ -9,6 +9,7 @@ using TMPro;
 public class PlayerReadyButton : Interactable<bool> {
     PlayerAvatar player;
     private bool m_LocalPlayerInteracting = false;
+    int readyCouter = 0;
 
     protected override void Interaction(){
         m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
@@ -24,7 +25,6 @@ public class PlayerReadyButton : Interactable<bool> {
 
     }
     void SetReadyConditions(bool ready){
-        int readyCouter = 0;
         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
             if(IsOwner){
                 if (PlayerManager.Instance.LocalPlayer.Avatar.ready.Value) {
