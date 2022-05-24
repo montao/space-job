@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 using TMPro;
 
 public class PlayerReadyButton : Interactable<bool> {
+
+    private NetworkObject IsServer;
     PlayerAvatar player;
     private bool m_LocalPlayerInteracting = false;
     //int readyCouter = 0;
@@ -45,7 +47,9 @@ public class PlayerReadyButton : Interactable<bool> {
         base.Update();
         Debug.Log("ready counter: " + PlayerManager.Instance.PlayersReady + " Player Counter: " + PlayerManager.Instance.Players.Count);
         if(PlayerManager.Instance.PlayersReady == PlayerManager.Instance.Players.Count){
-            NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+            if(IsServer) {
+                NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+            }
         }
     }
     public override void OnStateChange(bool previous, bool current){
