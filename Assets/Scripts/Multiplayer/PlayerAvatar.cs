@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Unity.Netcode;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public struct PlayerPos {
@@ -318,7 +319,8 @@ public class PlayerAvatar : NetworkBehaviour {
         itemRend.enabled = false;
 
         // Make overall world scale of object in hand match the item's scale.
-        handRend.transform.localScale = Vector3.Scale(transform.localScale, item.transform.lossyScale);
+        float itemscale = SceneManager.GetActiveScene().name == "SampleScene" ? 0.4f: 1.0f;
+        handRend.transform.localScale = Vector3.Scale(transform.localScale, item.transform.lossyScale) * itemscale;
 
         handRend.enabled = true;
     }
