@@ -120,7 +120,6 @@ public class ShipManager : NetworkBehaviour {
     public void TriggerPowerOutageEvent(){
         int error_idx = UnityEngine.Random.Range(0, ERROR_CODES.Length - 1);
         m_Power.Value = ERROR_CODES[error_idx];
-        Rooms[0].RoomOxygen = 0;
     }
     public bool TryResolvePowerOutageEvent(string solution_attempt) {
         if (solution_attempt == PowerSolutionCode(m_Power.Value)) {
@@ -132,7 +131,6 @@ public class ShipManager : NetworkBehaviour {
     }
     private void ResolvePowerOutageEvent() {
         m_Power.Value = HAS_POWER;
-        Rooms[0].RoomOxygen = 1;
     }
 
     public void TriggerHullBreachEvent(EventParameters.HullBreachSize size) {
