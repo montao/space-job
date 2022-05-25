@@ -19,7 +19,7 @@ public class Room : NetworkBehaviour {
     private List<Transform> m_HullBreachSpawnLocations = new List<Transform>();
     private List<GameObject> m_HullBreaches = new List<GameObject>();
 
-    void Awake() {
+    void Start() {
         ShipManager.Instance.Rooms.Add(this);
         foreach (Door door in Doors) {
             door.SetRoom(this);
