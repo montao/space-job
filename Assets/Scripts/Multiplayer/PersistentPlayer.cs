@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Collections;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(NetworkObject))]
 public class PersistentPlayer : NetworkBehaviour {
@@ -75,6 +76,19 @@ public class PersistentPlayer : NetworkBehaviour {
         NetworkObject avatarNetworkObject = avatar.GetComponent<NetworkObject>();
         avatarNetworkObject.SpawnWithOwnership(owner);
         //avatar.OnAvatarSpawnedClientRpc();
+
+        // I proudly present: Jank
+        if (SceneManager.GetActiveScene().name == "SampleScene") {
+            avatar.transform.GetChild(0).localScale = new Vector3(2.5f, 2.5f, 2.5f);
+            CharacterController characterController = avatar.GetComponent<CharacterController>();
+            characterController.height = 4;
+            characterController.center = new Vector3(0, 1, 0);
+            foreach (var rectt in avatar.GetComponentsInChildren<RectTransform>()) {
+                if (rectt.name == "PlayerName") {
+                    rectt.position = rectt.position + new Vector3(0, 2.7f, 0);
+                }
+            }
+        }
 
         m_Avatar.Value = avatarNetworkObject;
 
