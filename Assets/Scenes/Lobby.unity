@@ -1229,7 +1229,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Select & Ready
+  m_text: Select
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5bc7c323c2cb202c9b92d6ad31867e99, type: 2}
   m_sharedMaterial: {fileID: 3691657298897300434, guid: 5bc7c323c2cb202c9b92d6ad31867e99, type: 2}
@@ -4180,6 +4180,8 @@ MonoBehaviour:
   NeedsPower: 0
   HidePlayer: 0
   TriggeredAnimation: 2
+  PlayersReady:
+    m_InternalValue: 0
 --- !u!1 &1928991600
 GameObject:
   m_ObjectHideFlags: 0
