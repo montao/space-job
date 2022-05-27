@@ -52,8 +52,6 @@ public class CharacterSelect : MonoBehaviour {
             }
             //else characters[0].transform.GetChild(i).gameObject.SetActive(false);
         }
-        
-    
         canvas.SetActive(false);
         cam.Priority = 0;
     }
@@ -61,4 +59,6 @@ public class CharacterSelect : MonoBehaviour {
         canvas.SetActive(false);
         cam.Priority = 0;
     }
+
+
 }

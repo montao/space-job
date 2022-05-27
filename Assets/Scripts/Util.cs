@@ -10,6 +10,10 @@ public class Util {
         return result;
     }
 
+    public static float Frac(float a) {
+        return a - (int)a;
+    }
+
     public static bool NetworkObjectReferenceIsEmpty(NetworkObjectReference r) {
         NetworkObject _;
         return !r.TryGet(out _);

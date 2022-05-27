@@ -135,7 +135,7 @@ Shader "Custom/Simple Lit Affine"
             #pragma fragment ShadowPassFragment
 
             #include "SimpleLitInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/ShadersShadowCasterPass.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/ShadowCasterPass.hlsl"
             ENDHLSL
         }
 
