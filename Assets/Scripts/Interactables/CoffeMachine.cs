@@ -19,10 +19,9 @@ public class CoffeMachine : Interactable<bool> {
     public void SetServerRpc(bool value){
         m_State.Value = value;
 
-        if(!prevCup || prevCup.GetComponentInChildren<CoffeCup>().isPickedUp()) {
+        if(!prevCup || prevCup.GetComponentInChildren<CoffeCup>().IsPickedUp()) {
             GameObject freshCup = Instantiate(cupPrefab, machine.GetComponent<Transform>().position, Quaternion.identity);
             freshCup.GetComponent<NetworkObject>().Spawn();
-            freshCup.GetComponentInChildren<CoffeCup>().pickedUp = false;
             prevCup = freshCup;
             Debug.Log("new cup");
         }

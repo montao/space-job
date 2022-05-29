@@ -448,6 +448,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     public static bool IsHolding<T>() where T: DroppableInteractable {
-        return PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).GetComponentInChildren<T>() != null;
+        var primary_item = PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY);
+        return primary_item != null && primary_item.GetComponentInChildren<T>() != null;
     }
 }
