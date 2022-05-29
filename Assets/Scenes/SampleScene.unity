@@ -7929,6 +7929,7 @@ MonoBehaviour:
     m_InternalValue: 1
   m_HullBreachSpawnLocations:
   - {fileID: 104591269}
+  - {fileID: 360180788}
 --- !u!114 &109288114392039072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8711,6 +8712,8 @@ MonoBehaviour:
     m_InternalValue: 1
   m_HullBreachSpawnLocations:
   - {fileID: 1611164202}
+  - {fileID: 1107791396}
+  - {fileID: 613258477}
 --- !u!4 &2300495598306140667
 Transform:
   m_ObjectHideFlags: 0
