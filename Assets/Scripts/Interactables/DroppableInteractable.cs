@@ -9,7 +9,6 @@ public abstract class DroppableInteractable : Interactable<int>{
     protected List<Collider> m_AllCollider;
     protected NetworkTransform m_NetTransform;
     public const int IN_WORLD = -1;
-    public bool pickedUp = false;
     public float velocity;
 
 //----------------------------------------------------------------------------------------------
@@ -30,8 +29,7 @@ public abstract class DroppableInteractable : Interactable<int>{
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SetHolderServerRpc(int holder_id){
-        pickedUp = true;
+    public virtual void SetHolderServerRpc(int holder_id){
         m_State.Value = holder_id;
     }
 
@@ -55,11 +53,9 @@ public abstract class DroppableInteractable : Interactable<int>{
         SetHolderServerRpc((int) NetworkManager.Singleton.LocalClientId);
     }
 
-    public override void OnStateChange(int previous, int current)
-    {
+    public override void OnStateChange(int previous, int current) {
         if (current != previous) {
-            // inWorld changed, i.e. item was dropped or
-            // picked up
+            // inWorld changed, i.e. item was dropped or picked up
             UpdateWorldstate(current == IN_WORLD);
         }
     }
@@ -77,9 +73,5 @@ public abstract class DroppableInteractable : Interactable<int>{
         }
         m_Rigidbody.isKinematic = !inWorld; // TODO does this work? 
         m_NetTransform.enabled = inWorld;
-    }
-
-    public bool isPickedUp() {
-        return pickedUp;
     }
 }
