@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
@@ -14,9 +13,16 @@ public abstract class DroppableInteractable : Interactable<int>{
     public float velocity;
 
 //----------------------------------------------------------------------------------------------
+    
+    public virtual void Awake() {
+        m_AllCollider = new List<Collider>(GetComponentsInParent<Collider>());
+        m_AllCollider.AddRange(GetComponents<Collider>());
+        m_Mesh = GetComponentInParent<MeshRenderer>();
+        m_Rigidbody = GetComponentInParent<Rigidbody>();
+        m_NetTransform = GetComponentInParent<NetworkTransform>();
+    }
 
-    public override void OnNetworkSpawn()
-    {
+    public override void OnNetworkSpawn() {
         base.OnNetworkSpawn();
         if (IsServer) {
             m_State.Value = IN_WORLD;
@@ -24,9 +30,9 @@ public abstract class DroppableInteractable : Interactable<int>{
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SetServerRpc(int value){
+    public void SetHolderServerRpc(int holder_id){
         pickedUp = true;
-        m_State.Value = value;
+        m_State.Value = holder_id;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -46,6 +52,7 @@ public abstract class DroppableInteractable : Interactable<int>{
 
         m_IsInArea = false;
         localPlayer.AddToInventory(GetComponentInParent<NetworkObject>());
+        SetHolderServerRpc((int) NetworkManager.Singleton.LocalClientId);
     }
 
     public override void OnStateChange(int previous, int current)

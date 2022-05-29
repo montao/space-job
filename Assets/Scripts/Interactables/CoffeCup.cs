@@ -26,7 +26,7 @@ public class CoffeCup : DroppableInteractable{
     protected override void Interaction()
     {
         base.Interaction();
-        SetServerRpc((int) NetworkManager.Singleton.LocalClientId);
+        SetHolderServerRpc((int) NetworkManager.Singleton.LocalClientId);
     }
     
 //----------------------------------------------------------------------------------------------
