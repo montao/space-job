@@ -10,6 +10,10 @@ public class HullBreachInstance : RangedInteractableBase {
     private bool m_PlayerIsHoldingPlate = false;  // server-only!
     private Coroutine m_GrowCoroutine;
 
+    public float DrainFactor() {
+        return m_Size == EventParameters.HullBreachSize.LARGE ? 1.8f : 0.7f;
+    }
+
     public override void OnDestroy() {
         PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
         base.OnDestroy();

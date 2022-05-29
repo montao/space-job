@@ -17,7 +17,7 @@ public class Room : NetworkBehaviour {
 
     [SerializeField]
     private List<Transform> m_HullBreachSpawnLocations = new List<Transform>();
-    private List<GameObject> m_HullBreaches = new List<GameObject>();
+    private List<HullBreachInstance> m_HullBreaches = new List<HullBreachInstance>();
 
     void Start() {
         ShipManager.Instance.Rooms.Add(this);
@@ -46,7 +46,9 @@ public class Room : NetworkBehaviour {
     private void FixedUpdate() {
         if (IsServer) {
             float new_oxygen = m_RoomOxygen.Value;
-            new_oxygen -= m_HullBreaches.Count * Time.fixedDeltaTime * 0.03f;
+            foreach (var breach in m_HullBreaches) {
+                new_oxygen -= breach.DrainFactor() * Time.fixedDeltaTime * 0.03f;
+            }
             new_oxygen += Time.fixedDeltaTime * 0.01f;
             m_RoomOxygen.Value = Mathf.Clamp(new_oxygen, 0f, 1f);
         }
