@@ -75,4 +75,10 @@ public class Room : NetworkBehaviour {
         m_HullBreaches.Remove(breach);
         m_HullBreachSpawnLocations.Add(freed_up_spawn_location);  // location availble again
     }
+
+    void OnDrawGizmos() {
+        foreach (var spawnloc in m_HullBreachSpawnLocations) {
+            Gizmos.DrawIcon(spawnloc.position, "HullBreachIcon.png", true);
+        }
+    }
 }
