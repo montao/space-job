@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8731654249464391831}
   - component: {fileID: 7595611897578284742}
   - component: {fileID: 5495022205632644628}
+  - component: {fileID: 6939157499442346117}
+  - component: {fileID: 4542422595514559725}
   m_Layer: 7
   m_Name: Flashlight
   m_TagString: Untagged
@@ -88,6 +90,32 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
+--- !u!135 &6939157499442346117
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460500903394967709}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0.17}
+--- !u!65 &4542422595514559725
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460500903394967709}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2439971, y: 0.3826009, z: 0.634439}
+  m_Center: {x: -0.0011794567, y: 0.067768276, z: -0.072383165}
 --- !u!1 &1800966365802813323
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,8 +188,6 @@ GameObject:
   - component: {fileID: 1611616714891042694}
   - component: {fileID: 6498300347447404421}
   - component: {fileID: 8622063974087908701}
-  - component: {fileID: 103017077374849246}
-  - component: {fileID: 6664744969063573199}
   m_Layer: 0
   m_Name: simpleFlashlight
   m_TagString: Untagged
@@ -245,10 +271,10 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0.9800172, b: 0.495283, a: 1}
-  m_Intensity: 18.8
-  m_Range: 40
-  m_SpotAngle: 90.41559
-  m_InnerSpotAngle: 65.41557
+  m_Intensity: 12
+  m_Range: 35
+  m_SpotAngle: 59.629337
+  m_InnerSpotAngle: 28.99523
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -306,8 +332,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.24808073, y: 0.42738974, z: 0.65089655}
-  m_Center: {x: -0.0037753582, y: 0.065066636, z: -0.07396102}
+  m_Size: {x: 0.37327862, y: 0.48062325, z: 0.67149544}
+  m_Center: {x: -0.0014853477, y: 0.044379234, z: -0.063661575}
 --- !u!114 &6498300347447404421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,29 +366,3 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!65 &103017077374849246
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2742719732730400578}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.3983841, y: 0.49291444, z: 0.6811881}
-  m_Center: {x: -0.00919342, y: 0.044396758, z: -0.07518458}
---- !u!135 &6664744969063573199
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2742719732730400578}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0.17}
