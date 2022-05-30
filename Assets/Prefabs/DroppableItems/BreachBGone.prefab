@@ -99,7 +99,6 @@ MonoBehaviour:
   NeedsPower: 0
   HidePlayer: 0
   TriggeredAnimation: 2
-  pickedUp: 0
   velocity: 0
 --- !u!136 &6154259582838842101
 CapsuleCollider:
@@ -203,7 +202,7 @@ Transform:
   m_GameObject: {fileID: 6193960833816435966}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -24.253, y: -0.64, z: -7.246}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 6783409325694482500}
   m_Father: {fileID: 0}
