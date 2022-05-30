@@ -29,6 +29,10 @@ public class TwoLevelInteractable : Interactable<int> {
         SetSecondaryButtonsActive(false);
     }
 
+    protected override bool PlayerCanInteract() {
+        return base.PlayerCanInteract() && !LocalPlayerIsInteracting();
+    }
+
     [ServerRpc(RequireOwnership = false)]
     public void TryToggleOccupiedServerRpc(int playerId) {
         if (Value == NOT_OCCUPIED) {  // no one at terminal
@@ -67,7 +71,6 @@ public class TwoLevelInteractable : Interactable<int> {
     }
 
     private void SetSecondaryButtonsActive(bool active) {
-        Debug.Log("Secondary: " + active);
         foreach (var button in m_Buttons) {
             button.CanInteract = active;
         }
@@ -75,10 +78,20 @@ public class TwoLevelInteractable : Interactable<int> {
 
     public override void Update() {
         base.Update();
-        if (m_State.Value == (int)NetworkManager.Singleton.LocalClientId) { // local player at terminal
-            if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f || Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f) {
-                TryToggleOccupiedServerRpc((int)NetworkManager.Singleton.LocalClientId);
+        if (LocalPlayerIsInteracting()) { // local player at terminal
+            if (Util.PlayerIsPressingMoveButton() || Input.GetKeyDown(KeyCode.Escape)) {
+                TryExitLocalPlayer();
             }
         }
+    }
+
+    public void TryExitLocalPlayer() {
+        if (LocalPlayerIsInteracting()) {
+            TryToggleOccupiedServerRpc((int)NetworkManager.Singleton.LocalClientId);
+        }
+    }
+
+    public bool LocalPlayerIsInteracting() {
+        return m_State.Value == (int)NetworkManager.Singleton.LocalClientId;
     }
 }

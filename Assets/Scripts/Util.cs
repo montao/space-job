@@ -35,4 +35,8 @@ public class Util {
         int idx = Random.Range(0, list.Count);
         return list[idx];
     }
+
+    public static bool PlayerIsPressingMoveButton() {
+        return Mathf.Abs(Input.GetAxis("Horizontal")) > 0.05f || Mathf.Abs(Input.GetAxis("Vertical")) > 0.05f;
+    }
 }
