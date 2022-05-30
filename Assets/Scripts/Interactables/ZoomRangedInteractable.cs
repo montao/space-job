@@ -1,19 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ZoomInteractable : InteractableBase
-{
+public class ZoomRangedInteractable : RangedInteractableBase {
     private CameraSwap m_CameraSwap;
     private bool m_LocalPlayerLookingAt = false;
 
     public override void Start() {
         base.Start();
         m_CameraSwap = GetComponent<CameraSwap>();
-    }
-
-    protected override bool PlayerCanInteract(){
-        return true;
+        m_InteractionRange.OnRangeTriggerExit += SwitchAwayIfPlayer;
     }
 
     public void SwitchAwayIfPlayer(Collider other) {
