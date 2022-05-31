@@ -60,7 +60,8 @@ public class PlayerAvatar : NetworkBehaviour {
     [SerializeField]
     [Range(0f,1f)]
     private float m_Health = Mathf.Clamp(1f, 0f, 1f);
-    private float m_HealthBar;
+    [SerializeField]
+    private HealthBar m_HealthBar;
     // Places where items are attached
     private Animator m_PlayerAnimator;
     private PersistentPlayer m_LocalPlayer;
@@ -76,6 +77,7 @@ public class PlayerAvatar : NetworkBehaviour {
         m_Controller = GetComponent<CharacterController>();
         m_PlayerAnimator = GetComponent<Animator>();
         m_PlayerMesh = GetComponentInChildren<SkinnedMeshRenderer>();
+        m_HealthBar = GetComponentInChildren<HealthBar>();
     }
 
     void Update() {
@@ -88,6 +90,7 @@ public class PlayerAvatar : NetworkBehaviour {
                 UpdatePos();
             }
             UpdateNameTag();
+            UpdateHealthBar();
         }
     }
 
@@ -187,20 +190,21 @@ public class PlayerAvatar : NetworkBehaviour {
         OnAnimationChange(m_ActiveAnimation.Value, m_ActiveAnimation.Value);
     }
 
-    void OnGUI() {
-        if (IsClient) {
-            //UpdateNameTag();
-        }
-    }
     public void PerformGroundCheck() {
         m_IsGrounded = Physics.CheckSphere(groundCheck.position,
                 GroundCheck.GROUND_CHECK_RADIUS,
                 groundLayer
         );
     }
-    void UpdateNameTag() {
+
+    private void UpdateNameTag() {
         nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
     }
+
+    private void UpdateHealthBar() {
+        m_HealthBar.UpdateHealthBar(m_Health);
+    }
+
     void ProcessInput() {
         PerformGroundCheck();
         if (m_IsGrounded && m_Velocity.y < 0) {
