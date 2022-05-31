@@ -60,7 +60,7 @@ public class PlayerAvatar : NetworkBehaviour {
     [SerializeField]
     [Range(0f,1f)]
     private float m_Health = Mathf.Clamp(1f, 0f, 1f);
-    private float HealthBar;
+    private float m_HealthBar;
     // Places where items are attached
     private Animator m_PlayerAnimator;
     private PersistentPlayer m_LocalPlayer;
