@@ -57,9 +57,6 @@ public class PlayerAvatar : NetworkBehaviour {
     private CharacterController m_Controller;
     private float m_MovementSpeed = 3f;
     private bool m_IsGrounded = false;
-    [SerializeField]
-    [Range(0f,100f)]
-    private float m_health = 100f;
 
     // Places where items are attached
     private Animator m_PlayerAnimator;
