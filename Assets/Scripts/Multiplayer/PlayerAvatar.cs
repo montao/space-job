@@ -34,7 +34,6 @@ public class PlayerAvatar : NetworkBehaviour {
     public Material normalMaterial;
     public Material transparentMaterial;
     public Transform CameraLookAt;
-
     private NetworkVariable<int> m_ActiveAnimation
             = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<PlayerPos> m_PlayerPos
@@ -57,6 +56,10 @@ public class PlayerAvatar : NetworkBehaviour {
     private CharacterController m_Controller;
     private float m_MovementSpeed = 3f;
     private bool m_IsGrounded = false;
+
+    [SerializeField]
+    [Range(0f,1f)]
+    private float m_Health = Mathf.Clamp(1f, 0f, 1f);
 
     // Places where items are attached
     private Animator m_PlayerAnimator;
