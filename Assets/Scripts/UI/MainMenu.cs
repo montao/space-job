@@ -92,10 +92,10 @@ public class MainMenu : MonoBehaviour {
         if (host) {
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.Instance.StartShip;
             if (playerName.text != "Demo") {
-                NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                NetworkManager.Singleton.SceneManager.LoadScene("ShipScene", LoadSceneMode.Single);
             }
             else {
-                NetworkManager.Singleton.SceneManager.LoadScene("ShipScene", LoadSceneMode.Single);
+                NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
             }
         }
         
