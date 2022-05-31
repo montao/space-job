@@ -3,7 +3,6 @@ using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using TMPro;
 using UnityEngine.SceneManagement;
-using System.Runtime;
 
 /*
  * TODO separate out the connection stuff

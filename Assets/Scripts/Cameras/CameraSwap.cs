@@ -8,7 +8,7 @@ public class CameraSwap : MonoBehaviour {
 
     private static List<CameraSwap> m_Instances = new List<CameraSwap>();
 
-    void Awake() {
+    void Start() {
         if(m_Camera == null){
             m_Camera = GetComponent<CinemachineVirtualCamera>();
         }

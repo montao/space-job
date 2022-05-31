@@ -39,17 +39,6 @@ public class PersistentPlayer : NetworkBehaviour {
         }
     }
 
-    void Start() {
-        PlayerManager.Instance.RegisterPlayer(this, IsOwner);
-
-        // jah, a bit hacky but seems to do the trick?
-        m_PlayerName.OnValueChanged += (FixedString32Bytes _, FixedString32Bytes __) => {
-            if (Avatar != null) {
-                Avatar.Setup();
-            }
-        };
-    }
-
     public void AvatarChanged(NetworkObjectReference previous, NetworkObjectReference current) {
         Debug.Log("Avatar changed for " + PlayerName);
         if (OnAvatarChanged != null) {
@@ -58,8 +47,17 @@ public class PersistentPlayer : NetworkBehaviour {
     }
 
     public override void OnNetworkSpawn() {
-        Debug.Log("hewwo");
+        PlayerManager.Instance.RegisterPlayer(this, IsOwner);
+
         m_Avatar.OnValueChanged += AvatarChanged;
+        //
+        // jah, a bit hacky but seems to do the trick?
+        m_PlayerName.OnValueChanged += (FixedString32Bytes _, FixedString32Bytes __) => {
+            if (Avatar != null) {
+                Avatar.Setup();
+            }
+        };
+
     }
 
     public override void OnNetworkDespawn() {
@@ -68,7 +66,7 @@ public class PersistentPlayer : NetworkBehaviour {
 
     // Note: Only called by Server, as they are the only one allowed to spawn objects
     public void SpawnAvatar(Transform spawnLocation) {
-        Debug.Log("Spawning an avatar!");
+        Debug.Log("Spawning avatar " + PlayerManager.Instance.LocalPlayerName);
 
         var owner = OwnerClientId;
 

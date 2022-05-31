@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine.SceneManagement;
 
 public class PlayerManager : NetworkBehaviour {
@@ -44,13 +45,27 @@ public class PlayerManager : NetworkBehaviour {
         m_Players = new List<PersistentPlayer>();
     }
 
+    void Start() {
+        AttatchCallbacks();
+
+        if (Application.isEditor && !m_InGame && SceneManager.GetActiveScene().name != "MainMenu") {
+            LocalPlayerName = SystemInfo.deviceName;
+
+            var transport = NetworkManager.Singleton.GetComponentInParent<UnityTransport>();
+            transport.ConnectionData.ServerListenAddress = "127.0.0.1";
+
+            NetworkManager.Singleton.OnServerStarted += StartShip;
+            NetworkManager.Singleton.StartHost();
+        }
+    }
+
     // Set to true after the ship scene is loaded
     private bool m_InGame = false;
     public bool InGame {
         get => m_InGame;
     }
 
-    void Start() {
+    void AttatchCallbacks() {
         NetworkManager.Singleton.OnClientConnectedCallback +=
             (id) => {
                 if (IsServer) {
@@ -112,12 +127,18 @@ public class PlayerManager : NetworkBehaviour {
         }
     }
 
+    // Signature required for OnLoadEventCompleted
     public void StartShip(
             string sceneName,
             LoadSceneMode loadSceneMode,
             List<ulong> clientsCompleted,
             List<ulong> clientsTimedOut) {
 
+        StartShip();
+    }
+
+    public void StartShip() {
+        Debug.Log("ship go brrr");
         m_InGame = true;
         SpawnAvatars();
     }
