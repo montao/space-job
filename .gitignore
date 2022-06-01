@@ -3,6 +3,7 @@
 *.so
 *.debug
 *_Data/
+*~
 
 .vscode
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465878, g: 0.4964224, b: 0.57482475, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -907,10 +907,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7116354746579277564, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e31c958b53b4cfabab991536a0dbddb7, type: 2}
+    - target: {fileID: -3267094936448897518, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e31c958b53b4cfabab991536a0dbddb7, type: 2}
     - target: {fileID: 919132149155446097, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
       propertyPath: m_Name
       value: Computer
       objectReference: {fileID: 0}
+    - target: {fileID: 2831065782900121813, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e31c958b53b4cfabab991536a0dbddb7, type: 2}
+    - target: {fileID: 5235238926596794568, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e31c958b53b4cfabab991536a0dbddb7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3388689eed01c8b2b8182a0546ecbfa1, type: 3}
 --- !u!4 &1698738549 stripped
