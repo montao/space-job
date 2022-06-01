@@ -78,6 +78,15 @@ public class CameraBrain : MonoBehaviour {
             SetWireframe(blending);
             m_IsBlending = blending;
         }
+
+        if (Input.GetKeyDown(KeyCode.C)) {
+            RaycastHit hit;
+            var ray = OutputCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit)) {
+                Debug.Log(hit.transform.name);
+            }
+        }
     }
 
 }
