@@ -53,10 +53,11 @@ public class PlayerReadyButton : Interactable<bool> {
 
     public override void Update() {
         base.Update();
-        Debug.Log("ready counter: " + PlayersReady.Value + " Player Counter: " + PlayerManager.Instance.Players.Count);
         if(PlayersReady.Value == PlayerManager.Instance.Players.Count){
             if(IsServer) {
-                NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= PlayerManager.Instance.StartShip;
+                NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.Instance.MovePlayersToSpawns;
+                NetworkManager.Singleton.SceneManager.LoadScene("ShipScene", LoadSceneMode.Single);
             }
         }
     }

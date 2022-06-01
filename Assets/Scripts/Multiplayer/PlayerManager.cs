@@ -121,6 +121,15 @@ public class PlayerManager : NetworkBehaviour {
         }
     }
 
+    public void MovePlayersToSpawns(
+            string sceneName,
+            LoadSceneMode loadSceneMode,
+            List<ulong> clientsCompleted,
+            List<ulong> clientsTimedOut) {
+
+        PlayerSpawnLocation.SetPlayersToSpawnLocation();
+    }
+
     public void StartShip(
             string sceneName,
             LoadSceneMode loadSceneMode,
