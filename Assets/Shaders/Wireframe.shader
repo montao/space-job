@@ -6,6 +6,7 @@ Shader "Custom/Wireframe"
     {
         _WireThickness ("Wire Thickness", RANGE(0, 100)) = 10
         _WireColor ("Color", Color) = (0.6, 1, 0.6, 0.7)
+        [MaterialToggle] _ConstantThickness("Constant Thickness", Float) = 0
     }
 
     SubShader
@@ -28,6 +29,7 @@ Shader "Custom/Wireframe"
 
             float _WireThickness;
             fixed4 _WireColor;
+            float _ConstantThickness;
 
             struct appdata
             {
@@ -88,19 +90,28 @@ Shader "Custom/Wireframe"
                 o.worldSpacePosition = i[0].worldSpacePosition;
                 o.projectionSpaceVertex = i[0].projectionSpaceVertex;
                 o.dist.xyz = float3( (area / length(edge0)), 0.0, 0.0) * o.projectionSpaceVertex.w * wireThickness;
-                o.dist.w = 1.0; // / o.projectionSpaceVertex.w;
+                o.dist.w = 1.0;
+                if (_ConstantThickness != 0) {
+                    o.dist.w /= o.projectionSpaceVertex.w;
+                }
                 triangleStream.Append(o);
 
                 o.worldSpacePosition = i[1].worldSpacePosition;
                 o.projectionSpaceVertex = i[1].projectionSpaceVertex;
                 o.dist.xyz = float3(0.0, (area / length(edge1)), 0.0) * o.projectionSpaceVertex.w * wireThickness;
-                o.dist.w = 1.0; // / o.projectionSpaceVertex.w;
+                o.dist.w = 1.0;
+                if (_ConstantThickness != 0) {
+                    o.dist.w /= o.projectionSpaceVertex.w;
+                }
                 triangleStream.Append(o);
 
                 o.worldSpacePosition = i[2].worldSpacePosition;
                 o.projectionSpaceVertex = i[2].projectionSpaceVertex;
                 o.dist.xyz = float3(0.0, 0.0, (area / length(edge2))) * o.projectionSpaceVertex.w * wireThickness;
-                o.dist.w = 1.0; // / o.projectionSpaceVertex.w;
+                o.dist.w = 1.0;
+                if (_ConstantThickness != 0) {
+                    o.dist.w /= o.projectionSpaceVertex.w;
+                }
                 triangleStream.Append(o);
             }
 
