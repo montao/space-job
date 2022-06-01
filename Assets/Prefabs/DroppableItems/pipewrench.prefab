@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 6105532201919271807}
   m_LocalRotation: {x: -0.61590904, y: -0.63464093, z: 0.33497235, w: 0.32508537}
   m_LocalPosition: {x: -13.332, y: 1.81, z: -11.921}
-  m_LocalScale: {x: 4.9382315, y: 4.9382315, z: 4.9382315}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 6375510347268210879}
   m_Father: {fileID: 0}
@@ -231,7 +231,7 @@ MonoBehaviour:
   NeedsPower: 0
   HidePlayer: 0
   TriggeredAnimation: 2
-  pickedUp: 0
+  velocity: 0
 --- !u!1 &6375510347651138627
 GameObject:
   m_ObjectHideFlags: 0

@@ -158,4 +158,16 @@ public class ShipSteering : NetworkBehaviour {
             SetThrusterStateServerRpc(Thruster.ROTATE_RIGHT, false);
         }
     }
+
+    public void ResetSteering() {
+        m_Velocity.Value = new Vector3(0, 0, 0);
+        m_AngularVelocity.Value = 0;
+        m_TargetVelocityIdx.Value = 1;
+        SetThrusterStateServerRpc(Thruster.ROTATE_LEFT, false);
+        SetThrusterStateServerRpc(Thruster.ROTATE_RIGHT, false);
+        SetThrusterStateServerRpc(Thruster.TRANSLATE_LEFT, false);
+        SetThrusterStateServerRpc(Thruster.TRANSLATE_RIGHT, false);
+        SetThrusterStateServerRpc(Thruster.TRANSLATE_FORWARD, false);
+        SetThrusterStateServerRpc(Thruster.TRANSLATE_BACKWARD, false);
+    }
 }

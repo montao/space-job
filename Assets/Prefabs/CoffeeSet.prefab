@@ -216,8 +216,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf35e43e43f6b2d158ff024b017ed780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cupPrefab: {fileID: 0}
-  machine: {fileID: 0}
+  NeedsPower: 1
+  HidePlayer: 0
+  TriggeredAnimation: 2
+  cupPrefab: {fileID: 5950505010473834605, guid: 197d2534998fc0434881b19a103157f7, type: 3}
+  machine: {fileID: 6524575559782636402}
 --- !u!114 &6498240862344770193
 MonoBehaviour:
   m_ObjectHideFlags: 0

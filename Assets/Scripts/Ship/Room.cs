@@ -3,6 +3,7 @@ using Unity.Netcode;
 using System.Collections.Generic;
 using TMPro;
 
+[RequireComponent(typeof(BoxCollider))]
 public class Room : NetworkBehaviour {
     public string Name;
     public List<Door> Doors = new List<Door>();
@@ -14,7 +15,11 @@ public class Room : NetworkBehaviour {
     }
     private TMP_Text m_RoomDisplay;
 
-    void Awake() {
+    [SerializeField]
+    private List<Transform> m_HullBreachSpawnLocations = new List<Transform>();
+    private List<HullBreachInstance> m_HullBreaches = new List<HullBreachInstance>();
+
+    void Start() {
         ShipManager.Instance.Rooms.Add(this);
         foreach (Door door in Doors) {
             door.SetRoom(this);
@@ -39,4 +44,42 @@ public class Room : NetworkBehaviour {
         DisplayText("Oxygen Capacity: " + RoomOxygen);
     }
 
+    private void FixedUpdate() {
+        if (IsServer) {
+            float new_oxygen = m_RoomOxygen.Value;
+            foreach (var breach in m_HullBreaches) {
+                new_oxygen -= breach.DrainFactor() * Time.fixedDeltaTime * 0.03f;
+            }
+            new_oxygen += Time.fixedDeltaTime * 0.01f;
+            m_RoomOxygen.Value = Mathf.Clamp(new_oxygen, 0f, 1f);
+        }
+    }
+
+    public void SpawnHullBreach(EventParameters.HullBreachSize size) {
+        if (!IsServer) {
+            Debug.LogWarning("SpawnHullBreach should only be called on server!");
+            return;
+        }
+        if (m_HullBreachSpawnLocations.Count == 0) {
+            Debug.Log("You're in luck(?), there's no places to spawn hull breaches in " + name);
+            return;
+        }
+        Transform location = Util.RandomChoice(m_HullBreachSpawnLocations);
+        m_HullBreachSpawnLocations.Remove(location);
+        GameObject breach = Instantiate(EventManager.Instance.HullBreachPrefab, location.position, location.rotation);
+        breach.GetComponent<NetworkObject>().Spawn();
+        breach.GetComponent<HullBreachInstance>().Setup(this, location);
+        m_HullBreaches.Add(breach.GetComponent<HullBreachInstance>());
+    }
+
+    public void HullBreachResolved(HullBreachInstance breach, Transform freed_up_spawn_location) {
+        m_HullBreaches.Remove(breach);
+        m_HullBreachSpawnLocations.Add(freed_up_spawn_location);  // location availble again
+    }
+
+    void OnDrawGizmos() {
+        foreach (var spawnloc in m_HullBreachSpawnLocations) {
+            Gizmos.DrawIcon(spawnloc.position, "HullBreachIcon.png", true);
+        }
+    }
 }

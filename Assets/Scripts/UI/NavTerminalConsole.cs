@@ -20,7 +20,7 @@ public class NavTerminalConsole : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        m_AngleDisp.DisplayNumber(Mathf.Repeat(ShipManager.Instance.GetShipAngle(), 360f), 1);
+        m_AngleDisp.DisplayNumber(ShipManager.Instance.Steering.GetAngularSpeed(), 1);
         m_TargetSpeedDisp.DisplayNumber(ShipManager.Instance.GetTargetShipSpeed(), 1);
         m_SpeedDisp.DisplayNumber(ShipManager.Instance.GetShipSpeed(), 1);
 

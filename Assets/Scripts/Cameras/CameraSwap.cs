@@ -8,7 +8,7 @@ public class CameraSwap : MonoBehaviour {
 
     private static List<CameraSwap> m_Instances = new List<CameraSwap>();
 
-    void Awake() {
+    void Start() {
         if(m_Camera == null){
             m_Camera = GetComponent<CinemachineVirtualCamera>();
         }
@@ -37,7 +37,7 @@ public class CameraSwap : MonoBehaviour {
     }
 
     public void LookAtPlayer(PlayerAvatar avatar) {
-        m_Camera.LookAt = avatar.transform;
+        m_Camera.LookAt = avatar.CameraLookAt.transform;
     }
 
     public void SwitchTo() {

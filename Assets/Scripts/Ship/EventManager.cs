@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
@@ -8,17 +9,33 @@ public enum Event {
     HULL_BREACH,
 }
 
-public class EventManager : MonoBehaviour{
+namespace EventParameters {
+    public enum HullBreachSize {
+        SMALL,
+        LARGE,
+    }
+}
+
+public class EventManager : MonoBehaviour {
     public static EventManager Instance;
     [SerializeField]
     private Map m_Map;
-    [SerializeField]
-    [Range(0,1)]
-    private float risk;
+    private float risk = 0.02f;
 
     private Vector2 m_LastSpaceEventCoords = new Vector2(1, 1) * -10000;
 
-    private void Start() {
+    public GameObject HullBreachPrefab;
+
+    void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(this);
+        }
+    }
+
+    // Called by ShipManager, and only if current user is hosting
+    public void StartDiceRollCoroutine() {
         StartCoroutine(DiceRollCorutine());
     }
 
@@ -41,6 +58,9 @@ public class EventManager : MonoBehaviour{
         float ship_speed = ShipManager.Instance.GetShipSpeed()/ShipSteering.MAX_TRANSLATION_VELOCITY;
         float hull_breach_risk = (0.3f*Mathf.Atan(4.3f*(ship_speed-0.4f))+0.5f);
         hull_breach_risk = risk * hull_breach_risk * m_Map.GetState(ShipManager.Instance.GetShipPosition()).risk;
-        //Debug.Log("ship_speed: " + ship_speed + ", risk: " + m_Map.GetState(ShipManager.Instance.GetShipPosition()).risk + ", riskybiskuit: " + hull_breach_risk);
+
+        if (hull_breach_dice < hull_breach_risk) {
+            ShipManager.Instance.TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
+        }
     }
 }

@@ -36,7 +36,7 @@ public class PlayerAvatar : NetworkBehaviour {
     public TMP_Text nameText;
     public Material normalMaterial;
     public Material transparentMaterial;
-
+    public Transform CameraLookAt;
     private NetworkVariable<int> m_ActiveAnimation
             = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<int> m_ActiveCharacter
@@ -61,12 +61,14 @@ public class PlayerAvatar : NetworkBehaviour {
     private List<int> m_MovementLocks = new List<int>();
     private Coroutine m_SpeedBoostCoroutine = null;
     private CharacterController m_Controller;
-    private float m_MovementSpeed = 5f;
+    private float m_MovementSpeed = 3f;
     private bool m_IsGrounded = false;
-    [SerializeField]
-    [Range(0f,100f)]
-    private float m_health = 100f;
 
+    [SerializeField]
+    [Range(0f,1f)]
+    private float m_Health = Mathf.Clamp(1f, 0f, 1f);
+    [SerializeField]
+    private HealthBar m_HealthBar;
     // Places where items are attached
     private Animator m_PlayerAnimator;
     private PersistentPlayer m_LocalPlayer;
@@ -80,6 +82,9 @@ public class PlayerAvatar : NetworkBehaviour {
     private float m_LungCapacity = 1f;
 
     public void Start() {
+        if (CameraLookAt == null) {
+            CameraLookAt = transform;
+        }
         m_Controller = GetComponent<CharacterController>();
         m_PlayerAnimator = GetComponent<Animator>();
         m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
@@ -88,8 +93,8 @@ public class PlayerAvatar : NetworkBehaviour {
             isready.SetActive(false);
             notready.SetActive(false);
         }
-        Debug.Log(SceneManager.GetActiveScene().name);
         
+        m_HealthBar = GetComponentInChildren<HealthBar>();
     }
     
 
@@ -104,7 +109,7 @@ public class PlayerAvatar : NetworkBehaviour {
                 UpdatePos();
             }
             UpdateNameTag();
-            
+            UpdateHealthBar();
         }
         if( SceneManager.GetActiveScene().name == "Lobby"){
             if(ready.Value){
@@ -153,9 +158,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     public void OxygenRegulation(float delta_time){
-        if (m_CurrentRoom == null) {
-            return;
-        }
+        if (m_CurrentRoom == null) return;
         float oxygen = ((m_LungCapacity - 0.01f + (0.02f* m_CurrentRoom.RoomOxygen)));
         m_LungCapacity = Mathf.Clamp(oxygen, 0f, 1f);
         //Debug.Log(delta_time);
@@ -236,23 +239,23 @@ public class PlayerAvatar : NetworkBehaviour {
         OnAnimationChange(m_ActiveAnimation.Value, m_ActiveAnimation.Value);
     }
 
-
-    void OnGUI() {
-        if (IsClient) {
-            //UpdateNameTag();
-        }
-    }
     public void PerformGroundCheck() {
         m_IsGrounded = Physics.CheckSphere(groundCheck.position,
                 GroundCheck.GROUND_CHECK_RADIUS,
                 groundLayer
         );
     }
-    void UpdateNameTag() {
+
+    private void UpdateNameTag() {
         nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
         isready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
         notready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
     }
+
+    private void UpdateHealthBar() {
+        m_HealthBar.UpdateHealthBar(m_Health);
+    }
+
     void ProcessInput() {
         PerformGroundCheck();
         if (m_IsGrounded && m_Velocity.y < 0) {
@@ -371,7 +374,8 @@ public class PlayerAvatar : NetworkBehaviour {
         itemRend.enabled = false;
 
         // Make overall world scale of object in hand match the item's scale.
-        handRend.transform.localScale = Vector3.Scale(transform.localScale, item.transform.lossyScale);
+        float itemscale = SceneManager.GetActiveScene().name == "SampleScene" ? 0.4f: 1.0f;
+        handRend.transform.localScale = Vector3.Scale(transform.localScale, item.transform.lossyScale) * itemscale;
 
         handRend.enabled = true;
     }
@@ -501,6 +505,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     public static bool IsHolding<T>() where T: DroppableInteractable {
-        return PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).GetComponentInChildren<T>() != null;
+        var primary_item = PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY);
+        return primary_item != null && primary_item.GetComponentInChildren<T>() != null;
     }
 }

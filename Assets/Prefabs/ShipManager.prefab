@@ -105,4 +105,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Map: {fileID: 1047239872381265899}
-  risk: 1
+  HullBreachPrefab: {fileID: 5519585612222790138, guid: 6ac64921f83b462f69196c9298af06a6, type: 3}

@@ -1,5 +1,12 @@
 # space-Job
 
+## Unity Setup
+
+For setting up Unity on your Linux machine, please refer to
+[this guide](https://github.com/GooseGirlGames/steves-job/blob/main/doc/UnitySetup.md#unity-setup-linux)
+over in the Steve's Job repo.  The file also includes fixes for common
+errors, including crashes and the dreaded double empty errors.
+
 ## Multiplayer
 
 Multiplayer uses [Netcode for GameObjects](https://github.com/Unity-Technologies/com.unity.netcode.gameobjects),

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
@@ -10,13 +9,19 @@ public abstract class DroppableInteractable : Interactable<int>{
     protected List<Collider> m_AllCollider;
     protected NetworkTransform m_NetTransform;
     public const int IN_WORLD = -1;
-    public bool pickedUp = false;
     public float velocity;
 
 //----------------------------------------------------------------------------------------------
+    
+    public virtual void Awake() {
+        m_AllCollider = new List<Collider>(GetComponentsInParent<Collider>());
+        m_AllCollider.AddRange(GetComponents<Collider>());
+        m_Mesh = GetComponentInParent<MeshRenderer>();
+        m_Rigidbody = GetComponentInParent<Rigidbody>();
+        m_NetTransform = GetComponentInParent<NetworkTransform>();
+    }
 
-    public override void OnNetworkSpawn()
-    {
+    public override void OnNetworkSpawn() {
         base.OnNetworkSpawn();
         if (IsServer) {
             m_State.Value = IN_WORLD;
@@ -24,9 +29,8 @@ public abstract class DroppableInteractable : Interactable<int>{
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SetServerRpc(int value){
-        pickedUp = true;
-        m_State.Value = value;
+    public virtual void SetHolderServerRpc(int holder_id){
+        m_State.Value = holder_id;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -46,13 +50,12 @@ public abstract class DroppableInteractable : Interactable<int>{
 
         m_IsInArea = false;
         localPlayer.AddToInventory(GetComponentInParent<NetworkObject>());
+        SetHolderServerRpc((int) NetworkManager.Singleton.LocalClientId);
     }
 
-    public override void OnStateChange(int previous, int current)
-    {
+    public override void OnStateChange(int previous, int current) {
         if (current != previous) {
-            // inWorld changed, i.e. item was dropped or
-            // picked up
+            // inWorld changed, i.e. item was dropped or picked up
             UpdateWorldstate(current == IN_WORLD);
         }
     }
@@ -70,9 +73,5 @@ public abstract class DroppableInteractable : Interactable<int>{
         }
         m_Rigidbody.isKinematic = !inWorld; // TODO does this work? 
         m_NetTransform.enabled = inWorld;
-    }
-
-    public bool isPickedUp() {
-        return pickedUp;
     }
 }

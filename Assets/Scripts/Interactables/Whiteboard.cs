@@ -25,5 +25,4 @@ public class Whiteboard : RangedInteractableBase {
             m_CameraSwap.SwitchAway();
         }
     }
-
 }
