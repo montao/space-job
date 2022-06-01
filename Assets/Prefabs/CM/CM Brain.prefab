@@ -92,8 +92,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.1
+  far clip plane: 5000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -157,6 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 669d75977164534d3a20429b3d4e5d96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_WireframeRendererFeature: {fileID: 4082407462464489128, guid: 5bc392ef1f4545742b089dfb8e6d5608, type: 2}
+  m_SkyboxWireframe: {fileID: 2100000, guid: c9f74d02d05465a72b0618df6d5181ef, type: 2}
   Brain: {fileID: 90291987610743096}
 --- !u!45 &4110973500054497974
 Skybox:
