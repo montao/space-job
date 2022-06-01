@@ -35,8 +35,9 @@ public class Room : NetworkBehaviour {
     }
 
     public void DisplayText(string text) {
-        if(m_RoomDisplay == null) return;
-        m_RoomDisplay.text = text;
+        if (m_RoomDisplay != null) {
+            m_RoomDisplay.text = text;
+        }
     }
 
     private void Update() {

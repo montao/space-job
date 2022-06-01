@@ -17,6 +17,9 @@ public struct PlayerPos {
 
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerAvatar : NetworkBehaviour {
+
+    [SerializeField]
+    private GameObject m_CharacterList;
     [ServerRpc]
     public void UpdatePosServerRpc(PlayerPos p) {
         m_PlayerPos.Value = p;
@@ -36,12 +39,16 @@ public class PlayerAvatar : NetworkBehaviour {
     public Transform CameraLookAt;
     private NetworkVariable<int> m_ActiveAnimation
             = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<int> m_ActiveCharacter
+            = new NetworkVariable<int>(3, default, NetworkVariableWritePermission.Owner);
+    
     private NetworkVariable<PlayerPos> m_PlayerPos
             = new NetworkVariable<PlayerPos>();
     private NetworkVariable<NetworkObjectReference> m_PrimaryItem
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<NetworkObjectReference> m_SecondaryItem
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> ready = new NetworkVariable<bool>(default, default, NetworkVariableWritePermission.Owner);
 
     private Room m_CurrentRoom = null;
     public Room CurrentRoom {
@@ -66,7 +73,11 @@ public class PlayerAvatar : NetworkBehaviour {
     private Animator m_PlayerAnimator;
     private PersistentPlayer m_LocalPlayer;
     private Vector3 m_Velocity;
-    private SkinnedMeshRenderer m_PlayerMesh;
+
+    public GameObject isready;
+    public GameObject notready;
+    public CharacterSelect chara_select;
+    private MeshRenderer m_PlayerMesh;
     [SerializeField]
     private float m_LungCapacity = 1f;
 
@@ -76,9 +87,16 @@ public class PlayerAvatar : NetworkBehaviour {
         }
         m_Controller = GetComponent<CharacterController>();
         m_PlayerAnimator = GetComponent<Animator>();
-        m_PlayerMesh = GetComponentInChildren<SkinnedMeshRenderer>();
+        m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
+
+        if( SceneManager.GetActiveScene().name != "Lobby"){
+            isready.SetActive(false);
+            notready.SetActive(false);
+        }
+        
         m_HealthBar = GetComponentInChildren<HealthBar>();
     }
+    
 
     void Update() {
         //m_PlayerAnimator.SetInteger("active_animation", m_ActiveAnimation.Value);
@@ -86,35 +104,65 @@ public class PlayerAvatar : NetworkBehaviour {
         if (IsClient) {
             if (IsOwner) {
                 ProcessInput();
+                
             } else {
                 UpdatePos();
             }
             UpdateNameTag();
             UpdateHealthBar();
         }
+        if( SceneManager.GetActiveScene().name == "Lobby"){
+            if(ready.Value){
+                isready.SetActive(true);
+                notready.SetActive(false);
+            }
+            if(!ready.Value){
+                isready.SetActive(false);
+                notready.SetActive(true);
+            }
+        }
+        else {
+            isready.SetActive(false);
+            notready.SetActive(false);
+        }
+
+        
+    }
+
+    public void SetActiveCharacter(int characterIndex) {
+        m_ActiveCharacter.Value = characterIndex;
+    }
+
+    public void OnCharacterChanged(int previous, int current) {
+        // Debug.Log(name + ": Character model changed from " + previous + " to " + current);
+
+        m_CharacterList.transform.GetChild(previous).gameObject.SetActive(false);
+        m_CharacterList.transform.GetChild(current).gameObject.SetActive(true);
+        m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
+    }
+
+    public void Teleport(Vector3 pos, Quaternion rot) {
+        bool prev_controller_enabled = m_Controller.enabled;
+        m_Controller.enabled = false;
+        transform.SetPositionAndRotation(pos, rot);
+        m_Controller.enabled = prev_controller_enabled;
     }
 
     public void Teleport(Transform target) {
-        bool prev_controller_enabled = m_Controller.enabled;
-        m_Controller.enabled = false;
-        transform.SetPositionAndRotation(target.position, target.rotation);
-        m_Controller.enabled = prev_controller_enabled;
+        Teleport(target.position, target.rotation);
     }
+
+    [ClientRpc]
+    public void TeleportClientRpc(PlayerPos target) {
+        Teleport(target.Position, target.Rotation);
+    }
+
     public void OxygenRegulation(float delta_time){
         if (m_CurrentRoom == null) return;
         float oxygen = ((m_LungCapacity - 0.01f + (0.02f* m_CurrentRoom.RoomOxygen)));
-        if(oxygen <= 0f){
-            m_LungCapacity = 0f;
-            //Debug.Log("Your Chocking");
-        }
-        else if(oxygen >= 1f){
-            m_LungCapacity = 1f;
-        }
-        else{
-            m_LungCapacity = oxygen;
-            //Debug.Log(delta_time);
-            //Debug.Log("palyer Oxygen:" + m_LungCapacity + "\n room: " + m_CurrentRoom.Name + ",Ox-Level: " + m_CurrentRoom.RoomOxygen);
-        }
+        m_LungCapacity = Mathf.Clamp(oxygen, 0f, 1f);
+        //Debug.Log(delta_time);
+        //Debug.Log("palyer Oxygen:" + m_LungCapacity + "\n room: " + m_CurrentRoom.Name + ",Ox-Level: " + m_CurrentRoom.RoomOxygen);
     }
 
     public void SetActiveAnimation(int animation_index) {
@@ -156,6 +204,7 @@ public class PlayerAvatar : NetworkBehaviour {
         base.OnNetworkSpawn();
         m_PrimaryItem.OnValueChanged += OnPrimaryItemChanged;
         m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
+        m_ActiveCharacter.OnValueChanged += OnCharacterChanged;
         m_ActiveAnimation.OnValueChanged += OnAnimationChange;
         Debug.Log("[PlayerAvatar/OnNetworkSpawn] PlayerAvatar spanwed " + name + " owned by " + OwnerClientId);
         Setup();
@@ -199,6 +248,8 @@ public class PlayerAvatar : NetworkBehaviour {
 
     private void UpdateNameTag() {
         nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        isready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        notready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
     }
 
     private void UpdateHealthBar() {
@@ -380,6 +431,8 @@ public class PlayerAvatar : NetworkBehaviour {
             AddToInventory(Slot.SECONDARY, item);
         }
     }
+
+
 
     /*[ServerRpc(RequireOwnership=false)]
     public void PlayAnimationServerRpc(int i) {

@@ -91,4 +91,5 @@ public class PersistentPlayer : NetworkBehaviour {
         m_Avatar.Value = avatarNetworkObject;
 
     }
+
 }
