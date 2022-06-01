@@ -8,8 +8,10 @@ public class CameraBrain : MonoBehaviour {
     private ScriptableRendererFeature m_WireframeRendererFeature;
     [SerializeField]
     private Material m_SkyboxWireframe;
-
+    [SerializeField]
     private Material m_SkyboxDefault;
+
+    private Skybox m_Skybox;
     private bool m_IsBlending;
 
     public static CameraBrain Instance;
@@ -21,8 +23,7 @@ public class CameraBrain : MonoBehaviour {
         }
         DontDestroyOnLoad(this);
 
-        m_SkyboxDefault = RenderSettings.skybox;
-
+        m_Skybox = GetComponent<Skybox>();
     }
 
 
@@ -66,9 +67,9 @@ public class CameraBrain : MonoBehaviour {
         Brain.ActiveVirtualCamera.LookAt = target;
     }
 
-    public void SetWireframe(bool enable) {
-        m_WireframeRendererFeature.SetActive(enable);
-        RenderSettings.skybox = enable ? m_SkyboxWireframe : m_SkyboxWireframe;
+    public void SetWireframe(bool wireframe_on) {
+        m_WireframeRendererFeature.SetActive(wireframe_on);
+        RenderSettings.skybox = wireframe_on ? m_SkyboxWireframe : m_SkyboxDefault;
     }
 
     void Update() {
