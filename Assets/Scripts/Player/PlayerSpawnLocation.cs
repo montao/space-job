@@ -30,24 +30,4 @@ public class PlayerSpawnLocation : MonoBehaviour {
             return null;
         }
     }
-
-    public static void SetPlayersToSpawnLocation() {
-        var spawns = FindObjectsOfType<PlayerSpawnLocation>();
-
-        //foreach (var spawn in spawns) {
-        //    spawn.Occupied = false;
-        //}
-
-        var avatars = FindObjectsOfType<PlayerAvatar>();
-        foreach (var avatar in avatars) {
-            Transform t = PlayerSpawnLocation.GetSpawn();
-            if (t != null) {
-                avatar.transform.position = t.position;
-                avatar.transform.rotation = t.rotation;
-            } else {
-                avatar.transform.position = Vector3.zero;
-                avatar.transform.rotation = Quaternion.identity;
-            }
-        }
-    }
 }

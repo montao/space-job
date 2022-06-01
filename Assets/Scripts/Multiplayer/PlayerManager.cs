@@ -127,7 +127,27 @@ public class PlayerManager : NetworkBehaviour {
             List<ulong> clientsCompleted,
             List<ulong> clientsTimedOut) {
 
-        PlayerSpawnLocation.SetPlayersToSpawnLocation();
+        TeleportPlayerAvatarsToSpawnLocations();
+    }
+
+    public void TeleportPlayerAvatarsToSpawnLocations() {
+        var avatars = FindObjectsOfType<PlayerAvatar>();
+        foreach (var avatar in avatars) {
+            var spawn_location = PlayerSpawnLocation.GetSpawn();
+            ulong client_id = avatar.OwnerClientId;
+
+            ClientRpcParams rpc_params = new ClientRpcParams{
+                Send = new ClientRpcSendParams{
+                    TargetClientIds = new ulong[]{client_id}
+                }
+            };
+
+            var target_pos = new PlayerPos();
+            target_pos.Position = spawn_location.position;
+            target_pos.Rotation = spawn_location.rotation;
+
+            avatar.TeleportClientRpc(target_pos);
+        }
     }
 
     public void StartShip(
@@ -144,7 +164,6 @@ public class PlayerManager : NetworkBehaviour {
         foreach (PersistentPlayer p in PlayerManager.Instance.Players) {
             p.SpawnAvatar(PlayerSpawnLocation.GetSpawn());
         }
-        PlayerSpawnLocation.SetPlayersToSpawnLocation();
     }
 
     public static bool IsLocalPlayerAvatar(Collider collider) {

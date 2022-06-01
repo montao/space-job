@@ -136,12 +136,22 @@ public class PlayerAvatar : NetworkBehaviour {
         m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
     }
 
-    public void Teleport(Transform target) {
+    public void Teleport(Vector3 pos, Quaternion rot) {
         bool prev_controller_enabled = m_Controller.enabled;
         m_Controller.enabled = false;
-        transform.SetPositionAndRotation(target.position, target.rotation);
+        transform.SetPositionAndRotation(pos, rot);
         m_Controller.enabled = prev_controller_enabled;
     }
+
+    public void Teleport(Transform target) {
+        Teleport(target.position, target.rotation);
+    }
+
+    [ClientRpc]
+    public void TeleportClientRpc(PlayerPos target) {
+        Teleport(target.Position, target.Rotation);
+    }
+
     public void OxygenRegulation(float delta_time){
         if (m_CurrentRoom == null) {
             return;
