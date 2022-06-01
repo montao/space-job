@@ -8,6 +8,8 @@ TagManager:
   - MapShip
   - Map
   - Hologram
+  - Status
+  - CharacterList
   layers:
   - Default
   - TransparentFX

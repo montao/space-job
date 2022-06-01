@@ -9,6 +9,7 @@ public class PlayerManager : NetworkBehaviour {
     public static PlayerManager Instance;
 
     public string LocalPlayerName = "";
+    public string LocalPlayerStatus = "";
 
     private NetworkVariable<int> m_PlayerCount =
             new NetworkVariable<int>(1);
@@ -28,7 +29,7 @@ public class PlayerManager : NetworkBehaviour {
             string info = m_PlayerCount.Value + "/4: ";
             int n = 0;
             foreach (var player in m_Players) {
-                info = info + ((n++ == 0) ? "" : ", ") + player.PlayerName;
+                info =((n++ == 0) ? "" : info) +  player.PlayerName + " just joined! \n";
             }
             return info;
         }
@@ -114,6 +115,7 @@ public class PlayerManager : NetworkBehaviour {
 
     void FixedUpdate() {
         Shader.SetGlobalInt("_StripeOffset", ((int) (Time.fixedTime * 16)) % 64);
+        
     }
 
     public void RegisterPlayer(PersistentPlayer player, bool isLocal) {
@@ -124,6 +126,35 @@ public class PlayerManager : NetworkBehaviour {
             player.gameObject.transform.rotation = transform.rotation;
             m_LocalPlayer = player;
             m_LocalPlayer.PlayerName = LocalPlayerName;
+        }
+    }
+
+    public void MovePlayersToSpawns(
+            string sceneName,
+            LoadSceneMode loadSceneMode,
+            List<ulong> clientsCompleted,
+            List<ulong> clientsTimedOut) {
+
+        TeleportPlayerAvatarsToSpawnLocations();
+    }
+
+    public void TeleportPlayerAvatarsToSpawnLocations() {
+        var avatars = FindObjectsOfType<PlayerAvatar>();
+        foreach (var avatar in avatars) {
+            var spawn_location = PlayerSpawnLocation.GetSpawn();
+            ulong client_id = avatar.OwnerClientId;
+
+            ClientRpcParams rpc_params = new ClientRpcParams{
+                Send = new ClientRpcSendParams{
+                    TargetClientIds = new ulong[]{client_id}
+                }
+            };
+
+            var target_pos = new PlayerPos();
+            target_pos.Position = spawn_location.position;
+            target_pos.Rotation = spawn_location.rotation;
+
+            avatar.TeleportClientRpc(target_pos);
         }
     }
 
@@ -147,7 +178,6 @@ public class PlayerManager : NetworkBehaviour {
         foreach (PersistentPlayer p in PlayerManager.Instance.Players) {
             p.SpawnAvatar(PlayerSpawnLocation.GetSpawn());
         }
-        PlayerSpawnLocation.SetPlayersToSpawnLocation();
     }
 
     public static bool IsLocalPlayerAvatar(Collider collider) {

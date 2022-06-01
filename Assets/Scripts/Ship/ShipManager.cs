@@ -39,8 +39,6 @@ public class ShipManager : NetworkBehaviour {
                 + Convert.ToByte(power).ToString("x2").ToUpper();
     }
 
-
-
     public bool HasPower{
         get => m_Power.Value == HAS_POWER;
     }
@@ -50,15 +48,19 @@ public class ShipManager : NetworkBehaviour {
         LightManager.Instance.SetBackup(!hasPower);
         LightManager.Instance.SetNormal(hasPower);
 
-        if (!hasPower) {
-            PowerTerminal.DisplayError("0x" + ErrorCodeDisplay(power));
-        } else {
-            PowerTerminal.DisplayError("Power:\n100%");
-        }
+        if(PowerTerminal != null){   
+            if (!hasPower) {
+                PowerTerminal.DisplayError("0x" + ErrorCodeDisplay(power));
+            } else {
+                PowerTerminal.DisplayError("Power:\n100%");
+            }
+        } 
 
     }
     protected void OnWinChange(bool prev, bool current) {
-        WinCanvas.enabled = current;
+        if (WinCanvas != null) {
+            WinCanvas.enabled = current;
+        }
     }
     public override void OnNetworkSpawn(){
         m_Power.OnValueChanged += OnPowerChange;
