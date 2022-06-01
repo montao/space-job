@@ -4,6 +4,7 @@
 *.debug
 *_Data/
 *~
+*-autosave.kra
 
 .vscode
 
