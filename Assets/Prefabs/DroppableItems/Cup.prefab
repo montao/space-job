@@ -112,7 +112,7 @@ MonoBehaviour:
   NeedsPower: 0
   HidePlayer: 0
   TriggeredAnimation: 2
-  pickedUp: 0
+  velocity: 0
   Materials:
   - {fileID: 2100000, guid: 81a3d8fc1ecbe98b9a4d5e960267e448, type: 2}
   - {fileID: 2100000, guid: 851aa4802535d4aff867b947b99dfe41, type: 2}
