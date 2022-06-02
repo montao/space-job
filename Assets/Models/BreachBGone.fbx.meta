@@ -2,10 +2,19 @@ fileFormatVersion: 2
 guid: 5a82201c0d79527b4a4c33ae94fe1393
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -3299178882980226264
+    second: Cylinder|CameraAction
+  - first:
+      74: -88723805440604879
+    second: Cylinder|CylinderAction
+  - first:
+      74: -5315980108583086191
+    second: Cylinder|EmptyAction
   externalObjects: {}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
