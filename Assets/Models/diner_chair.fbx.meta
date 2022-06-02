@@ -2,10 +2,16 @@ fileFormatVersion: 2
 guid: f66ebde549fdfbf3eb8a56af127e7053
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 5803482161297508627
+    second: chair|employe_idle
+  - first:
+      74: 383317286623749229
+    second: chair|EmptyAction
   externalObjects: {}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
