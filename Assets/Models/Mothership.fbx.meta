@@ -9,6 +9,12 @@ ModelImporter:
   - first:
       74: -2235298856490809118
     second: Cube|EmptyAction
+  - first:
+      74: 7006395755946706197
+    second: Mothership|CubeAction
+  - first:
+      74: -8419163270309460085
+    second: Mothership|EmptyAction
   externalObjects: {}
   materials:
     materialImportMode: 2
