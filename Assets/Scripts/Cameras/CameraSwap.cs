@@ -6,6 +6,7 @@ public class CameraSwap : MonoBehaviour {
     public CinemachineVirtualCamera m_Camera;
     public bool InRoom;
 
+    public static bool CurrentSwapInRoom = false;
     private static List<CameraSwap> m_Instances = new List<CameraSwap>();
 
     void Start() {
