@@ -604,8 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d8563c6dbf5e6c2947519126cc6a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeedsPower: 0
-  HidePlayer: 0
+  NeedsPower: 1
   TriggeredAnimation: 2
   CanInteract: 0
   m_Action: 4
@@ -996,7 +995,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NeedsPower: 1
-  HidePlayer: 1
   TriggeredAnimation: 2
   m_Buttons:
   - {fileID: 712930025738524551}
@@ -1270,8 +1268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d8563c6dbf5e6c2947519126cc6a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeedsPower: 0
-  HidePlayer: 0
+  NeedsPower: 1
   TriggeredAnimation: 2
   CanInteract: 0
   m_Action: 3
@@ -1780,8 +1777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d8563c6dbf5e6c2947519126cc6a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeedsPower: 0
-  HidePlayer: 0
+  NeedsPower: 1
   TriggeredAnimation: 2
   CanInteract: 0
   m_Action: 1
@@ -3574,8 +3570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d8563c6dbf5e6c2947519126cc6a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeedsPower: 0
-  HidePlayer: 0
+  NeedsPower: 1
   TriggeredAnimation: 2
   CanInteract: 0
   m_Action: 2
