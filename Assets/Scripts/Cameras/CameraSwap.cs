@@ -6,6 +6,7 @@ public class CameraSwap : MonoBehaviour {
     public CinemachineVirtualCamera m_Camera;
     public bool InRoom;
 
+    public static bool CurrentSwapInRoom = false;
     private static List<CameraSwap> m_Instances = new List<CameraSwap>();
 
     void Start() {
@@ -42,10 +43,14 @@ public class CameraSwap : MonoBehaviour {
 
     public void SwitchTo() {
         m_Camera.Priority = InRoom ? 30 : 20;
+        PlayerManager.Instance.LocalPlayer.Avatar.HidePlayer(InRoom);
     }
 
     public void SwitchAway() {
         m_Camera.Priority = InRoom ? 5 : 10;
+        if (InRoom) {
+            PlayerManager.Instance.LocalPlayer.Avatar.HidePlayer(false);
+        }
     }
 
     public static void UpdateLookAt(PlayerAvatar avatar) {

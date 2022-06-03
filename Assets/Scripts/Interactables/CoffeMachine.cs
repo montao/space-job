@@ -20,7 +20,10 @@ public class CoffeMachine : Interactable<bool> {
         m_State.Value = value;
 
         if(!prevCup || prevCup.GetComponentInChildren<CoffeCup>().IsPickedUp()) {
+            Vector3 yeet = Vector3.Normalize(transform.forward + transform.up) * 50f;
+
             GameObject freshCup = Instantiate(cupPrefab, machine.GetComponent<Transform>().position, Quaternion.identity);
+            freshCup.GetComponent<Rigidbody>().AddForce(yeet);
             freshCup.GetComponent<NetworkObject>().Spawn();
             prevCup = freshCup;
             Debug.Log("new cup");
