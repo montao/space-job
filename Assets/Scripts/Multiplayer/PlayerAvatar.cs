@@ -358,7 +358,8 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     public void HidePlayer(bool on){
-        if(on){
+        if (!m_PlayerMesh) return; // too early
+        if(on) {
             m_PlayerMesh.sharedMaterial = transparentMaterial;
         }
         else{
