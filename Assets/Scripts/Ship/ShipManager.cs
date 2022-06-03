@@ -45,8 +45,12 @@ public class ShipManager : NetworkBehaviour {
 
     protected void OnPowerChange(char _, char power){
         bool hasPower = power == HAS_POWER;
-        LightManager.Instance.SetBackup(!hasPower);
-        LightManager.Instance.SetNormal(hasPower);
+
+        if(LightManager.Instance != null){
+            LightManager.Instance.SetBackup(!hasPower);
+            LightManager.Instance.SetNormal(hasPower);
+        }
+        
 
         if(PowerTerminal != null){   
             if (!hasPower) {

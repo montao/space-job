@@ -1087,7 +1087,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7462590395471467259}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -1189,10 +1189,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stepSounds:
-  - {fileID: 8300000, guid: f979aadd253a0920da78eb14d83e7cdd, type: 3}
-  - {fileID: 8300000, guid: 5c188545f223553d78641666d8a18548, type: 3}
-  - {fileID: 8300000, guid: a65fe941c99702e61a95f120dd7a7d64, type: 3}
-  - {fileID: 8300000, guid: 8cf3105ad6e5088cd82cca03ac26ebbc, type: 3}
+  - {fileID: 8300000, guid: 53a368b1f3081f0e0b5254d4cc9b5af3, type: 3}
+  - {fileID: 8300000, guid: 7d36344442d7b5874a9dda05f5335935, type: 3}
+  - {fileID: 8300000, guid: 12fb79c0ac1568fa7afdad198890f2b6, type: 3}
+  - {fileID: 8300000, guid: b7dd0fadeefc56742830100030921731, type: 3}
+  - {fileID: 8300000, guid: 315363f44a995462db1925e254c91f4b, type: 3}
+  - {fileID: 8300000, guid: 569b19a4a2183104caf267af3579d52c, type: 3}
+  - {fileID: 8300000, guid: ce440c50faf8609dca2d44298382d8cb, type: 3}
+  - {fileID: 8300000, guid: 16cfd6bb4576bf6559a0a92e69233873, type: 3}
+  - {fileID: 8300000, guid: 3fe49d3eb14559e6eb13d6c57efa4527, type: 3}
+  - {fileID: 8300000, guid: f9b78d51361f4497e973c4d1266853f0, type: 3}
+  - {fileID: 8300000, guid: 89007e9de2d3677899818fbf2579d585, type: 3}
+  - {fileID: 8300000, guid: 10fbf59b94a76ff8eb583f4b57370a00, type: 3}
   take: {fileID: 8300000, guid: 2874e3cd37bc403089a945e2b19152dd, type: 3}
   clap: {fileID: 8300000, guid: a675903fb254376d7a78b7c5230a369a, type: 3}
 --- !u!1 &8571012707668101226
