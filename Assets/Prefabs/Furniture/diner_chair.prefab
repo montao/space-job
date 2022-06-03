@@ -158,7 +158,7 @@ MonoBehaviour:
   NeedsPower: 0
   HidePlayer: 0
   TriggeredAnimation: 4
-  TeleportPoint: {fileID: 0}
+  TeleportPoint: {fileID: 5223830424159481352}
 --- !u!114 &3440226495771614361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,7 +212,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4483826340343059163}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.005, y: 0.58, z: 0.258}
+  m_LocalPosition: {x: -0.005, y: 0.729, z: 0.258}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2663302390344238625}

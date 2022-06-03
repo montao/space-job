@@ -8,9 +8,8 @@ public abstract class DroppableInteractable : Interactable<int>{
     protected Rigidbody m_Rigidbody;
     protected List<Collider> m_AllCollider;
     protected NetworkTransform m_NetTransform;
+    public float Velocity = 100;
     public const int IN_WORLD = -1;
-    public float velocity;
-
 //----------------------------------------------------------------------------------------------
     
     public virtual void Awake() {
@@ -35,11 +34,10 @@ public abstract class DroppableInteractable : Interactable<int>{
 
     [ServerRpc(RequireOwnership = false)]
     public void DropServerRpc(Vector3 position) {
-        GetComponentInParent<Rigidbody>().position = position;
+        m_Rigidbody.position = position;
         m_State.Value = IN_WORLD;
+        m_Rigidbody.AddForce(Vector3.Normalize(PlayerManager.Instance.LocalPlayer.Avatar.transform.forward) * Velocity);
     }
-
-
     protected override void Interaction(){
         PlayerAvatar localPlayer = PlayerManager.Instance.LocalPlayer.Avatar;
 
