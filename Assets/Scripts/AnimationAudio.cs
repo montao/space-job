@@ -17,6 +17,7 @@ public class AnimationAudio : MonoBehaviour {
     private void Step(){
         AudioClip sound = GetRandomClip();
         audioSource.PlayOneShot(sound);
+        Debug.Log("step");
     }
 
     private void Take(){
