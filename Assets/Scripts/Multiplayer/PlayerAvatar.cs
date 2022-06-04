@@ -41,9 +41,8 @@ public class PlayerAvatar : NetworkBehaviour {
             = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<int> m_ActiveCharacter
             = new NetworkVariable<int>(3, default, NetworkVariableWritePermission.Owner);
-    private NetworkVariable<float> m_HorizontalSpeed
+    public NetworkVariable<float> HorizontalSpeed
             = new NetworkVariable<float>(0, default, NetworkVariableWritePermission.Owner);
-    public float HorizontalSpeed { get => m_HorizontalSpeed.Value; }
 
     private NetworkVariable<PlayerPos> m_PlayerPos
             = new NetworkVariable<PlayerPos>();
