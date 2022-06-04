@@ -62,6 +62,8 @@ public class MainMenu : MonoBehaviour {
     void Update() {
         if(!host){
             if(ishosted){
+
+                Debug.Log(PlayerManager.Instance.LobbyInfo);
                 startClient.SetActive(true);
                 startClientTMP.text = " Game has been hosted. Join!"; 
             }
