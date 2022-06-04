@@ -29,14 +29,4 @@ public class PlayerAnimationController : NetworkBehaviour {
         Debug.Log("Speed: " + current);
         m_PlayerAnimator.SetFloat("speed", current);
     }
-
-    public override void OnNetworkSpawn() {
-        base.OnNetworkSpawn();
-        m_Player.HorizontalSpeed.OnValueChanged += OnSpeedChange;
-    }
-
-    public override void OnNetworkDespawn() {
-        base.OnNetworkDespawn();
-        m_Player.HorizontalSpeed.OnValueChanged -= OnSpeedChange;
-    }
 }

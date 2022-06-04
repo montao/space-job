@@ -172,8 +172,18 @@ public class PlayerAvatar : NetworkBehaviour {
         m_PrimaryItem.OnValueChanged += OnPrimaryItemChanged;
         m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
         m_ActiveCharacter.OnValueChanged += OnCharacterChanged;
+        HorizontalSpeed.OnValueChanged += m_AnimationController.OnSpeedChange;
+
         Debug.Log("[PlayerAvatar/OnNetworkSpawn] PlayerAvatar spanwed " + name + " owned by " + OwnerClientId);
         Setup();
+    }
+
+    public override void OnNetworkDespawn(){
+        base.OnNetworkDespawn();
+        m_PrimaryItem.OnValueChanged -= OnPrimaryItemChanged;
+        m_SecondaryItem.OnValueChanged -= OnSecondaryItemChanged;
+        m_ActiveCharacter.OnValueChanged -= OnCharacterChanged;
+        HorizontalSpeed.OnValueChanged -= m_AnimationController.OnSpeedChange;
     }
 
     public void Setup() {
