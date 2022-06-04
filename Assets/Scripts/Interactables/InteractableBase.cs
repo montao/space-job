@@ -9,7 +9,6 @@ public abstract class InteractableBase : NetworkBehaviour {
     public bool NeedsPower = false;
     public PlayerAnimation TriggeredAnimation = PlayerAnimation.INTERACT;
 
-
     // Called when item is held in hand and right mouse button pressed
     // Returns animation to play upon interaction
     public virtual PlayerAnimation SelfInteraction(PlayerAvatar avatar) {
@@ -18,6 +17,9 @@ public abstract class InteractableBase : NetworkBehaviour {
 
     protected abstract void Interaction();
     protected abstract bool PlayerCanInteract();
+
+    // Relevant only for HOLD_DOWN mode.  Called when mouse button is lifted.
+    protected virtual void StopInteraction() {}
 
     public virtual void Start() {
         m_HighlightedLayer = LayerMask.NameToLayer("Highlighted");
@@ -43,13 +45,25 @@ public abstract class InteractableBase : NetworkBehaviour {
 
     protected void OnMouseOver() {
         SetHighlight(PlayerCanInteract());
-        if (PlayerCanInteract() && Input.GetButtonDown("Fire1") && (!NeedsPower || ShipManager.Instance.HasPower)) {
-            Interaction();
-            PlayerManager.Instance.LocalPlayer.Avatar.AnimationController.TriggerAnimation(TriggeredAnimation);
+
+        if (PlayerCanInteract() && (!NeedsPower || ShipManager.Instance.HasPower)) {
+            bool playAnim = false;
+            if (Input.GetButtonDown("Fire1")) {
+                Interaction();
+                playAnim = true;
+            } else if (Input.GetButtonUp("Fire1")){
+                StopInteraction();
+                playAnim = true;
+            }
+
+            if (playAnim) {
+                PlayerManager.Instance.LocalPlayer.Avatar.AnimationController.TriggerAnimation(TriggeredAnimation);
+            }
         }
     }
     protected void OnMouseExit() {
         SetHighlight(false);
+        StopInteraction();
     }
 
     public virtual void Update() {
