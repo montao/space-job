@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 651959f91c2839f6ea1237755dc2d4c0, type: 3}
+  - {fileID: 2100000, guid: 753dbc1610379be7d83da5f2ee2cfb9c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -330,7 +330,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 651959f91c2839f6ea1237755dc2d4c0, type: 3}
+  - {fileID: 2100000, guid: 753dbc1610379be7d83da5f2ee2cfb9c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -417,7 +417,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 651959f91c2839f6ea1237755dc2d4c0, type: 3}
+  - {fileID: 2100000, guid: 753dbc1610379be7d83da5f2ee2cfb9c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -452,7 +452,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NeedsPower: 0
-  HidePlayer: 1
   TriggeredAnimation: 2
 --- !u!114 &8830366610905631143
 MonoBehaviour:
