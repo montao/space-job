@@ -6,4 +6,29 @@
 - Bad Supplies (Toothpaste, brushes, sink ect..)
 - Toiletten
 - Block Stifte, Doodels
-- s
+- Karteikarten, Klebezettel
+- TischLampe
+- Schallplattenspieler
+- Ordner
+- Dartscheibe
+- Magazinstapel
+- Ramennudeln (Geöffnet, zu, in Schale)
+- Mülleimar
+- Saftboxen
+- Game Console
+- Plushys
+- Gameboy
+- Papercrumps
+- classic standing Lamp
+- Deckenlampen
+- Lichterketten
+- Lavalampe
+- Boxen (SoundBoxen)
+- Fernbedienung (Fernseher)
+- Ductape
+- Unfertiges Puzzel
+- Süße Gutenachtlicher (mond, stern, blitz, blume z.B)
+- Wakelköpfe
+- Skateboard
+- Kristalle oder ander Kitch
+- Lucky Strikes
