@@ -301,7 +301,7 @@ public class PlayerAvatar : NetworkBehaviour {
                 var item = GetInventoryItem(Slot.PRIMARY).GetComponentInChildren<InteractableBase>();
                 if (item != null) {
                     PlayerAnimation anim = item.SelfInteraction(this);
-                    AnimationController.TriggerAnimationClientRpc(anim);
+                    AnimationController.TriggerAnimation(anim);
                 }
             }
         }
@@ -424,7 +424,7 @@ public class PlayerAvatar : NetworkBehaviour {
             m_SecondaryItem.Value = new NetworkObjectReference();
         }
 
-        AnimationController.TriggerAnimationClientRpc(PlayerAnimation.INTERACT);
+        AnimationController.TriggerAnimation(PlayerAnimation.INTERACT);
     }
 
     public void LockMovement(int locker) {

@@ -19,14 +19,35 @@ public class PlayerAnimationController : NetworkBehaviour {
         m_Player = GetComponent<PlayerAvatar>();
     }
 
+    private void TriggerAnimationLocally(PlayerAnimation animation) {
+        Debug.Log("Triggering " + animation.ToString().ToLower());
+        m_PlayerAnimator.SetTrigger(animation.ToString().ToLower());
+    }
+
+    public void TriggerAnimation(PlayerAnimation animation) {
+        if (!IsOwner) {
+            Debug.LogWarning("Only owner should call TriggerAnimation!");
+            return;
+        }
+        TriggerAnimationLocally(animation);
+        TriggerAnimationServerRpc(animation);
+    }
+
     [ClientRpc]
-    public void TriggerAnimationClientRpc(PlayerAnimation animation){
+    private void TriggerAnimationClientRpc(PlayerAnimation animation) {
+        if (IsOwner) {
+            return;  // Animation already triggered locally
+        }
         if (animation == PlayerAnimation.NONE) {
             return;
         }
 
-        Debug.Log("Triggering " + animation.ToString().ToLower());
-        m_PlayerAnimator.SetTrigger(animation.ToString().ToLower());
+        TriggerAnimationLocally(animation);
+    }
+
+    [ServerRpc]
+    private void TriggerAnimationServerRpc(PlayerAnimation animation) {
+        TriggerAnimationClientRpc(animation);
     }
 
     public void OnSpeedChange(float speed){
@@ -36,16 +57,16 @@ public class PlayerAnimationController : NetworkBehaviour {
     void Update() {
         if (IsOwner) {
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
-                TriggerAnimationClientRpc(PlayerAnimation.ARMWAVE);
+                TriggerAnimation(PlayerAnimation.ARMWAVE);
             }
             if (Input.GetKeyDown(KeyCode.Alpha2)) {
-                TriggerAnimationClientRpc(PlayerAnimation.JUMP);
+                TriggerAnimation(PlayerAnimation.JUMP);
             }
             if (Input.GetKeyDown(KeyCode.Alpha3)) {
-                TriggerAnimationClientRpc(PlayerAnimation.DRINK);
+                TriggerAnimation(PlayerAnimation.DRINK);
             }
             if (Input.GetKeyDown(KeyCode.Alpha4)) {
-                TriggerAnimationClientRpc(PlayerAnimation.SIT);
+                TriggerAnimation(PlayerAnimation.SIT);
             }
         }
     }

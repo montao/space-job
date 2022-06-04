@@ -45,7 +45,7 @@ public abstract class InteractableBase : NetworkBehaviour {
         SetHighlight(PlayerCanInteract());
         if (PlayerCanInteract() && Input.GetButtonDown("Fire1") && (!NeedsPower || ShipManager.Instance.HasPower)) {
             Interaction();
-            PlayerManager.Instance.LocalPlayer.Avatar.AnimationController.TriggerAnimationClientRpc(TriggeredAnimation);
+            PlayerManager.Instance.LocalPlayer.Avatar.AnimationController.TriggerAnimation(TriggeredAnimation);
         }
     }
     protected void OnMouseExit() {
