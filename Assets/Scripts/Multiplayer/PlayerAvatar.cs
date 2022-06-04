@@ -239,6 +239,8 @@ public class PlayerAvatar : NetworkBehaviour {
         float distanceToCamera = Vector3.Distance(CameraBrain.Instance.ActiveCameraTransform.position, transform.position);
         Vector3 scale = new Vector3(distanceToCamera, distanceToCamera, distanceToCamera);
         nameText.gameObject.transform.localScale = scale * 0.002f;
+        isready.transform.localScale = scale * 0.002f;
+        notready.transform.localScale = scale * 0.002f;
     }
 
     private void UpdateHealthBar() {
