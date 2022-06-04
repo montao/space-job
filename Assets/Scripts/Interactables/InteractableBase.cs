@@ -7,7 +7,7 @@ public abstract class InteractableBase : NetworkBehaviour {
     protected LayerMask m_DefaultLayer;
     protected MeshRenderer m_Renderer;
     public bool NeedsPower = false;
-    public int TriggeredAnimation = 2;
+    public PlayerAnimation TriggeredAnimation = PlayerAnimation.INTERACT;
 
 
     // Called when item is held in hand and right mouse button pressed
@@ -45,7 +45,7 @@ public abstract class InteractableBase : NetworkBehaviour {
         SetHighlight(PlayerCanInteract());
         if (PlayerCanInteract() && Input.GetButtonDown("Fire1") && (!NeedsPower || ShipManager.Instance.HasPower)) {
             Interaction();
-            PlayerManager.Instance.LocalPlayer.Avatar.SetActiveAnimation(TriggeredAnimation);
+            PlayerManager.Instance.LocalPlayer.Avatar.AnimationController.TriggerAnimationClientRpc(TriggeredAnimation);
         }
     }
     protected void OnMouseExit() {
