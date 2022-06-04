@@ -22,9 +22,9 @@ public class CoffeCup : DroppableInteractable{
         GetComponent<MeshRenderer>().material = Materials[mat_idx];
     }
 
-    public override int SelfInteraction(PlayerAvatar avatar) {
+    public override PlayerAnimation SelfInteraction(PlayerAvatar avatar) {
         avatar.SpeedBoost();
-        return 6;
+        return PlayerAnimation.DRINK;
     }
 
     [ServerRpc(RequireOwnership = false)]

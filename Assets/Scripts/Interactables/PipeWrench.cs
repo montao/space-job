@@ -1,5 +1,5 @@
 public class PipeWrench : DroppableInteractable{
-    public override int SelfInteraction(PlayerAvatar avatar) {
-        return 2;
+    public override PlayerAnimation SelfInteraction(PlayerAvatar avatar) {
+        return PlayerAnimation.INTERACT;
     }
 }

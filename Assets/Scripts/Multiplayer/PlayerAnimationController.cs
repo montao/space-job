@@ -2,9 +2,10 @@ using UnityEngine;
 using Unity.Netcode;
 
 public enum PlayerAnimation {
+    NONE,
     ARMWAVE,
-    SIT,
     INTERACT,
+    SIT,
     JUMP,
     DRINK,
 }
@@ -20,6 +21,10 @@ public class PlayerAnimationController : NetworkBehaviour {
 
     [ClientRpc]
     public void TriggerAnimationClientRpc(PlayerAnimation animation){
+        if (animation == PlayerAnimation.NONE) {
+            return;
+        }
+
         Debug.Log("Triggering " + animation.ToString().ToLower());
         m_PlayerAnimator.SetTrigger(animation.ToString().ToLower());
     }

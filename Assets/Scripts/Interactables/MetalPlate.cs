@@ -1,5 +1,5 @@
 public class MetalPlate : DroppableInteractable {
-    public override int SelfInteraction(PlayerAvatar avatar) {
-        return 6;
+    public override PlayerAnimation SelfInteraction(PlayerAvatar avatar) {
+        return PlayerAnimation.DRINK;
     }
 }

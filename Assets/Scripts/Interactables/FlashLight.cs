@@ -10,9 +10,9 @@ public class FlashLight : DroppableInteractable {
         m_Beam = GetComponent<Light>();
     }
 
-    public override int SelfInteraction(PlayerAvatar avatar) {
+    public override PlayerAnimation SelfInteraction(PlayerAvatar avatar) {
         m_TurnedOn = !m_TurnedOn;
         m_Beam.enabled = m_TurnedOn;
-        return 2;
+        return PlayerAnimation.INTERACT;
     }
 }
