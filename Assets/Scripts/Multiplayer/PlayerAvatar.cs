@@ -37,8 +37,6 @@ public class PlayerAvatar : NetworkBehaviour {
     public Material normalMaterial;
     public Material transparentMaterial;
     public Transform CameraLookAt;
-    private NetworkVariable<int> m_ActiveAnimation
-            = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<int> m_ActiveCharacter
             = new NetworkVariable<int>(3, default, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> HorizontalSpeed
@@ -74,7 +72,6 @@ public class PlayerAvatar : NetworkBehaviour {
     [SerializeField]
     private HealthBar m_HealthBar;
     // Places where items are attached
-    private Animator m_PlayerAnimator;
     private PersistentPlayer m_LocalPlayer;
     private float m_FallVelocity;
 
@@ -90,7 +87,6 @@ public class PlayerAvatar : NetworkBehaviour {
             CameraLookAt = transform;
         }
         m_Controller = GetComponent<CharacterController>();
-        m_PlayerAnimator = GetComponent<Animator>();
         m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
 
         if( SceneManager.GetActiveScene().name != "Lobby"){
@@ -103,7 +99,6 @@ public class PlayerAvatar : NetworkBehaviour {
     
 
     void Update() {
-        //m_PlayerAnimator.SetInteger("active_animation", m_ActiveAnimation.Value);
         OxygenRegulation(Time.deltaTime);
         if (IsClient) {
             if (IsOwner) {
@@ -169,47 +164,11 @@ public class PlayerAvatar : NetworkBehaviour {
         //Debug.Log("palyer Oxygen:" + m_LungCapacity + "\n room: " + m_CurrentRoom.Name + ",Ox-Level: " + m_CurrentRoom.RoomOxygen);
     }
 
-    public void SetActiveAnimation(int animation_index) {
-        //Debug.Log("Interaction Animation Triggered: "+ animation_index);
-        m_ActiveAnimation.Value = animation_index;
-        //m_PlayerAnimator.SetInteger("active_animation", animation_index);
-    }
-
-    public void OnAnimationChange(int previous, int current){
-        if (!m_PlayerAnimator) {
-            return;  // bye
-        }
-        //Debug.Log(m_LocalPlayer.PlayerName + "-> old ani: "+ previous + ", new ani:" + current);
-        //m_PlayerAnimator.SetInteger("active_animation", current);
-        if(current == 0){
-            m_PlayerAnimator.SetTrigger("idle");
-        }
-        if(current == 1){
-            m_PlayerAnimator.SetTrigger("walk");
-        }
-        if(current == 2){
-            m_PlayerAnimator.SetTrigger("interact");
-        }
-        if(current == 3){
-            m_PlayerAnimator.SetTrigger("armwave");
-        }
-        if(current == 4){
-            m_PlayerAnimator.SetTrigger("sit");
-        }
-        if(current == 5){
-            m_PlayerAnimator.SetTrigger("jump");
-        }
-        if(current == 6){
-            m_PlayerAnimator.SetTrigger("drink");
-        }
-    }
-
     public override void OnNetworkSpawn() {
         base.OnNetworkSpawn();
         m_PrimaryItem.OnValueChanged += OnPrimaryItemChanged;
         m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
         m_ActiveCharacter.OnValueChanged += OnCharacterChanged;
-        m_ActiveAnimation.OnValueChanged += OnAnimationChange;
         Debug.Log("[PlayerAvatar/OnNetworkSpawn] PlayerAvatar spanwed " + name + " owned by " + OwnerClientId);
         Setup();
     }
@@ -240,7 +199,6 @@ public class PlayerAvatar : NetworkBehaviour {
         // more setup
         OnPrimaryItemChanged(m_PrimaryItem.Value, m_PrimaryItem.Value);
         OnSecondaryItemChanged(m_SecondaryItem.Value, m_SecondaryItem.Value);
-        OnAnimationChange(m_ActiveAnimation.Value, m_ActiveAnimation.Value);
     }
 
     public void PerformGroundCheck() {
@@ -297,7 +255,6 @@ public class PlayerAvatar : NetworkBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Q)) {
             if (!HasInventorySpace(Slot.PRIMARY)) {
-                m_ActiveAnimation.Value = 2;
                 DropItem(Slot.PRIMARY);
             }
         }
@@ -325,19 +282,12 @@ public class PlayerAvatar : NetworkBehaviour {
         if (Input.GetKeyDown(KeyCode.Mouse1)) {
             if (!HasInventorySpace(Slot.PRIMARY)) {
                 var item = GetInventoryItem(Slot.PRIMARY).GetComponentInChildren<InteractableBase>();
-                if (item != null) {
-                    int animation = item.SelfInteraction(this);
-                    if (animation != -1) {
-                        m_ActiveAnimation.Value = animation;
-                    }
-                }
             }
         }
 
         UpdatePosServerRpc(p);
     }
     void UpdatePos() {
-        //m_PlayerAnimator.SetFloat("speed", 0.1f);
         transform.position = m_PlayerPos.Value.Position;
         transform.rotation = m_PlayerPos.Value.Rotation;
     }
@@ -419,14 +369,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
 
-
-    /*[ServerRpc(RequireOwnership=false)]
-    public void PlayAnimationServerRpc(int i) {
-        m_ActiveAnimation.Value = i;
-        m_PlayerAnimator.SetInteger("active_animation", m_ActiveAnimation.Value);
-    }*/
     public void AddToInventory(Slot slot, NetworkObject item) {
-        //PlayAnimationServerRpc(2);
         if (slot == Slot.PRIMARY) {
             m_PrimaryItem.Value = item;
             ShowInInventory(PrimaryItemDisplay, item);  // optional, client-sided
@@ -483,10 +426,8 @@ public class PlayerAvatar : NetworkBehaviour {
     IEnumerator SpeedBoostCoroutine() {
         float speed_prev = m_MovementSpeed;
         m_MovementSpeed *= 3f;
-        m_PlayerAnimator.speed = 3f;
         yield return new WaitForSeconds(4);
         m_MovementSpeed = speed_prev;
-        m_PlayerAnimator.speed = 1f;
         m_SpeedBoostCoroutine = null;
     }
 
