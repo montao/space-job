@@ -51,6 +51,8 @@ public class PlayerAvatar : NetworkBehaviour {
     private NetworkVariable<NetworkObjectReference> m_SecondaryItem
             = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> ready = new NetworkVariable<bool>(default, default, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<float> m_HorizontalSpeed
+            = new NetworkVariable<float>(0f, default, NetworkVariableWritePermission.Owner);
 
     private Room m_CurrentRoom = null;
     public Room CurrentRoom {
