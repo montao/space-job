@@ -41,7 +41,10 @@ public class PlayerAvatar : NetworkBehaviour {
             = new NetworkVariable<int>(default, default, NetworkVariableWritePermission.Owner);
     private NetworkVariable<int> m_ActiveCharacter
             = new NetworkVariable<int>(3, default, NetworkVariableWritePermission.Owner);
-    
+    private NetworkVariable<float> m_HorizontalSpeed
+            = new NetworkVariable<float>(0, default, NetworkVariableWritePermission.Owner);
+    public float HorizontalSpeed { get => m_HorizontalSpeed.Value; }
+
     private NetworkVariable<PlayerPos> m_PlayerPos
             = new NetworkVariable<PlayerPos>();
     private NetworkVariable<NetworkObjectReference> m_PrimaryItem
@@ -72,7 +75,7 @@ public class PlayerAvatar : NetworkBehaviour {
     // Places where items are attached
     private Animator m_PlayerAnimator;
     private PersistentPlayer m_LocalPlayer;
-    private Vector3 m_Velocity;
+    private float m_FallVelocity;
 
     public GameObject isready;
     public GameObject notready;
@@ -258,8 +261,8 @@ public class PlayerAvatar : NetworkBehaviour {
 
     void ProcessInput() {
         PerformGroundCheck();
-        if (m_IsGrounded && m_Velocity.y < 0) {
-            m_Velocity.y = -2f;
+        if (m_IsGrounded && m_FallVelocity < 0) {
+            m_FallVelocity = -2f;
         }
 
         if (MovementLocked) {
@@ -270,45 +273,26 @@ public class PlayerAvatar : NetworkBehaviour {
         float verticalInput = Input.GetAxis("Vertical");
 
         var direction = new Vector3(horizontalInput, 0, verticalInput);
+        if (direction.magnitude > 1) {
+            direction = Vector3.Normalize(direction);
+        }
 
-        var cameraDirection = CameraBrain.Instance.ActiveCameraTransform.rotation;
-        direction = Vector3.Normalize(cameraDirection * direction);
+        Quaternion cameraDirection = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        direction = cameraDirection * direction;
         direction.y = 0;  // no flying allowed!
 
-        m_Controller.Move(direction * Time.deltaTime * m_MovementSpeed);
-        if((direction * Time.deltaTime * m_MovementSpeed) != Vector3.zero){
-            m_ActiveAnimation.Value = 1;
-        }
-        else{
-            m_ActiveAnimation.Value = 0;
-        }
+        var horizontalVelocity = direction * Time.deltaTime * m_MovementSpeed;
+        m_Controller.Move(horizontalVelocity);
+        m_HorizontalSpeed.Value = direction.magnitude;
+
         m_Controller.transform.LookAt(m_Controller.transform.position + direction);
 
-        m_Velocity.y += GRAVITY * Time.deltaTime;
-        m_Controller.Move(m_Velocity * Time.deltaTime);
+        m_FallVelocity += GRAVITY * Time.deltaTime;
+        m_Controller.Move(new Vector3(0, m_FallVelocity, 0) * Time.deltaTime);
 
         var p = new PlayerPos();
         p.Position = m_Controller.transform.position;
         p.Rotation = m_Controller.transform.rotation;
-        
-        if (Input.GetKeyDown(KeyCode.Alpha1)){
-            //armwava dance
-            m_ActiveAnimation.Value = 3;
-            //HidePlayer(true);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2)){
-            //jumpingjacks
-            m_ActiveAnimation.Value = 5;
-            //HidePlayer(false);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3)){
-            //drink
-            m_ActiveAnimation.Value = 6;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4)){
-            //sit
-            m_ActiveAnimation.Value = 4;
-        }
 
         if (Input.GetKeyDown(KeyCode.Q)) {
             if (!HasInventorySpace(Slot.PRIMARY)) {
