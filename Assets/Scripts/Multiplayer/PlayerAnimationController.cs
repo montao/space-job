@@ -35,4 +35,8 @@ public class PlayerAnimationController : NetworkBehaviour {
         base.OnNetworkSpawn();
         m_Player.HorizontalSpeed.OnValueChanged += OnSpeedChange;
     }
+    public override void OnNetworkDespawn()
+    {
+        base.OnNetworkDespawn();
+    }
 }
