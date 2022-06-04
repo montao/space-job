@@ -97,6 +97,7 @@ public class PlayerAvatar : NetworkBehaviour {
         }
         
         m_HealthBar = GetComponentInChildren<HealthBar>();
+        m_AnimationController = GetComponent<PlayerAnimationController>();
     }
     
 
