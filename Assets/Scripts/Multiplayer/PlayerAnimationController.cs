@@ -27,4 +27,21 @@ public class PlayerAnimationController : NetworkBehaviour {
     public void OnSpeedChange(float speed){
         m_PlayerAnimator.SetFloat("speed", speed);
     }
+
+    void Update() {
+        if (IsOwner) {
+            if (Input.GetKeyDown(KeyCode.Alpha1)) {
+                TriggerAnimationClientRpc(PlayerAnimation.ARMWAVE);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2)) {
+                TriggerAnimationClientRpc(PlayerAnimation.JUMP);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3)) {
+                TriggerAnimationClientRpc(PlayerAnimation.DRINK);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4)) {
+                TriggerAnimationClientRpc(PlayerAnimation.SIT);
+            }
+        }
+    }
 }
