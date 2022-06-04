@@ -2870,7 +2870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214c44ce72d5fd67cb9ee35df798cde1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Camera: {fileID: 1275997485}
+  m_Camera: {fileID: 2099111649}
   InRoom: 0
 --- !u!65 &605487345
 BoxCollider:
