@@ -14,7 +14,7 @@ public class PlayerAnimationController : NetworkBehaviour {
     private Animator m_PlayerAnimator;
     private PlayerAvatar m_Player;
 
-    private void Awake() {
+    private void Start() {
         m_PlayerAnimator = GetComponent<Animator>();
         m_Player = GetComponent<PlayerAvatar>();
     }
