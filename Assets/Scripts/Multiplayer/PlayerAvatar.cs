@@ -176,6 +176,13 @@ public class PlayerAvatar : NetworkBehaviour {
         m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
         m_ActiveCharacter.OnValueChanged += OnCharacterChanged;
         m_HorizontalSpeed.OnValueChanged += (float _, float curr) => {
+            if (!m_AnimationController) {
+                m_AnimationController = GetComponent<PlayerAnimationController>();
+                if (!m_AnimationController) {
+                    Debug.LogError("Speed changed for " + name + " but no Animator attached.");
+                    return;
+                }
+            }
             m_AnimationController.OnSpeedChange(curr);
         };
 
