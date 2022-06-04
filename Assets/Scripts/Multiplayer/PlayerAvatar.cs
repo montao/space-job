@@ -226,6 +226,9 @@ public class PlayerAvatar : NetworkBehaviour {
         nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
         isready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
         notready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        float distanceToCamera = Vector3.Distance(CameraBrain.Instance.ActiveCameraTransform.position, transform.position);
+        Vector3 scale = new Vector3(distanceToCamera, distanceToCamera, distanceToCamera);
+        nameText.gameObject.transform.localScale = scale;
     }
 
     private void UpdateHealthBar() {
