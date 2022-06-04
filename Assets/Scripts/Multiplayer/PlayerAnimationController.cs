@@ -2,9 +2,9 @@ using UnityEngine;
 using Unity.Netcode;
 
 public enum PlayerAnimation {
-    INTERACT,
     ARMWAVE,
     SIT,
+    INTERACT,
     JUMP,
     DRINK,
 }
