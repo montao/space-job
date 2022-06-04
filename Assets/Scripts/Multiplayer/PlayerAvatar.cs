@@ -81,6 +81,8 @@ public class PlayerAvatar : NetworkBehaviour {
     private MeshRenderer m_PlayerMesh;
     [SerializeField]
     private float m_LungCapacity = 1f;
+    private PlayerAnimationController m_AnimationController;
+    public PlayerAnimationController AnimationController { get => m_AnimationController; }
 
     public void Start() {
         if (CameraLookAt == null) {
@@ -402,6 +404,8 @@ public class PlayerAvatar : NetworkBehaviour {
         } else {
             m_SecondaryItem.Value = new NetworkObjectReference();
         }
+
+        AnimationController.TriggerAnimationClientRpc(PlayerAnimation.INTERACT);
     }
 
     public void LockMovement(int locker) {
