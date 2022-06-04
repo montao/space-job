@@ -16,7 +16,6 @@ public class PlayerAnimationController : NetworkBehaviour {
     private void Awake() {
         m_PlayerAnimator = GetComponent<Animator>();
         m_Player = GetComponent<PlayerAvatar>();
-        Debug.Log("PlayerAnimationController: " + "hello" + m_PlayerAnimator + m_Player);
     }
 
     [ClientRpc]
@@ -25,8 +24,7 @@ public class PlayerAnimationController : NetworkBehaviour {
         m_PlayerAnimator.SetTrigger(animation.ToString().ToLower());
     }
 
-    public void OnSpeedChange(float prev, float current){
-        Debug.Log("Speed: " + current);
-        m_PlayerAnimator.SetFloat("speed", current);
+    public void OnSpeedChange(float speed){
+        m_PlayerAnimator.SetFloat("speed", speed);
     }
 }
