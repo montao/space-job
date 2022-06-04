@@ -65,7 +65,7 @@ public class MainMenu : MonoBehaviour {
 
                 Debug.Log(PlayerManager.Instance.LobbyInfo);
                 startClient.SetActive(true);
-                startClientTMP.text = " Game has been hosted. Join!"; 
+                startClientTMP.text = "Click to join Lobby " + serverAddress.text; 
             }
             
         }
@@ -114,6 +114,7 @@ public class MainMenu : MonoBehaviour {
             return;
         }
 
+        // not great since this is set every reload but works fpor now
         ishosted = true;
         Debug.Log("Reload");
         
@@ -174,7 +175,12 @@ public class MainMenu : MonoBehaviour {
     void OnGUI() {
         // TODO only update when needed
         if (connected) {
-            lobbyInfo.text = PlayerManager.Instance.LobbyInfo;
+            if(PlayerManager.Instance.LobbyInfo == "1/4: " && MultiplayerUtil.GetLocalIPAddress() != serverAddress.text) {
+                lobbyInfo.text = "waiting for the host to connect";
+            } 
+            else{
+                lobbyInfo.text = PlayerManager.Instance.LobbyInfo;
+            }
         } else {
             lobbyInfo.text = "Not connected";
         }
