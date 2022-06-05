@@ -12,13 +12,24 @@ public class GooseBuddyNavMesh : MonoBehaviour
         m_GooseNavMesh = GetComponent<NavMeshAgent>();
     }
 
-    private void StealRandomItem(){
+    private void SetEvilBehaviour(){
 
     }
+
+    private void SetBuddyBehaviour(){
+
+    }
+
+    private void SetIdleBehaviour(){
+
+    }
+
+    // idle through ship
+    // follow player
+    // steal mission (priorieat)
 
     void Update()
     {
 
-        m_GooseNavMesh.destination = Destination.position;
     }
 }
