@@ -12,7 +12,7 @@ public class GooseBuddyNavMesh : MonoBehaviour
         m_GooseNavMesh = GetComponent<NavMeshAgent>();
     }
 
-    private void SetNewDestination(){
+    private void StealRandomItem(){
 
     }
 
