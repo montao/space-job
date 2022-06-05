@@ -7,15 +7,18 @@ public class GooseBuddyNavMesh : MonoBehaviour
 {
     private NavMeshAgent m_GooseNavMesh;
     public Transform Destination;
-    // Start is called before the first frame update
     void Start()
     {
         m_GooseNavMesh = GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
+    private void SetNewDestination(){
+
+    }
+
     void Update()
     {
+
         m_GooseNavMesh.destination = Destination.position;
     }
 }
