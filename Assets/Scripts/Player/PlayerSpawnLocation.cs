@@ -10,7 +10,7 @@ public class PlayerSpawnLocation : MonoBehaviour {
 
     void OnDrawGizmos() {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, 1.0f);
+        Gizmos.DrawSphere(transform.position, 0.05f);
     }
 
     public static Transform GetSpawn() {
