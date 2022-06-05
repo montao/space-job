@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
@@ -16,6 +17,8 @@ public class CoffeCup : DroppableInteractable{
     private bool m_PickedUp = false;  // Server-Only
     [SerializeField]
     private AudioClip[] pickupSounds;
+    [SerializeField]
+    private AudioClip[] gulpSounds;
     private AudioSource audioSource;
 
 
@@ -26,10 +29,20 @@ public class CoffeCup : DroppableInteractable{
         GetComponent<MeshRenderer>().material = Materials[mat_idx];
         audioSource = GetComponent<AudioSource>();   
     }
-
+    private AudioClip GetRandomGulpClip(){
+        return gulpSounds[UnityEngine.Random.Range(0, gulpSounds.Length)];
+    }
+    IEnumerator WaitForMouth(float waitTime){
+        yield return new WaitForSeconds(waitTime);
+        AudioClip sound = GetRandomGulpClip();
+        audioSource.PlayOneShot(sound);
+        Debug.Log("gulp");
+    }
     public override PlayerAnimation SelfInteraction(PlayerAvatar avatar) {
         avatar.SpeedBoost();
+        StartCoroutine(WaitForMouth(0.5f));
         return PlayerAnimation.DRINK;
+        
     }
 
     private AudioClip GetRandomClip(){

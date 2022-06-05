@@ -1,6 +1,5 @@
 using UnityEngine;
 using Unity.Netcode;
-using System.Collections;
 using System;
 
 public enum PlayerAnimation {
@@ -15,20 +14,13 @@ public enum PlayerAnimation {
 public class PlayerAnimationController : NetworkBehaviour {
     private Animator m_PlayerAnimator;
     private PlayerAvatar m_Player;
-    [SerializeField]
-    private AudioClip[] gulpSounds;
-    private AudioSource audioSource;
-    private void Awake() {
-        audioSource = GetComponent<AudioSource>();
-    }
+
     private void Start() {
         m_PlayerAnimator = GetComponent<Animator>();
         m_Player = GetComponent<PlayerAvatar>();
     }
 
-    private AudioClip GetRandomClip(){
-        return gulpSounds[UnityEngine.Random.Range(0, gulpSounds.Length)];
-    }
+    
     private void TriggerAnimationLocally(PlayerAnimation animation) {
         Debug.Log("Triggering " + animation.ToString().ToLower());
         foreach(PlayerAnimation ani in Enum.GetValues(typeof(PlayerAnimation))){
@@ -69,12 +61,6 @@ public class PlayerAnimationController : NetworkBehaviour {
         m_PlayerAnimator.SetFloat("speed", speed);
     }
 
-    IEnumerator WaitForMouth(float waitTime){
-        yield return new WaitForSeconds(waitTime);
-        AudioClip sound = GetRandomClip();
-        audioSource.PlayOneShot(sound);
-        Debug.Log("gulp");
-    }
     void Update() {
         if (IsOwner) {
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
@@ -85,9 +71,6 @@ public class PlayerAnimationController : NetworkBehaviour {
             }
             if (Input.GetKeyDown(KeyCode.Alpha3)) {
                 TriggerAnimation(PlayerAnimation.DRINK);
-                if(m_Player.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).tag == "Drink"){
-                    StartCoroutine(WaitForMouth(0.5f));
-                }
                 
             }
             if (Input.GetKeyDown(KeyCode.Alpha4)) {

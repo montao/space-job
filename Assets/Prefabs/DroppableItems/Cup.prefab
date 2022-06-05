@@ -109,6 +109,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 46330d85680cc30368bf52053faa8855, type: 3}
   - {fileID: 8300000, guid: 538fa1c80c124fa539e14752c77fbb53, type: 3}
   - {fileID: 8300000, guid: eaa7b3e688caa359abcbb3016d9a1daf, type: 3}
+  gulpSounds:
+  - {fileID: 8300000, guid: 3792d6b064d737b70a3db7f4163400fc, type: 3}
+  - {fileID: 8300000, guid: 34dc44da0ec0d3d44b03a4cd79b7c911, type: 3}
+  - {fileID: 8300000, guid: 7ec3c4618bbcfbf19b52759a4d273c97, type: 3}
+  - {fileID: 8300000, guid: f02df1e0f7a3c1fe884b27ff0ac254d9, type: 3}
+  - {fileID: 8300000, guid: daa1a3d67ba1bf364b2314900df35ddb, type: 3}
+  - {fileID: 8300000, guid: 5b5b78000b9321bb4be60cbb32defffa, type: 3}
+  - {fileID: 8300000, guid: 47fc8e2902bbd18b993d4100d00b2d05, type: 3}
+  - {fileID: 8300000, guid: c06459485092401d7a2a82777d62fb2b, type: 3}
+  - {fileID: 8300000, guid: aa3b43c982de88c6485458e5d5957451, type: 3}
+  - {fileID: 8300000, guid: cb117dc23a85d1701a692c37574a06c5, type: 3}
+  - {fileID: 8300000, guid: 232893a9997c6cf358b9082b1ce02304, type: 3}
 --- !u!65 &3831669206521906116
 BoxCollider:
   m_ObjectHideFlags: 0
