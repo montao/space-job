@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3534101790474234467}
   - component: {fileID: 2526070932926222611}
   - component: {fileID: 2186665031462195720}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: rararBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 1607267234331231053}
   - component: {fileID: 7084016047160398219}
   - component: {fileID: 6729489567759544603}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Hat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 3334404207270403019}
   - component: {fileID: 2552633340287618488}
   - component: {fileID: 1237700275654752339}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: goose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 5290100806283920046}
   - component: {fileID: 7467572726383304047}
   - component: {fileID: 3805909411847881224}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: radar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 8155625946514538789}
   - component: {fileID: 8548997489045808832}
   - component: {fileID: 8548997489045808835}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: spaceGooseBuddy (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -26,14 +26,19 @@ public class GooseBuddyNavMesh : MonoBehaviour
     // follow player
     // steal mission (priorieat)
 
+
+
     private void OnCollisionEnter(Collision other) {
+        Debug.Log(Destination.position + "; " + other.gameObject.name);
         if (other.gameObject.GetComponent<PlayerAvatar>() != null){
-            Destination = other.gameObject.transform;
+            Destination = other.transform;
         }
     }
 
     void Update()
     {
-        m_GooseNavMesh.destination = Destination.position;
+        if(Destination != null){
+            m_GooseNavMesh.destination = Destination.position;
+        }
     }
 }
