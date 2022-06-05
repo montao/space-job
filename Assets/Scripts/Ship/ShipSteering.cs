@@ -12,6 +12,11 @@ public class ShipSteering : NetworkBehaviour {
     public static readonly float MAX_ABS_ANGULAR_VELOCITY = 30.0f;
     public static readonly float EPSILON = 0.05f;
 
+    public AudioSource audioSourceLeft; 
+    public AudioSource audioSourceRight; 
+    public AudioClip thrusterSound;
+
+
     public enum Thruster {
         ROTATE_LEFT,
         ROTATE_RIGHT,
@@ -114,6 +119,19 @@ public class ShipSteering : NetworkBehaviour {
         Debug_MoveWithKeys(Time.deltaTime);
         if (IsServer) {
             UpdateServerside();
+        }
+        if(GetThrusterState(Thruster.TRANSLATE_FORWARD) | GetThrusterState(Thruster.TRANSLATE_BACKWARD)){
+            AudioClip sound = thrusterSound;
+            audioSourceLeft.PlayOneShot(thrusterSound);
+            audioSourceRight.PlayOneShot(thrusterSound);
+        }
+        if(GetThrusterState(Thruster.TRANSLATE_LEFT)){
+            AudioClip sound = thrusterSound;
+            audioSourceLeft.PlayOneShot(thrusterSound);
+        }
+        if(GetThrusterState(Thruster.TRANSLATE_RIGHT)){
+            AudioClip sound = thrusterSound;
+            audioSourceRight.PlayOneShot(thrusterSound);
         }
     }
 
