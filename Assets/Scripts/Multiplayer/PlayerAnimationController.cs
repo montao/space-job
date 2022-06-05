@@ -85,7 +85,6 @@ public class PlayerAnimationController : NetworkBehaviour {
             }
             if (Input.GetKeyDown(KeyCode.Alpha3)) {
                 TriggerAnimation(PlayerAnimation.DRINK);
-                Debug.Log(m_Player.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).name);
                 if(m_Player.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).tag == "Drink"){
                     StartCoroutine(WaitForMouth(0.5f));
                 }

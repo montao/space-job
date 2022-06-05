@@ -6,8 +6,9 @@ public class AnimationAudio : MonoBehaviour {
     
     [SerializeField]
     private AudioClip[] stepSounds;
+    [SerializeField]
+    private AudioClip[] clapSounds;
     public AudioClip take;
-    public AudioClip clap;
     private AudioSource audioSource;
 
     void Awake() {
@@ -15,7 +16,7 @@ public class AnimationAudio : MonoBehaviour {
     }
 
     private void Step(){
-        AudioClip sound = GetRandomClip();
+        AudioClip sound = GetRandomStepClip();
         audioSource.PlayOneShot(sound);
         Debug.Log("step");
     }
@@ -26,11 +27,15 @@ public class AnimationAudio : MonoBehaviour {
     }
 
     private void Clap(){
-        AudioClip sound = clap;
-        audioSource.PlayOneShot(clap);
+        AudioClip sound = GetRandomClapClip();
+        audioSource.PlayOneShot(sound);
+        Debug.Log("clap");
     }
-    private AudioClip GetRandomClip(){
+    private AudioClip GetRandomStepClip(){
         return stepSounds[UnityEngine.Random.Range(0, stepSounds.Length)];
+    }
+    private AudioClip GetRandomClapClip(){
+        return clapSounds[UnityEngine.Random.Range(0, clapSounds.Length)];
     }
 
     private void NoHologram(){
