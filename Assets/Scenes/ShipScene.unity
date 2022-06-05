@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.040637374, g: 0.24334216, b: 0.31317982, a: 1}
+  m_IndirectSpecularColor: {r: 0.040689424, g: 0.24335492, b: 0.31316802, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -273,13 +273,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11470610}
-  m_LocalRotation: {x: 0.5648625, y: -0.09960049, z: 0.14224426, w: 0.8067074}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.5513098, y: -0.1171993, z: -0.18804407, w: 0.80433905}
+  m_LocalPosition: {x: 0, y: 0.109900005, z: -0.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1168395093}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 20}
+  m_LocalEulerAnglesHint: {x: 57.437, y: -47.352, z: -53.335}
 --- !u!108 &11470612
 Light:
   m_ObjectHideFlags: 0
@@ -292,7 +292,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.3
+  m_Intensity: 0.04
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -467,13 +467,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 15819094}
-  m_LocalRotation: {x: 0.5648625, y: 0.09960054, z: -0.14224434, w: 0.8067074}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.5199782, y: 0.10721775, z: -0.13659455, w: 0.8363426}
+  m_LocalPosition: {x: 0, y: 0.109900005, z: -0.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1168395093}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 70, y: 0, z: -20}
+  m_LocalEulerAnglesHint: {x: 64.034, y: 4.886, z: -15.496}
 --- !u!108 &15819096
 Light:
   m_ObjectHideFlags: 0
@@ -486,7 +486,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.3
+  m_Intensity: 0.04
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -913,13 +913,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 143589488}
-  m_LocalRotation: {x: 0.7544065, y: 0.13302228, z: -0.11161895, w: 0.63302225}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.31403872, y: 0.60510206, z: -0.44790784, w: 0.57845473}
+  m_LocalPosition: {x: 0, y: 0.109900005, z: -0.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1168395093}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 100, y: 0, z: -20}
+  m_LocalEulerAnglesHint: {x: 64.874, y: 80.448, z: -18.985}
 --- !u!108 &143589490
 Light:
   m_ObjectHideFlags: 0
@@ -932,7 +932,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.3
+  m_Intensity: 0.04
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2476,7 +2476,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520098186}
-  m_LocalRotation: {x: -0.00010735697, y: 0.99947333, z: -0.032280874, w: -0.0033239627}
+  m_LocalRotation: {x: -0.00010735683, y: 0.99947333, z: -0.032280874, w: -0.0033239583}
   m_LocalPosition: {x: -1.07, y: 2.800001, z: 1.7400006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5313,7 +5313,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1602352833}
-  m_LocalRotation: {x: 0.16326039, y: -0.01756875, z: 0.0029077614, w: 0.9864223}
+  m_LocalRotation: {x: 0.1632604, y: -0.017568717, z: 0.002907756, w: 0.9864223}
   m_LocalPosition: {x: -1.07, y: 2.800001, z: 1.7400006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6133,13 +6133,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1931939425}
-  m_LocalRotation: {x: 0.7544065, y: -0.1330222, z: 0.11161889, w: 0.63302225}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.91340476, y: -0.05859537, z: 0.05981134, w: 0.3983479}
+  m_LocalPosition: {x: 0, y: 0.1099, z: -0.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1168395093}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 100, y: 0, z: 20}
+  m_LocalEulerAnglesHint: {x: 132.717, y: -5.2929993, z: 5.022995}
 --- !u!108 &1931939427
 Light:
   m_ObjectHideFlags: 0
@@ -6152,7 +6152,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.3
+  m_Intensity: 0.04
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
