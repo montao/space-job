@@ -30,14 +30,14 @@ public class LightManager : MonoBehaviour {
         foreach (Light light in NormalLights){
             light.gameObject.SetActive(on);
         }
-        SetLightmapsEnabled(true);
+        //SetLightmapsEnabled(true);
     }
 
     public void SetBackup(bool on){
         foreach (Light light in BackupLights){
             light.gameObject.SetActive(on);
         }
-        SetLightmapsEnabled(false);
+        //SetLightmapsEnabled(false);
     }
 
     private void SetLightmapsEnabled(bool enabled) {
