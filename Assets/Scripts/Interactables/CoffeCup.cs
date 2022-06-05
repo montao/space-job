@@ -53,9 +53,11 @@ public class CoffeCup : DroppableInteractable{
     public override void SetHolderServerRpc(int holder_id) {
         base.SetHolderServerRpc(holder_id);
         m_PickedUp = true;
+        audioSource.volume = 0.1f;
         AudioClip sound = GetRandomClip();
         audioSource.PlayOneShot(sound);
         Debug.Log("Pick Cup");
+        audioSource.volume = 1.0f;
     }
 
     public bool IsPickedUp() {

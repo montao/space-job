@@ -12,9 +12,15 @@ public class ShipSteering : NetworkBehaviour {
     public static readonly float MAX_ABS_ANGULAR_VELOCITY = 30.0f;
     public static readonly float EPSILON = 0.05f;
 
-    public AudioSource audioSourceLeft; 
-    public AudioSource audioSourceRight; 
-    public AudioClip thrusterSound;
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioSource audioSourceLeft; 
+    [SerializeField]
+    private AudioSource audioSourceRight; 
+    [SerializeField]
+    private AudioClip thrusterSound;
+    [SerializeField]
+    private AudioClip speedSound;
 
 
     public enum Thruster {
@@ -37,6 +43,7 @@ public class ShipSteering : NetworkBehaviour {
 
     void Awake() {
         m_ThrusterStates = new bool[Enum.GetValues(typeof(Thruster)).Length];
+        audioSource = GetComponent<AudioSource>();
     }
 
     public bool GetThrusterState(Thruster t) {
@@ -125,14 +132,19 @@ public class ShipSteering : NetworkBehaviour {
             audioSourceLeft.PlayOneShot(thrusterSound);
             audioSourceRight.PlayOneShot(thrusterSound);
         }
-        if(GetThrusterState(Thruster.TRANSLATE_LEFT)){
+        if(GetThrusterState(Thruster.ROTATE_LEFT)){
+            Debug.Log("left thruster");
             AudioClip sound = thrusterSound;
             audioSourceLeft.PlayOneShot(thrusterSound);
         }
-        if(GetThrusterState(Thruster.TRANSLATE_RIGHT)){
+        if(GetThrusterState(Thruster.ROTATE_RIGHT)){
+            Debug.Log("right thruster");
             AudioClip sound = thrusterSound;
             audioSourceRight.PlayOneShot(thrusterSound);
         }
+        if(GetSpeed() > 0.0f){
+            audioSource.volume = 0.05f;
+        } else audioSource.volume = 0.0f;
     }
 
     // Server-side only

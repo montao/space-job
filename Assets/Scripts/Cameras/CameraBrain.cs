@@ -21,7 +21,6 @@ public class CameraBrain : MonoBehaviour {
         } else {
             Destroy(this);
         }
-        DontDestroyOnLoad(this);
 
         m_Skybox = GetComponent<Skybox>();
     }

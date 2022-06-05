@@ -19,7 +19,6 @@ public class PlayerAnimationController : NetworkBehaviour {
         m_PlayerAnimator = GetComponent<Animator>();
         m_Player = GetComponent<PlayerAvatar>();
     }
-
     
     private void TriggerAnimationLocally(PlayerAnimation animation) {
         Debug.Log("Triggering " + animation.ToString().ToLower());
