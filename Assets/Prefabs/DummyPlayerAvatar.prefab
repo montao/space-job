@@ -994,6 +994,16 @@ MonoBehaviour:
   notready: {fileID: 3596736054757866448}
   chara_select: {fileID: 0}
   m_LungCapacity: 1
+  dropCupSounds:
+  - {fileID: 8300000, guid: 41676e0dc4a10bd44a241a680b370fcc, type: 3}
+  - {fileID: 8300000, guid: ceae54f2237fae2e9af30de607ca2f12, type: 3}
+  - {fileID: 8300000, guid: 82030e1214006049f9a46cb7b78f3efc, type: 3}
+  - {fileID: 8300000, guid: fd0f2afe261e20b4faecfd20feecf22d, type: 3}
+  - {fileID: 8300000, guid: d78f3fa20b506a67db512fa8a3ae6062, type: 3}
+  - {fileID: 8300000, guid: 79ec38392d2de45dbbe6f0fca5a194ed, type: 3}
+  - {fileID: 8300000, guid: 270833354801840f082c684408b9b82d, type: 3}
+  - {fileID: 8300000, guid: 3b1a47d19ae580daa8b18efdcacc1315, type: 3}
+  - {fileID: 8300000, guid: 00680f9e18072e60c990f499572e4c64, type: 3}
 --- !u!222 &7404256255760437957
 CanvasRenderer:
   m_ObjectHideFlags: 0

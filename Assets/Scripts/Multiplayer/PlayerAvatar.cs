@@ -83,7 +83,13 @@ public class PlayerAvatar : NetworkBehaviour {
     private float m_LungCapacity = 1f;
     private PlayerAnimationController m_AnimationController;
     public PlayerAnimationController AnimationController { get => m_AnimationController; }
+    [SerializeField]
+    private AudioClip[] dropCupSounds;
+    private AudioSource audioSource;
 
+    private void Awake() {
+        audioSource = GetComponent<AudioSource>();
+    }
     public void Start() {
         if (CameraLookAt == null) {
             CameraLookAt = transform;
@@ -285,6 +291,9 @@ public class PlayerAvatar : NetworkBehaviour {
         if (Input.GetKeyDown(KeyCode.Q)) {
             if (!HasInventorySpace(Slot.PRIMARY)) {
                 DropItem(Slot.PRIMARY);
+                AudioClip sound = GetRandomCupDropClip();
+                audioSource.PlayOneShot(sound);
+                Debug.Log("Cup Drop");
             }
         }
 
@@ -410,6 +419,10 @@ public class PlayerAvatar : NetworkBehaviour {
             m_SecondaryItem.Value = item;
             ShowInInventory(SecondaryItemDisplay, item);  // optional, client-sided
         }
+    }
+
+    private AudioClip GetRandomCupDropClip(){
+        return dropCupSounds[UnityEngine.Random.Range(0, dropCupSounds.Length)];
     }
 
     public void DropItem(Slot slot) {
