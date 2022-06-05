@@ -143,7 +143,7 @@ public class ShipSteering : NetworkBehaviour {
             audioSourceRight.PlayOneShot(thrusterSound);
         }
         if(GetSpeed() > 0.0f){
-            audioSource.volume = 0.05f;
+            audioSource.volume = 0.1f;
         } else audioSource.volume = 0.0f;
     }
 
