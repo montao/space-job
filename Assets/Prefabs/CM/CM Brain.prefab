@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 90291987610743097}
   - component: {fileID: 90291987610743098}
   - component: {fileID: 6757386009695000438}
+  - component: {fileID: 6192711588618140320}
   m_Layer: 0
   m_Name: CM Brain
   m_TagString: Untagged
@@ -160,3 +161,11 @@ MonoBehaviour:
   m_SkyboxWireframe: {fileID: 2100000, guid: 84e8d37410cf4e801a4c4a60eaa473a2, type: 2}
   m_SkyboxDefault: {fileID: 2100000, guid: bcb37a3ce591201ca87bb446d595e55a, type: 2}
   Brain: {fileID: 90291987610743096}
+--- !u!81 &6192711588618140320
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90291987610743099}
+  m_Enabled: 1
