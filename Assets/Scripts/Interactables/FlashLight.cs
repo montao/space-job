@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 
 public class FlashLight : DroppableInteractable {
 
@@ -13,6 +15,8 @@ public class FlashLight : DroppableInteractable {
     public override PlayerAnimation SelfInteraction(PlayerAvatar avatar) {
         m_TurnedOn = !m_TurnedOn;
         m_Beam.enabled = m_TurnedOn;
+        AudioClip sound = GetRandomInteractionClip();
+        audioSource.PlayOneShot(sound);
         return PlayerAnimation.INTERACT;
     }
 }

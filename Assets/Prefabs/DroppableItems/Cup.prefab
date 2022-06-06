@@ -100,15 +100,16 @@ MonoBehaviour:
   NeedsPower: 0
   TriggeredAnimation: 2
   Velocity: 100
-  Materials:
-  - {fileID: 2100000, guid: 81a3d8fc1ecbe98b9a4d5e960267e448, type: 2}
-  - {fileID: 2100000, guid: 851aa4802535d4aff867b947b99dfe41, type: 2}
   pickupSounds:
   - {fileID: 8300000, guid: f113628dbe2ca633b98cf5e1b01cf36e, type: 3}
   - {fileID: 8300000, guid: a1ab87f048c506a638c5d9a8243e2b29, type: 3}
   - {fileID: 8300000, guid: 46330d85680cc30368bf52053faa8855, type: 3}
   - {fileID: 8300000, guid: 538fa1c80c124fa539e14752c77fbb53, type: 3}
   - {fileID: 8300000, guid: eaa7b3e688caa359abcbb3016d9a1daf, type: 3}
+  interactionSounds: []
+  Materials:
+  - {fileID: 2100000, guid: 81a3d8fc1ecbe98b9a4d5e960267e448, type: 2}
+  - {fileID: 2100000, guid: 851aa4802535d4aff867b947b99dfe41, type: 2}
   gulpSounds:
   - {fileID: 8300000, guid: 3792d6b064d737b70a3db7f4163400fc, type: 3}
   - {fileID: 8300000, guid: 34dc44da0ec0d3d44b03a4cd79b7c911, type: 3}

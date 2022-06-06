@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Components;
@@ -10,6 +11,11 @@ public abstract class DroppableInteractable : Interactable<int>{
     protected NetworkTransform m_NetTransform;
     public float Velocity = 100;
     public const int IN_WORLD = -1;
+    [SerializeField]
+    protected AudioClip[] pickupSounds;
+    [SerializeField]
+    protected AudioClip[] interactionSounds;
+    protected AudioSource audioSource;
 //----------------------------------------------------------------------------------------------
     
     public virtual void Awake() {
@@ -18,6 +24,13 @@ public abstract class DroppableInteractable : Interactable<int>{
         m_Mesh = GetComponentInParent<MeshRenderer>();
         m_Rigidbody = GetComponentInParent<Rigidbody>();
         m_NetTransform = GetComponentInParent<NetworkTransform>();
+        audioSource = GetComponent<AudioSource>(); 
+    }
+    protected AudioClip GetRandomInteractionClip(){
+        return interactionSounds[UnityEngine.Random.Range(0, interactionSounds.Length)];
+    }
+    protected AudioClip GetRandomPickUpClip(){
+        return pickupSounds[UnityEngine.Random.Range(0, pickupSounds.Length)];
     }
 
     public override void OnNetworkSpawn() {
@@ -30,6 +43,8 @@ public abstract class DroppableInteractable : Interactable<int>{
     [ServerRpc(RequireOwnership = false)]
     public virtual void SetHolderServerRpc(int holder_id){
         m_State.Value = holder_id;
+        AudioClip sound = GetRandomPickUpClip();
+        audioSource.PlayOneShot(sound);
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -37,6 +52,7 @@ public abstract class DroppableInteractable : Interactable<int>{
         m_Rigidbody.position = position;
         m_State.Value = IN_WORLD;
         m_Rigidbody.AddForce(Vector3.Normalize(PlayerManager.Instance.LocalPlayer.Avatar.transform.forward) * Velocity);
+
     }
     protected override void Interaction(){
         PlayerAvatar localPlayer = PlayerManager.Instance.LocalPlayer.Avatar;

@@ -16,18 +16,12 @@ public class CoffeCup : DroppableInteractable{
     public List<Material> Materials = new List<Material>();
     private bool m_PickedUp = false;  // Server-Only
     [SerializeField]
-    private AudioClip[] pickupSounds;
-    [SerializeField]
     private AudioClip[] gulpSounds;
-    private AudioSource audioSource;
-
-
 
     public override void Awake() {
         base.Awake();
         int mat_idx = (m_CupMaterialPattern >> (m_CupNumber++ % 32)) & 1;
-        GetComponent<MeshRenderer>().material = Materials[mat_idx];
-        audioSource = GetComponent<AudioSource>();   
+        GetComponent<MeshRenderer>().material = Materials[mat_idx];  
     }
     private AudioClip GetRandomGulpClip(){
         return gulpSounds[UnityEngine.Random.Range(0, gulpSounds.Length)];
@@ -45,19 +39,11 @@ public class CoffeCup : DroppableInteractable{
         
     }
 
-    private AudioClip GetRandomClip(){
-        return pickupSounds[UnityEngine.Random.Range(0, pickupSounds.Length)];
-    }
-
     [ServerRpc(RequireOwnership = false)]
     public override void SetHolderServerRpc(int holder_id) {
         base.SetHolderServerRpc(holder_id);
         m_PickedUp = true;
-        audioSource.volume = 0.1f;
-        AudioClip sound = GetRandomClip();
-        audioSource.PlayOneShot(sound);
-        Debug.Log("Pick Cup");
-        audioSource.volume = 1.0f;
+
     }
 
     public bool IsPickedUp() {

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1047239872381265899}
   - component: {fileID: 3732126219389465208}
   - component: {fileID: 4398631959310996855}
+  - component: {fileID: 7125714971065593813}
   m_Layer: 0
   m_Name: ShipManager
   m_TagString: Untagged
@@ -49,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rooms: []
   PowerTerminal: {fileID: 0}
+  WinCanvas: {fileID: 0}
 --- !u!114 &-4673841838035738812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +94,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1120d94c9d02ab2c68c9b3b447a91138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSourceLeft: {fileID: 0}
+  audioSourceRight: {fileID: 0}
+  thrusterSound: {fileID: 0}
+  speedSound: {fileID: 0}
 --- !u!114 &4398631959310996855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,3 +112,99 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Map: {fileID: 1047239872381265899}
   HullBreachPrefab: {fileID: 5519585612222790138, guid: 6ac64921f83b462f69196c9298af06a6, type: 3}
+--- !u!82 &7125714971065593813
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9204123625600447561}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
