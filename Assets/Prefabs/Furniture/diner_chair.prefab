@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NeedsPower: 0
-  TriggeredAnimation: 4
+  TriggeredAnimation: 3
   TeleportPoint: {fileID: 5223830424159481352}
   sitSounds:
   - {fileID: 8300000, guid: 4367908fe1053e403a8c3f5f66cdf7ff, type: 3}
