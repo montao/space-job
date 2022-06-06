@@ -48,6 +48,7 @@ public class CameraSwap : MonoBehaviour {
     }
 
     public void SwitchTo() {
+        CameraBrain.Instance.WireframeOnBlend = !InRoom;
         if (InRoom) {
             m_Camera.Priority = INROOM_CAMERA_ON;
             foreach (var cam in CameraSwap.Instances) {

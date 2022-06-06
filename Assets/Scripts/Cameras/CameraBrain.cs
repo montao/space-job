@@ -13,6 +13,11 @@ public class CameraBrain : MonoBehaviour {
 
     private Skybox m_Skybox;
     private bool m_IsBlending;
+    private bool m_WireframeOnBlend = true;
+    public bool WireframeOnBlend {
+        get { return m_WireframeOnBlend; }
+        set { m_WireframeOnBlend = value; }
+    }
 
     public static CameraBrain Instance;
     void Awake() {
@@ -66,7 +71,7 @@ public class CameraBrain : MonoBehaviour {
         Brain.ActiveVirtualCamera.LookAt = target;
     }
 
-    public void SetWireframe(bool wireframe_on) {
+    private void SetWireframe(bool wireframe_on) {
         m_WireframeRendererFeature.SetActive(wireframe_on);
         RenderSettings.skybox = wireframe_on ? m_SkyboxWireframe : m_SkyboxDefault;
     }
@@ -74,7 +79,9 @@ public class CameraBrain : MonoBehaviour {
     void Update() {
         bool blending = Brain.IsBlending;
         if (blending != m_IsBlending) {
-            SetWireframe(blending);
+            if (m_WireframeOnBlend || !blending) {  // wireframe enabled, or we've just stopped blending
+                SetWireframe(blending);
+            }
             m_IsBlending = blending;
         }
 
