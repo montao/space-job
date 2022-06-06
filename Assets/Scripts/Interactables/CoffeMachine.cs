@@ -5,14 +5,14 @@ public class CoffeMachine : Interactable<bool> {
     public GameObject cupPrefab;
     public GameObject machine;
     private GameObject prevCup = null;
-        [SerializeField]
+/*         [SerializeField]
     private AudioClip[] sitSounds;
     private AudioSource audioSource;
 
     void Awake() {
         audioSource = GetComponent<AudioSource>();    
     }
-
+ */
     protected override void Interaction(){
         SetServerRpc(!Value);
         if (PlayerAvatar.IsHolding<PipeWrench>()) {
