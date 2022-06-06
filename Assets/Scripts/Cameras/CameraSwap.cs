@@ -3,11 +3,17 @@ using Cinemachine;
 using UnityEngine;
 
 public class CameraSwap : MonoBehaviour {
+
+    public const int INROOM_CAMERA_ON = 120;
+    public const int CAMERA_ON = 100;
+    public const int CAMERA_OFF = 0;
+
     public CinemachineVirtualCamera m_Camera;
     public bool InRoom;
 
     public static bool CurrentSwapInRoom = false;
     private static List<CameraSwap> m_Instances = new List<CameraSwap>();
+    public static List<CameraSwap> Instances { get => m_Instances; }
 
     void Start() {
         if(m_Camera == null){
@@ -42,16 +48,37 @@ public class CameraSwap : MonoBehaviour {
     }
 
     public void SwitchTo() {
-        m_Camera.Priority = InRoom ? 30 : 20;
+        if (InRoom) {
+            m_Camera.Priority = INROOM_CAMERA_ON;
+            foreach (var cam in CameraSwap.Instances) {
+                if (cam.InRoom && cam != this) {
+                    cam.m_Camera.Priority = CAMERA_OFF;
+                }
+            }
+            m_Camera.Priority = INROOM_CAMERA_ON;
+        } else {
+            Solo();
+        }
         PlayerManager.Instance.LocalPlayer.Avatar.HidePlayer(InRoom);
     }
 
     public void SwitchAway() {
-        m_Camera.Priority = InRoom ? 5 : 10;
         if (InRoom) {
+            m_Camera.Priority = CAMERA_OFF;
             PlayerManager.Instance.LocalPlayer.Avatar.HidePlayer(false);
         }
     }
+
+    public void Solo() {
+        m_Camera.Priority = CAMERA_ON;
+        foreach (var cam in CameraSwap.Instances) {
+            if (cam != this) {
+                cam.m_Camera.Priority = CAMERA_OFF;
+            }
+        }
+        m_Camera.Priority = CAMERA_ON;  // i don't know either
+    }
+
 
     public static void UpdateLookAt(PlayerAvatar avatar) {
         foreach (var camera in m_Instances) {
