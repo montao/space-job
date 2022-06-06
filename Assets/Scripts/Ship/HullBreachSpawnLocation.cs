@@ -7,7 +7,7 @@ public class HullBreachSpawnLocation : MonoBehaviour {
     void OnDrawGizmos() {
         var color_prev = Gizmos.color;
         Gizmos.color = Color.cyan;
-        if (GizmoMesh == null) {
+        if (GizmoMesh == null || GizmoMeshes.Instance == null) {
             Gizmos.DrawIcon(transform.position, "HullBreachIcon.png", true);
             GizmoMesh = GizmoMeshes.Instance.HullBreach;
         } else {
