@@ -15,7 +15,6 @@ public class Room : NetworkBehaviour {
     }
     private TMP_Text m_RoomDisplay;
 
-    [SerializeField]
     private List<Transform> m_HullBreachSpawnLocations = new List<Transform>();
     private List<HullBreachInstance> m_HullBreaches = new List<HullBreachInstance>();
 
@@ -25,6 +24,10 @@ public class Room : NetworkBehaviour {
             door.SetRoom(this);
         }
         m_RoomDisplay = GetComponentInChildren<TMP_Text>();
+
+        foreach (HullBreachSpawnLocation spawnloc in GetComponentsInChildren<HullBreachSpawnLocation>()) {
+            m_HullBreachSpawnLocations.Add(spawnloc.transform);
+        }
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -75,11 +78,5 @@ public class Room : NetworkBehaviour {
     public void HullBreachResolved(HullBreachInstance breach, Transform freed_up_spawn_location) {
         m_HullBreaches.Remove(breach);
         m_HullBreachSpawnLocations.Add(freed_up_spawn_location);  // location availble again
-    }
-
-    void OnDrawGizmos() {
-        foreach (var spawnloc in m_HullBreachSpawnLocations) {
-            Gizmos.DrawIcon(spawnloc.position, "HullBreachIcon.png", true);
-        }
     }
 }
