@@ -136,6 +136,7 @@ public class PlayerManager : NetworkBehaviour {
             List<ulong> clientsTimedOut) {
 
         TeleportPlayerAvatarsToSpawnLocations();
+        ShipReadyClientRpc();
     }
 
     public void TeleportPlayerAvatarsToSpawnLocations() {
@@ -166,6 +167,7 @@ public class PlayerManager : NetworkBehaviour {
             List<ulong> clientsTimedOut) {
 
         StartShip();
+        ShipReadyClientRpc();
     }
 
     public void StartShip() {
@@ -178,6 +180,12 @@ public class PlayerManager : NetworkBehaviour {
         foreach (PersistentPlayer p in PlayerManager.Instance.Players) {
             p.SpawnAvatar(PlayerSpawnLocation.GetSpawn());
         }
+    }
+
+    [ClientRpc]
+    private void ShipReadyClientRpc() {
+        Debug.Log("Ship ready!");
+        GameManager.Instance.OnPlayersReady();
     }
 
     public static bool IsLocalPlayerAvatar(Collider collider) {
