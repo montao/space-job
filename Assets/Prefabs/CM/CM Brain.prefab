@@ -162,7 +162,7 @@ MonoBehaviour:
   m_SkyboxDefault: {fileID: 2100000, guid: bcb37a3ce591201ca87bb446d595e55a, type: 2}
   BlendBetweenRooms:
     m_Style: 1
-    m_Time: 1.5
+    m_Time: 0.8
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -171,7 +171,7 @@ MonoBehaviour:
       m_RotationOrder: 4
   BlendWithinRoom:
     m_Style: 1
-    m_Time: 1
+    m_Time: 0.6
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
