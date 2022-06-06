@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 1490923000605287261}
   - component: {fileID: 2530751430948990200}
   - component: {fileID: 359160203894478898}
+  - component: {fileID: 266530636809138765}
   m_Layer: 0
   m_Name: Neon Lamp
   m_TagString: Untagged
@@ -166,6 +167,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &266530636809138765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2304438096491051495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f62f414a250e508a5cad15351396c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BulbRenderer: {fileID: 3681031757400570188}
+  m_DynamicLights:
+  - {fileID: 482173496441932018}
+  BulbGlowMaterial: {fileID: 2100000, guid: bd1e195545ec542548256ddbc01136c1, type: 2}
+  BulbOffMaterial: {fileID: 2100000, guid: 7535962e238e1092386914808aaf110f, type: 2}
 --- !u!1 &5401859128492173744
 GameObject:
   m_ObjectHideFlags: 0

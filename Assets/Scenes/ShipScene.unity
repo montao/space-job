@@ -654,7 +654,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70842671}
-  m_LocalRotation: {x: 0.17896944, y: -0.043198522, z: 0.007865923, w: 0.98287433}
+  m_LocalRotation: {x: 0.17896944, y: -0.043198463, z: 0.007865914, w: 0.98287433}
   m_LocalPosition: {x: -1.095, y: 2.628, z: -28.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -800,8 +800,16 @@ PrefabInstance:
       value: Neon Lamp (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643767726633691106, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5782271387719901539, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -822,6 +830,10 @@ PrefabInstance:
     - target: {fileID: 7766475431063243874, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_BoundingSphereOverride.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8728115341605127806, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
@@ -973,8 +985,16 @@ PrefabInstance:
       value: Neon Lamp
       objectReference: {fileID: 0}
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643767726633691106, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5782271387719901539, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -995,6 +1015,10 @@ PrefabInstance:
     - target: {fileID: 7766475431063243874, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_BoundingSphereOverride.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8728115341605127806, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
@@ -1661,6 +1685,10 @@ PrefabInstance:
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_Name
       value: Neon Lamp (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
       objectReference: {fileID: 0}
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2731,8 +2759,8 @@ Transform:
   - {fileID: 774098055}
   - {fileID: 382858571}
   - {fileID: 484433603}
-  - {fileID: 134907312}
   - {fileID: 1951125421}
+  - {fileID: 134907312}
   - {fileID: 1300592295}
   - {fileID: 431398426}
   - {fileID: 383288501}
@@ -3637,7 +3665,7 @@ GameObject:
   - component: {fileID: 704953870}
   m_Layer: 0
   m_Name: Neon Lormps
-  m_TagString: Untagged
+  m_TagString: Normal Lamp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -4583,6 +4611,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NeonGoose
       objectReference: {fileID: 0}
+    - target: {fileID: 1763603669953448716, guid: 3bcc89ca80e7d57049ec3d589bcfb1b8, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bcc89ca80e7d57049ec3d589bcfb1b8, type: 3}
 --- !u!1001 &952282589
@@ -4718,8 +4750,16 @@ PrefabInstance:
       value: Neon Lamp (2)
       objectReference: {fileID: 0}
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643767726633691106, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5782271387719901539, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -4740,6 +4780,10 @@ PrefabInstance:
     - target: {fileID: 7766475431063243874, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_BoundingSphereOverride.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8728115341605127806, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
@@ -4806,6 +4850,10 @@ PrefabInstance:
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_Name
       value: Neon Lamp (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
       objectReference: {fileID: 0}
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5186,6 +5234,10 @@ PrefabInstance:
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_Name
       value: Neon Lamp (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
       objectReference: {fileID: 0}
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5934,6 +5986,10 @@ PrefabInstance:
       value: Neon Lamp (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -6529,8 +6585,16 @@ PrefabInstance:
       value: Neon Lamp (3)
       objectReference: {fileID: 0}
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643767726633691106, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5782271387719901539, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -6551,6 +6615,10 @@ PrefabInstance:
     - target: {fileID: 7766475431063243874, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_BoundingSphereOverride.z
       value: 254211900
+      objectReference: {fileID: 0}
+    - target: {fileID: 8728115341605127806, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
@@ -6583,7 +6651,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1602352833}
-  m_LocalRotation: {x: 0.1632604, y: -0.017568717, z: 0.002907756, w: 0.9864223}
+  m_LocalRotation: {x: 0.16326039, y: -0.01756875, z: 0.0029077614, w: 0.9864223}
   m_LocalPosition: {x: -1.07, y: 2.800001, z: 1.7400006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6803,6 +6871,10 @@ PrefabInstance:
       value: Neon Lamp (5)
       objectReference: {fileID: 0}
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -6985,6 +7057,10 @@ PrefabInstance:
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_Name
       value: Neon Lamp (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
       objectReference: {fileID: 0}
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -7376,8 +7452,16 @@ PrefabInstance:
       value: Neon Lamp (2)
       objectReference: {fileID: 0}
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643767726633691106, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5782271387719901539, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -7398,6 +7482,10 @@ PrefabInstance:
     - target: {fileID: 7766475431063243874, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_BoundingSphereOverride.z
       value: 254211900
+      objectReference: {fileID: 0}
+    - target: {fileID: 8728115341605127806, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
@@ -7591,6 +7679,10 @@ PrefabInstance:
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_Name
       value: Neon Lamp (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
+      propertyPath: m_TagString
+      value: Normal Lamp
       objectReference: {fileID: 0}
     - target: {fileID: 2304438096491051495, guid: f63172d109e0dcdaf90708d2a6e1fedc, type: 3}
       propertyPath: m_StaticEditorFlags

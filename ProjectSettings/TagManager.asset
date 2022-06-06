@@ -12,6 +12,8 @@ TagManager:
   - CharacterList
   - Drink
   - Cup
+  - Normal Lamp
+  - Backup Lamp
   layers:
   - Default
   - TransparentFX

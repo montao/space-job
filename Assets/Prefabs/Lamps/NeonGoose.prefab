@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1383243477639680438}
   - component: {fileID: 2638439815507992083}
   - component: {fileID: 250345885203507929}
+  - component: {fileID: 253704954177606108}
   m_Layer: 0
   m_Name: NeonGoose
   m_TagString: Untagged
@@ -84,6 +85,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &253704954177606108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763603669953448716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f62f414a250e508a5cad15351396c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BulbRenderer: {fileID: 250345885203507929}
+  m_DynamicLights: []
+  BulbGlowMaterial: {fileID: 2100000, guid: 8e7bb0ea019fce1d6a1fc86f45cb6e78, type: 2}
+  BulbOffMaterial: {fileID: 2100000, guid: 7535962e238e1092386914808aaf110f, type: 2}
 --- !u!1 &3768012892323000108
 GameObject:
   m_ObjectHideFlags: 0
