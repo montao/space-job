@@ -23,6 +23,8 @@ After initially cloning the repo, and anytime you change baked lights,
 head to `Window->Rendering->Lighting`.  Set a good *Max Lightmap Size*
 (32 for development, 1024 for release), and hit `Generate Lighting`.
 
+Alternatively, run `make lighting`.
+
 ## Interactables
 
 See [misc/Interactables.md](misc/Interactables.md) for infomation on how
@@ -36,3 +38,9 @@ export Blender models into Unity.
 ## PSX-style shader
 
 Based on https://github.com/Kodrin/URP-PSX, released under the MIT License.
+
+## Build
+
+A Makefile has been provided.  Run `make` to bake lighting and build for
+Linux and Windows.  Depending on whether you have some cached files
+leftover, you might want to grab a cup of tea.

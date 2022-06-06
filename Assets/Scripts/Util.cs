@@ -2,6 +2,11 @@ using UnityEngine;
 using Unity.Netcode;
 using System.Collections.Generic;
 
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.SceneManagement;
+#endif
+
 public class Util {
     public static Vector3 DivideElementwise(Vector3 a, Vector3 b) {
         var result = a;
@@ -38,5 +43,14 @@ public class Util {
 
     public static bool PlayerIsPressingMoveButton() {
         return Mathf.Abs(Input.GetAxis("Horizontal")) > 0.05f || Mathf.Abs(Input.GetAxis("Vertical")) > 0.05f;
+    }
+
+    public static void BakeLighting() {
+#if UNITY_EDITOR
+        foreach (var scene in new string[]{"ShipScene"}) {
+            EditorSceneManager.OpenScene("Assets/Scenes/" + scene + ".unity");
+            Lightmapping.BakeAsync();
+        }
+#endif
     }
 }
