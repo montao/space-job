@@ -7,8 +7,8 @@ public class LightManager : MonoBehaviour {
     public List<Light> BackupLights;
     public static LightManager Instance;
 
-    private LightmapData[] m_LightmapData;
-    private LightmapData[] m_EmptyLightmapData;
+    private List<LightmapData> m_LightmapData;
+    private List<LightmapData> m_EmptyLightmapData;
 
     private void Awake() {
         if (Instance == null) {
@@ -17,8 +17,8 @@ public class LightManager : MonoBehaviour {
             Destroy(this);
         }
 
-        m_LightmapData = LightmapSettings.lightmaps;
-        m_EmptyLightmapData = new LightmapData[]{};
+        m_LightmapData = new List<LightmapData>(LightmapSettings.lightmaps);
+        m_EmptyLightmapData = new List<LightmapData>(m_LightmapData.Count);
     }
 
     void Start() {
@@ -30,18 +30,18 @@ public class LightManager : MonoBehaviour {
         foreach (Light light in NormalLights){
             light.gameObject.SetActive(on);
         }
-        //SetLightmapsEnabled(true);
+        SetLightmapsEnabled(on);
     }
 
     public void SetBackup(bool on){
         foreach (Light light in BackupLights){
             light.gameObject.SetActive(on);
         }
-        //SetLightmapsEnabled(false);
+        // No need to change lightmap status here, since `SetNormal` will be called too.
     }
 
     private void SetLightmapsEnabled(bool enabled) {
-        LightmapSettings.lightmaps = enabled ? m_LightmapData : m_EmptyLightmapData;
+        LightmapSettings.lightmaps = enabled ? m_LightmapData.ToArray() : m_EmptyLightmapData.ToArray();
     }
 
 }
