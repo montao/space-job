@@ -61,6 +61,8 @@ public class Room : NetworkBehaviour {
     public void SpawnHullBreach(EventParameters.HullBreachSize size) {
         if (!IsServer) {
             Debug.LogWarning("SpawnHullBreach should only be called on server!");
+            Debug.Log("Spawned? " + IsSpawned);
+            Debug.Log("Client? " + IsClient);
             return;
         }
         if (m_HullBreachSpawnLocations.Count == 0) {

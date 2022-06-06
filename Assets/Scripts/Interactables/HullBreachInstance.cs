@@ -10,6 +10,8 @@ public class HullBreachInstance : RangedInteractableBase {
     private bool m_PlayerIsHoldingPlate = false;  // server-only!
     private Coroutine m_GrowCoroutine;
 
+    private readonly float LARGE_HULLBREACH_SCALE = 3.2f;
+
 
     public float DrainFactor() {
         return m_Size == EventParameters.HullBreachSize.LARGE ? 1.8f : 0.7f;
@@ -69,7 +71,7 @@ public class HullBreachInstance : RangedInteractableBase {
     public void GrowHoleClientRpc(EventParameters.HullBreachSize new_size) {
         m_Size = new_size;
         if (new_size == EventParameters.HullBreachSize.LARGE) {
-            transform.localScale = 2.0f * transform.localScale;
+            transform.localScale = LARGE_HULLBREACH_SCALE * transform.localScale;
         }
     }
 
