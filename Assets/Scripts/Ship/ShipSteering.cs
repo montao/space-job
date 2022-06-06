@@ -135,21 +135,37 @@ public class ShipSteering : NetworkBehaviour {
         }
         if(GetThrusterState(Thruster.TRANSLATE_FORWARD) | GetThrusterState(Thruster.TRANSLATE_BACKWARD)){
             AudioClip sound = thrusterSound;
-            audioSourceLeft.PlayOneShot(thrusterSound);
-            audioSourceRight.PlayOneShot(thrusterSound);
-            audioSourceTerminal.PlayOneShot(buttonSound);
+            if(!audioSourceLeft.isPlaying) {
+                audioSourceLeft.PlayOneShot(thrusterSound);
+            }
+            if(!audioSourceRight.isPlaying) {
+                audioSourceRight.PlayOneShot(thrusterSound);
+
+            }
+            if(!audioSourceTerminal.isPlaying){
+                audioSourceTerminal.PlayOneShot(buttonSound);
+            }
+            
         }
         if(GetThrusterState(Thruster.ROTATE_LEFT)){
             Debug.Log("left thruster");
             AudioClip sound = thrusterSound;
-            audioSourceLeft.PlayOneShot(thrusterSound);
-            audioSourceTerminal.PlayOneShot(buttonSound);
+            if(!audioSourceLeft.isPlaying) {
+                audioSourceLeft.PlayOneShot(thrusterSound);
+            }
+            if(!audioSourceTerminal.isPlaying){
+                audioSourceTerminal.PlayOneShot(buttonSound);
+            }
         }
         if(GetThrusterState(Thruster.ROTATE_RIGHT)){
             Debug.Log("right thruster");
             AudioClip sound = thrusterSound;
-            audioSourceRight.PlayOneShot(thrusterSound);
-            audioSourceTerminal.PlayOneShot(buttonSound);
+            if(!audioSourceRight.isPlaying) {
+                audioSourceRight.PlayOneShot(thrusterSound);
+            }
+            if(!audioSourceTerminal.isPlaying){
+                audioSourceTerminal.PlayOneShot(buttonSound);
+            }
         }
         if(GetSpeed() > 0.0f){
             audioSourceSpeed.volume = 0.1f;
