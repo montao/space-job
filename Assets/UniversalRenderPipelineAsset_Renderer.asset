@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Active: 0
   settings:
     passTag: Wireframe
-    Event: 300
+    Event: 550
     filterSettings:
       RenderQueueType: 0
       LayerMask:

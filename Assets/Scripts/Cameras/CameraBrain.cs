@@ -10,6 +10,12 @@ public class CameraBrain : MonoBehaviour {
     private Material m_SkyboxWireframe;
     [SerializeField]
     private Material m_SkyboxDefault;
+    [SerializeField]
+    private ForwardRendererData m_RendererData;
+    [SerializeField]
+    private LayerMask m_DefaultOpaqueLayerMask;
+    [SerializeField]
+    private LayerMask m_WireframeOpaqueLayerMask;
 
     private Skybox m_Skybox;
     private bool m_IsBlending;
@@ -79,6 +85,7 @@ public class CameraBrain : MonoBehaviour {
 
     private void SetWireframe(bool wireframe_on) {
         m_WireframeRendererFeature.SetActive(wireframe_on);
+        m_RendererData.opaqueLayerMask = wireframe_on ? m_WireframeOpaqueLayerMask : m_DefaultOpaqueLayerMask;
         RenderSettings.skybox = wireframe_on ? m_SkyboxWireframe : m_SkyboxDefault;
     }
 
@@ -114,6 +121,11 @@ public class CameraBrain : MonoBehaviour {
                 Debug.Log(hit.transform.name);
             }
         }
+    }
+
+    void OnDestroy() {
+        // Don't get stuck in Wireframe mode when stopping the game in the Editor while Wireframe is active
+        SetWireframe(false);
     }
 
 }
