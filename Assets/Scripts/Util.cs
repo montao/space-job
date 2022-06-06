@@ -49,8 +49,8 @@ public class Util {
 #if UNITY_EDITOR
         foreach (var scene in new string[]{"ShipScene"}) {
             EditorSceneManager.OpenScene("Assets/Scenes/" + scene + ".unity");
-            // Lightmapping.
-            Lightmapping.BakeAsync();
+            Lightmapping.lightingSettings.lightmapMaxSize = 1024;
+            Lightmapping.Bake();
         }
 #endif
     }
