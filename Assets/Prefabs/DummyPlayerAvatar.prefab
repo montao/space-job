@@ -1004,6 +1004,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 270833354801840f082c684408b9b82d, type: 3}
   - {fileID: 8300000, guid: 3b1a47d19ae580daa8b18efdcacc1315, type: 3}
   - {fileID: 8300000, guid: 00680f9e18072e60c990f499572e4c64, type: 3}
+  dropMetalObjectSounds:
+  - {fileID: 8300000, guid: 4975d9304318e6106aea8c3b3449edd0, type: 3}
+  - {fileID: 8300000, guid: b934614ec091401949c2b4762b0dece9, type: 3}
+  - {fileID: 8300000, guid: b625298cc0effe979a25ef744215d5fa, type: 3}
+  - {fileID: 8300000, guid: eaf4605fc90df13fc8bb5c6414614530, type: 3}
+  - {fileID: 8300000, guid: ab258e4cb81ee79c3b83e02ada4db410, type: 3}
+  - {fileID: 8300000, guid: cbb20b78870fcf9b49c84ea6913d5553, type: 3}
+  - {fileID: 8300000, guid: 4c3feb33bfabf9d60bd1753285fc108b, type: 3}
+  - {fileID: 8300000, guid: f4b25ec7a4e0d3ce0a0381774da45d1c, type: 3}
 --- !u!222 &7404256255760437957
 CanvasRenderer:
   m_ObjectHideFlags: 0

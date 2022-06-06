@@ -4,6 +4,14 @@ using Unity.Netcode;
 
 public class LightSwitch : Interactable<bool> {
     public List<Light> Lights;
+
+    [SerializeField]
+    private AudioClip[] switchSounds;
+    private AudioSource audioSource;
+
+    private AudioClip GetRandomSwitchClip(){
+        return switchSounds[UnityEngine.Random.Range(0, switchSounds.Length)];
+    }
     [ServerRpc(RequireOwnership = false)]
     public void SetServerRpc(bool value){
         m_State.Value = value;
@@ -11,9 +19,12 @@ public class LightSwitch : Interactable<bool> {
     protected override void Interaction(){
         SetLightConditions(!Value);
         SetServerRpc(!Value);
-
+        AudioClip sound = GetRandomSwitchClip();
+        audioSource.PlayOneShot(sound);
+        Debug.Log("lightswitch");
         
     }
+    
     public override void OnStateChange(bool previous, bool current){
         SetLightConditions(current);
     }
@@ -33,5 +44,6 @@ public class LightSwitch : Interactable<bool> {
     }
     private void Awake() {
         SetLightConditions(Value);
+        audioSource = GetComponent<AudioSource>();
     }
 }

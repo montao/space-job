@@ -85,6 +85,8 @@ public class PlayerAvatar : NetworkBehaviour {
     public PlayerAnimationController AnimationController { get => m_AnimationController; }
     [SerializeField]
     private AudioClip[] dropCupSounds;
+    [SerializeField]
+    private AudioClip[] dropMetalObjectSounds;
     private AudioSource audioSource;
 
     private void Awake() {
@@ -253,6 +255,22 @@ public class PlayerAvatar : NetworkBehaviour {
         m_HealthBar.UpdateHealthBar(m_Health);
     }
 
+    IEnumerator WaitForGround(float time){
+        var item = GetInventoryItem(Slot.PRIMARY);
+        DropItem(Slot.PRIMARY);
+        yield return new WaitForSeconds(time);
+        if(item.tag == "Cup"){
+            AudioClip sound = GetRandomCupDropClip();
+            audioSource.PlayOneShot(sound);
+            Debug.Log("Cup Drop");
+        }
+        else{
+            AudioClip sound = GetRandomMetalObjectDropClip();
+            audioSource.PlayOneShot(sound);
+            Debug.Log("Metal Object Drop");
+        }
+    }
+
     void ProcessInput() {
         PerformGroundCheck();
         if (m_IsGrounded && m_FallVelocity < 0) {
@@ -290,10 +308,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Q)) {
             if (!HasInventorySpace(Slot.PRIMARY)) {
-                DropItem(Slot.PRIMARY);
-                AudioClip sound = GetRandomCupDropClip();
-                audioSource.PlayOneShot(sound);
-                Debug.Log("Cup Drop");
+                StartCoroutine(WaitForGround(0.5f));
             }
         }
 
@@ -423,6 +438,9 @@ public class PlayerAvatar : NetworkBehaviour {
 
     private AudioClip GetRandomCupDropClip(){
         return dropCupSounds[UnityEngine.Random.Range(0, dropCupSounds.Length)];
+    }
+    private AudioClip GetRandomMetalObjectDropClip(){
+        return dropMetalObjectSounds[UnityEngine.Random.Range(0, dropMetalObjectSounds.Length)];
     }
 
     public void DropItem(Slot slot) {

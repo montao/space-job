@@ -11,6 +11,7 @@ TagManager:
   - Status
   - CharacterList
   - Drink
+  - Cup
   layers:
   - Default
   - TransparentFX
