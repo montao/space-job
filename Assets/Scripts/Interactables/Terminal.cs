@@ -10,6 +10,12 @@ public class Terminal : Interactable<FixedString32Bytes> {
     private string m_TextEntered = "";
     private bool m_LocalPlayerIsInteracting = false;
     private CameraSwap m_CameraSwap;
+    public AudioClip pressSound;
+    private AudioSource audioSource;
+
+    void Awake() {
+        audioSource = GetComponent<AudioSource>();    
+    }
 
     public override void Start() {
         base.Start();
@@ -55,6 +61,7 @@ public class Terminal : Interactable<FixedString32Bytes> {
             PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
             m_CameraSwap.SwitchAway();
         }
+        audioSource.PlayOneShot(pressSound);
     }
 
     public void SwitchAwayIfPlayer(Collider other) {

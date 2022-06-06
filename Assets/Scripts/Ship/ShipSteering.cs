@@ -18,9 +18,15 @@ public class ShipSteering : NetworkBehaviour {
     [SerializeField]
     private AudioSource audioSourceRight; 
     [SerializeField]
+    private AudioSource audioSourceTerminal;
+    [SerializeField]
     private AudioClip thrusterSound;
     [SerializeField]
     private AudioClip speedSound;
+    [SerializeField]
+    private AudioSource audioSourceSpeed; 
+    [SerializeField]
+    private AudioClip buttonSound;
 
 
     public enum Thruster {
@@ -131,20 +137,23 @@ public class ShipSteering : NetworkBehaviour {
             AudioClip sound = thrusterSound;
             audioSourceLeft.PlayOneShot(thrusterSound);
             audioSourceRight.PlayOneShot(thrusterSound);
+            audioSourceTerminal.PlayOneShot(buttonSound);
         }
         if(GetThrusterState(Thruster.ROTATE_LEFT)){
             Debug.Log("left thruster");
             AudioClip sound = thrusterSound;
             audioSourceLeft.PlayOneShot(thrusterSound);
+            audioSourceTerminal.PlayOneShot(buttonSound);
         }
         if(GetThrusterState(Thruster.ROTATE_RIGHT)){
             Debug.Log("right thruster");
             AudioClip sound = thrusterSound;
             audioSourceRight.PlayOneShot(thrusterSound);
+            audioSourceTerminal.PlayOneShot(buttonSound);
         }
         if(GetSpeed() > 0.0f){
-            audioSource.volume = 0.1f;
-        } else audioSource.volume = 0.0f;
+            audioSourceSpeed.volume = 0.1f;
+        } else audioSourceSpeed.volume = 0.0f;
     }
 
     // Server-side only
