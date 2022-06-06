@@ -256,10 +256,10 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     IEnumerator WaitForGround(float time){
-        var item = GetInventoryItem(Slot.PRIMARY);
+        var item = GetInventoryItem(Slot.PRIMARY).tag;
         DropItem(Slot.PRIMARY);
         yield return new WaitForSeconds(time);
-        if(item.tag == "Cup"){
+        if(item == "Cup"){
             AudioClip sound = GetRandomCupDropClip();
             audioSource.PlayOneShot(sound);
             Debug.Log("Cup Drop");
@@ -269,6 +269,7 @@ public class PlayerAvatar : NetworkBehaviour {
             audioSource.PlayOneShot(sound);
             Debug.Log("Metal Object Drop");
         }
+
     }
 
     void ProcessInput() {

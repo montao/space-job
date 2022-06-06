@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AnimationAudio : MonoBehaviour {
     
     [SerializeField]
     private AudioClip[] stepSounds;
+    [SerializeField]
+    private AudioClip[] stepCarpetSounds;
     [SerializeField]
     private AudioClip[] clapSounds;
     public AudioClip take;
@@ -16,12 +19,13 @@ public class AnimationAudio : MonoBehaviour {
     }
 
     private void Step(){
-        AudioClip sound = GetRandomStepClip();
+        AudioClip sound = null;
+        if(SceneManager.GetActiveScene().name == "Lobby") sound = GetRandomStepClip();
+        else sound = GetRandomStepClip();
         audioSource.PlayOneShot(sound);
     }
 
     private void Take(){
-        AudioClip sound = take;
         audioSource.PlayOneShot(take);
     }
 
@@ -31,6 +35,9 @@ public class AnimationAudio : MonoBehaviour {
     }
     private AudioClip GetRandomStepClip(){
         return stepSounds[UnityEngine.Random.Range(0, stepSounds.Length)];
+    }
+    private AudioClip GetRandomCarpetStepClip(){
+        return stepCarpetSounds[UnityEngine.Random.Range(0, stepCarpetSounds.Length)];
     }
     private AudioClip GetRandomClapClip(){
         return clapSounds[UnityEngine.Random.Range(0, clapSounds.Length)];
