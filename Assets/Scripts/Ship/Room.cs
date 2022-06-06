@@ -55,6 +55,14 @@ public class Room : NetworkBehaviour {
             }
             new_oxygen += Time.fixedDeltaTime * 0.01f;
             m_RoomOxygen.Value = Mathf.Clamp(new_oxygen, 0f, 1f);
+
+            foreach (var door in Doors) {
+                Room other = door.GetOtherRoom(this);
+                float oxygen_gradient = this.RoomOxygen - other.RoomOxygen; // positive: this room has higher O2
+                float exchange_amount = oxygen_gradient * Time.fixedDeltaTime * 0.1f;
+                this.RoomOxygen = this.RoomOxygen - exchange_amount;
+                other.RoomOxygen = other.RoomOxygen + exchange_amount;
+            }
         }
     }
 
@@ -71,7 +79,11 @@ public class Room : NetworkBehaviour {
         }
         Transform location = Util.RandomChoice(m_HullBreachSpawnLocations);
         m_HullBreachSpawnLocations.Remove(location);
-        GameObject breach = Instantiate(EventManager.Instance.HullBreachPrefab, location.position, location.rotation);
+        GameObject breach = Instantiate(
+                EventManager.Instance.HullBreachPrefab,
+                location.position,
+                location.rotation
+            );
         breach.GetComponent<NetworkObject>().Spawn();
         breach.GetComponent<HullBreachInstance>().Setup(this, location);
         m_HullBreaches.Add(breach.GetComponent<HullBreachInstance>());

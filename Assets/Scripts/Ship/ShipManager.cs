@@ -195,6 +195,7 @@ public class ShipManager : NetworkBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.O)) {
+            Rooms[0].RoomOxygen = 0;
             foreach (Room room in Rooms) {
                 Debug.Log(room.Name + ": " + room.RoomOxygen);
             }

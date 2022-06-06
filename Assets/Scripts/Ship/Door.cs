@@ -38,6 +38,21 @@ public class Door : NetworkBehaviour {
         //m_PhysicalDoor.enabled = current;
     }
 
+    public Room GetOtherRoom(Room thisRoom) {
+        if (thisRoom == m_ConnectedRoomA) {
+            return m_ConnectedRoomB;
+        } else if (thisRoom == m_ConnectedRoomB) {
+            return m_ConnectedRoomA;
+        } else {
+            Debug.LogWarning(
+                    "Attempted to get other room for door " + name + " and room "
+                    + thisRoom.name + ", but they're not connected!  Make sure to add this door to "
+                    + thisRoom.name + " in the Editor."
+            );
+            return null;
+        }
+    }
+
     // Start is called before the first frame update
     void Start() {
         m_PhysicalDoor = GetComponent<Collider>();
