@@ -5,19 +5,20 @@ public class CoffeMachine : Interactable<bool> {
     public GameObject cupPrefab;
     public GameObject machine;
     private GameObject prevCup = null;
-/*         [SerializeField]
-    private AudioClip[] sitSounds;
+    [SerializeField]
+    private AudioClip beepSound;
     private AudioSource audioSource;
 
     void Awake() {
         audioSource = GetComponent<AudioSource>();    
     }
- */
+
     protected override void Interaction(){
         SetServerRpc(!Value);
         if (PlayerAvatar.IsHolding<PipeWrench>()) {
             transform.localScale = transform.localScale * 1.6f;
         }
+        audioSource.PlayOneShot(beepSound);
     }
 
     public override void OnStateChange(bool previous, bool current) {
@@ -35,7 +36,5 @@ public class CoffeMachine : Interactable<bool> {
             prevCup = freshCup;
             Debug.Log("new cup");
         }
-    }
-    private void Awake() {
     }
 }
