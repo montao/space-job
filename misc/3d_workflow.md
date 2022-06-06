@@ -14,6 +14,8 @@ If you stuck to this convention, select "-Y forward".  If your model
 faces a different way, select the appropriate axis as "forward".
 In any case, `Z` will be the "up" axis.
 
+(Note: The `ship.fbx` is exported with default settings.)
+
 # 2. GIMP/Krita/PS/Paint/etc
 1. Texture size should be a power of two (e.g. 1024x1024, 2048x2048,
   512x1024, 32x32, ...)
