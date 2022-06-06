@@ -14,6 +14,10 @@ public class CameraBrain : MonoBehaviour {
     private Skybox m_Skybox;
     private bool m_IsBlending;
     private bool m_WireframeOnBlend = true;
+
+    public CinemachineBlendDefinition BlendBetweenRooms;
+    public CinemachineBlendDefinition BlendWithinRoom;
+
     public bool WireframeOnBlend {
         get { return m_WireframeOnBlend; }
         set { m_WireframeOnBlend = value; }
@@ -74,6 +78,12 @@ public class CameraBrain : MonoBehaviour {
     private void SetWireframe(bool wireframe_on) {
         m_WireframeRendererFeature.SetActive(wireframe_on);
         RenderSettings.skybox = wireframe_on ? m_SkyboxWireframe : m_SkyboxDefault;
+    }
+
+    public void SetBlendOverride(CinemachineBlendDefinition blend) {
+        CinemachineCore.GetBlendOverride = (cam_from, cam_to, defaultBlend, owner) => {
+            return blend;
+        };
     }
 
     void Update() {

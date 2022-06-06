@@ -160,6 +160,24 @@ MonoBehaviour:
   m_WireframeRendererFeature: {fileID: 4082407462464489128, guid: 5bc392ef1f4545742b089dfb8e6d5608, type: 2}
   m_SkyboxWireframe: {fileID: 2100000, guid: 84e8d37410cf4e801a4c4a60eaa473a2, type: 2}
   m_SkyboxDefault: {fileID: 2100000, guid: bcb37a3ce591201ca87bb446d595e55a, type: 2}
+  BlendBetweenRooms:
+    m_Style: 1
+    m_Time: 1.5
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  BlendWithinRoom:
+    m_Style: 1
+    m_Time: 1
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   Brain: {fileID: 90291987610743096}
 --- !u!81 &6192711588618140320
 AudioListener:

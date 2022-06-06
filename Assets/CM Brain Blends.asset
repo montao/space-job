@@ -13,120 +13,10 @@ MonoBehaviour:
   m_Name: CM Brain Blends
   m_EditorClassIdentifier: 
   m_CustomBlends:
-  - m_From: red cam
-    m_To: red desk cam
-    m_Blend:
-      m_Style: 1
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: red desk cam
-    m_To: red cam
-    m_Blend:
-      m_Style: 1
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: blue cam
-    m_To: desk cam
-    m_Blend:
-      m_Style: 1
-      m_Time: 1
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: desk cam
-    m_To: blue cam
-    m_Blend:
-      m_Style: 1
-      m_Time: 1
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: blue cam
-    m_To: Whiteboard Cam
-    m_Blend:
-      m_Style: 1
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: Whiteboard Cam
-    m_To: blue cam
-    m_Blend:
-      m_Style: 1
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: red holo cam
-    m_To: red cam
-    m_Blend:
-      m_Style: 1
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: red cam
-    m_To: red holo cam
-    m_Blend:
-      m_Style: 1
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: red cam
-    m_To: blue cam
-    m_Blend:
-      m_Style: 0
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: blue cam
-    m_To: red cam
-    m_Blend:
-      m_Style: 0
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
   - m_From: '**ANY CAMERA**'
     m_To: '**ANY CAMERA**'
     m_Blend:
-      m_Style: 1
+      m_Style: 0
       m_Time: 1
       m_CustomCurve:
         serializedVersion: 2
@@ -134,43 +24,10 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: greycam1
-    m_To: greycam2
+  - m_From: 'NOTE: UNUSED.'
+    m_To: USE CAMERABRAIN!
     m_Blend:
-      m_Style: 0
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: greycam2
-    m_To: greycam1
-    m_Blend:
-      m_Style: 0
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: greycam1
-    m_To: blue cam
-    m_Blend:
-      m_Style: 0
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: blue cam
-    m_To: greycam1
-    m_Blend:
-      m_Style: 0
+      m_Style: 1
       m_Time: 2
       m_CustomCurve:
         serializedVersion: 2

@@ -15,6 +15,8 @@ public class CameraSwap : MonoBehaviour {
     private static List<CameraSwap> m_Instances = new List<CameraSwap>();
     public static List<CameraSwap> Instances { get => m_Instances; }
 
+    private static CameraSwap m_Current;
+
     void Start() {
         if(m_Camera == null){
             m_Camera = GetComponent<CinemachineVirtualCamera>();
@@ -48,6 +50,17 @@ public class CameraSwap : MonoBehaviour {
     }
 
     public void SwitchTo() {
+        CameraSwap previous = m_Current;
+        if (previous == null) {
+            previous = this;
+        }
+
+        if (!this.InRoom && !previous.InRoom) {  // switching between rooms
+            CameraBrain.Instance.SetBlendOverride(CameraBrain.Instance.BlendBetweenRooms);
+        } else {  // inroom camera involved
+            CameraBrain.Instance.SetBlendOverride(CameraBrain.Instance.BlendWithinRoom);
+        }
+
         CameraBrain.Instance.WireframeOnBlend = !InRoom;
         if (InRoom) {
             m_Camera.Priority = INROOM_CAMERA_ON;
@@ -61,6 +74,7 @@ public class CameraSwap : MonoBehaviour {
             Solo();
         }
         PlayerManager.Instance.LocalPlayer.Avatar.HidePlayer(InRoom);
+        m_Current = this;
     }
 
     public void SwitchAway() {
@@ -70,7 +84,7 @@ public class CameraSwap : MonoBehaviour {
         }
     }
 
-    public void Solo() {
+    private void Solo() {
         m_Camera.Priority = CAMERA_ON;
         foreach (var cam in CameraSwap.Instances) {
             if (cam != this) {
