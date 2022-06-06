@@ -18,7 +18,6 @@ public class AnimationAudio : MonoBehaviour {
     private void Step(){
         AudioClip sound = GetRandomStepClip();
         audioSource.PlayOneShot(sound);
-        Debug.Log("step");
     }
 
     private void Take(){
@@ -29,7 +28,6 @@ public class AnimationAudio : MonoBehaviour {
     private void Clap(){
         AudioClip sound = GetRandomClapClip();
         audioSource.PlayOneShot(sound);
-        Debug.Log("clap");
     }
     private AudioClip GetRandomStepClip(){
         return stepSounds[UnityEngine.Random.Range(0, stepSounds.Length)];
