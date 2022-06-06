@@ -1,26 +1,21 @@
 // Based on:  Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
 
-Shader "Custom/Wireframe"
-{
-    Properties
-    {
+Shader "Custom/Wireframe" {
+    Properties {
         _WireThickness ("Wire Thickness", RANGE(0, 100)) = 10
         _WireColor ("Color", Color) = (0.6, 1, 0.6, 0.7)
         [MaterialToggle] _ConstantThickness("Constant Thickness", Float) = 0
         [MaterialToggle] _Seethrough("X-Ray", Float) = 0
     }
 
-    SubShader
-    {
-
+    SubShader {
         Blend SrcAlpha OneMinusSrcAlpha  // Enable transparency
         Tags {
             "RenderType"="Transparent"
             "Queue"="Transparent"
         }
 
-        Pass
-        {
+        Pass {
             // Wireframe shader based on the the following
             // http://developer.download.nvidia.com/SDK/10/direct3d/Source/SolidWireframe/Doc/SolidWireframe.pdf
 
@@ -36,29 +31,25 @@ Shader "Custom/Wireframe"
             float _ConstantThickness;
             float _Seethrough;
 
-            struct appdata
-            {
+            struct appdata {
                 float4 vertex : POSITION;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
-            struct v2g
-            {
+            struct v2g  {
                 float4 projectionSpaceVertex : SV_POSITION;
                 float4 worldSpacePosition : TEXCOORD1;
                 UNITY_VERTEX_OUTPUT_STEREO_EYE_INDEX
             };
 
-            struct g2f
-            {
+            struct g2f {
                 float4 projectionSpaceVertex : SV_POSITION;
                 float4 worldSpacePosition : TEXCOORD0;
                 float4 dist : TEXCOORD1;
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
-            v2g vert (appdata v)
-            {
+            v2g vert(appdata v) {
                 v2g o;
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_OUTPUT_STEREO_EYE_INDEX(o);
@@ -69,8 +60,7 @@ Shader "Custom/Wireframe"
             }
 
             [maxvertexcount(3)]
-            void geom(triangle v2g i[3], inout TriangleStream<g2f> triangleStream)
-            {
+            void geom(triangle v2g i[3], inout TriangleStream<g2f> triangleStream) {
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i[0]);
 
                 float2 p0 = i[0].projectionSpaceVertex.xy / i[0].projectionSpaceVertex.w;
@@ -120,8 +110,7 @@ Shader "Custom/Wireframe"
                 triangleStream.Append(o);
             }
 
-            fixed4 frag (g2f i) : SV_Target
-            {
+            fixed4 frag(g2f i) : SV_Target {
 
                 float minDistanceToEdge = min(i.dist[0], min(i.dist[1], i.dist[2])) * i.dist[3];
 
