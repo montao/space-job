@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
@@ -21,7 +22,13 @@ public class GameManager : MonoBehaviour {
     }
 
     private void OnSceneLoad(ulong clientId, string scene, LoadSceneMode loadSceneMode, AsyncOperation op) {
-        // TODO Loading Screen
-        Debug.Log("Load progress: " + op.progress);
+        StartCoroutine(LoadingScreenCoroutine(op));
+    }
+
+    private IEnumerator LoadingScreenCoroutine(AsyncOperation op) {
+        while (!op.isDone) {
+            Debug.Log("Loading... " + op.progress + "%");
+            yield return new WaitForEndOfFrame();
+        }
     }
 }
