@@ -17,6 +17,8 @@ public class CameraBrain : MonoBehaviour {
 
     public CinemachineBlendDefinition BlendBetweenRooms;
     public CinemachineBlendDefinition BlendWithinRoom;
+    private Blend m_CurrentBlend;
+    public enum Blend { BETWEEN_ROOMS, WITHIN_ROOM };
 
     public bool WireframeOnBlend {
         get { return m_WireframeOnBlend; }
@@ -80,10 +82,12 @@ public class CameraBrain : MonoBehaviour {
         RenderSettings.skybox = wireframe_on ? m_SkyboxWireframe : m_SkyboxDefault;
     }
 
-    public void SetBlendOverride(CinemachineBlendDefinition blend) {
+    public void SetBlendOverride(Blend blendType) {
+        CinemachineBlendDefinition blend = blendType == Blend.WITHIN_ROOM ? BlendWithinRoom : BlendBetweenRooms;
         CinemachineCore.GetBlendOverride = (cam_from, cam_to, defaultBlend, owner) => {
             return blend;
         };
+        m_CurrentBlend = blendType;
     }
 
     void Update() {
@@ -92,6 +96,13 @@ public class CameraBrain : MonoBehaviour {
             if (m_WireframeOnBlend || !blending) {  // wireframe enabled, or we've just stopped blending
                 SetWireframe(blending);
             }
+
+            if (blending && m_CurrentBlend == Blend.BETWEEN_ROOMS) {
+                PlayerManager.Instance.LocalPlayer.Avatar.LockMovement(GetHashCode());
+            } else {
+                PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
+            }
+
             m_IsBlending = blending;
         }
 

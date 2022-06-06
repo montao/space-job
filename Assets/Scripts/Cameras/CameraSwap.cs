@@ -56,9 +56,9 @@ public class CameraSwap : MonoBehaviour {
         }
 
         if (!this.InRoom && !previous.InRoom) {  // switching between rooms
-            CameraBrain.Instance.SetBlendOverride(CameraBrain.Instance.BlendBetweenRooms);
+            CameraBrain.Instance.SetBlendOverride(CameraBrain.Blend.BETWEEN_ROOMS);
         } else {  // inroom camera involved
-            CameraBrain.Instance.SetBlendOverride(CameraBrain.Instance.BlendWithinRoom);
+            CameraBrain.Instance.SetBlendOverride(CameraBrain.Blend.WITHIN_ROOM);
         }
 
         CameraBrain.Instance.WireframeOnBlend = !InRoom;
