@@ -20,8 +20,10 @@ public class AnimationAudio : MonoBehaviour {
 
     private void Step(){
         AudioClip sound = null;
-        if(SceneManager.GetActiveScene().name == "Lobby") sound = GetRandomStepClip();
-        else sound = GetRandomStepClip();
+        if(SceneManager.GetActiveScene().name == "Lobby"){
+            sound = GetRandomStepClip();
+            Debug.Log("Lobby Steps");
+        }  else sound = GetRandomStepClip();
         audioSource.PlayOneShot(sound);
     }
 
