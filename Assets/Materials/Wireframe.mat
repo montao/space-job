@@ -22,7 +22,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Wireframe
   m_Shader: {fileID: 4800000, guid: 846cb66200a44ddfaa7ec5763dbcf16b, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _SEETHROUGH_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -109,6 +109,7 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Seethrough: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

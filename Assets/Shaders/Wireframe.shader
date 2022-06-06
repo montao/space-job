@@ -7,13 +7,17 @@ Shader "Custom/Wireframe"
         _WireThickness ("Wire Thickness", RANGE(0, 100)) = 10
         _WireColor ("Color", Color) = (0.6, 1, 0.6, 0.7)
         [MaterialToggle] _ConstantThickness("Constant Thickness", Float) = 0
+        [MaterialToggle] _Seethrough("X-Ray", Float) = 0
     }
 
     SubShader
     {
-        // Each color represents a meter.
 
-        Tags { "RenderType"="Opaque" }
+        Blend SrcAlpha OneMinusSrcAlpha  // Enable transparency
+        Tags {
+            "RenderType"="Transparent"
+            "Queue"="Transparent"
+        }
 
         Pass
         {
@@ -30,6 +34,7 @@ Shader "Custom/Wireframe"
             float _WireThickness;
             fixed4 _WireColor;
             float _ConstantThickness;
+            float _Seethrough;
 
             struct appdata
             {
@@ -117,12 +122,12 @@ Shader "Custom/Wireframe"
 
             fixed4 frag (g2f i) : SV_Target
             {
+
                 float minDistanceToEdge = min(i.dist[0], min(i.dist[1], i.dist[2])) * i.dist[3];
 
                 // Early out if we know we are not on a line segment.
-                if(minDistanceToEdge > 0.9)
-                {
-                    return fixed4(0,0,0,0);
+                if(minDistanceToEdge > 0.9) {
+                    return fixed4(0, 0, 0, 1 - _Seethrough);
                 }
 
                 // Smooth our line out
@@ -131,7 +136,9 @@ Shader "Custom/Wireframe"
                 float cameraToVertexDistance = length(_WorldSpaceCameraPos - i.worldSpacePosition);
 
                 fixed4 finalColor = lerp(float4(0,0,0,1), _WireColor, t);
-                finalColor.a = t;
+                if (_Seethrough != 0) {
+                    finalColor.a = t;
+                }
 
                 return finalColor;
             }
