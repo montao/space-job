@@ -43,8 +43,7 @@ public abstract class DroppableInteractable : Interactable<int>{
     [ServerRpc(RequireOwnership = false)]
     public virtual void SetHolderServerRpc(int holder_id){
         m_State.Value = holder_id;
-        AudioClip sound = GetRandomPickUpClip();
-        audioSource.PlayOneShot(sound);
+        
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -65,6 +64,8 @@ public abstract class DroppableInteractable : Interactable<int>{
         m_IsInArea = false;
         localPlayer.AddToInventory(GetComponentInParent<NetworkObject>());
         SetHolderServerRpc((int) NetworkManager.Singleton.LocalClientId);
+        AudioClip sound = GetRandomPickUpClip();
+        audioSource.PlayOneShot(sound);
     }
 
     public override void OnStateChange(int previous, int current) {
