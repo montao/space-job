@@ -81,7 +81,11 @@ public class CameraSwap : MonoBehaviour {
         if (InRoom) {
             m_Camera.Priority = CAMERA_OFF;
             PlayerManager.Instance.LocalPlayer.Avatar.HidePlayer(false);
+        } else {
+            // TODO? Check if player is inside another CameraSwap collider.  In that case,
+            // switch to that Camera.  This *should* allow for overlapping colliders.
         }
+
     }
 
     private void Solo() {

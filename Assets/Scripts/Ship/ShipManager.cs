@@ -172,6 +172,11 @@ public class ShipManager : NetworkBehaviour {
         m_TransitionColorNormal = m_TransitionMaterial.GetColor("_WireColor");
     }
 
+    public override void OnDestroy() {
+        base.OnDestroy();
+        m_TransitionMaterial.SetColor("_WireColor", m_TransitionColorNormal);
+    }
+
     private void Start() {
         if (IsServer) {
             GetComponent<EventManager>().StartDiceRollCoroutine();
