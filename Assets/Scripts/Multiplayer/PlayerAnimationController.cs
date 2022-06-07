@@ -1,6 +1,5 @@
 using UnityEngine;
 using Unity.Netcode;
-using System;
 
 public enum PlayerAnimation {
     NONE,
@@ -19,14 +18,8 @@ public class PlayerAnimationController : NetworkBehaviour {
         m_PlayerAnimator = GetComponent<Animator>();
         m_Player = GetComponent<PlayerAvatar>();
     }
-    
+
     private void TriggerAnimationLocally(PlayerAnimation animation) {
-        Debug.Log("Triggering " + animation.ToString().ToLower());
-        foreach(PlayerAnimation ani in Enum.GetValues(typeof(PlayerAnimation))){
-            if(ani != PlayerAnimation.NONE){
-                m_PlayerAnimator.ResetTrigger(ani.ToString().ToLower());
-            }
-        }
         m_PlayerAnimator.SetTrigger(animation.ToString().ToLower());
     }
 
@@ -35,8 +28,12 @@ public class PlayerAnimationController : NetworkBehaviour {
             Debug.LogWarning("Only owner should call TriggerAnimation!");
             return;
         }
-        TriggerAnimationLocally(animation);
-        TriggerAnimationServerRpc(animation);
+        var state = m_PlayerAnimator.GetCurrentAnimatorStateInfo(layerIndex: 0);
+        var transition = m_PlayerAnimator.GetAnimatorTransitionInfo(layerIndex: 0);
+        if (state.IsTag("Normal") && transition.nameHash == 0) {
+            TriggerAnimationLocally(animation);
+            TriggerAnimationServerRpc(animation);
+        }
     }
 
     [ClientRpc]
