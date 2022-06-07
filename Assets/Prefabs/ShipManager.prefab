@@ -95,13 +95,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1120d94c9d02ab2c68c9b3b447a91138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSourceLeft: {fileID: 0}
-  audioSourceRight: {fileID: 0}
-  audioSourceTerminal: {fileID: 0}
-  thrusterSound: {fileID: 0}
-  speedSound: {fileID: 0}
-  audioSourceSpeed: {fileID: 0}
-  buttonSound: {fileID: 0}
+  audioSourceLeft: {fileID: 3470750269528536480, guid: e9f45d6a4e67da3f2a384d908b538fe6, type: 3}
+  audioSourceRight: {fileID: 8164656220880866793, guid: 8c35c6af05f81b7f088e2e534eedd4a7, type: 3}
+  audioSourceTerminal: {fileID: 4267446512716197173, guid: 4866e4adfaa59a3a09606fc6027d4851, type: 3}
+  thrusterSound: {fileID: 8300000, guid: 2224220c055727a7e89c6eeece803625, type: 3}
+  speedSound: {fileID: 8300000, guid: 0d36280856e53b964a041c1b8da1fabf, type: 3}
+  audioSourceSpeed: {fileID: 5414670394912157762, guid: b80e9556809e5452782f427bf1ab22fb, type: 3}
+  buttonSound: {fileID: 8300000, guid: e624fd355280edc1899131bd276cdf6c, type: 3}
 --- !u!114 &4398631959310996855
 MonoBehaviour:
   m_ObjectHideFlags: 0
