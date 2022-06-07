@@ -41,7 +41,7 @@ clean:
 
 .PHONY: check
 check:
-	@[ -z $(git status -s) ] \
-		&& echo "Please ensure your working tree is clean." \
+	@[ -z "$(shell git status -s)" ] && exit 0 \
+		|| echo "Please ensure your working tree is clean." \
 		&& echo "Check git status for any uncommitted changes and try again." \
 		&& exit 1
