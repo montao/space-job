@@ -1,14 +1,17 @@
 using UnityEngine;
 using Unity.Netcode;
+using System.Collections;
 
 public class Door : NetworkBehaviour {
     private Room m_ConnectedRoomA = null;
     private Room m_ConnectedRoomB = null;
-    private NetworkVariable<bool> m_Open = new NetworkVariable<bool>(true);
+    private NetworkVariable<bool> m_Open = new NetworkVariable<bool>(false);
     private Collider m_PhysicalDoor;
     private MeshRenderer m_PsychologicalDoor;
     private Animator m_DoorAnimator;
 
+    public static float AUTO_CLOSE_DELAY = 4.0f;
+    public bool AutoClose = false;
 
     public void SetRoom(Room room) {
         if (m_ConnectedRoomA == null) {
@@ -21,8 +24,19 @@ public class Door : NetworkBehaviour {
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SetRoomStatusServerRpc(){
+    public void ToogleDoorStatusServerRpc(){
         m_Open.Value = !m_Open.Value;
+        if (AutoClose && m_Open.Value) {
+            StartCoroutine(AutoCloseCoroutine());
+        }
+    }
+
+    private IEnumerator AutoCloseCoroutine() {
+        Debug.Log("Closing " + name + " in " + AUTO_CLOSE_DELAY + " seconds!");
+        yield return new WaitForSeconds(AUTO_CLOSE_DELAY);
+        if (m_Open.Value) {
+            m_Open.Value = false;
+        }
     }
 
     public override void OnNetworkSpawn(){
