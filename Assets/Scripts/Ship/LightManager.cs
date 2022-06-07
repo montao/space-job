@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class LightManager : MonoBehaviour {
 
+    public Texture2D m_LightOffTex;
+
     public List<Light> NormalLights;
     public List<Light> BackupLights;
 
@@ -32,7 +34,13 @@ public class LightManager : MonoBehaviour {
         }
 
         m_LightmapData = new List<LightmapData>(LightmapSettings.lightmaps);
-        m_EmptyLightmapData = new List<LightmapData>(m_LightmapData.Count);
+
+        m_EmptyLightmapData = new List<LightmapData>();
+        var dark_data = new LightmapData();
+        dark_data.lightmapColor = m_LightOffTex;
+        for (int i = 0; i < m_LightmapData.Count; ++i) {
+            m_EmptyLightmapData.Add(dark_data);
+        }
 
         Debug.Log("Lightmanager got: " + m_NormalLamps.Count);
     }
