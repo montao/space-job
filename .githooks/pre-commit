@@ -35,13 +35,7 @@ OPEN_FILES=(
     "$(open_unity)"
 )
 
-FILES_TO_COMMIT="$(git diff --cached --name-only)"
-
 for f in ${OPEN_FILES[@]}; do
-    for g in ${FILES_TO_COMMIT[@]}; do
-        if [[ "$g" =~ "$f" ]]; then
-            echo "Warning: '$f' has unsaved changes!"
-            prompt_continue
-        fi
-    done
+    echo "Warning: '$f' has unsaved changes!"
+    prompt_continue
 done
