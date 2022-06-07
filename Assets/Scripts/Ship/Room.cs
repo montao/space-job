@@ -18,6 +18,7 @@ public class Room : NetworkBehaviour {
     private List<Transform> m_HullBreachSpawnLocations = new List<Transform>();
     private List<HullBreachInstance> m_HullBreaches = new List<HullBreachInstance>();
 
+
     void Start() {
         ShipManager.Instance.Rooms.Add(this);
         foreach (Door door in Doors) {
@@ -65,7 +66,6 @@ public class Room : NetworkBehaviour {
             }
         }
     }
-
     public void SpawnHullBreach(EventParameters.HullBreachSize size) {
         if (!IsServer) {
             Debug.LogWarning("SpawnHullBreach should only be called on server!");
