@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.UI;
 
 public class CharacterSelect : MonoBehaviour {
     private GameObject[] characterList;
     private int index;
     public GameObject canvas;
     public CinemachineVirtualCamera cam;
+    public Slider red;
+    public Slider green;
+    public Slider blue;
+    private Renderer charRend;
+    private Renderer test;
 
     void Start() {
         index = PlayerPrefs.GetInt("CharacterSelected");
@@ -48,6 +54,7 @@ public class CharacterSelect : MonoBehaviour {
         for(int i = 0; i< characters[0].transform.childCount; i++){
             if(characterList[index].name == characters[0].transform.GetChild(i).name){
                 PlayerManager.Instance.LocalPlayer.Avatar.SetActiveCharacter(i);
+                charRend = PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<Renderer>();
                 /* PlayerManager.Instance.LocalPlayer.GetComponent<Animator>().avatar =; */
             }
             //else characters[0].transform.GetChild(i).gameObject.SetActive(false);
@@ -60,5 +67,10 @@ public class CharacterSelect : MonoBehaviour {
         cam.Priority = 0;
     }
 
+    void Update() {
+        charRend.material.color = new Color(red.value, blue.value, green.value);
+        characterList[index].GetComponent<Renderer>().material.color = new Color(red.value, blue.value, green.value);
+        Debug.Log(characterList[index].GetComponent<Renderer>().material.color);
+    }
 
 }
