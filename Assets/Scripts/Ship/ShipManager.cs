@@ -35,6 +35,10 @@ public class ShipManager : NetworkBehaviour {
     private Color m_TransitionColorOutage;
 
     public static char[] ERROR_CODES = {'2', 'e', (char)0xba, (char)42, '\n'};
+    [SerializeField]
+    private AudioSource audioSourceLamps;
+    [SerializeField]
+    private AudioClip lampSound;
 
     public static string PowerSolutionCode(char error_code) {
         return Convert.ToByte((error_code >> 1) ^ 'a').ToString("x2").ToUpper()
@@ -51,7 +55,7 @@ public class ShipManager : NetworkBehaviour {
 
     protected void OnPowerChange(char _, char power){
         bool hasPower = power == HAS_POWER;
-
+        
         if(LightManager.Instance != null){
             LightManager.Instance.SetBackup(!hasPower);
             LightManager.Instance.SetNormal(hasPower);
@@ -148,6 +152,7 @@ public class ShipManager : NetworkBehaviour {
     }
     private void ResolvePowerOutageEvent() {
         m_Power.Value = HAS_POWER;
+        audioSourceLamps.PlayOneShot(lampSound);
     }
 
     public void TriggerHullBreachEvent(EventParameters.HullBreachSize size) {
