@@ -28,6 +28,12 @@ public class ShipManager : NetworkBehaviour {
     public Terminal PowerTerminal;
     public Canvas WinCanvas;
 
+    [SerializeField]
+    private Material m_TransitionMaterial;
+    private Color m_TransitionColorNormal;
+    [SerializeField]
+    private Color m_TransitionColorOutage;
+
     public static char[] ERROR_CODES = {'2', 'e', (char)0xba, (char)42, '\n'};
 
     public static string PowerSolutionCode(char error_code) {
@@ -59,6 +65,11 @@ public class ShipManager : NetworkBehaviour {
                 PowerTerminal.DisplayError("Power:\n100%");
             }
         } 
+
+        if (m_TransitionMaterial != null) {
+            var col = hasPower ? m_TransitionColorNormal : m_TransitionColorOutage;
+            m_TransitionMaterial.SetColor("_WireColor", col);
+        }
 
     }
     protected void OnWinChange(bool prev, bool current) {
@@ -153,6 +164,7 @@ public class ShipManager : NetworkBehaviour {
 
         m_Map = GetComponent<Map>();
         m_Steering = GetComponent<ShipSteering>();
+        m_TransitionColorNormal = m_TransitionMaterial.GetColor("_WireColor");
     }
 
     private void Start() {

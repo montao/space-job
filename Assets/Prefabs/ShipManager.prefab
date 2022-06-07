@@ -52,6 +52,8 @@ MonoBehaviour:
   Rooms: []
   PowerTerminal: {fileID: 0}
   WinCanvas: {fileID: 0}
+  m_TransitionMaterial: {fileID: 2100000, guid: e31c958b53b4cfabab991536a0dbddb7, type: 2}
+  m_TransitionColorOutage: {r: 0.6415094, g: 0.09380562, b: 0.09380562, a: 0}
 --- !u!114 &-4673841838035738812
 MonoBehaviour:
   m_ObjectHideFlags: 0
