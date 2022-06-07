@@ -5,7 +5,7 @@ public abstract class InteractableBase : NetworkBehaviour {
 
     protected LayerMask m_HighlightedLayer;
     protected LayerMask m_DefaultLayer;
-    protected MeshRenderer m_Renderer;
+    protected Renderer m_Renderer;
     public bool NeedsPower = false;
     public PlayerAnimation TriggeredAnimation = PlayerAnimation.INTERACT;
 
@@ -23,12 +23,12 @@ public abstract class InteractableBase : NetworkBehaviour {
 
     public virtual void Start() {
         m_HighlightedLayer = LayerMask.NameToLayer("Highlighted");
-        m_Renderer = GetComponent<MeshRenderer>();
+        m_Renderer = GetComponent<Renderer>();
         if (!m_Renderer) {
-            m_Renderer = GetComponentInChildren<MeshRenderer>();
+            m_Renderer = GetComponentInChildren<Renderer>();
         }
         if (!m_Renderer) {
-            m_Renderer = GetComponentInParent<MeshRenderer>();
+            m_Renderer = GetComponentInParent<Renderer>();
         }
 
         if (m_Renderer) {
