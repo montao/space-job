@@ -43,3 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526dfeee78ffcf69b89f5378cd02474e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_LightOffTex: {fileID: 2800000, guid: 5c140b7dc9d2438cd8ef6f9a8ac99247, type: 3}
+  NormalLights: []
+  BackupLights: []
