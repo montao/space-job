@@ -44,3 +44,10 @@ Based on https://github.com/Kodrin/URP-PSX, released under the MIT License.
 A Makefile has been provided.  Run `make` to bake lighting and build for
 Linux and Windows.  Depending on whether you have some cached files
 leftover, you might want to grab a cup of tea.
+
+## Git Hooks
+
+To enable a git hook that checks for unsaved files run:
+```
+git config --local core.hooksPath .githooks/
+```

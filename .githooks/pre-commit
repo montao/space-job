@@ -1,0 +1,47 @@
+#!/usr/bin/bash
+
+exec < /dev/tty
+
+BLENDER_CLASS="(\"Blender\" \"Blender\")"
+BLENDER_ASSET_DIR="Assets/Models/blend"
+
+UNITY_CLASS="(\"Unity\" \"Unity\")"
+
+open_blend() {
+    xwininfo -tree -root \
+        | grep "$BLENDER_CLASS" \
+        | grep "$BLENDER_ASSET_DIR" \
+        | grep "Blender\*" \
+        | sed -e "s/.*\/\(.*\.blend\).*/\1/"
+}
+
+open_unity() {
+    xwininfo -tree -root \
+        | grep "$UNITY_CLASS" \
+        | grep "Standalone" \
+        | grep -E "Unity [0-9\.f]+\*" \
+        | cut -d- -f3 \
+        | cut -d\  -f2
+}
+
+prompt_continue() {
+    read -p "Do you really want to continue? [y/N] " choice
+    echo ""
+    [[ $choice =~ ^[yY].* ]] || exit 1
+}
+
+OPEN_FILES=(
+    "$(open_blend)"
+    "$(open_unity)"
+)
+
+FILES_TO_COMMIT="$(git diff --cached --name-only)"
+
+for f in ${OPEN_FILES[@]}; do
+    for g in ${FILES_TO_COMMIT[@]}; do
+        if [[ "$g" =~ "$f" ]]; then
+            echo "Warning: '$f' has unsaved changes!"
+            prompt_continue
+        fi
+    done
+done
