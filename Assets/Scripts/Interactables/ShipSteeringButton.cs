@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ShipSteeringButton : SecondaryButton {
+public class ShipSteeringButton : InteractableBase {
     public enum Action {
         NONE,
         TOGGLE_THRUSTER_TURN_LEFT,
