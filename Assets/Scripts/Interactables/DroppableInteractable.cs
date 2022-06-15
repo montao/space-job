@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Components;
@@ -16,6 +15,11 @@ public abstract class DroppableInteractable : Interactable<int>{
     [SerializeField]
     protected AudioClip[] interactionSounds;
     protected AudioSource audioSource;
+
+    public delegate void OnPickupDropDelegate(PlayerAvatar avatar);
+    public OnPickupDropDelegate OnPickup;
+    public OnPickupDropDelegate OnDrop;
+
 //----------------------------------------------------------------------------------------------
     
     public virtual void Awake() {

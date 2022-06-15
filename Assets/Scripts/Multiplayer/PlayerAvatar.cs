@@ -446,6 +446,10 @@ public class PlayerAvatar : NetworkBehaviour {
             m_SecondaryItem.Value = item;
             ShowInInventory(SecondaryItemDisplay, item);  // optional, client-sided
         }
+        var interactable = item.GetComponent<DroppableInteractable>();
+        if (interactable && interactable.OnPickup != null) {
+            interactable.OnPickup(this);
+        }
     }
 
     private AudioClip GetRandomCupDropClip(){
@@ -480,6 +484,9 @@ public class PlayerAvatar : NetworkBehaviour {
         }
 
         AnimationController.TriggerAnimation(PlayerAnimation.INTERACT);
+        if (cup && cup.OnDrop != null) {
+            cup.OnDrop(this);
+        }
     }
 
     public void LockMovement(int locker) {

@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
 
 public class FlashLight : DroppableInteractable {
 
@@ -10,6 +8,17 @@ public class FlashLight : DroppableInteractable {
     public override void Awake() {
         base.Awake();
         m_Beam = GetComponent<Light>();
+
+        OnDrop = (PlayerAvatar avatar) => {
+            avatar.GetComponentInChildren<FlashLightInHand>().gameObject.SetActive(false);
+            m_Beam.enabled = true;
+        };
+        OnPickup = (PlayerAvatar avatar) => {
+            var fl_hand = avatar.GetComponentInChildren<FlashLightInHand>(includeInactive: true);
+            fl_hand.gameObject.SetActive(true);
+            fl_hand.ItemRenderer = avatar.PrimaryItemDisplay;
+            m_Beam.enabled = false;
+        };
     }
 
     public override PlayerAnimation SelfInteraction(PlayerAvatar avatar) {
