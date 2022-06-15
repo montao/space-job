@@ -12,6 +12,10 @@ public class ShipSteeringButton : SecondaryButton {
     [SerializeField]
     private Action m_Action;
 
+    void Awake() {
+        m_Mode = Mode.HOLD_DOWN;
+    }
+
     protected override void Interaction() {
         switch (m_Action) {
             case (Action.TOGGLE_THRUSTER_TURN_LEFT):

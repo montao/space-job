@@ -346,9 +346,10 @@ public class PlayerAvatar : NetworkBehaviour {
         if (Input.GetKeyDown(KeyCode.Mouse1)) {
             if (!HasInventorySpace(Slot.PRIMARY)) {
                 var item = GetInventoryItem(Slot.PRIMARY).GetComponentInChildren<InteractableBase>();
-                if (item != null) {
+                if (item != null && item.LastUse + item.CooldownTime() < Time.fixedTime) {
                     PlayerAnimation anim = item.SelfInteraction(this);
                     AnimationController.TriggerAnimation(anim);
+                    item.LastUse = Time.fixedTime;
                 }
             }
         }

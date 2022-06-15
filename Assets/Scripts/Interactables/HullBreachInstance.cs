@@ -22,6 +22,10 @@ public class HullBreachInstance : RangedInteractableBase {
         base.OnDestroy();
     }
 
+    public override float CooldownTime() {
+        return 2.0f;
+    }
+
     protected override void Interaction() {
         if (m_Size == EventParameters.HullBreachSize.SMALL) {
             InteractionSmall();
