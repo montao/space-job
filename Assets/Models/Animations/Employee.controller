@@ -8,7 +8,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Armature|drink_end
-  m_Speed: 1
+  m_Speed: -1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1201645796943675312}
@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 507908267289166432, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
+  m_Motion: {fileID: 5250651521777999257, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -140,7 +140,7 @@ BlendTree:
     m_Motion: {fileID: 7168293901883076996, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
+    m_TimeScale: 1.25
     m_CycleOffset: 0
     m_DirectBlendParameter: speed
     m_Mirror: 0

@@ -8,6 +8,10 @@ public enum PlayerAnimation {
     SIT,
     JUMP,
     DRINK,
+    SPRAY,
+    PLATE_HOLD,
+    HIT,
+    SIT_IDLE,
 }
 
 public class PlayerAnimationController : NetworkBehaviour {
