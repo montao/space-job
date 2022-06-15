@@ -606,6 +606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NeedsPower: 1
   TriggeredAnimation: 2
+  LastUse: 0
   CanInteract: 0
   m_Action: 4
 --- !u!1 &1961705511963039414
@@ -996,7 +997,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NeedsPower: 1
   TriggeredAnimation: 2
-  m_Buttons:
+  LastUse: 0
+  CanInteract: 1
+  m_Interactables:
   - {fileID: 712930025738524551}
   - {fileID: 551269167546806200}
   - {fileID: 5178429019803165278}
@@ -1270,6 +1273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NeedsPower: 1
   TriggeredAnimation: 2
+  LastUse: 0
   CanInteract: 0
   m_Action: 3
 --- !u!65 &6478805310194224770
@@ -1779,6 +1783,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NeedsPower: 1
   TriggeredAnimation: 2
+  LastUse: 0
   CanInteract: 0
   m_Action: 1
 --- !u!1 &5704546361837829706
@@ -3572,6 +3577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NeedsPower: 1
   TriggeredAnimation: 2
+  LastUse: 0
   CanInteract: 0
   m_Action: 2
 --- !u!65 &1033494466861714172
