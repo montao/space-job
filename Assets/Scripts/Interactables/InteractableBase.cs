@@ -14,6 +14,7 @@ public abstract class InteractableBase : NetworkBehaviour {
     public bool NeedsPower = false;
     public PlayerAnimation TriggeredAnimation = PlayerAnimation.INTERACT;
     public float LastUse = 0;
+    public bool CanInteract;
 
     // Called when item is held in hand and right mouse button pressed
     // Returns animation to play upon interaction
@@ -22,7 +23,9 @@ public abstract class InteractableBase : NetworkBehaviour {
     }
 
     protected abstract void Interaction();
-    protected abstract bool PlayerCanInteract();
+    protected virtual bool PlayerCanInteract(){
+        return CanInteract;
+    }
 
     // Relevant only for HOLD_DOWN mode.  Called when mouse button is lifted.
     protected virtual void StopInteraction() {}

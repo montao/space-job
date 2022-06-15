@@ -15,7 +15,7 @@ public class TwoLevelInteractable : Interactable<int> {
 
     // Will be active iff local player is interacting with the NavTerminal
     [SerializeField]
-    private List<SecondaryButton> m_Buttons;
+    private List<InteractableBase> m_Interactables;
 
     private CameraSwap m_CameraSwap;
 
@@ -78,7 +78,7 @@ public class TwoLevelInteractable : Interactable<int> {
     }
 
     private void SetSecondaryButtonsActive(bool active) {
-        foreach (var button in m_Buttons) {
+        foreach (var button in m_Interactables) {
             button.CanInteract = active;
         }
     }
