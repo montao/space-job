@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 1992337678008038446}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: PlayerMeshRenderer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -811,7 +811,7 @@ GameObject:
   - component: {fileID: 7942798883970451318}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: PlayerMeshRenderer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1394,6 +1394,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c6246c3f257b13a9ea84755a52393e6e, type: 3}
+      propertyPath: m_TagString
+      value: PlayerMeshRenderer
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6246c3f257b13a9ea84755a52393e6e, type: 3}
 --- !u!4 &5624403063731049518 stripped
@@ -1512,6 +1516,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 922796996909368877, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -1563,6 +1571,10 @@ PrefabInstance:
     - target: {fileID: 5105920266523279069, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5105920266523279069, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
+      propertyPath: m_TagString
+      value: PlayerMeshRenderer
       objectReference: {fileID: 0}
     - target: {fileID: 5129938235176642550, guid: 98b11bf6f5130be0ab222d572ab4b4d6, type: 3}
       propertyPath: m_Layer

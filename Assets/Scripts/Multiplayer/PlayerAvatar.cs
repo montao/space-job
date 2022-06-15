@@ -78,7 +78,7 @@ public class PlayerAvatar : NetworkBehaviour {
     public GameObject isready;
     public GameObject notready;
     public CharacterSelect chara_select;
-    private MeshRenderer m_PlayerMesh;
+    private Renderer m_PlayerMesh;
     [SerializeField]
     private float m_LungCapacity = 1f;
     private PlayerAnimationController m_AnimationController;
@@ -97,7 +97,17 @@ public class PlayerAvatar : NetworkBehaviour {
             CameraLookAt = transform;
         }
         m_Controller = GetComponent<CharacterController>();
-        m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
+        var renderers = GetComponentsInChildren<Renderer>(includeInactive: false);
+        foreach (var renderer in renderers) {
+            if (renderer.gameObject.CompareTag("PlayerMeshRenderer")) {
+                m_PlayerMesh = renderer;
+            }
+        }
+
+        if (m_PlayerMesh == null) {
+            Debug.LogError("No Player renderer found for " + name + ". "
+                    + "Did you forget to tag the renderer as 'PlayerMeshRenderer'?");
+        }
 
         if( SceneManager.GetActiveScene().name != "Lobby"){
             isready.SetActive(false);
@@ -352,6 +362,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
     public void HidePlayer(bool on){
         if (!m_PlayerMesh) return; // too early
+        Debug.Log(m_PlayerMesh);
         if(on) {
             m_PlayerMesh.sharedMaterial = transparentMaterial;
         }
