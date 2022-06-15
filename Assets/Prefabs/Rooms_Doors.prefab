@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoClose: 0
+  AlwaysOpen: 1
 --- !u!1 &2066085174869199618
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,6 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoClose: 0
+  AlwaysOpen: 1
 --- !u!1 &2850231744276972341
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,6 +663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoClose: 0
+  AlwaysOpen: 1
 --- !u!1 &3598543561906851854
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,6 +950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoClose: 0
+  AlwaysOpen: 1
 --- !u!1 &6126837240379953308
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,6 +995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoClose: 0
+  AlwaysOpen: 1
 --- !u!1 &7457689186380149281
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,6 +1040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoClose: 0
+  AlwaysOpen: 1
 --- !u!1 &7661390306134102041
 GameObject:
   m_ObjectHideFlags: 0
@@ -1319,6 +1325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoClose: 0
+  AlwaysOpen: 1
 --- !u!1 &8064442905243736152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1525,6 +1532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoClose: 0
+  AlwaysOpen: 1
 --- !u!1001 &1409353833057068044
 PrefabInstance:
   m_ObjectHideFlags: 0
