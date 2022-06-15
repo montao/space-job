@@ -14,7 +14,7 @@ public abstract class InteractableBase : NetworkBehaviour {
     public bool NeedsPower = false;
     public PlayerAnimation TriggeredAnimation = PlayerAnimation.INTERACT;
     public float LastUse = 0;
-    public bool CanInteract;
+    public bool CanInteract = true;
 
     // Called when item is held in hand and right mouse button pressed
     // Returns animation to play upon interaction
