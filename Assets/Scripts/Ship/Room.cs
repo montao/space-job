@@ -52,12 +52,13 @@ public class Room : NetworkBehaviour {
         if (IsServer) {
             float new_oxygen = m_RoomOxygen.Value;
             foreach (var breach in m_HullBreaches) {
-                new_oxygen -= breach.DrainFactor() * Time.fixedDeltaTime * 0.03f;
+                new_oxygen -= breach.DrainFactor() * Time.fixedDeltaTime * 0.06f;
             }
             new_oxygen += Time.fixedDeltaTime * 0.01f;
             m_RoomOxygen.Value = Mathf.Clamp(new_oxygen, 0f, 1f);
 
             foreach (var door in Doors) {
+                if (!door.IsOpen) continue;
                 Room other = door.GetOtherRoom(this);
                 float oxygen_gradient = this.RoomOxygen - other.RoomOxygen; // positive: this room has higher O2
                 float exchange_amount = oxygen_gradient * Time.fixedDeltaTime * 0.1f;

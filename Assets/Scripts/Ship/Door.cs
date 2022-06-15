@@ -12,6 +12,11 @@ public class Door : NetworkBehaviour {
 
     public static float AUTO_CLOSE_DELAY = 4.0f;
     public bool AutoClose = false;
+    public bool AlwaysOpen = false;
+
+    public bool IsOpen {
+        get => AlwaysOpen || m_Open.Value;
+    }
 
     public void SetRoom(Room room) {
         if (m_ConnectedRoomA == null) {
