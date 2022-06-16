@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class LightManager : MonoBehaviour {
 
     public Texture2D m_LightOffTex;

@@ -14,6 +14,11 @@ public class Door : NetworkBehaviour {
     public bool AutoClose = false;
     public bool AlwaysOpen = false;
 
+    // Other classes can attatch here to do stuff when the door state changes.
+    public delegate void OnDoorStateChangeDelegate();
+    public event OnDoorStateChangeDelegate OnDoorOpen;
+    public event OnDoorStateChangeDelegate OnDoorClose;
+
     public bool IsOpen {
         get => AlwaysOpen || m_Open.Value;
     }
@@ -55,6 +60,11 @@ public class Door : NetworkBehaviour {
         m_DoorAnimator.SetBool("open", current);
         //m_PsychologicalDoor.enabled = current;
         //m_PhysicalDoor.enabled = current;
+        if (current) {
+            OnDoorOpen?.Invoke();
+        } else {
+            OnDoorClose?.Invoke();
+        }
     }
 
     public Room GetOtherRoom(Room thisRoom) {
