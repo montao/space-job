@@ -46,6 +46,9 @@ GameObject:
   - component: {fileID: 7967443040400574426}
   - component: {fileID: 6860795914967490226}
   - component: {fileID: 3357962824856537638}
+  - component: {fileID: 5128188810036684696}
+  - component: {fileID: 2780813053736080991}
+  - component: {fileID: 3851587517514475412}
   m_Layer: 0
   m_Name: Screen
   m_TagString: Untagged
@@ -114,7 +117,8 @@ SkinnedMeshRenderer:
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: -1875780437015597444, guid: 829d7a51a1642761d84b244cb7006772, type: 3}
   m_Bones: []
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0.4
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0.0009367764, y: 0.016890481, z: 0.06889291}
@@ -169,6 +173,51 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!65 &5128188810036684696
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3423282888306018669}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.633642, y: 0.70722234, z: 0.46763238}
+  m_Center: {x: 0.00093677384, y: 0.016890466, z: -0.055296134}
+--- !u!65 &2780813053736080991
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3423282888306018669}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.55788517, y: 0.52324235, z: 0.4524977}
+  m_Center: {x: -0.0013819933, y: 0.0022030473, z: -0.062863484}
+--- !u!95 &3851587517514475412
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3423282888306018669}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b5cc11df2570370408e139b95508686c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3810313985112587906
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +270,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3810313985112587906}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1.6
@@ -238,6 +287,7 @@ GameObject:
   - component: {fileID: 6121370061218819660}
   - component: {fileID: 7250152841721722770}
   - component: {fileID: 3313314788457865633}
+  - component: {fileID: 4774484218857587200}
   m_Layer: 0
   m_Name: ButtonL
   m_TagString: Untagged
@@ -326,6 +376,19 @@ MonoBehaviour:
   CanInteract: 1
   ConnectedDoor: {fileID: 0}
   ShouldClose: 1
+--- !u!65 &4774484218857587200
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5612717840064521046}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.10208924, y: 0.08000004, z: 0.038164664}
+  m_Center: {x: 0.15605007, y: -0.19273803, z: 0.20453027}
 --- !u!1 &8283029150003127286
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,6 +401,7 @@ GameObject:
   - component: {fileID: 4612650368813784970}
   - component: {fileID: 6905542422883572507}
   - component: {fileID: 7205389007623453036}
+  - component: {fileID: 1356384088966359547}
   m_Layer: 0
   m_Name: ButtonR
   m_TagString: Untagged
@@ -426,3 +490,16 @@ MonoBehaviour:
   CanInteract: 1
   ConnectedDoor: {fileID: 0}
   ShouldClose: 0
+--- !u!65 &1356384088966359547
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8283029150003127286}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.10208924, y: 0.08000004, z: 0.04443421}
+  m_Center: {x: -0.1642389, y: -0.19273798, z: 0.2076648}

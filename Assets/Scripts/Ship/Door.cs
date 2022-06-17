@@ -34,6 +34,11 @@ public class Door : NetworkBehaviour {
     }
 
     [ServerRpc(RequireOwnership = false)]
+    public void SetDoorStatusServerRpc(bool state){
+        m_Open.Value = state;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
     public void ToogleDoorStatusServerRpc(){
         m_Open.Value = !m_Open.Value;
         if (AutoClose && m_Open.Value) {
