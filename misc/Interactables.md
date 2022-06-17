@@ -12,7 +12,8 @@ essential scripts on each of the three objects:
 Cup (layer: IgnorePlayerCollision)
 │ * Rigidbody w/ appropriate colliders, i.e. non-trigger colliders
 │   matching the physical shape
-│ * NetworkTransform w/ NetworkObject
+│ * NetworkTransform
+│ * NetworkObject
 │ * FixMouseOverNotPassingToChildren (to let mouseovers pass on to the
 │   child with the Interactable script)
 └── Interaction (layer: Default)
@@ -20,6 +21,7 @@ Cup (layer: IgnorePlayerCollision)
     │ * Script inheriting from DroppableInteractable
     │ * Trigger Collider for mouse over (usually slightly larger than
     │   object)
+    │ * NOTE: No need for a NetworkObject here, since it's on our parent
     └── InteractionRange (layer: IgnoreRaycast)
           * Trigger Collider the player must be inside of to interact
 ```
