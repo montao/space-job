@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4348026977394783259}
   - component: {fileID: 473282213952899948}
   - component: {fileID: 1512264999431840583}
-  - component: {fileID: 5666644820213799599}
   - component: {fileID: 7354708734564647363}
   m_Layer: 0
   m_Name: DoubleDoor
@@ -123,6 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoClose: 0
+  AlwaysOpen: 0
 --- !u!114 &1512264999431840583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,20 +139,6 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &5666644820213799599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1303755949898961345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3336476b7ce59363e9e6c1099e039de6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NeedsPower: 0
-  TriggeredAnimation: 2
 --- !u!65 &7354708734564647363
 BoxCollider:
   m_ObjectHideFlags: 0
