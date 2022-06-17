@@ -379,6 +379,12 @@ public class PlayerAvatar : NetworkBehaviour {
         handRend.GetComponent<MeshFilter>().mesh = itemRend.GetComponent<MeshFilter>().mesh;
         itemRend.enabled = false;
 
+        DroppableInteractable interactable = item.GetComponentInChildren<DroppableInteractable>();
+        handRend.transform.localPosition = interactable.PrimaryPos;
+        Quaternion rot = Quaternion.identity;
+        rot.eulerAngles = interactable.PrimaryRot;
+        handRend.transform.localRotation = rot;
+
         // Make overall world scale of object in hand match the item's scale.
         float itemscale = SceneManager.GetActiveScene().name == "SampleScene" ? 0.4f: 1.0f;
         handRend.transform.localScale = Vector3.Scale(transform.localScale, item.transform.lossyScale) * itemscale;

@@ -20,6 +20,11 @@ public abstract class DroppableInteractable : Interactable<int>{
     public OnPickupDropDelegate OnPickup;
     public OnPickupDropDelegate OnDrop;
 
+    public Vector3 PrimaryPos;
+    public Vector3 PrimaryRot;
+    public Vector3 SecondaryPos;
+    public Vector3 SecondaryRot;
+
 //----------------------------------------------------------------------------------------------
     
     public virtual void Awake() {
