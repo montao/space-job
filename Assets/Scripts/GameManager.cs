@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void OnSceneLoad(ulong clientId, string scene, LoadSceneMode loadSceneMode, AsyncOperation op) {
-        m_LoadingScreen.enabled = true;
+        //m_LoadingScreen.enabled = true;  TODO re-enable
         StartCoroutine(LoadingScreenCoroutine(op));
     }
 
