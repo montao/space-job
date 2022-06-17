@@ -59,32 +59,6 @@ public class ShipSteering : NetworkBehaviour {
     [ServerRpc(RequireOwnership=false)]
     public void SetThrusterStateServerRpc(Thruster t, bool state) {
         m_ThrusterStates[(int)t] = state;
-        if(t == Thruster.TRANSLATE_FORWARD | t == Thruster.TRANSLATE_BACKWARD){
-            AudioClip sound = thrusterSound;
-            if(!audioSourceLeft.isPlaying) {
-                audioSourceLeft.PlayOneShot(thrusterSound);
-            }
-            if(!audioSourceRight.isPlaying) {
-                audioSourceRight.PlayOneShot(thrusterSound);
-            }            
-        }
-        if(t == Thruster.ROTATE_LEFT){
-            Debug.Log("left thruster");
-            AudioClip sound = thrusterSound;
-            if(!audioSourceLeft.isPlaying) {
-                audioSourceLeft.PlayOneShot(thrusterSound);
-            }
-        }
-        if(GetThrusterState(Thruster.ROTATE_RIGHT)){
-            Debug.Log("right thruster");
-            AudioClip sound = thrusterSound;
-            if(!audioSourceRight.isPlaying) {
-                audioSourceRight.PlayOneShot(thrusterSound);
-            }
-        }
-        if(GetSpeed() > 0.0f){
-            audioSourceSpeed.volume = 0.1f;
-        } else audioSourceSpeed.volume = 0.0f;
         
         if (state) {
             m_ThrusterStatesNetwork.Value |= (1 << (int)t);
@@ -168,6 +142,32 @@ public class ShipSteering : NetworkBehaviour {
                 audioSourceTerminal.PlayOneShot(buttonSound);
             } 
         }
+        if(GetThrusterState(Thruster.TRANSLATE_FORWARD) | GetThrusterState(Thruster.TRANSLATE_BACKWARD)){
+            AudioClip sound = thrusterSound;
+            if(!audioSourceLeft.isPlaying) {
+                audioSourceLeft.PlayOneShot(thrusterSound);
+            }
+            if(!audioSourceRight.isPlaying) {
+                audioSourceRight.PlayOneShot(thrusterSound);
+            }            
+        }
+        if(GetThrusterState(Thruster.ROTATE_LEFT)){
+            Debug.Log("left thruster");
+            AudioClip sound = thrusterSound;
+            if(!audioSourceLeft.isPlaying) {
+                audioSourceLeft.PlayOneShot(thrusterSound);
+            }
+        }
+        if(GetThrusterState(Thruster.ROTATE_RIGHT)){
+            Debug.Log("right thruster");
+            AudioClip sound = thrusterSound;
+            if(!audioSourceRight.isPlaying) {
+                audioSourceRight.PlayOneShot(thrusterSound);
+            }
+        }
+        if(GetSpeed() > 0.0f){
+            audioSourceSpeed.volume = 0.1f;
+        } else audioSourceSpeed.volume = 0.0f;
 
     }
 
