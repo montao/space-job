@@ -7,7 +7,7 @@ public class FlashLight : DroppableInteractable {
 
     public override void Awake() {
         base.Awake();
-        m_Beam = GetComponent<Light>();
+        m_Beam = GetComponentInChildren<Light>();
 
         OnDrop = (PlayerAvatar avatar) => {
             avatar.GetComponentInChildren<FlashLightInHand>().gameObject.SetActive(false);

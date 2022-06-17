@@ -19,8 +19,7 @@ public class FlashLightInHand : MonoBehaviour {
     void Update() {
         var target = GetPointerTarget();
         if (target.HasValue) {
-            transform.LookAt(target.Value);
-            ItemRenderer.LookAt(target.Value);
+            ItemRenderer.LookAt(transform.position - (target.Value - transform.position));
         }
 
     }
