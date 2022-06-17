@@ -166,7 +166,7 @@ public class ShipSteering : NetworkBehaviour {
             }
         }
         if(GetSpeed() > 0.0f){
-            audioSourceSpeed.volume = 0.1f;
+            audioSourceSpeed.volume = 1.0f;
         } else audioSourceSpeed.volume = 0.0f;
 
     }
