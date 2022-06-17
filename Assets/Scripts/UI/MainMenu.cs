@@ -108,12 +108,6 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void Reload() {
-        if (MultiplayerUtil.GetLocalIPAddress() == serverAddress.text && !IsArgon()) {
-            Debug.LogWarning("Cannot join a game from the same ip address, host instead");
-
-            return;
-        }
-
         // not great since this is set every reload but works fpor now
         ishosted = true;
         Debug.Log("Reload");
