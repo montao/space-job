@@ -138,23 +138,22 @@ public class ShipSteering : NetworkBehaviour {
             UpdateServerside();
         }
         if(GetThrusterState(Thruster.TRANSLATE_FORWARD) | GetThrusterState(Thruster.TRANSLATE_BACKWARD)){
-            if(!audioSourceLeft.isPlaying) {
-                audioSourceLeft.Play();
-            }
-            if(!audioSourceRight.isPlaying) {
-                audioSourceRight.Play();
-            }            
+            Debug.Log(audioSourceLeft.clip);
+            audioSourceLeft.Play(0);
+            audioSourceRight.Play(0);        
         }
         if(GetThrusterState(Thruster.ROTATE_LEFT)){
-            Debug.Log("left thruster");
+            if(audioSourceLeft.isPlaying) {
+                Debug.Log("left thruster");
+            }
             if(!audioSourceLeft.isPlaying) {
-                audioSourceLeft.Play();
+                audioSourceLeft.Play(0);
             }
         }
         if(GetThrusterState(Thruster.ROTATE_RIGHT)){
             Debug.Log("right thruster");
             if(!audioSourceRight.isPlaying) {
-                audioSourceRight.Play();
+                audioSourceRight.Play(0);
             }
         }
         if(GetSpeed() > 0.0f){
