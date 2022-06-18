@@ -466,7 +466,7 @@ public class PlayerAvatar : NetworkBehaviour {
             m_Ragdoll.SetRagdollEnabled(false);
         }
 
-        if (IsOwner) {
+        if (IsOwner && !alive) {
             var net_ref = new NetworkObjectReference(NetworkObject);
             PlayerManager.Instance.SpawnRevivalFloppyServerRpc(net_ref, transform.position);
         }

@@ -4,12 +4,14 @@ using Unity.Netcode;
 public class RevivalFloppy : DroppableInteractable {
     public NetworkVariable<NetworkObjectReference> Player = new NetworkVariable<NetworkObjectReference>();
 
+    public override void OnNetworkSpawn() {
+        base.OnNetworkDespawn();
+        Debug.Log("RevivalFloppy spawned!");
+    }
+
     // TODO move to medbay
     public override PlayerAnimation SelfInteraction(PlayerAvatar avatar_reviving) {
-        Debug.Log("Revival Time!");
-
         avatar_reviving.DropItem(PlayerAvatar.Slot.PRIMARY);
-        CanInteract = false;
 
         NetworkObject avatar_to_revive_neto;
         var pos = avatar_reviving.transform.position + (1.5f * avatar_reviving.transform.forward) + (0.2f * Vector3.up);
@@ -25,7 +27,6 @@ public class RevivalFloppy : DroppableInteractable {
 
     [ServerRpc(RequireOwnership = false)]
     public void DespawnServerRpc() {
-        Debug.Log("Despawning floppy");
         GetComponentInParent<NetworkObject>().Despawn(destroy: true);
     }
 }
