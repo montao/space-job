@@ -226,7 +226,7 @@ public class PlayerAvatar : NetworkBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.R) && m_Health.Value <= 0) {
-            Revive();
+            Revive(transform.position);
         }
 
         if (MovementLocked) {
@@ -432,7 +432,9 @@ public class PlayerAvatar : NetworkBehaviour {
         }
     }
 
-    public void Revive() {
+    public void Revive(Vector3 position) {
+        Debug.Log(name + " revived");
+        Teleport(position, Quaternion.identity);
         m_HasDied = false;
         m_Health.Value = 1f;
         SetPlayerAlive(alive: true);
@@ -443,6 +445,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     public IEnumerator SetPlayerAliveCoroutine(bool alive, float delay) {
+        Debug.Log("YOU DIED.");
         if (alive) {
             ReleaseMovementLock(GetHashCode());
         } else {
@@ -452,18 +455,17 @@ public class PlayerAvatar : NetworkBehaviour {
         if (!alive) {
             m_Ragdoll.SetRagdollEnabled(true);
         }
-        // TODO enable ragdoll if !alive
 
         yield return new WaitForSeconds(delay);
         Canvas canvas = GetComponentInChildren<Canvas>();
         canvas.enabled = alive;
         m_CharacterList.SetActive(alive);
-        // TODO disable ragdoll if !alive
         if (!alive) {
             m_Ragdoll.SetRagdollEnabled(false);
         }
 
-        // TODO spawn floppy disk
+        var net_ref = new NetworkObjectReference(NetworkObject);
+        PlayerManager.Instance.SpawnRevivalFloppyServerRpc(net_ref, transform.position);
     }
 
 
@@ -472,6 +474,17 @@ public class PlayerAvatar : NetworkBehaviour {
         m_Ragdoll.SetRagdollEnabled(false);
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void ReviveServerRpc(Vector3 position) {
+        ReviveClientRpc(position);
+    }
+
+    [ClientRpc]
+    public void ReviveClientRpc(Vector3 position) {
+        if (IsOwner) {
+            Revive(position);
+        }
+    }
 
     /* ================== HIDE PLAYER ================== */
 

@@ -11,6 +11,8 @@ public class PlayerManager : NetworkBehaviour {
     public string LocalPlayerName = "";
     public string LocalPlayerStatus = "";
 
+    public GameObject RevivalFloppyPrefab;
+
     private NetworkVariable<int> m_PlayerCount =
             new NetworkVariable<int>(1);
 
@@ -188,9 +190,15 @@ public class PlayerManager : NetworkBehaviour {
         GameManager.Instance.OnPlayersReady();
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnRevivalFloppyServerRpc(NetworkObjectReference player, Vector3 pos) {
+        GameObject floppy = Instantiate(RevivalFloppyPrefab, pos, Quaternion.identity);
+        floppy.GetComponent<NetworkObject>().Spawn();
+        floppy.GetComponentInChildren<RevivalFloppy>().Player.Value = player;
+    }
+
     public static bool IsLocalPlayerAvatar(Collider collider) {
         PlayerAvatar player = collider.GetComponent<PlayerAvatar>();
         return player != null && player.IsOwner;
     }
-
 }
