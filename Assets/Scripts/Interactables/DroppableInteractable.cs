@@ -141,7 +141,9 @@ public abstract class DroppableInteractable : Interactable<int>{
         localPlayer.AddToInventory(GetComponentInParent<NetworkObject>());
         SetHolderServerRpc((int) NetworkManager.Singleton.LocalClientId);
         AudioClip sound = GetRandomPickUpClip();
-        audioSource.PlayOneShot(sound);
+        if (sound && audioSource) {
+            audioSource.PlayOneShot(sound);
+        }
     }
 
 
