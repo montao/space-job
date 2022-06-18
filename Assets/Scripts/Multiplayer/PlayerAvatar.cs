@@ -422,18 +422,26 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     public void SetPlayerAlive(bool alive) {
-        Canvas canvas = GetComponentInChildren<Canvas>();
-        canvas.enabled = alive;
-        m_CharacterList.SetActive(alive);
+        StartCoroutine(SetPlayerAliveCoroutine(alive, alive ? 0.0f : 2.0f));
+    }
 
+    public IEnumerator SetPlayerAliveCoroutine(bool alive, float delay) {
         if (alive) {
             ReleaseMovementLock(GetHashCode());
         } else {
             LockMovement(GetHashCode());
-            // TODO spawn floppy disk
         }
 
+        // TODO enable ragdoll
+
+        yield return new WaitForSeconds(delay);
+        Canvas canvas = GetComponentInChildren<Canvas>();
+        canvas.enabled = alive;
+        m_CharacterList.SetActive(alive);
+
+        // TODO spawn floppy disk
     }
+
 
 
     /* ================== HIDE PLAYER ================== */
