@@ -30,6 +30,11 @@ public class FlashLight : DroppableInteractable {
             m_Beam.enabled = true;
             m_InHand = null;
         };
+
+        OnSlotChanged += (PlayerAvatar avatar, PlayerAvatar.Slot slot) => {
+            Debug.Log("Slot changed for " + name);
+            m_InHand.Light.enabled = (slot == PlayerAvatar.Slot.PRIMARY);
+        };
     }
 
     public override void OnNetworkSpawn() {

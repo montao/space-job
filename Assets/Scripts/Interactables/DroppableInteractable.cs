@@ -44,6 +44,11 @@ public abstract class DroppableInteractable : Interactable<int>{
     public delegate void OnPickupDropDelegate(PlayerAvatar avatar);
 
     /// <summary>
+    /// Delegate for OnSlotChanged event.
+    /// </summary>
+    public delegate void OnSlotChangedDelegate(PlayerAvatar avatar, PlayerAvatar.Slot new_slot);
+
+    /// <summary>
     /// Called on all clients when the Item has been picked up.
     /// For local client, it is called immediateley (i.e. without waiting for the server).
     /// See <see cref="Flashlight"/> for how this may be used.
@@ -56,6 +61,14 @@ public abstract class DroppableInteractable : Interactable<int>{
     /// See <see cref="Flashlight"/> for how this may be used.
     /// </summary>
     public event OnPickupDropDelegate OnDrop;
+
+    /// <summary>
+    /// Called when the item is moved to another slot, i.e. when the player swapped inventory slots.
+    /// Note that this is *not* called when the item is initially picked up
+    /// For local client, it is called immediateley (i.e. without waiting for the server).
+    /// See <see cref="Flashlight"/> for how this may be used.
+    /// </summary>
+    public event OnSlotChangedDelegate OnSlotChanged;
 
     /* ================== LIFECYCLE METHODS ================== */
 
@@ -91,6 +104,10 @@ public abstract class DroppableInteractable : Interactable<int>{
 
     public void InvokeOnDrop(PlayerAvatar avatar) {
         OnDrop?.Invoke(avatar);
+    }
+
+    public void InvokeOnSlotChange(PlayerAvatar avatar, PlayerAvatar.Slot new_slot) {
+        OnSlotChanged?.Invoke(avatar, new_slot);
     }
 
 

@@ -271,11 +271,7 @@ public class PlayerAvatar : NetworkBehaviour {
         }
 
         if (Input.mouseScrollDelta.y != 0) {
-            // swap items
-            NetworkObjectReference tmp = m_PrimaryItem.Value;
-            m_PrimaryItem.Value = m_SecondaryItem.Value;
-            m_SecondaryItem.Value = tmp;
-            // ShowInInventory **should** be called automatically, because the networkvariable changed
+            SwapInventorySlots();
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1)) {
@@ -552,6 +548,26 @@ public class PlayerAvatar : NetworkBehaviour {
         InvokeOnDropServerRpc(item);
     }
 
+    public void SwapInventorySlots() {
+        NetworkObjectReference tmp = m_PrimaryItem.Value;
+        m_PrimaryItem.Value = m_SecondaryItem.Value;
+        m_SecondaryItem.Value = tmp;
+
+        // ShowInInventory **should** be called automatically, because the networkvariable changed
+        // TODO figure out if this is delayed or immediate
+
+        // invoke events locally....
+        GetInventoryItem(Slot.PRIMARY)
+                ?.GetComponentInChildren<DroppableInteractable>()
+                ?.InvokeOnSlotChange(this, Slot.PRIMARY);
+        GetInventoryItem(Slot.SECONDARY)
+                ?.GetComponentInChildren<DroppableInteractable>()
+                ?.InvokeOnSlotChange(this, Slot.SECONDARY);
+        // ...and for all other players
+        InvokeOnSlotChangedServerRpc(m_PrimaryItem.Value, Slot.PRIMARY);
+        InvokeOnSlotChangedServerRpc(m_SecondaryItem.Value, Slot.SECONDARY);
+    }
+
     [ServerRpc]
     private void InvokeOnPickupServerRpc(NetworkObjectReference reference) {
         InvokeOnPickupClientRpc(reference);
@@ -580,6 +596,18 @@ public class PlayerAvatar : NetworkBehaviour {
         }
         DroppableInteractable interactable = Util.GetDroppableInteractable(reference);
         interactable.InvokeOnDrop(this);
+    }
+
+    [ServerRpc]
+    private void InvokeOnSlotChangedServerRpc(NetworkObjectReference reference, Slot slot) {
+        InvokeOnSlotChangedClientRpc(reference, slot);
+    }
+
+    [ClientRpc]
+    private void InvokeOnSlotChangedClientRpc(NetworkObjectReference reference, Slot slot) {
+        if (IsOwner) { return; }  // already invoked
+        DroppableInteractable interactable = Util.GetDroppableInteractable(reference);
+        interactable.InvokeOnSlotChange(this, slot);
     }
 
     public static bool IsHolding<T>() where T: DroppableInteractable {

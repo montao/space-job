@@ -7,6 +7,15 @@ public class FlashLightInHand : MonoBehaviour {
     public Transform ItemRenderer;  // set by FlashLight in OnPickup
     public bool TrackingActive = false;
 
+    private Light m_Light;
+    public Light Light {
+        get => m_Light;
+    }
+
+    void Start() {
+        m_Light = GetComponent<Light>();
+    }
+
     Vector3? GetPointerTarget() {
         RaycastHit hit;
         Ray ray = CameraBrain.Instance.OutputCamera.ScreenPointToRay(Input.mousePosition);
