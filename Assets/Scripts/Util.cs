@@ -45,6 +45,18 @@ public class Util {
         return Mathf.Abs(Input.GetAxis("Horizontal")) > 0.05f || Mathf.Abs(Input.GetAxis("Vertical")) > 0.05f;
     }
 
+    public static DroppableInteractable GetDroppableInteractable(NetworkObjectReference reference) {
+        NetworkObject o;
+        if (reference.TryGet(out o)) {
+            return GetDroppableInteractable(o);
+        }
+        return null;
+    }
+
+    public static DroppableInteractable GetDroppableInteractable(NetworkObject network_object) {
+        return network_object.GetComponentInChildren<DroppableInteractable>();
+    }
+
     public static void BakeLighting() {
 #if UNITY_EDITOR
         foreach (var scene in new string[]{"ShipScene"}) {

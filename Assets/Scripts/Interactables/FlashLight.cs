@@ -22,7 +22,7 @@ public class FlashLight : DroppableInteractable {
             m_Beam.enabled = false;
         };
 
-        OnDrop -= (PlayerAvatar avatar) => {
+        OnDrop += (PlayerAvatar avatar) => {
             Debug.Log("Flashlight dropped by " + avatar.name);
             avatar.GetComponentInChildren<FlashLightInHand>().gameObject.SetActive(false);
             m_Beam.enabled = true;

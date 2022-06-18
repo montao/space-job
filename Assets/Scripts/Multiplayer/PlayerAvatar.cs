@@ -456,7 +456,8 @@ public class PlayerAvatar : NetworkBehaviour {
         if (!interactable) {
             Debug.LogError("Picked up " + item.name + " but no DroppableInteractable component found on it.");
         }
-        interactable.InvokeOnPickup(this);  // TODO Trigger on all clients
+        interactable.InvokeOnPickup(this);
+        InvokeOnPickupServerRpc(new NetworkObjectReference(item));
     }
 
     private AudioClip GetRandomCupDropClip(){
@@ -491,24 +492,37 @@ public class PlayerAvatar : NetworkBehaviour {
         }
 
         AnimationController.TriggerAnimation(PlayerAnimation.INTERACT);
-        cup.InvokeOnDrop(this);  // TODO Trigger on all clients
+        cup.InvokeOnDrop(this);
+        InvokeOnDropServerRpc(item);
+    }
+
+    [ServerRpc]
+    private void InvokeOnPickupServerRpc(NetworkObjectReference reference) {
+        InvokeOnPickupClientRpc(reference);
     }
 
     [ClientRpc]
-    private void InvokeOnPickupClientRpc(DroppableInteractable interactable) {
+    private void InvokeOnPickupClientRpc(NetworkObjectReference reference) {
         if (IsOwner) {
             // OnPickup was already invoked purely client-side.
             return;
         }
+        DroppableInteractable interactable = Util.GetDroppableInteractable(reference);
         interactable.InvokeOnPickup(this);
     }
 
+    [ServerRpc]
+    private void InvokeOnDropServerRpc(NetworkObjectReference reference) {
+        InvokeOnDropClientRpc(reference);
+    }
+
     [ClientRpc]
-    private void InvokeOnDropClientRpc(DroppableInteractable interactable) {
+    private void InvokeOnDropClientRpc(NetworkObjectReference reference) {
         if (IsOwner) {
             // Ondrop was already invoked purely client-side.
             return;
         }
+        DroppableInteractable interactable = Util.GetDroppableInteractable(reference);
         interactable.InvokeOnDrop(this);
     }
 
