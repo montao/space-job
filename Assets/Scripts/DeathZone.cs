@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 public class DeathZone : MonoBehaviour
 {
@@ -10,9 +9,9 @@ public class DeathZone : MonoBehaviour
         DeathField = GetComponent<Collider>();
     }
     private void OnTriggerStay(Collider other) {
-        Debug.Log("hi");
-        if (other.gameObject.GetComponent<PlayerAvatar>() != null){
-            other.gameObject.GetComponent<PlayerAvatar>().TakeDamage(0.01f);
-        } 
+        var ava = other.gameObject.GetComponent<PlayerAvatar>();
+        if (ava != null && ava.OwnerClientId == NetworkManager.Singleton.LocalClientId) {
+            ava.TakeDamage(0.01f);
+        }
     }
 }
