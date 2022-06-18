@@ -21,8 +21,7 @@ public class PlayerAvatar : NetworkBehaviour {
     /* === GENERAL STUFF === */
     private PersistentPlayer m_LocalPlayer;
     private Renderer m_PlayerMesh;
-    [SerializeField]
-    // private Ragdoll m_Ragdoll; TODO implement after eating noods
+    private PlayerRagdoll m_Ragdoll;
 
     /* === MOVEMENT & ROOMS === */
     public const float GRAVITY = -10f;  //in case of zero gravity this need to change
@@ -104,6 +103,8 @@ public class PlayerAvatar : NetworkBehaviour {
 
     private void Awake() {
         audioSource = GetComponent<AudioSource>();
+        m_Ragdoll = GetComponent<PlayerRagdoll>();
+        SetupRagdoll();
     }
 
     public void Start() {
@@ -369,10 +370,12 @@ public class PlayerAvatar : NetworkBehaviour {
 
     /* ================== CHARACTER SELECT ================== */
 
+    // might not be called initially, i think.  not that that's super bad or anything, just worth keeping in mind
     public void OnCharacterChanged(int previous, int current) {
         m_CharacterList.transform.GetChild(previous).gameObject.SetActive(false);
         m_CharacterList.transform.GetChild(current).gameObject.SetActive(true);
         m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
+        SetupRagdoll();
     }
 
     public void SetActiveCharacter(int characterIndex) {
@@ -446,6 +449,9 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
 
+    private void SetupRagdoll() {
+        m_Ragdoll.Setup(this, m_CharacterList);
+    }
 
     /* ================== HIDE PLAYER ================== */
 
