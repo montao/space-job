@@ -72,12 +72,10 @@ public class PlayerAvatar : NetworkBehaviour {
 
 
     /* === HEALTH, OXYGEN & RELATED UI === */
-    [SerializeField]
-    [Range(0f,1f)]
-    private float m_Health = Mathf.Clamp(1f, 0f, 1f);
+    public NetworkVariable<float> m_Health
+            = new NetworkVariable<float>(1f, default, NetworkVariableWritePermission.Owner);
     [SerializeField]
     private HealthBar m_HealthBar;
-    [SerializeField]
     private float m_LungOxygen = 1f;
 
     /* === ANIMATION === */
@@ -305,7 +303,7 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     private void UpdateHealthBar() {
-        m_HealthBar.UpdateHealthBar(m_Health);
+        m_HealthBar.UpdateHealthBar(m_Health.Value);
     }
 
 
@@ -413,6 +411,28 @@ public class PlayerAvatar : NetworkBehaviour {
         if (m_CurrentRoom == null) return;
         float oxygen = ((m_LungOxygen - 0.01f + (0.02f* m_CurrentRoom.RoomOxygen)));
         m_LungOxygen = Mathf.Clamp(oxygen, 0f, 1f);
+    }
+
+    public void TakeDamage(float damage) {
+        m_Health.Value = Mathf.Clamp(m_Health.Value - damage, 0f, 1f);
+        Debug.Log(name + " took " + damage + " damage.");
+        if (m_Health.Value <= 0) {
+            SetPlayerAlive(alive: false);
+        }
+    }
+
+    public void SetPlayerAlive(bool alive) {
+        Canvas canvas = GetComponentInChildren<Canvas>();
+        canvas.enabled = alive;
+        m_CharacterList.SetActive(alive);
+
+        if (alive) {
+            ReleaseMovementLock(GetHashCode());
+        } else {
+            LockMovement(GetHashCode());
+            // TODO spawn floppy disk
+        }
+
     }
 
 

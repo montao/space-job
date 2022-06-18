@@ -971,30 +971,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c69dc5172dc8889a688253e26e3dc7e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CharacterList: {fileID: 882870206865439736}
   groundCheck: {fileID: 5987355476180094076}
-  dropPoint: {fileID: 3633807288807027857}
-  PrimaryItemDisplay: {fileID: 2663379619625991804}
-  SecondaryItemDisplay: {fileID: 3486877119432998455}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  dropPoint: {fileID: 3633807288807027857}
+  PrimaryItemDisplay: {fileID: 2663379619625991804}
+  SecondaryItemDisplay: {fileID: 3486877119432998455}
+  m_CharacterList: {fileID: 882870206865439736}
+  isready: {fileID: 2516736626263197235}
+  notready: {fileID: 3596736054757866448}
+  chara_select: {fileID: 0}
+  ready:
+    m_InternalValue: 0
+  m_Health:
+    m_InternalValue: 1
+  m_HealthBar: {fileID: 456014176189738090}
+  HorizontalSpeed:
+    m_InternalValue: 0
   nameText: {fileID: 8939025460541712738}
   normalMaterial: {fileID: 2100000, guid: 391a6cc892247c04d934becca40d133f, type: 2}
   transparentMaterial: {fileID: 2100000, guid: 55a1ebda3c1d0ec63a6143342c575ead, type: 2}
   CameraLookAt: {fileID: 1788296244511089710}
-  HorizontalSpeed:
-    m_InternalValue: 0
-  ready:
-    m_InternalValue: 0
-  m_HorizontalSpeed:
-    m_InternalValue: 0
-  m_Health: 1
-  m_HealthBar: {fileID: 456014176189738090}
-  isready: {fileID: 2516736626263197235}
-  notready: {fileID: 3596736054757866448}
-  chara_select: {fileID: 0}
-  m_LungCapacity: 1
   dropCupSounds:
   - {fileID: 8300000, guid: 41676e0dc4a10bd44a241a680b370fcc, type: 3}
   - {fileID: 8300000, guid: ceae54f2237fae2e9af30de607ca2f12, type: 3}
