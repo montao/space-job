@@ -75,6 +75,7 @@ public class PlayerAvatar : NetworkBehaviour {
     /* === HEALTH, OXYGEN & RELATED UI === */
     public NetworkVariable<float> m_Health
             = new NetworkVariable<float>(1f, default, NetworkVariableWritePermission.Owner);
+    private bool m_HasDied = false;  // used to avoid triggering death sequence multiple times
     [SerializeField]
     private HealthBar m_HealthBar;
     private float m_LungOxygen = 1f;
@@ -222,6 +223,10 @@ public class PlayerAvatar : NetworkBehaviour {
         PerformGroundCheck();
         if (m_IsGrounded && m_FallVelocity < 0) {
             m_FallVelocity = -2f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && m_Health.Value <= 0) {
+            Revive();
         }
 
         if (MovementLocked) {
@@ -421,9 +426,16 @@ public class PlayerAvatar : NetworkBehaviour {
     public void TakeDamage(float damage) {
         m_Health.Value = Mathf.Clamp(m_Health.Value - damage, 0f, 1f);
         Debug.Log(name + " took " + damage + " damage.");
-        if (m_Health.Value <= 0) {
+        if (m_Health.Value <= 0 && !m_HasDied) {
+            m_HasDied = true;
             SetPlayerAlive(alive: false);
         }
+    }
+
+    public void Revive() {
+        m_HasDied = false;
+        m_Health.Value = 1f;
+        SetPlayerAlive(alive: true);
     }
 
     public void SetPlayerAlive(bool alive) {
