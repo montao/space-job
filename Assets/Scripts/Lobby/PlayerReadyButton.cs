@@ -23,7 +23,7 @@ public class PlayerReadyButton : Interactable<bool> {
         m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
         SetServerRpc(m_LocalPlayerInteracting);
         SetPlayerConditions(m_LocalPlayerInteracting);
-        ModReadyServerRpc(m_LocalPlayerInteracting ? 1 : -1);
+        ModReadyServerRpc(PlayerManager.Instance.LocalPlayer.Avatar.ready.Value ? 1 : -1);
         Debug.Log("ready" + PlayersReady.Value);
     }
     void SetPlayerConditions(bool on){
