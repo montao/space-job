@@ -2058,7 +2058,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4124887342369412159, guid: 8cffe2858e8058516a0a6c6f03759a77, type: 3}
       propertyPath: m_Radius
-      value: 3.51
+      value: 2.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 4124887342369412159, guid: 8cffe2858e8058516a0a6c6f03759a77, type: 3}
+      propertyPath: m_Center.y
+      value: -1.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 4124887342369412159, guid: 8cffe2858e8058516a0a6c6f03759a77, type: 3}
+      propertyPath: m_Center.z
+      value: 1.16
       objectReference: {fileID: 0}
     - target: {fileID: 7205389007623453036, guid: 8cffe2858e8058516a0a6c6f03759a77, type: 3}
       propertyPath: ConnectedDoor
@@ -2501,6 +2509,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3313314788457865633, guid: 8cffe2858e8058516a0a6c6f03759a77, type: 3}
+      propertyPath: ConnectedDoor
+      value: 
+      objectReference: {fileID: 1365710470005482718}
     - target: {fileID: 3327255435653238121, guid: 8cffe2858e8058516a0a6c6f03759a77, type: 3}
       propertyPath: m_Name
       value: WallTerminal (HW Bottom <-> Room ER)
@@ -2509,6 +2521,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 951099334
       objectReference: {fileID: 0}
+    - target: {fileID: 7205389007623453036, guid: 8cffe2858e8058516a0a6c6f03759a77, type: 3}
+      propertyPath: ConnectedDoor
+      value: 
+      objectReference: {fileID: 1365710470005482718}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cffe2858e8058516a0a6c6f03759a77, type: 3}
 --- !u!4 &6042667977928794172 stripped
