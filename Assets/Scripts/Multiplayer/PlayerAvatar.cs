@@ -494,6 +494,24 @@ public class PlayerAvatar : NetworkBehaviour {
         cup.InvokeOnDrop(this);  // TODO Trigger on all clients
     }
 
+    [ClientRpc]
+    private void InvokeOnPickupClientRpc(DroppableInteractable interactable) {
+        if (IsOwner) {
+            // OnPickup was already invoked purely client-side.
+            return;
+        }
+        interactable.InvokeOnPickup(this);
+    }
+
+    [ClientRpc]
+    private void InvokeOnDropClientRpc(DroppableInteractable interactable) {
+        if (IsOwner) {
+            // Ondrop was already invoked purely client-side.
+            return;
+        }
+        interactable.InvokeOnDrop(this);
+    }
+
     public void LockMovement(int locker) {
         if (!m_MovementLocks.Contains(locker)) {
             m_MovementLocks.Add(locker);
