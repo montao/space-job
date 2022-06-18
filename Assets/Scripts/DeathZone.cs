@@ -12,7 +12,7 @@ public class DeathZone : MonoBehaviour
     private void OnTriggerStay(Collider other) {
         Debug.Log("hi");
         if (other.gameObject.GetComponent<PlayerAvatar>() != null){
-            other.gameObject.GetComponent<PlayerAvatar>().HidePlayer(true);
+            other.gameObject.GetComponent<PlayerAvatar>().TakeDamage(0.01f);
         } 
     }
 }
