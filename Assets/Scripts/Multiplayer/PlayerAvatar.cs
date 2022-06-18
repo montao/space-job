@@ -208,6 +208,7 @@ public class PlayerAvatar : NetworkBehaviour {
             }
             m_AnimationController.OnSpeedChange(curr);
         };
+        m_Health.OnValueChanged += OnHealthChanged;
 
         Debug.Log("[PlayerAvatar/OnNetworkSpawn] PlayerAvatar spanwed " + name + " owned by " + OwnerClientId);
         Setup();
@@ -218,6 +219,7 @@ public class PlayerAvatar : NetworkBehaviour {
         m_PrimaryItem.OnValueChanged -= OnPrimaryItemChanged;
         m_SecondaryItem.OnValueChanged -= OnSecondaryItemChanged;
         m_ActiveCharacter.OnValueChanged -= OnCharacterChanged;
+        m_Health.OnValueChanged -= OnHealthChanged;
     }
 
     void ProcessInput() {
@@ -427,10 +429,6 @@ public class PlayerAvatar : NetworkBehaviour {
     public void TakeDamage(float damage) {
         m_Health.Value = Mathf.Clamp(m_Health.Value - damage, 0f, 1f);
         Debug.Log(name + " took " + damage + " damage.");
-        if (m_Health.Value <= 0 && !m_HasDied) {
-            m_HasDied = true;
-            SetPlayerAlive(alive: false);
-        }
     }
 
     public void Revive(Vector3 position) {
@@ -448,11 +446,12 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     public IEnumerator SetPlayerAliveCoroutine(bool alive, float delay) {
-        Debug.Log("YOU DIED.");
-        if (alive) {
-            ReleaseMovementLock(GetHashCode());
-        } else {
-            LockMovement(GetHashCode());
+        if (IsOwner) {
+            if (alive) {
+                ReleaseMovementLock(GetHashCode());
+            } else {
+                LockMovement(GetHashCode());
+            }
         }
 
         if (!alive) {
@@ -467,10 +466,19 @@ public class PlayerAvatar : NetworkBehaviour {
             m_Ragdoll.SetRagdollEnabled(false);
         }
 
-        var net_ref = new NetworkObjectReference(NetworkObject);
-        PlayerManager.Instance.SpawnRevivalFloppyServerRpc(net_ref, transform.position);
+        if (IsOwner) {
+            var net_ref = new NetworkObjectReference(NetworkObject);
+            PlayerManager.Instance.SpawnRevivalFloppyServerRpc(net_ref, transform.position);
+        }
 
         m_DeathReviveCoroutine = null;
+    }
+
+    private void OnHealthChanged(float _, float health) {
+        if (health <= 0 && !m_HasDied) {
+            m_HasDied = true;
+            SetPlayerAlive(alive: false);
+        }
     }
 
 
