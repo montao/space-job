@@ -9,7 +9,7 @@ public class HealthBar : MonoBehaviour
         m_HealthBar = GetComponent<RectTransform>();
     }
 
-    public void UpdateHealthBar(float value){
-        m_HealthBar.localScale = m_HealthBar.localScale * value;
+    public void UpdateHealthBar(float health){
+        m_HealthBar.localScale = new Vector3(health*40 ,m_HealthBar.localScale.y ,m_HealthBar.localScale.z );
     }
 }
