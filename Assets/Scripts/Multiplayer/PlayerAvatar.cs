@@ -437,6 +437,9 @@ public class PlayerAvatar : NetworkBehaviour {
             LockMovement(GetHashCode());
         }
 
+        if (!alive) {
+            m_Ragdoll.SetRagdollEnabled(true);
+        }
         // TODO enable ragdoll if !alive
 
         yield return new WaitForSeconds(delay);
@@ -444,6 +447,9 @@ public class PlayerAvatar : NetworkBehaviour {
         canvas.enabled = alive;
         m_CharacterList.SetActive(alive);
         // TODO disable ragdoll if !alive
+        if (!alive) {
+            m_Ragdoll.SetRagdollEnabled(false);
+        }
 
         // TODO spawn floppy disk
     }
