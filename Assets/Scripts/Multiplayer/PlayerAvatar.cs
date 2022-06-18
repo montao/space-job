@@ -104,7 +104,6 @@ public class PlayerAvatar : NetworkBehaviour {
     private void Awake() {
         audioSource = GetComponent<AudioSource>();
         m_Ragdoll = GetComponent<PlayerRagdoll>();
-        SetupRagdoll();
     }
 
     public void Start() {
@@ -134,6 +133,7 @@ public class PlayerAvatar : NetworkBehaviour {
         if(m_AnimationController = null){
             Debug.Log("animation contraller created to early");
         }
+        SetupRagdoll();
     }
 
     public void Setup() {
@@ -451,6 +451,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
     private void SetupRagdoll() {
         m_Ragdoll.Setup(this, m_CharacterList);
+        m_Ragdoll.SetRagdollEnabled(false);
     }
 
     /* ================== HIDE PLAYER ================== */

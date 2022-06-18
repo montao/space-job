@@ -27,6 +27,9 @@ public class PlayerRagdoll : MonoBehaviour {
         foreach (var r in m_RagdollRigidbodies) {
             r.isKinematic = !ragdoll_enabled;
         }
-        m_Avatar.AnimationController.enabled = !ragdoll_enabled;
+        var animator = m_Avatar.GetComponentInChildren<Animator>();
+        Debug.Log("Avatar: " + m_Avatar);
+        Debug.Log("AnimC: " + animator);
+        animator.enabled = !ragdoll_enabled;
     }
 }
