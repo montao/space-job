@@ -5,6 +5,7 @@ public class FlashLightInHand : MonoBehaviour {
 
     public static float MAX_RAYCAST_DIST = 10000f;
     public Transform ItemRenderer;  // set by FlashLight in OnPickup
+    public bool TrackingActive = false;
 
     Vector3? GetPointerTarget() {
         RaycastHit hit;
@@ -17,6 +18,9 @@ public class FlashLightInHand : MonoBehaviour {
     }
 
     void Update() {
+        if (!TrackingActive) {
+            return;
+        }
         var target = GetPointerTarget();
         if (target.HasValue) {
             ItemRenderer.LookAt(transform.position - (target.Value - transform.position));

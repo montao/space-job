@@ -6,7 +6,7 @@ public class FlashLight : DroppableInteractable {
     private Light m_Beam;
     private FlashLightInHand m_InHand;
 
-    private NetworkVariable<bool> m_TurnedOn = new NetworkVariable<bool>(true);
+    private NetworkVariable<bool> m_TurnedOn = new NetworkVariable<bool>(true);  // TODO unused for now
     private NetworkVariable<Quaternion> m_RotationInHand = new NetworkVariable<Quaternion>();
 
     public override void Awake() {
@@ -14,18 +14,21 @@ public class FlashLight : DroppableInteractable {
         m_Beam = GetComponentInChildren<Light>();
 
         OnPickup += (PlayerAvatar avatar) => {
-            Debug.Log("Flashlight picked up by " + avatar.name);
-            var fl_hand = avatar.GetComponentInChildren<FlashLightInHand>(includeInactive: true);
-            Debug.Log("FlashLightInHand: " + fl_hand);
-            fl_hand.gameObject.SetActive(true);
-            fl_hand.ItemRenderer = avatar.PrimaryItemDisplay;
+            bool by_local_player = avatar.OwnerClientId == NetworkManager.Singleton.LocalClientId;
+
+            m_InHand = avatar.GetComponentInChildren<FlashLightInHand>(includeInactive: true);
+            m_InHand.gameObject.SetActive(true);
+            m_InHand.TrackingActive = by_local_player;
+            m_InHand.ItemRenderer = avatar.PrimaryItemDisplay;
             m_Beam.enabled = false;
         };
 
         OnDrop += (PlayerAvatar avatar) => {
-            Debug.Log("Flashlight dropped by " + avatar.name);
+            bool by_local_player = avatar.OwnerClientId == NetworkManager.Singleton.LocalClientId;
+
             avatar.GetComponentInChildren<FlashLightInHand>().gameObject.SetActive(false);
             m_Beam.enabled = true;
+            m_InHand = null;
         };
     }
 
@@ -76,5 +79,25 @@ public class FlashLight : DroppableInteractable {
         audioSource.PlayOneShot(sound);
         */
         return PlayerAnimation.INTERACT;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SetRotationInHandServerRpc(Quaternion rot) {
+        m_RotationInHand.Value = rot;
+    }
+
+    public override void Update() {
+        base.Update();
+        if (!m_InHand) {
+            return;
+        }
+
+        if (m_InHand.TrackingActive) {
+            // held by local client
+            SetRotationInHandServerRpc(m_InHand.ItemRenderer.transform.rotation);
+        } else {
+            // held by other client
+            m_InHand.ItemRenderer.transform.rotation = m_RotationInHand.Value;
+        }
     }
 }
