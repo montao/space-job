@@ -22,7 +22,7 @@ public abstract class RangedInteractableBase : InteractableBase {
     }
 
     protected override bool PlayerCanInteract() {
-        return m_IsInArea;
+        return m_IsInArea && base.PlayerCanInteract();
     }
 
     public void OnRangeTriggerEnter(Collider other) {

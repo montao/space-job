@@ -25,6 +25,7 @@ public class RevivalFloppy : DroppableInteractable {
 
     [ServerRpc(RequireOwnership = false)]
     public void DespawnServerRpc() {
+        Debug.Log("Despawning floppy");
         GetComponentInParent<NetworkObject>().Despawn(destroy: true);
     }
 }

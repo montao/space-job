@@ -13,7 +13,7 @@ public class ZoomInteractable : InteractableBase
     }
 
     protected override bool PlayerCanInteract(){
-        return true;
+        return true;  // TODO does this make sense?!
     }
 
     public void SwitchAwayIfPlayer(Collider other) {
