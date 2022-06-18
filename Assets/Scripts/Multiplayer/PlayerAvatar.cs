@@ -21,6 +21,8 @@ public class PlayerAvatar : NetworkBehaviour {
     /* === GENERAL STUFF === */
     private PersistentPlayer m_LocalPlayer;
     private Renderer m_PlayerMesh;
+    [SerializeField]
+    // private Ragdoll m_Ragdoll; TODO implement after eating noods
 
     /* === MOVEMENT & ROOMS === */
     public const float GRAVITY = -10f;  //in case of zero gravity this need to change
@@ -432,12 +434,13 @@ public class PlayerAvatar : NetworkBehaviour {
             LockMovement(GetHashCode());
         }
 
-        // TODO enable ragdoll
+        // TODO enable ragdoll if !alive
 
         yield return new WaitForSeconds(delay);
         Canvas canvas = GetComponentInChildren<Canvas>();
         canvas.enabled = alive;
         m_CharacterList.SetActive(alive);
+        // TODO disable ragdoll if !alive
 
         // TODO spawn floppy disk
     }
