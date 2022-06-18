@@ -2,7 +2,79 @@ fileFormatVersion: 2
 guid: 651959f91c2839f6ea1237755dc2d4c0
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -9207532954136251366
+    second: num1|CubeAction
+  - first:
+      74: 8669224465646782610
+    second: num1|EmptyAction
+  - first:
+      74: 6066922293796325811
+    second: num2|CubeAction
+  - first:
+      74: -5425086580702626300
+    second: num2|EmptyAction
+  - first:
+      74: -6256994195471198769
+    second: num3|CubeAction
+  - first:
+      74: -2457827871028256322
+    second: num3|EmptyAction
+  - first:
+      74: -5719949425541604714
+    second: num6|CubeAction
+  - first:
+      74: -4976335268203341679
+    second: num6|EmptyAction
+  - first:
+      74: -2524142743630932312
+    second: num5|CubeAction
+  - first:
+      74: 2176591052325605431
+    second: num5|EmptyAction
+  - first:
+      74: 8523522440432627134
+    second: num4|CubeAction
+  - first:
+      74: 7970496017516027844
+    second: num4|EmptyAction
+  - first:
+      74: 4398089877562246571
+    second: num7|CubeAction
+  - first:
+      74: -491740688670552136
+    second: num7|EmptyAction
+  - first:
+      74: 3300067375765309508
+    second: num8|CubeAction
+  - first:
+      74: -7467655401851066124
+    second: num8|EmptyAction
+  - first:
+      74: -4608004221703890728
+    second: num9|CubeAction
+  - first:
+      74: -5463751478406940320
+    second: num9|EmptyAction
+  - first:
+      74: 7900540284697954306
+    second: numC|CubeAction
+  - first:
+      74: -4382466669696053418
+    second: numC|EmptyAction
+  - first:
+      74: 6692867367804645488
+    second: num0|CubeAction
+  - first:
+      74: -6235044685414451238
+    second: num0|EmptyAction
+  - first:
+      74: -2597573378429586222
+    second: numE|CubeAction
+  - first:
+      74: 6586192840548888330
+    second: numE|EmptyAction
   externalObjects: {}
   materials:
     materialImportMode: 0
