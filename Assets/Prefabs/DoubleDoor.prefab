@@ -122,6 +122,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AutoClose: 0
   AlwaysOpen: 0
+  DoorStatusDisplays:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &1512264999431840583
 MonoBehaviour:
   m_ObjectHideFlags: 0

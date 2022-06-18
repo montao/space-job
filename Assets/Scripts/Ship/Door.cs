@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Door : NetworkBehaviour {
     private Room m_ConnectedRoomA = null;
@@ -18,6 +19,7 @@ public class Door : NetworkBehaviour {
     public delegate void OnDoorStateChangeDelegate();
     public event OnDoorStateChangeDelegate OnDoorOpen;
     public event OnDoorStateChangeDelegate OnDoorClose;
+    public List<WallTerminal> DoorStatusDisplays;
 
     public bool IsOpen {
         get => AlwaysOpen || m_Open.Value;
@@ -65,9 +67,13 @@ public class Door : NetworkBehaviour {
         m_DoorAnimator.SetBool("open", current);
         //m_PsychologicalDoor.enabled = current;
         //m_PhysicalDoor.enabled = current;
+        foreach(WallTerminal terminal in DoorStatusDisplays){
+            terminal.DisplayDoorState(!current);
+        }
         if (current) {
             OnDoorOpen?.Invoke();
-        } else {
+        } 
+        else {
             OnDoorClose?.Invoke();
         }
     }

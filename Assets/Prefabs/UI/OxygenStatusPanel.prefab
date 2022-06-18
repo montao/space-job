@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 77321227580118724}
   - component: {fileID: 3944423929771039073}
   - component: {fileID: 1250206171086548395}
-  - component: {fileID: 7012930651246955912}
   - component: {fileID: 7582654832157549115}
   - component: {fileID: 4651037631816351672}
   - component: {fileID: 5308675939178043217}
+  - component: {fileID: 2251974259159754326}
   m_Layer: 0
   m_Name: OxygenStatusPanel
   m_TagString: Untagged
@@ -95,22 +95,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7012930651246955912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 745736699357875326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34faf9d7194eb0b94ae0d4cceef06859, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NeedsPower: 0
-  TriggeredAnimation: 2
-  LastUse: 0
-  CanInteract: 1
 --- !u!114 &7582654832157549115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +138,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 0.28480163, z: 2}
   m_Center: {x: 0, y: -0.14240082, z: 0}
+--- !u!114 &2251974259159754326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745736699357875326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be5effaf523d077b8e3390b6ccd6fc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NeedsPower: 0
+  TriggeredAnimation: 2
+  LastUse: 0
+  CanInteract: 1
+  m_Interactables: []
 --- !u!1 &6006444394133812686
 GameObject:
   m_ObjectHideFlags: 0
