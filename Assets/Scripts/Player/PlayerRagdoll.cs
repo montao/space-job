@@ -7,8 +7,8 @@ public class PlayerRagdoll : MonoBehaviour {
     bool m_IsSetup = false;
 
     public void Setup(PlayerAvatar avatar, GameObject character) {
-        m_RagdollColliders = character.GetComponentsInChildren<Collider>();
-        m_RagdollRigidbodies = character.GetComponentsInChildren<Rigidbody>();
+        m_RagdollColliders = character.GetComponentsInChildren<Collider>(includeInactive: true);
+        m_RagdollRigidbodies = character.GetComponentsInChildren<Rigidbody>(includeInactive: true);
         m_Avatar = avatar;
 
         Debug.Log("Ragdoll:  Found " + m_RagdollColliders.Length + " colliders and "

@@ -460,6 +460,7 @@ public class PlayerAvatar : NetworkBehaviour {
         m_Ragdoll.SetRagdollEnabled(false);
     }
 
+
     /* ================== HIDE PLAYER ================== */
 
     public void HidePlayer(bool on){
