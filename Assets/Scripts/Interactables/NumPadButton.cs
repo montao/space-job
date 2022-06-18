@@ -5,6 +5,20 @@ using UnityEngine;
 public class NumPadButton : InteractableBase
 {
     public int Number;
-        protected override void Interaction(){
+    public NumPad VendingNumPad;
+    protected override void Interaction(){
+        if(Number == 420){
+            VendingNumPad.ClearInput();
+        }
+        else if(Number == 69){
+            VendingNumPad.ClearInput();
+        }
+        else{
+            VendingNumPad.DisplayInputText(Number);
+        }
+    }
+    public override float CooldownTime()
+    {
+        return 0.0f;
     }
 }
