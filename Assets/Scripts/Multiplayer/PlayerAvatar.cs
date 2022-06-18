@@ -22,6 +22,7 @@ public class PlayerAvatar : NetworkBehaviour {
     private PersistentPlayer m_LocalPlayer;
     private Renderer m_PlayerMesh;
     private PlayerRagdoll m_Ragdoll;
+    private Coroutine m_DeathReviveCoroutine = null;
 
     /* === MOVEMENT & ROOMS === */
     public const float GRAVITY = -10f;  //in case of zero gravity this need to change
@@ -441,7 +442,9 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     public void SetPlayerAlive(bool alive) {
-        StartCoroutine(SetPlayerAliveCoroutine(alive, alive ? 0.0f : 2.0f));
+        if (m_DeathReviveCoroutine == null) {
+            m_DeathReviveCoroutine = StartCoroutine(SetPlayerAliveCoroutine(alive, alive ? 0.0f : 2.0f));
+        }
     }
 
     public IEnumerator SetPlayerAliveCoroutine(bool alive, float delay) {
@@ -466,6 +469,8 @@ public class PlayerAvatar : NetworkBehaviour {
 
         var net_ref = new NetworkObjectReference(NetworkObject);
         PlayerManager.Instance.SpawnRevivalFloppyServerRpc(net_ref, transform.position);
+
+        m_DeathReviveCoroutine = null;
     }
 
 

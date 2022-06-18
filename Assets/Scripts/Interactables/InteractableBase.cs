@@ -23,8 +23,8 @@ public abstract class InteractableBase : NetworkBehaviour {
     }
 
     protected abstract void Interaction();
-    protected virtual bool PlayerCanInteract(){
-        return CanInteract;
+    protected virtual bool PlayerCanInteract() {
+        return CanInteract && PlayerManager.Instance.LocalPlayer.Avatar.m_Health.Value > 0;
     }
 
     // Relevant only for HOLD_DOWN mode.  Called when mouse button is lifted.
