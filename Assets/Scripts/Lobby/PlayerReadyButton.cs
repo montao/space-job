@@ -8,47 +8,26 @@ using TMPro;
 
 public class PlayerReadyButton : Interactable<bool> {
 
-    PlayerAvatar player;
     private bool m_LocalPlayerInteracting = false;
     //int readyCouter = 0;
     public NetworkVariable<int> PlayersReady =
         new NetworkVariable<int>(0);    
         
     [ServerRpc(RequireOwnership = false)]
-    public void IncReadyServerRpc(){
-        PlayersReady.Value = PlayersReady.Value + 1;
-    }
-    [ServerRpc(RequireOwnership = false)]
-    public void ResReadyServerRpc(){
-        PlayersReady.Value = 0;
+    public void ModReadyServerRpc(int i){
+        PlayersReady.Value = PlayersReady.Value + i;
     }
 
     protected override void Interaction(){
-        Debug.Log("hey" + PlayersReady.Value);
+        Debug.Log("ready" + PlayersReady.Value);
         m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
         SetServerRpc(m_LocalPlayerInteracting);
         SetPlayerConditions(m_LocalPlayerInteracting);
-        IncReadyServerRpc();  
-        Debug.Log("hey" + PlayersReady.Value);
-        /* SetReadyConditions(m_LocalPlayerInteracting); */
-
+        ModReadyServerRpc(m_LocalPlayerInteracting ? 1 : -1);
+        Debug.Log("ready" + PlayersReady.Value);
     }
     void SetPlayerConditions(bool on){
         PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = !PlayerManager.Instance.LocalPlayer.Avatar.ready.Value;  
-        
-        
-        /* if(readyCouter == PlayerManager.Instance.Players.Count)  NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single); */
-
-    }
-    void SetReadyConditions(bool ready){
-/*         foreach (var player in FindObjectsOfType<PersistentPlayer>()) {
-            if(IsOwner){
-                if (PlayerManager.Instance.LocalPlayer.Avatar.ready.Value) { */
-        /* PlayerManager.Instance.PlayersReady++; */
-      /*           }
-            }
-            
-        } */ 
     }
 
     public override void Update() {
