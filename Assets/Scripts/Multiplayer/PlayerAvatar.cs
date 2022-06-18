@@ -18,39 +18,22 @@ public struct PlayerPos {
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerAvatar : NetworkBehaviour {
 
-    [SerializeField]
-    private GameObject m_CharacterList;
-    [ServerRpc]
-    public void UpdatePosServerRpc(PlayerPos p) {
-        m_PlayerPos.Value = p;
-    }
-    public enum Slot {
-        PRIMARY, SECONDARY
-    };
+    /* === GENERAL STUFF === */
+    private PersistentPlayer m_LocalPlayer;
+    private Renderer m_PlayerMesh;
+
+    /* === MOVEMENT & ROOMS === */
     public const float GRAVITY = -10f;  //in case of zero gravity this need to change
     public Transform groundCheck;
-    public Transform dropPoint;
-    public Transform PrimaryItemDisplay;  // left hand
-    public Transform SecondaryItemDisplay;  // back
     public LayerMask groundLayer;
-    public TMP_Text nameText;
-    public Material normalMaterial;
-    public Material transparentMaterial;
-    public Transform CameraLookAt;
-    private NetworkVariable<int> m_ActiveCharacter
-            = new NetworkVariable<int>(3, default, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<float> HorizontalSpeed
-            = new NetworkVariable<float>(0, default, NetworkVariableWritePermission.Owner);
-
     private NetworkVariable<PlayerPos> m_PlayerPos
             = new NetworkVariable<PlayerPos>();
-    private NetworkVariable<NetworkObjectReference> m_PrimaryItem
-            = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
-    private NetworkVariable<NetworkObjectReference> m_SecondaryItem
-            = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<bool> ready = new NetworkVariable<bool>(default, default, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<float> m_HorizontalSpeed
-            = new NetworkVariable<float>(0f, default, NetworkVariableWritePermission.Owner);
+    private List<int> m_MovementLocks = new List<int>();
+    private Coroutine m_SpeedBoostCoroutine = null;
+    private CharacterController m_Controller;
+    private float m_MovementSpeed = 3f;
+    private bool m_IsGrounded = false;
+    private float m_FallVelocity;
 
     private Room m_CurrentRoom = null;
     public Room CurrentRoom {
@@ -60,38 +43,69 @@ public class PlayerAvatar : NetworkBehaviour {
         }
     }
 
-    private List<int> m_MovementLocks = new List<int>();
-    private Coroutine m_SpeedBoostCoroutine = null;
-    private CharacterController m_Controller;
-    private float m_MovementSpeed = 3f;
-    private bool m_IsGrounded = false;
+    /* === INVENTORY === */
+    public enum Slot { PRIMARY, SECONDARY };
 
+    [Tooltip("Point in space from which items are dropped.")]
+    public Transform dropPoint;
+    [Tooltip("Location where the item is displayed in the primaty slot.  Should be the player's left hand.")]
+    public Transform PrimaryItemDisplay;
+    [Tooltip("Location where the item is displayed in the secondary slot.  Should be the player's back.")]
+    public Transform SecondaryItemDisplay;
+
+    private NetworkVariable<NetworkObjectReference> m_PrimaryItem
+            = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<NetworkObjectReference> m_SecondaryItem
+            = new NetworkVariable<NetworkObjectReference>(default, default, NetworkVariableWritePermission.Owner);
+
+
+    /* === LOBBY & CHARACTER SELECT === */
+    [SerializeField]
+    private GameObject m_CharacterList;
+    public GameObject isready;
+    public GameObject notready;
+    public CharacterSelect chara_select;
+    private NetworkVariable<int> m_ActiveCharacter
+            = new NetworkVariable<int>(3, default, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> ready
+            = new NetworkVariable<bool>(default, default, NetworkVariableWritePermission.Owner);
+
+
+    /* === HEALTH, OXYGEN & RELATED UI === */
     [SerializeField]
     [Range(0f,1f)]
     private float m_Health = Mathf.Clamp(1f, 0f, 1f);
     [SerializeField]
     private HealthBar m_HealthBar;
-    // Places where items are attached
-    private PersistentPlayer m_LocalPlayer;
-    private float m_FallVelocity;
-
-    public GameObject isready;
-    public GameObject notready;
-    public CharacterSelect chara_select;
-    private Renderer m_PlayerMesh;
     [SerializeField]
-    private float m_LungCapacity = 1f;
+    private float m_LungOxygen = 1f;
+
+    /* === ANIMATION === */
     private PlayerAnimationController m_AnimationController;
     public PlayerAnimationController AnimationController { get => m_AnimationController; }
+    public NetworkVariable<float> HorizontalSpeed
+            = new NetworkVariable<float>(0, default, NetworkVariableWritePermission.Owner);
+
+    /* === OTHER VISUALS (NAMETAG, MATERIALS, CAMERA, ...) === */
+    public TMP_Text nameText;
+    public Material normalMaterial;
+    public Material transparentMaterial;
+    public Transform CameraLookAt;
+
+    /* === AUDIO === */
     [SerializeField]
     private AudioClip[] dropCupSounds;
     [SerializeField]
     private AudioClip[] dropMetalObjectSounds;
     private AudioSource audioSource;
 
+
+    /* ================== LIFECYCLE METHODS ================== */
+
     private void Awake() {
         audioSource = GetComponent<AudioSource>();
     }
+
     public void Start() {
         if (CameraLookAt == null) {
             CameraLookAt = transform;
@@ -113,106 +127,12 @@ public class PlayerAvatar : NetworkBehaviour {
             isready.SetActive(false);
             notready.SetActive(false);
         }
-        
+
         m_HealthBar = GetComponentInChildren<HealthBar>();
         m_AnimationController = GetComponent<PlayerAnimationController>();
         if(m_AnimationController = null){
             Debug.Log("animation contraller created to early");
         }
-    }
-    
-
-    void Update() {
-        OxygenRegulation(Time.deltaTime);
-        if (IsClient) {
-            if (IsOwner) {
-                ProcessInput();
-                
-            } else {
-                UpdatePos();
-            }
-            UpdateNameTag();
-            UpdateHealthBar();
-        }
-        if( SceneManager.GetActiveScene().name == "Lobby"){
-            if(ready.Value){
-                isready.SetActive(true);
-                notready.SetActive(false);
-            }
-            if(!ready.Value){
-                isready.SetActive(false);
-                notready.SetActive(true);
-            }
-        }
-        else {
-            isready.SetActive(false);
-            notready.SetActive(false);
-        }
-
-        
-    }
-
-    public void SetActiveCharacter(int characterIndex) {
-        m_ActiveCharacter.Value = characterIndex;
-    }
-
-    public void OnCharacterChanged(int previous, int current) {
-        // Debug.Log(name + ": Character model changed from " + previous + " to " + current);
-
-        m_CharacterList.transform.GetChild(previous).gameObject.SetActive(false);
-        m_CharacterList.transform.GetChild(current).gameObject.SetActive(true);
-        m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
-    }
-
-    public void Teleport(Vector3 pos, Quaternion rot) {
-        bool prev_controller_enabled = m_Controller.enabled;
-        m_Controller.enabled = false;
-        transform.SetPositionAndRotation(pos, rot);
-        m_Controller.enabled = prev_controller_enabled;
-    }
-
-    public void Teleport(Transform target) {
-        Teleport(target.position, target.rotation);
-    }
-
-    [ClientRpc]
-    public void TeleportClientRpc(PlayerPos target) {
-        Teleport(target.Position, target.Rotation);
-    }
-
-    public void OxygenRegulation(float delta_time){
-        if (m_CurrentRoom == null) return;
-        float oxygen = ((m_LungCapacity - 0.01f + (0.02f* m_CurrentRoom.RoomOxygen)));
-        m_LungCapacity = Mathf.Clamp(oxygen, 0f, 1f);
-        //Debug.Log(delta_time);
-        //Debug.Log("palyer Oxygen:" + m_LungCapacity + "\n room: " + m_CurrentRoom.Name + ",Ox-Level: " + m_CurrentRoom.RoomOxygen);
-    }
-
-    public override void OnNetworkSpawn() {
-        base.OnNetworkSpawn();
-        m_PrimaryItem.OnValueChanged += OnPrimaryItemChanged;
-        m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
-        m_ActiveCharacter.OnValueChanged += OnCharacterChanged;
-        m_HorizontalSpeed.OnValueChanged += (float _, float curr) => {
-            if (!m_AnimationController) {
-                m_AnimationController = GetComponent<PlayerAnimationController>();
-                if (!m_AnimationController) {
-                    Debug.LogError("Speed changed for " + name + " but no Animator attached.");
-                    return;
-                }
-            }
-            m_AnimationController.OnSpeedChange(curr);
-        };
-
-        Debug.Log("[PlayerAvatar/OnNetworkSpawn] PlayerAvatar spanwed " + name + " owned by " + OwnerClientId);
-        Setup();
-    }
-
-    public override void OnNetworkDespawn(){
-        base.OnNetworkDespawn();
-        m_PrimaryItem.OnValueChanged -= OnPrimaryItemChanged;
-        m_SecondaryItem.OnValueChanged -= OnSecondaryItemChanged;
-        m_ActiveCharacter.OnValueChanged -= OnCharacterChanged;
     }
 
     public void Setup() {
@@ -243,43 +163,58 @@ public class PlayerAvatar : NetworkBehaviour {
         OnSecondaryItemChanged(m_SecondaryItem.Value, m_SecondaryItem.Value);
     }
 
-    public void PerformGroundCheck() {
-        m_IsGrounded = Physics.CheckSphere(groundCheck.position,
-                GroundCheck.GROUND_CHECK_RADIUS,
-                groundLayer
-        );
-    }
-
-    private void UpdateNameTag() {
-        nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
-        isready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
-        notready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
-        float distanceToCamera = Vector3.Distance(CameraBrain.Instance.ActiveCameraTransform.position, transform.position);
-        Vector3 scale = new Vector3(distanceToCamera, distanceToCamera, distanceToCamera);
-        nameText.gameObject.transform.localScale = scale * 0.002f;
-        isready.transform.localScale = scale * 0.002f;
-        notready.transform.localScale = scale * 0.002f;
-    }
-
-    private void UpdateHealthBar() {
-        m_HealthBar.UpdateHealthBar(m_Health);
-    }
-
-    IEnumerator WaitForGround(float time){
-        var item = GetInventoryItem(Slot.PRIMARY).tag;
-        DropItem(Slot.PRIMARY);
-        yield return new WaitForSeconds(time);
-        if(item == "Cup"){
-            AudioClip sound = GetRandomCupDropClip();
-            audioSource.PlayOneShot(sound);
-            Debug.Log("Cup Drop");
+    void Update() {
+        if (IsClient) {
+            if (IsOwner) {
+                ProcessInput();
+                OxygenRegulation(Time.deltaTime);
+            } else {
+                UpdatePos();
+            }
+            UpdateNameTag();
+            UpdateHealthBar();
         }
-        else{
-            AudioClip sound = GetRandomMetalObjectDropClip();
-            audioSource.PlayOneShot(sound);
-            Debug.Log("Metal Object Drop");
+        if(SceneManager.GetActiveScene().name == "Lobby") {
+            if(ready.Value) {
+                isready.SetActive(true);
+                notready.SetActive(false);
+            }
+            if(!ready.Value) {
+                isready.SetActive(false);
+                notready.SetActive(true);
+            }
         }
+        else {
+            isready.SetActive(false);
+            notready.SetActive(false);
+        }
+    }
 
+    public override void OnNetworkSpawn() {
+        base.OnNetworkSpawn();
+        m_PrimaryItem.OnValueChanged += OnPrimaryItemChanged;
+        m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
+        m_ActiveCharacter.OnValueChanged += OnCharacterChanged;
+        HorizontalSpeed.OnValueChanged += (float _, float curr) => {
+            if (!m_AnimationController) {
+                m_AnimationController = GetComponent<PlayerAnimationController>();
+                if (!m_AnimationController) {
+                    Debug.LogError("Speed changed for " + name + " but no Animator attached.");
+                    return;
+                }
+            }
+            m_AnimationController.OnSpeedChange(curr);
+        };
+
+        Debug.Log("[PlayerAvatar/OnNetworkSpawn] PlayerAvatar spanwed " + name + " owned by " + OwnerClientId);
+        Setup();
+    }
+
+    public override void OnNetworkDespawn(){
+        base.OnNetworkDespawn();
+        m_PrimaryItem.OnValueChanged -= OnPrimaryItemChanged;
+        m_SecondaryItem.OnValueChanged -= OnSecondaryItemChanged;
+        m_ActiveCharacter.OnValueChanged -= OnCharacterChanged;
     }
 
     void ProcessInput() {
@@ -306,7 +241,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
         var horizontalVelocity = direction * Time.deltaTime * m_MovementSpeed;
         m_Controller.Move(horizontalVelocity);
-        m_HorizontalSpeed.Value = direction.magnitude;
+        HorizontalSpeed.Value = direction.magnitude;
 
         m_Controller.transform.LookAt(m_Controller.transform.position + direction);
 
@@ -356,10 +291,136 @@ public class PlayerAvatar : NetworkBehaviour {
 
         UpdatePosServerRpc(p);
     }
+
     void UpdatePos() {
         transform.position = m_PlayerPos.Value.Position;
         transform.rotation = m_PlayerPos.Value.Rotation;
     }
+
+    private void UpdateNameTag() {
+        nameText.gameObject.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        isready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        notready.transform.rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        float distanceToCamera = Vector3.Distance(CameraBrain.Instance.ActiveCameraTransform.position, transform.position);
+        Vector3 scale = new Vector3(distanceToCamera, distanceToCamera, distanceToCamera);
+        nameText.gameObject.transform.localScale = scale * 0.002f;
+        isready.transform.localScale = scale * 0.002f;
+        notready.transform.localScale = scale * 0.002f;
+    }
+
+    private void UpdateHealthBar() {
+        m_HealthBar.UpdateHealthBar(m_Health);
+    }
+
+
+    /* ================== MOVEMENT ================== */
+
+    [ServerRpc]
+    public void UpdatePosServerRpc(PlayerPos p) {
+        m_PlayerPos.Value = p;
+    }
+
+    public void PerformGroundCheck() {
+        m_IsGrounded = Physics.CheckSphere(groundCheck.position,
+                GroundCheck.GROUND_CHECK_RADIUS,
+                groundLayer
+        );
+    }
+
+    public void Teleport(Vector3 pos, Quaternion rot) {
+        bool prev_controller_enabled = m_Controller.enabled;
+        m_Controller.enabled = false;
+        transform.SetPositionAndRotation(pos, rot);
+        m_Controller.enabled = prev_controller_enabled;
+    }
+
+    public void Teleport(Transform target) {
+        Teleport(target.position, target.rotation);
+    }
+
+    [ClientRpc]
+    public void TeleportClientRpc(PlayerPos target) {
+        Teleport(target.Position, target.Rotation);
+    }
+
+    public void LockMovement(int locker) {
+        if (!m_MovementLocks.Contains(locker)) {
+            m_MovementLocks.Add(locker);
+        }
+    }
+    public void ReleaseMovementLock(int locker) {
+        if (m_MovementLocks.Contains(locker)) {
+            m_MovementLocks.Remove(locker);
+        }
+    }
+    public bool MovementLocked {
+        get => m_MovementLocks.Count > 0;
+    }
+
+    public void SpeedBoost() {
+        if (m_SpeedBoostCoroutine == null) {
+            m_SpeedBoostCoroutine = StartCoroutine(SpeedBoostCoroutine());
+        }
+    }
+    IEnumerator SpeedBoostCoroutine() {
+        float speed_prev = m_MovementSpeed;
+        m_MovementSpeed *= 3f;
+        yield return new WaitForSeconds(4);
+        m_MovementSpeed = speed_prev;
+        m_SpeedBoostCoroutine = null;
+    }
+
+
+    /* ================== CHARACTER SELECT ================== */
+
+    public void OnCharacterChanged(int previous, int current) {
+        m_CharacterList.transform.GetChild(previous).gameObject.SetActive(false);
+        m_CharacterList.transform.GetChild(current).gameObject.SetActive(true);
+        m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
+    }
+
+    public void SetActiveCharacter(int characterIndex) {
+        m_ActiveCharacter.Value = characterIndex;
+    }
+
+
+    /* ================== AUDIO ================== */
+
+    private AudioClip GetRandomCupDropClip() {
+        return dropCupSounds[UnityEngine.Random.Range(0, dropCupSounds.Length)];
+    }
+
+    private AudioClip GetRandomMetalObjectDropClip() {
+        return dropMetalObjectSounds[UnityEngine.Random.Range(0, dropMetalObjectSounds.Length)];
+    }
+
+    IEnumerator WaitForGround(float time){
+        var item = GetInventoryItem(Slot.PRIMARY).tag;
+        DropItem(Slot.PRIMARY);
+        yield return new WaitForSeconds(time);
+        if(item == "Cup"){
+            AudioClip sound = GetRandomCupDropClip();
+            audioSource.PlayOneShot(sound);
+            Debug.Log("Cup Drop");
+        }
+        else{
+            AudioClip sound = GetRandomMetalObjectDropClip();
+            audioSource.PlayOneShot(sound);
+            Debug.Log("Metal Object Drop");
+        }
+    }
+
+
+    /* ================== HEALTH & OXYGEN ================== */
+
+    public void OxygenRegulation(float delta_time){
+        if (m_CurrentRoom == null) return;
+        float oxygen = ((m_LungOxygen - 0.01f + (0.02f* m_CurrentRoom.RoomOxygen)));
+        m_LungOxygen = Mathf.Clamp(oxygen, 0f, 1f);
+    }
+
+
+    /* ================== HIDE PLAYER ================== */
 
     public void HidePlayer(bool on){
         if (!m_PlayerMesh) return; // too early
@@ -370,6 +431,9 @@ public class PlayerAvatar : NetworkBehaviour {
             m_PlayerMesh.sharedMaterial = normalMaterial;
         }
     }
+
+
+    /* ================== INVENTORY ================== */
 
     private void ShowInInventory(Transform hand, NetworkObject item) {
         MeshRenderer itemRend = item.GetComponentInChildren<MeshRenderer>();
@@ -443,7 +507,6 @@ public class PlayerAvatar : NetworkBehaviour {
         }
     }
 
-
     public void AddToInventory(Slot slot, NetworkObject item) {
         if (slot == Slot.PRIMARY) {
             m_PrimaryItem.Value = item;
@@ -458,13 +521,6 @@ public class PlayerAvatar : NetworkBehaviour {
         }
         interactable.InvokeOnPickup(this);
         InvokeOnPickupServerRpc(new NetworkObjectReference(item));
-    }
-
-    private AudioClip GetRandomCupDropClip(){
-        return dropCupSounds[UnityEngine.Random.Range(0, dropCupSounds.Length)];
-    }
-    private AudioClip GetRandomMetalObjectDropClip(){
-        return dropMetalObjectSounds[UnityEngine.Random.Range(0, dropMetalObjectSounds.Length)];
     }
 
     public void DropItem(Slot slot) {
@@ -524,33 +580,6 @@ public class PlayerAvatar : NetworkBehaviour {
         }
         DroppableInteractable interactable = Util.GetDroppableInteractable(reference);
         interactable.InvokeOnDrop(this);
-    }
-
-    public void LockMovement(int locker) {
-        if (!m_MovementLocks.Contains(locker)) {
-            m_MovementLocks.Add(locker);
-        }
-    }
-    public void ReleaseMovementLock(int locker) {
-        if (m_MovementLocks.Contains(locker)) {
-            m_MovementLocks.Remove(locker);
-        }
-    }
-    public bool MovementLocked {
-        get => m_MovementLocks.Count > 0;
-    }
-
-    public void SpeedBoost() {
-        if (m_SpeedBoostCoroutine == null) {
-            m_SpeedBoostCoroutine = StartCoroutine(SpeedBoostCoroutine());
-        }
-    }
-    IEnumerator SpeedBoostCoroutine() {
-        float speed_prev = m_MovementSpeed;
-        m_MovementSpeed *= 3f;
-        yield return new WaitForSeconds(4);
-        m_MovementSpeed = speed_prev;
-        m_SpeedBoostCoroutine = null;
     }
 
     public static bool IsHolding<T>() where T: DroppableInteractable {
