@@ -474,10 +474,14 @@ public class PlayerAvatar : NetworkBehaviour {
         m_DeathReviveCoroutine = null;
     }
 
-    private void OnHealthChanged(float _, float health) {
+    private void OnHealthChanged(float health_prev, float health) {
         if (health <= 0 && !m_HasDied) {
             m_HasDied = true;
             SetPlayerAlive(alive: false);
+        }
+        if (health > 0 && health_prev <= 0 && m_HasDied) {
+            m_HasDied = false;
+            SetPlayerAlive(alive: true);
         }
     }
 

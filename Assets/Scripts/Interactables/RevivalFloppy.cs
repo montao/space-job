@@ -7,8 +7,11 @@ public class RevivalFloppy : DroppableInteractable {
     // TODO move to medbay
     public override PlayerAnimation SelfInteraction(PlayerAvatar avatar_reviving) {
         Debug.Log("Revival Time!");
-        NetworkObject avatar_to_revive_neto;
+
+        avatar_reviving.DropItem(PlayerAvatar.Slot.PRIMARY);
         CanInteract = false;
+
+        NetworkObject avatar_to_revive_neto;
         var pos = avatar_reviving.transform.position + (1.5f * avatar_reviving.transform.forward) + (0.2f * Vector3.up);
         if (Player.Value.TryGet(out avatar_to_revive_neto)) {
             avatar_to_revive_neto.GetComponent<PlayerAvatar>().ReviveServerRpc(pos);
