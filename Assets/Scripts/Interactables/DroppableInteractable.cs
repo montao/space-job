@@ -17,8 +17,8 @@ public abstract class DroppableInteractable : Interactable<int>{
     protected AudioSource audioSource;
 
     public delegate void OnPickupDropDelegate(PlayerAvatar avatar);
-    public OnPickupDropDelegate OnPickup;
-    public OnPickupDropDelegate OnDrop;
+    public event OnPickupDropDelegate OnPickup;
+    public event OnPickupDropDelegate OnDrop;
 
     public Vector3 PrimaryPos;
     public Vector3 PrimaryRot;
@@ -97,5 +97,13 @@ public abstract class DroppableInteractable : Interactable<int>{
         }
         m_Rigidbody.isKinematic = !inWorld; // TODO does this work? 
         m_NetTransform.enabled = inWorld;
+    }
+
+    public void InvokeOnPickup(PlayerAvatar avatar) {
+        OnPickup?.Invoke(avatar);
+    }
+
+    public void InvokeOnDrop(PlayerAvatar avatar) {
+        OnDrop?.Invoke(avatar);
     }
 }

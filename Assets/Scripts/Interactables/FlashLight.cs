@@ -14,15 +14,17 @@ public class FlashLight : DroppableInteractable {
         m_Beam = GetComponentInChildren<Light>();
 
         // Only run on local client
-        OnPickup = (PlayerAvatar avatar) => {
+        OnPickup += (PlayerAvatar avatar) => {
+            Debug.Log("Flashlight picked up by " + avatar.name);
             var fl_hand = avatar.GetComponentInChildren<FlashLightInHand>(includeInactive: true);
+            Debug.Log("FlashLightInHand: " + fl_hand);
             fl_hand.gameObject.SetActive(true);
             fl_hand.ItemRenderer = avatar.PrimaryItemDisplay;
             m_Beam.enabled = false;
         };
 
         // Only run on local client
-        OnDrop = (PlayerAvatar avatar) => {
+        OnDrop -= (PlayerAvatar avatar) => {
             avatar.GetComponentInChildren<FlashLightInHand>().gameObject.SetActive(false);
             m_Beam.enabled = true;
         };

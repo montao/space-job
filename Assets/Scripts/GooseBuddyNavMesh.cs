@@ -26,7 +26,7 @@ public class GooseBuddyNavMesh : MonoBehaviour {
 
     public static GooseState RandomState() {
         int i = UnityEngine.Random.Range(0, Enum.GetValues(typeof(GooseState)).Length);
-        Debug.Log("Goose " + i);
+        //Debug.Log("Goose " + i);
         return (GooseState)Enum.ToObject(typeof(GooseState), i);
     }
     public static Transform RandomTarget(GooseState state) {
@@ -91,7 +91,7 @@ public class GooseBuddyNavMesh : MonoBehaviour {
             return hit.position;
         }
 
-        Debug.Log("No Goose destination found, trying again with maxdist=" + (max_distance - 10) + "...");
+        // Debug.Log("No Goose destination found, trying again with maxdist=" + (max_distance - 10) + "...");
         return RandomPointOnNavMesh(max_distance - 10);
     }
 

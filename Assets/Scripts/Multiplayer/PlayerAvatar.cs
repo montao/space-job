@@ -363,7 +363,6 @@ public class PlayerAvatar : NetworkBehaviour {
 
     public void HidePlayer(bool on){
         if (!m_PlayerMesh) return; // too early
-        Debug.Log(m_PlayerMesh);
         if(on) {
             m_PlayerMesh.sharedMaterial = transparentMaterial;
         }
@@ -453,10 +452,11 @@ public class PlayerAvatar : NetworkBehaviour {
             m_SecondaryItem.Value = item;
             ShowInInventory(SecondaryItemDisplay, item);  // optional, client-sided
         }
-        var interactable = item.GetComponent<DroppableInteractable>();
-        if (interactable && interactable.OnPickup != null) {
-            interactable.OnPickup(this);
+        var interactable = item.GetComponentInChildren<DroppableInteractable>();
+        if (!interactable) {
+            Debug.LogError("Picked up " + item.name + " but no DroppableInteractable component found on it.");
         }
+        interactable.InvokeOnPickup(this);  // TODO Trigger on all clients
     }
 
     private AudioClip GetRandomCupDropClip(){
@@ -491,9 +491,7 @@ public class PlayerAvatar : NetworkBehaviour {
         }
 
         AnimationController.TriggerAnimation(PlayerAnimation.INTERACT);
-        if (cup && cup.OnDrop != null) {
-            cup.OnDrop(this);
-        }
+        cup.InvokeOnDrop(this);  // TODO Trigger on all clients
     }
 
     public void LockMovement(int locker) {
