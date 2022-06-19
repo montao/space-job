@@ -4,11 +4,6 @@ using Unity.Netcode;
 public class RevivalFloppy : DroppableInteractable {
     public NetworkVariable<NetworkObjectReference> Player = new NetworkVariable<NetworkObjectReference>();
 
-    public override void OnNetworkSpawn() {
-        base.OnNetworkDespawn();
-        Debug.Log("RevivalFloppy spawned!");
-    }
-
     // TODO move to medbay
     public override PlayerAnimation SelfInteraction(PlayerAvatar avatar_reviving) {
         avatar_reviving.DropItem(PlayerAvatar.Slot.PRIMARY);

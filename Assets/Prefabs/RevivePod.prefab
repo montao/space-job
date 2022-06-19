@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 466541475214015741}
   - component: {fileID: 4558610155862407026}
   - component: {fileID: 6646191761117198068}
+  - component: {fileID: 290228803830695060}
   m_Layer: 2
   m_Name: RevivePod
   m_TagString: Untagged
@@ -465,6 +466,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.083732605, z: 0.083774485}
   m_Center: {x: 1.1813806e-15, y: -1.0160587, z: 0.58313215}
+--- !u!114 &290228803830695060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4567142223320531753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &5018919438054772895
 GameObject:
   m_ObjectHideFlags: 0

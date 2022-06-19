@@ -1,24 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
 
-public class FloppyInsertPort : InteractableBase
-{
+public class FloppyInsertPort : InteractableBase {
     private NetworkVariable<NetworkObjectReference> m_PlayerData = new NetworkVariable<NetworkObjectReference>();
+
     protected override void Interaction(){
         PlayerAvatar activePlayer = PlayerManager.Instance.LocalPlayer.Avatar;
-        DroppableInteractable thing = Util.GetDroppableInteractable(activePlayer.GetInventoryItem(PlayerAvatar.Slot.PRIMARY));
-        Debug.Log(thing.name);
-        thing.DropServerRpc(activePlayer.dropPoint.position);
-        thing.DespawnServerRpc();
-        if (PlayerAvatar.IsHolding<CoffeCup>()) {
+        if (PlayerAvatar.IsHolding<RevivalFloppy>()) {
             DroppableInteractable item = Util.GetDroppableInteractable(activePlayer.GetInventoryItem(PlayerAvatar.Slot.PRIMARY));
             RevivalFloppy floppy = item.GetComponent<RevivalFloppy>();
-            m_PlayerData.Value = floppy.Player.Value;
+            SetPlayerReferenceServerRpc(floppy.Player.Value);
+            activePlayer.DropItem(PlayerAvatar.Slot.PRIMARY);
             floppy.DespawnServerRpc();
             Debug.Log("Cromch");
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SetPlayerReferenceServerRpc(NetworkObjectReference reference) {
+        Debug.Log("Floppy Inserted!");
+        m_PlayerData.Value = reference;
     }
 }
