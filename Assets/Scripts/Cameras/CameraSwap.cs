@@ -106,4 +106,17 @@ public class CameraSwap : MonoBehaviour {
             }
         }
     }
+
+    public void SetNoiseParameters(float amp, float freq) {
+        if (InRoom) {
+            amp *= 0.05f;
+        }
+        var noise = m_Camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        if (noise) {
+            noise.m_AmplitudeGain = amp;
+            noise.m_FrequencyGain = freq;
+        } else {
+            Debug.LogWarning("No noise found for " + name);
+        }
+    }
 }

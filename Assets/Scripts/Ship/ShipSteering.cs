@@ -48,6 +48,27 @@ public class ShipSteering : NetworkBehaviour {
         audioSource = GetComponent<AudioSource>();
     }
 
+    public override void OnNetworkSpawn() {
+        base.OnNetworkSpawn();
+        m_Velocity.OnValueChanged += OnVelocityChanged;
+    }
+
+    public override void OnNetworkDespawn() {
+        base.OnNetworkDespawn();
+        m_Velocity.OnValueChanged -= OnVelocityChanged;
+    }
+
+    private void OnVelocityChanged(Vector3 prev, Vector3 curr) {
+        float speed_prev = prev.magnitude;
+        float speed_curr = curr.magnitude;
+
+        if (speed_prev < EPSILON && speed_curr >= EPSILON) {
+            CameraBrain.Instance.QuickShake(0.6f, 0.3f);
+        } else if (speed_prev >= EPSILON && speed_curr < EPSILON) {
+            CameraBrain.Instance.QuickShake(0.4f, 0.3f);
+        }
+    }
+
     public bool GetThrusterState(Thruster t) {
         return (m_ThrusterStatesNetwork.Value & (1 << (int)t)) != 0;
     }
@@ -137,10 +158,10 @@ public class ShipSteering : NetworkBehaviour {
         if (IsServer) {
             UpdateServerside();
         }
-        if(GetThrusterState(Thruster.TRANSLATE_FORWARD) | GetThrusterState(Thruster.TRANSLATE_BACKWARD)){
+        if(GetThrusterState(Thruster.TRANSLATE_FORWARD) || GetThrusterState(Thruster.TRANSLATE_BACKWARD)){
             Debug.Log(audioSourceLeft.clip);
             audioSourceLeft.Play(0);
-            audioSourceRight.Play(0);        
+            audioSourceRight.Play(0);
         }
         if(GetThrusterState(Thruster.ROTATE_LEFT)){
             if(audioSourceLeft.isPlaying) {
