@@ -126,6 +126,11 @@ public abstract class DroppableInteractable : Interactable<int>{
 
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void DespawnServerRpc() {
+        GetComponentInParent<NetworkObject>().Despawn(destroy: true);
+    }
+
 
     /* ================== INTERACTION ================== */
 

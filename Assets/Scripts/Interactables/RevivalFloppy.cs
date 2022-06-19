@@ -24,9 +24,4 @@ public class RevivalFloppy : DroppableInteractable {
         DespawnServerRpc();
         return base.SelfInteraction(avatar_reviving);  // TODO? animation?
     }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void DespawnServerRpc() {
-        GetComponentInParent<NetworkObject>().Despawn(destroy: true);
-    }
 }
