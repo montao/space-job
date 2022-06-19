@@ -526,9 +526,13 @@ public class PlayerAvatar : NetworkBehaviour {
         itemRend.enabled = false;
 
         DroppableInteractable interactable = item.GetComponentInChildren<DroppableInteractable>();
-        handRend.transform.localPosition = interactable.PrimaryPos;
+
+        bool primary = hand == PrimaryItemDisplay;
+        var handRendPos = primary ? interactable.PrimaryPos : interactable.SecondaryPos;
+        var handRendRot = primary ? interactable.PrimaryRot : interactable.SecondaryRot;
+        handRend.transform.localPosition = handRendPos;
         Quaternion rot = Quaternion.identity;
-        rot.eulerAngles = interactable.PrimaryRot;
+        rot.eulerAngles = handRendRot;
         handRend.transform.localRotation = rot;
 
         // Make overall world scale of object in hand match the item's scale.
