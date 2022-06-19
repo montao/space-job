@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Cinemachine;
@@ -20,6 +21,8 @@ public class CameraBrain : MonoBehaviour {
     private Skybox m_Skybox;
     private bool m_IsBlending;
     private bool m_WireframeOnBlend = true;
+
+    private Coroutine m_ShakeCoroutine = null;
 
     public CinemachineBlendDefinition BlendBetweenRooms;
     public CinemachineBlendDefinition BlendWithinRoom;
@@ -95,6 +98,30 @@ public class CameraBrain : MonoBehaviour {
             return blend;
         };
         m_CurrentBlend = blendType;
+    }
+
+    public void SetNoiseParameters(float amplitude, float frequency = 6f) {
+        foreach (var cam in CameraSwap.Instances) {
+            cam.SetNoiseParameters(amplitude, frequency);
+        }
+    }
+
+    private IEnumerator QuickShakeCoroutine(float duration, float max_amplitude, int steps) {
+        for (float t = 0f; t <= 1f; t += 1f/(float)steps) {
+            float amp = max_amplitude * Mathf.Sqrt(4f * t * (1f - t));
+            amp = Mathf.Clamp(amp, 0f, max_amplitude);
+            SetNoiseParameters(amp);
+            yield return new WaitForSeconds(duration/steps);
+        }
+        SetNoiseParameters(0);
+        m_ShakeCoroutine = null;
+    }
+
+    public void QuickShake(float duration, float max_amplitude = 1f, int steps = 40) {
+        if (m_ShakeCoroutine != null) {
+            return;
+        }
+        m_ShakeCoroutine = StartCoroutine(QuickShakeCoroutine(duration, max_amplitude, steps));
     }
 
     void Update() {
