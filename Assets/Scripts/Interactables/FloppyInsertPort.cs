@@ -8,6 +8,9 @@ public class FloppyInsertPort : InteractableBase
 {
     private NetworkVariable<NetworkObjectReference> m_PlayerData = new NetworkVariable<NetworkObjectReference>();
     protected override void Interaction(){
+        DroppableInteractable thing = Util.GetDroppableInteractable(PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY));
+        Debug.Log(thing.name);
+        thing.DespawnServerRpc();
         if (PlayerAvatar.IsHolding<RevivalFloppy>()) {
             DroppableInteractable item = Util.GetDroppableInteractable(PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY));
             RevivalFloppy floppy = item.GetComponent<RevivalFloppy>();
