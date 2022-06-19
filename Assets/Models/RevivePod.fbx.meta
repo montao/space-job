@@ -1,0 +1,201 @@
+fileFormatVersion: 2
+guid: 5e01132ac07e77ef38e2cbed06efbd78
+ModelImporter:
+  serializedVersion: 20200
+  internalIDToNameTable:
+  - first:
+      74: -7156440825861976114
+    second: doorOpen
+  - first:
+      74: -5932279931876818476
+    second: closeSavety
+  - first:
+      74: -3615008105333845336
+    second: Floppyinsert
+  - first:
+      74: 211435690349559565
+    second: door|closeSavety
+  - first:
+      74: 6080753905422173523
+    second: door|CubeAction
+  - first:
+      74: 7021849423861141327
+    second: door|CylinderAction
+  - first:
+      74: -5399200397528593491
+    second: door|doorOpen
+  - first:
+      74: -2117847265294159060
+    second: door|Floppyinsert
+  - first:
+      74: 7246373205269971581
+    second: door|SavetyThingyAction
+  - first:
+      74: -7886812608615796353
+    second: Hardware|closeSavety
+  - first:
+      74: 8067333962179286029
+    second: Hardware|CubeAction
+  - first:
+      74: -8044428199285395138
+    second: Hardware|CylinderAction
+  - first:
+      74: 3455055668582132050
+    second: Hardware|doorOpen
+  - first:
+      74: -5140731286235416852
+    second: Hardware|Floppyinsert
+  - first:
+      74: 4461267728117288487
+    second: Hardware|SavetyThingyAction
+  - first:
+      74: -5218273480626009641
+    second: SavetyThingy|closeSavety
+  - first:
+      74: 5142307668368877803
+    second: SavetyThingy|CubeAction
+  - first:
+      74: -2897209059675653299
+    second: SavetyThingy|CylinderAction
+  - first:
+      74: 7723103181677637833
+    second: SavetyThingy|doorOpen
+  - first:
+      74: -4144144948426348237
+    second: SavetyThingy|Floppyinsert
+  - first:
+      74: -299190501446115781
+    second: SavetyThingy|SavetyThingyAction
+  - first:
+      74: 8420391273274621622
+    second: Button|closeSavety
+  - first:
+      74: -5415876975779537825
+    second: Button|CubeAction
+  - first:
+      74: 5212978677597794019
+    second: Button|CylinderAction
+  - first:
+      74: -2656828622529848240
+    second: Button|doorOpen
+  - first:
+      74: -6728085514332412155
+    second: Button|Floppyinsert
+  - first:
+      74: 8542844730516982906
+    second: Button|SavetyThingyAction
+  - first:
+      74: 6873524747177328198
+    second: RevivalFloppy|closeSavety
+  - first:
+      74: 8357968044670520307
+    second: RevivalFloppy|CubeAction
+  - first:
+      74: 2300875457623973354
+    second: RevivalFloppy|CylinderAction
+  - first:
+      74: 1494430513569620427
+    second: RevivalFloppy|doorOpen
+  - first:
+      74: 1423957585936522673
+    second: RevivalFloppy|Floppyinsert
+  - first:
+      74: 2094457913926890123
+    second: RevivalFloppy|SavetyThingyAction
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
