@@ -227,6 +227,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 79e91775b5b0262c8a06c1f354be964d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 22a9b32280c86d350a9ff9ae9fe21089, type: 2}
     - target: {fileID: 919132149155446097, guid: 79e91775b5b0262c8a06c1f354be964d, type: 3}
       propertyPath: m_Name
       value: RevivalFloppy_Interactable
@@ -273,13 +277,11 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Velocity: 100
-  PrimaryPos: {x: 0, y: 0, z: 0}
-  PrimaryRot: {x: 0, y: 0, z: 0}
-  SecondaryPos: {x: 0, y: 0, z: 0}
-  SecondaryRot: {x: 0, y: 0, z: 0}
+  PrimaryPos: {x: 0.035, y: -0.0241, z: -0.2519}
+  PrimaryRot: {x: 86.10318, y: 7.283581, z: 94.46281}
+  SecondaryPos: {x: 0.005, y: 0.101, z: -0.191}
+  SecondaryRot: {x: -0.0000032140647, y: 80.59388, z: 0.000005110406}
   pickupSounds:
   - {fileID: 8300000, guid: 4975d9304318e6106aea8c3b3449edd0, type: 3}
   interactionSounds:
   - {fileID: 8300000, guid: 2febf34916db4709fb409562ac961bd4, type: 3}
-  PlayerId:
-    m_InternalValue: -1
