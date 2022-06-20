@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Unity.Netcode;
 
-public class GooseBuddyNavMesh : MonoBehaviour {
+public class GooseBuddyNavMesh : NetworkBehaviour {
 
     private NavMeshAgent m_GooseNavMesh;
     private Collider m_FollowingRange;
@@ -22,6 +23,14 @@ public class GooseBuddyNavMesh : MonoBehaviour {
         CHASE_PLAYER,
         ASLEEP,
         DANCE,
+    }
+
+    public override void OnNetworkSpawn() {
+        m_GooseNavMesh.enabled = IsServer;
+        base.OnNetworkSpawn();
+        if (IsServer) {
+            StartCoroutine(GooseLoop());
+        }
     }
 
     public static GooseState RandomState() {
@@ -95,10 +104,10 @@ public class GooseBuddyNavMesh : MonoBehaviour {
         return RandomPointOnNavMesh(max_distance - 10);
     }
 
-    void Start() {
+    void Awake() {
         m_GooseNavMesh = GetComponent<NavMeshAgent>();
+        m_GooseNavMesh.enabled = false;
         m_FollowingRange = GetComponent<Collider>();
-        StartCoroutine(GooseLoop());
     }
 
     // idle through ship
@@ -115,6 +124,10 @@ public class GooseBuddyNavMesh : MonoBehaviour {
     }
 
     void Update() {
+        if (!m_GooseNavMesh.enabled) {
+            return;
+        }
+
         if (m_Target != null){
             m_GooseNavMesh.destination = m_Target.position;
         } else {
