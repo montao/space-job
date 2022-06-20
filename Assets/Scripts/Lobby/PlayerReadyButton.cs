@@ -47,18 +47,18 @@ public class PlayerReadyButton : Interactable<bool> {
         if(PlayersReady.Value == PlayerManager.Instance.Players.Count){
             if(IsServer) {
                 if (! countdownInAction) {
-                    canvas.gameObject.SetActive(true);
                     countdownInAction = true;
                 }
                 Countdown(true);
             }
+            canvas.gameObject.SetActive(true);
         }
         else {
             if(IsServer) {
                 Countdown(false);
-                countdownInAction = false;
-                canvas.gameObject.SetActive(false);
+                countdownInAction = false;                
             }
+            canvas.gameObject.SetActive(false);
         }
     }
     public override void OnStateChange(bool previous, bool current){
