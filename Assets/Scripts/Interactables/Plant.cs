@@ -68,7 +68,6 @@ public class Plant : Interactable<bool> {
         Debug.Log(dryIn);
         yield return new WaitForSeconds(dryIn);
         Debug.Log("change mesh");
-        healthyPlant = currentMesh.mesh;
         currentMesh.mesh = dryPlant;
         watered.Value = false;
     }
@@ -93,7 +92,7 @@ public class Plant : Interactable<bool> {
     }
     [ServerRpc(RequireOwnership = false)]
     public void WaterPlantServerRpc() {
-        if(currentMesh.mesh != dryPlant){
+        if(watered.Value){
             currentMesh.mesh = healthyPlant;
         }
         Debug.Log("starting Plant Corountine");
