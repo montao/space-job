@@ -109,7 +109,7 @@ public class CameraSwap : MonoBehaviour {
 
     public void SetNoiseParameters(float amp, float freq) {
         if (!m_Camera) {
-            Debug.LogWarning("Camera " + name " is gone unfourtunetly :(");
+            Debug.LogWarning("Camera " + name + " is gone unfourtunetly :(");
             return;
         }
 
