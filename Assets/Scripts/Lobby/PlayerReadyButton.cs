@@ -89,12 +89,7 @@ public class PlayerReadyButton : Interactable<bool> {
 
     void OnGUI() {
         if(countdownInAction) {
-            if (TimeShown.Value < 0) {
-                secs.text = "loading...";
-            }
-            else {
-                secs.text = TimeShown.Value.ToString();
-            }  
+            secs.text = (TimeShown.Value < 0) ? "loading..." : TimeShown.Value.ToString();
         }
     }
 }
