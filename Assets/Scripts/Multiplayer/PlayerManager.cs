@@ -15,6 +15,9 @@ public class PlayerManager : NetworkBehaviour {
 
     private NetworkVariable<int> m_PlayerCount =
             new NetworkVariable<int>(1);
+    public int ConnectedPlayerCount {
+        get => m_PlayerCount.Value;
+    }
 
     private List<PersistentPlayer> m_Players;
     public List<PersistentPlayer> Players {
