@@ -197,7 +197,7 @@ public class ShipManager : NetworkBehaviour {
 
     private void CheckWinCondition(){
         m_DistanceToWin = (m_Destination.Value - m_Position.Value).magnitude; 
-        if (m_DistanceToWin <= 5){
+        if (m_DistanceToWin <= 15){
             if (IsServer) {
                 m_Won.Value = true;
             }

@@ -3,8 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Unity.Netcode;
 
-public class GooseBuddyNavMesh : MonoBehaviour {
+public struct GoosePosRot {
+    public Vector3 pos;
+    public Quaternion rot;
+}
+
+public class GooseBuddyNavMesh : NetworkBehaviour {
+
+    private NetworkVariable<GoosePosRot> m_PosRot = new NetworkVariable<GoosePosRot>();
 
     private NavMeshAgent m_GooseNavMesh;
     private Collider m_FollowingRange;
@@ -22,6 +30,14 @@ public class GooseBuddyNavMesh : MonoBehaviour {
         CHASE_PLAYER,
         ASLEEP,
         DANCE,
+    }
+
+    public override void OnNetworkSpawn() {
+        m_GooseNavMesh.enabled = IsServer;
+        base.OnNetworkSpawn();
+        if (IsServer) {
+            StartCoroutine(GooseLoop());
+        }
     }
 
     public static GooseState RandomState() {
@@ -95,10 +111,10 @@ public class GooseBuddyNavMesh : MonoBehaviour {
         return RandomPointOnNavMesh(max_distance - 10);
     }
 
-    void Start() {
+    void Awake() {
         m_GooseNavMesh = GetComponent<NavMeshAgent>();
+        m_GooseNavMesh.enabled = false;
         m_FollowingRange = GetComponent<Collider>();
-        StartCoroutine(GooseLoop());
     }
 
     // idle through ship
@@ -115,6 +131,18 @@ public class GooseBuddyNavMesh : MonoBehaviour {
     }
 
     void Update() {
+        if (IsServer) {
+            UpdateServer();
+        } else {
+            UpdateClient();
+        }
+    }
+
+    void UpdateServer() {
+        if (!m_GooseNavMesh.enabled) {
+            return;
+        }
+
         if (m_Target != null){
             m_GooseNavMesh.destination = m_Target.position;
         } else {
@@ -124,6 +152,16 @@ public class GooseBuddyNavMesh : MonoBehaviour {
         if (State == GooseState.ITEM_GET && m_GooseNavMesh.remainingDistance < 0.05f) {
             State = GooseState.ITEM_DEPOSIT;
         }
+
+        GoosePosRot posrot = new GoosePosRot();
+        posrot.pos = transform.position;
+        posrot.rot = transform.rotation;
+        m_PosRot.Value = posrot;
+    }
+
+    void UpdateClient() {
+        transform.position = m_PosRot.Value.pos;
+        transform.rotation = m_PosRot.Value.rot;
     }
 
     private IEnumerator GooseLoop() {

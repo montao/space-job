@@ -118,12 +118,25 @@ public abstract class DroppableInteractable : Interactable<int>{
         m_State.Value = holder_id;
     }
 
+    /// <summary>
+    /// Called by PlayerAvatar.DropItem, does the server-side bit of dropping an item. Note that calling this alone
+    /// doesn't do everything needed to actually drop the item! Call DropItem on the Avatar instead!
+    /// </summary>
     [ServerRpc(RequireOwnership = false)]
     public void DropServerRpc(Vector3 position) {
         m_Rigidbody.position = position;
         m_State.Value = IN_WORLD;
         m_Rigidbody.AddForce(Vector3.Normalize(PlayerManager.Instance.LocalPlayer.Avatar.transform.forward) * Velocity);
 
+    }
+
+    /// <summary>
+    /// Despawn the item.  Note that until #55 is fixed, calling this while the item is in a player's hand is likely to
+    /// cause ugly undefined behavior. https://github.com/GooseGirlGames/space-job/issues/55
+    /// </summary>
+    [ServerRpc(RequireOwnership = false)]
+    public void DespawnServerRpc() {
+        GetComponentInParent<NetworkObject>().Despawn(destroy: true);
     }
 
 

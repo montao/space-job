@@ -18,7 +18,10 @@ public class HullBreachInstance : RangedInteractableBase {
     }
 
     public override void OnDestroy() {
-        PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
+        var ava = PlayerManager.Instance.LocalPlayer.Avatar;
+        if (ava) {
+            ava.ReleaseMovementLock(GetHashCode());
+        }
         base.OnDestroy();
     }
 

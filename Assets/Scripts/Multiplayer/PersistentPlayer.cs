@@ -32,7 +32,7 @@ public class PersistentPlayer : NetworkBehaviour {
     public PlayerAvatar Avatar {
         get {
             NetworkObject ava;
-            if (m_Avatar.Value.TryGet(out ava)) {
+            if (m_Avatar != null && m_Avatar.Value.TryGet(out ava)) {
                 return ava.GetComponent<PlayerAvatar>();
             }
             return null;
