@@ -57,6 +57,20 @@ public class Util {
         return network_object.GetComponentInChildren<DroppableInteractable>();
     }
 
+    public static T TryGet<T>(NetworkObjectReference reference) where T: MonoBehaviour  {
+        NetworkObject o;
+        if (reference.TryGet(out o)) {
+            T t = o.GetComponent<T>();
+            if (t == null)
+                t = o.GetComponentInChildren<T>();
+
+            if (t != null)
+                return t;
+        }
+
+        return null;
+    }
+
     public static void BakeLighting() {
 #if UNITY_EDITOR
         foreach (var scene in new string[]{"ShipScene"}) {

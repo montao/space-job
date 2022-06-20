@@ -19,7 +19,8 @@ public class FloppyInsertPort : InteractableBase {
 
     [ServerRpc(RequireOwnership = false)]
     private void SetPlayerReferenceServerRpc(NetworkObjectReference reference) {
-        Debug.Log("Floppy Inserted!");
+        var player = Util.TryGet<PlayerAvatar>(reference);
+        Debug.Log("Floppy Inserted to revive " + (player != null ? player.name : "null") + "!");
         m_PlayerData.Value = reference;
     }
 }
