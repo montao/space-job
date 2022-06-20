@@ -9,7 +9,7 @@ using TMPro;
 public class PlayerReadyButton : Interactable<bool> {
 
     private bool m_LocalPlayerInteracting = false;
-    private static float countdownTime = 5.0f;
+    private static float countdownTime = 5.9f;
     private float timeRemaining = countdownTime;
     private bool countdownInAction = false;
     //int readyCouter = 0;
@@ -90,7 +90,7 @@ public class PlayerReadyButton : Interactable<bool> {
     void OnGUI() {
         if(countdownInAction) {
             if (TimeShown.Value < 0) {
-                secs.text = "Starting the Game";
+                secs.text = "loading...";
             }
             else {
                 secs.text = TimeShown.Value.ToString();
