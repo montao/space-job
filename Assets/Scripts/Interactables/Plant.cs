@@ -13,9 +13,15 @@ public class Plant : Interactable<bool> {
     private Mesh seedInPot;
     [SerializeField]
     private Mesh plantStage1;
+    [SerializeField]
+    private Mesh deadPlant;
+    [SerializeField]
+    private Mesh dryPlant;
+    private Mesh healthyPlant;
     private MeshFilter currentMesh;
     private NetworkObject seed;
     private NetworkVariable<bool> seedPlanted = new NetworkVariable<bool>(false);
+    private NetworkVariable<bool> watered = new NetworkVariable<bool>(false);
 
     void Awake() {
         currentMesh = GetComponent<MeshFilter>();
@@ -32,6 +38,13 @@ public class Plant : Interactable<bool> {
             seedPlanted.Value = true;
            /*  audioSource.PlayOneShot(plantSound); */
         }
+        if (PlayerAvatar.IsHolding<WateringCan>()){
+            if(seedPlanted.Value){
+                watered.Value = true;
+                WaterPlantServerRpc();
+            }
+            
+        }
         DespawnServerRpc();
         GrowPlantServerRpc();
     }
@@ -41,24 +54,30 @@ public class Plant : Interactable<bool> {
     [ServerRpc(RequireOwnership = false)]
     public void SetServerRpc(bool value){
         m_State.Value = value;
-
-        /* if(!prevCup || prevCup.GetComponentInChildren<CoffeCup>().IsPickedUp()) {
-            Vector3 yeet = Vector3.Normalize(transform.forward + transform.up) * 50f;
-
-            GameObject freshCup = Instantiate(cupPrefab, machine.GetComponent<Transform>().position, Quaternion.identity);
-            freshCup.GetComponent<Rigidbody>().AddForce(yeet);
-            freshCup.GetComponent<NetworkObject>().Spawn();
-            prevCup = freshCup;
-            Debug.Log("new cup");
-        } */
     }
 
-     IEnumerator WaitForPlantGrow(float maxtime){
-        float growIn = UnityEngine.Random.Range(60, maxtime);
+    IEnumerator WaitForPlantGrow(float maxtime){
+        float growIn = UnityEngine.Random.Range(2, maxtime);
         Debug.Log(growIn);
         yield return new WaitForSeconds(growIn);
         Debug.Log("change mesh");
         currentMesh.mesh = plantStage1;
+    }
+    IEnumerator TimeTillPlantDry(float maxtime){
+        float dryIn = UnityEngine.Random.Range(2, maxtime);
+        Debug.Log(dryIn);
+        yield return new WaitForSeconds(dryIn);
+        Debug.Log("change mesh");
+        healthyPlant = currentMesh.mesh;
+        currentMesh.mesh = dryPlant;
+        watered.Value = false;
+    }
+    IEnumerator TimeTillPlantDead(float maxtime){
+        float deadIn = UnityEngine.Random.Range(2, maxtime);
+        Debug.Log(deadIn);
+        yield return new WaitForSeconds(deadIn);
+        Debug.Log("change mesh");
+        currentMesh.mesh = deadPlant;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -69,7 +88,19 @@ public class Plant : Interactable<bool> {
     public void GrowPlantServerRpc() {
         if(seedPlanted.Value) {
             Debug.Log("starting Plant Corountine");
-            StartCoroutine(WaitForPlantGrow(120));
+            StartCoroutine(WaitForPlantGrow(10));
+        }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void WaterPlantServerRpc() {
+        if(currentMesh.mesh != dryPlant){
+            currentMesh.mesh = healthyPlant;
+        }
+        Debug.Log("starting Plant Corountine");
+        StartCoroutine(TimeTillPlantDry(10));
+        if(!watered.Value){
+            Debug.Log("Plant starting to die");
+            StartCoroutine(TimeTillPlantDead(10));
         }
     }
 
