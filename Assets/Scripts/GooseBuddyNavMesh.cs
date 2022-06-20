@@ -5,7 +5,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using Unity.Netcode;
 
+public struct GoosePosRot {
+    public Vector3 pos;
+    public Quaternion rot;
+}
+
 public class GooseBuddyNavMesh : NetworkBehaviour {
+
+    private NetworkVariable<GoosePosRot> m_PosRot = new NetworkVariable<GoosePosRot>();
 
     private NavMeshAgent m_GooseNavMesh;
     private Collider m_FollowingRange;
@@ -124,6 +131,14 @@ public class GooseBuddyNavMesh : NetworkBehaviour {
     }
 
     void Update() {
+        if (IsServer) {
+            UpdateServer();
+        } else {
+            UpdateClient();
+        }
+    }
+
+    void UpdateServer() {
         if (!m_GooseNavMesh.enabled) {
             return;
         }
@@ -137,6 +152,16 @@ public class GooseBuddyNavMesh : NetworkBehaviour {
         if (State == GooseState.ITEM_GET && m_GooseNavMesh.remainingDistance < 0.05f) {
             State = GooseState.ITEM_DEPOSIT;
         }
+
+        GoosePosRot posrot = new GoosePosRot();
+        posrot.pos = transform.position;
+        posrot.rot = transform.rotation;
+        m_PosRot.Value = posrot;
+    }
+
+    void UpdateClient() {
+        transform.position = m_PosRot.Value.pos;
+        transform.rotation = m_PosRot.Value.rot;
     }
 
     private IEnumerator GooseLoop() {
