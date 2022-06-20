@@ -44,20 +44,20 @@ public class PlayerReadyButton : Interactable<bool> {
 
     public override void Update() {
         base.Update();
-        if (PlayersReady.Value == PlayerManager.Instance.ConnectedPlayerCount){
-            if (IsServer) {
-                if (! countdownInAction) {
-                    countdownInAction = true;
-                }   
+        if(PlayersReady.Value == PlayerManager.Instance.Players.Count){
+            if (! countdownInAction) {
+                countdownInAction = true;
             }
-            Countdown(true);
+            if (IsServer) {     
+                Countdown(true);
+            }
             canvas.gameObject.SetActive(true);
         }
         else {
-            if (IsServer){
-                countdownInAction = false;                
+            if(IsServer) {
+                Countdown(false);               
             }
-            Countdown(false);
+            countdownInAction = false; 
             canvas.gameObject.SetActive(false);
         }
     }
