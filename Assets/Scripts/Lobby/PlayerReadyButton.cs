@@ -9,10 +9,22 @@ using TMPro;
 public class PlayerReadyButton : Interactable<bool> {
 
     private bool m_LocalPlayerInteracting = false;
+    private static float countdownTime = 5.0f;
+    private float timeRemaining = countdownTime;
+    private bool countdownInAction = false;
     //int readyCouter = 0;
     public NetworkVariable<int> PlayersReady =
-        new NetworkVariable<int>(0);    
-        
+        new NetworkVariable<int>(0);
+    public NetworkVariable<int> TimeShown =
+        new NetworkVariable<int>(0);
+
+    [SerializeField]
+    private Canvas canvas;
+
+    [SerializeField]
+    private TMP_Text secs;
+
+
     [ServerRpc(RequireOwnership = false)]
     public void ModReadyServerRpc(int i){
         PlayersReady.Value = PlayersReady.Value + i;
@@ -34,9 +46,18 @@ public class PlayerReadyButton : Interactable<bool> {
         base.Update();
         if(PlayersReady.Value == PlayerManager.Instance.Players.Count){
             if(IsServer) {
-                NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= PlayerManager.Instance.StartShip;
-                NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.Instance.MovePlayersToSpawns;
-                NetworkManager.Singleton.SceneManager.LoadScene("ShipScene", LoadSceneMode.Single);
+                if (! countdownInAction) {
+                    canvas.gameObject.SetActive(true);
+                    countdownInAction = true;
+                }
+                Countdown(true);
+            }
+        }
+        else {
+            if(IsServer) {
+                Countdown(false);
+                countdownInAction = false;
+                canvas.gameObject.SetActive(false);
             }
         }
     }
@@ -49,5 +70,32 @@ public class PlayerReadyButton : Interactable<bool> {
         m_State.Value = value;
     }
 
+    public void Countdown(bool isrunning) {
+        if (isrunning) {
+            if (timeRemaining < 0) {
+                NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= PlayerManager.Instance.StartShip;
+                NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.Instance.MovePlayersToSpawns;
+                NetworkManager.Singleton.SceneManager.LoadScene("ShipScene", LoadSceneMode.Single);
+            }
+            else {
+                timeRemaining -= Time.deltaTime;
+                TimeShown.Value = (Mathf.FloorToInt(timeRemaining % 60));
+            }
+        }
+        else {
+            timeRemaining = countdownTime;
+        }
+    }
+
+    void OnGUI() {
+        if(countdownInAction) {
+            if (TimeShown.Value < 0) {
+                secs.text = "Starting the Game";
+            }
+            else {
+                secs.text = TimeShown.Value.ToString();
+            }  
+        }
+    }
 }
 
