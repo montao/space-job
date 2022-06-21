@@ -102,6 +102,9 @@ ModelImporter:
   - first:
       74: 2094457913926890123
     second: RevivalFloppy|SavetyThingyAction
+  - first:
+      74: -4338571384475680023
+    second: floppy_idle
   externalObjects: {}
   materials:
     materialImportMode: 0
