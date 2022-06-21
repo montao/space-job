@@ -32,6 +32,7 @@ public class Plant : Interactable<bool> {
         audioSource = GetComponent<AudioSource>();    
     }
     private void Update() {
+        Debug.Log(watered.Value);
         if(dry.Value && (!watered.Value)) {
             PlantDyingServerRpc();
         }
@@ -124,10 +125,8 @@ public class Plant : Interactable<bool> {
     }
     [ServerRpc(RequireOwnership = false)]
     public void PlantDyingServerRpc() {
-        if((!watered.Value) && dry.Value){
-            Debug.Log("Plant starting to die");
-            StartCoroutine(TimeTillPlantDead(10));
-        } 
+        Debug.Log("Plant starting to die");
+        StartCoroutine(TimeTillPlantDead(10));
         
     }
     
