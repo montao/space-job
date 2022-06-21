@@ -402,6 +402,7 @@ GameObject:
   - component: {fileID: 4558610155862407026}
   - component: {fileID: 6646191761117198068}
   - component: {fileID: 290228803830695060}
+  - component: {fileID: 7654541759076334485}
   m_Layer: 2
   m_Name: RevivePod
   m_TagString: Untagged
@@ -515,6 +516,25 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!95 &7654541759076334485
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4567142223320531753}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 5e01132ac07e77ef38e2cbed06efbd78, type: 3}
+  m_Controller: {fileID: 9100000, guid: 55947bd719dea36e882c02a56754a3e7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5018919438054772895
 GameObject:
   m_ObjectHideFlags: 0
