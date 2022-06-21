@@ -79,6 +79,8 @@ public class PlayerAvatar : NetworkBehaviour {
     private bool m_HasDied = false;  // used to avoid triggering death sequence multiple times
     [SerializeField]
     private HealthBar m_HealthBar;
+    [SerializeField]
+    private HealthBar m_OxygenBar;  // TODO remove, this is just temporary
     private float m_LungOxygen = 1f;
 
     /* === ANIMATION === */
@@ -98,6 +100,14 @@ public class PlayerAvatar : NetworkBehaviour {
     private AudioClip[] dropCupSounds;
     [SerializeField]
     private AudioClip[] dropMetalObjectSounds;
+    [SerializeField]
+    private AudioClip[] m_DeathSounds;
+    [SerializeField]
+    private AudioClip[] m_FallSounds;
+    [SerializeField]
+    private AudioClip[] m_DamageSounds;
+    private float m_LastDamageSound = 0f;
+    private readonly float DAMAGE_SOUND_COOLDOWN = 0.7f;  // seconds
     private AudioSource audioSource;
 
 
@@ -315,6 +325,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
     private void UpdateHealthBar() {
         m_HealthBar.UpdateHealthBar(m_Health.Value);
+        m_OxygenBar.UpdateHealthBar(IsOwner ? m_LungOxygen : 0f);
     }
 
 
@@ -401,6 +412,18 @@ public class PlayerAvatar : NetworkBehaviour {
         return dropMetalObjectSounds[UnityEngine.Random.Range(0, dropMetalObjectSounds.Length)];
     }
 
+    private AudioClip GetRandomDamageClip() {
+        return Util.RandomChoice<AudioClip>(m_DamageSounds);
+    }
+
+    private AudioClip GetRandomDeathClip() {
+        return Util.RandomChoice<AudioClip>(m_DeathSounds);
+    }
+
+    private AudioClip GetRandomFallClip() {
+        return Util.RandomChoice<AudioClip>(m_FallSounds);
+    }
+
     IEnumerator WaitForGround(float time){
         var item = GetInventoryItem(Slot.PRIMARY).tag;
         DropItem(Slot.PRIMARY);
@@ -422,13 +445,24 @@ public class PlayerAvatar : NetworkBehaviour {
 
     public void OxygenRegulation(float delta_time){
         if (m_CurrentRoom == null) return;
-        float oxygen = ((m_LungOxygen - 0.01f + (0.02f* m_CurrentRoom.RoomOxygen)));
+
+        float breathing_rate = 0.6f * delta_time;
+        float oxygen = ((m_LungOxygen - breathing_rate + ((1.1f * breathing_rate) * m_CurrentRoom.RoomOxygen)));
+
         m_LungOxygen = Mathf.Clamp(oxygen, 0f, 1f);
+
+        if (m_LungOxygen < 0.2f) {
+            float dps = 0.08f;
+            TakeDamage(dps * delta_time);
+        }
     }
 
     public void TakeDamage(float damage) {
         m_Health.Value = Mathf.Clamp(m_Health.Value - damage, 0f, 1f);
-        Debug.Log(name + " took " + damage + " damage.");
+        if (!m_HasDied && m_LastDamageSound + DAMAGE_SOUND_COOLDOWN < Time.fixedTime) {
+            audioSource.PlayOneShot(GetRandomDamageClip());
+            m_LastDamageSound = Time.fixedTime;
+        }
     }
 
     public void Revive(Vector3 position, Quaternion rotation) {
@@ -441,6 +475,8 @@ public class PlayerAvatar : NetworkBehaviour {
 
     public void SetPlayerAlive(bool alive) {
         if (m_DeathReviveCoroutine == null) {
+            audioSource.PlayOneShot(GetRandomDeathClip());
+            audioSource.PlayOneShot(GetRandomFallClip());
             m_DeathReviveCoroutine = StartCoroutine(SetPlayerAliveCoroutine(alive, alive ? 0.0f : 2.0f));
         }
     }
@@ -482,6 +518,13 @@ public class PlayerAvatar : NetworkBehaviour {
         if (health > 0 && health_prev <= 0 && m_HasDied) {
             m_HasDied = false;
             SetPlayerAlive(alive: true);
+        }
+
+        if (health < health_prev && !IsOwner) {  // played immediately for owner in TakeDamage
+            if (m_LastDamageSound + DAMAGE_SOUND_COOLDOWN < Time.fixedTime) {
+                audioSource.PlayOneShot(GetRandomDamageClip());
+                m_LastDamageSound = Time.fixedTime;
+            }
         }
     }
 

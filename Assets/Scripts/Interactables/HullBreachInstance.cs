@@ -65,6 +65,7 @@ public class HullBreachInstance : RangedInteractableBase {
     // called by room
     public void Setup(Room room, Transform spawn) {
         m_Room = room;
+        name = "Hullbreach (" + room.name + ")";
         m_SpawnLocation = spawn;
         if (IsServer) {
             m_GrowCoroutine = StartCoroutine(Grow());

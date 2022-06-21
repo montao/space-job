@@ -23,6 +23,8 @@ public class Util {
         );
     }
 
+
+
     public static float Frac(float a) {
         return a - (int)a;
     }
@@ -37,8 +39,13 @@ public class Util {
             Debug.LogError("RandomChoice called for an empty list of " + typeof(T) + ".  This will crash, goodbye.");
         }
 
-        int idx = Random.Range(0, list.Count);
+        int idx = UnityEngine.Random.Range(0, list.Count);
         return list[idx];
+    }
+
+    public static T RandomChoice<T>(T[] elements) where T: UnityEngine.Object {
+        int i = UnityEngine.Random.Range(0, elements.Length);
+        return elements[i];
     }
 
     public static bool PlayerIsPressingMoveButton() {

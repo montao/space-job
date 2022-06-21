@@ -10,8 +10,9 @@ public class ShipManager : NetworkBehaviour {
         get => m_Steering;
     }
 
-    public List<Room> Rooms = new List<Room>();
     public const char HAS_POWER = '\0';
+
+    public List<Room> Rooms = new List<Room>();
 
     private NetworkVariable<float> m_Oxygen = new NetworkVariable<float>(1f);
     private NetworkVariable<char> m_Power = new NetworkVariable<char>(HAS_POWER);
@@ -173,6 +174,7 @@ public class ShipManager : NetworkBehaviour {
         m_Steering = GetComponent<ShipSteering>();
         m_TransitionColorNormal = m_TransitionMaterial.GetColor("_WireColor");
     }
+
     public float GetPlantOxygen(){
         float oxygen = 0.0f;
         plants = FindObjectsOfType<Plant>();
