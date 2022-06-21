@@ -12,7 +12,6 @@ public class PlayerReadyButton : Interactable<bool> {
     private static float countdownTime = 5.9f;
     private float timeRemaining = countdownTime;
     private bool countdownInAction = false;
-    private int playerNumber;
     public NetworkVariable<int> PlayersReady =
         new NetworkVariable<int>(0);
     public NetworkVariable<int> TimeShown =
@@ -43,26 +42,22 @@ public class PlayerReadyButton : Interactable<bool> {
 
     public override void Update() {
         base.Update();
-        Debug.Log(PlayerManager.Instance.ConnectedPlayerCount);
-        if(PlayersReady.Value == PlayerManager.Instance.ConnectedPlayerCount){
+        if(PlayersReady.Value == PlayerManager.Instance.ConnectedPlayerCount) {
             if (! countdownInAction) {
                 countdownInAction = true;
-                playerNumber = PlayerManager.Instance.ConnectedPlayerCount;
             }
-            if (playerNumber == PlayerManager.Instance.ConnectedPlayerCount) {
-                ShowCountdown(true);
-            }
-            else {
+            ShowCountdown(true);       
+        }
+        else {
+            ShowCountdown(false);
+            if (PlayersReady.Value > PlayerManager.Instance.ConnectedPlayerCount) {
                 Debug.Log("a player left during the countdown" + PlayerManager.Instance.Players.Count.ToString());
                 var avatars = FindObjectsOfType<PlayerAvatar>();
                     foreach (var avatar in avatars) {
                         avatar.ready.Value = !avatar.ready.Value;
                 }
-                ShowCountdown(false);
-            }        
-        }
-        else {
-            ShowCountdown(false);
+                ModReadyServerRpc(-1);
+            }
         }
     }
 
