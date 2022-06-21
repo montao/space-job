@@ -52,12 +52,10 @@ public class PlayerReadyButton : Interactable<bool> {
             ShowCountdown(false);
             if (PlayersReady.Value > PlayerManager.Instance.ConnectedPlayerCount && IsServer) {
                 Debug.Log("a player left during the countdown" + PlayerManager.Instance.Players.Count.ToString());
-                var avatars = FindObjectsOfType<PlayerAvatar>();
-                    foreach (var avatar in avatars) {
-                        avatar.ready.Value = !avatar.ready.Value;
-                }
-                ModReadyServerRpc(-1);
+                UnreadyPlayersClientRpc();
             }
+            PlayersReady.Value = 0;
+
         }
     }
 
@@ -73,8 +71,15 @@ public class PlayerReadyButton : Interactable<bool> {
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SetServerRpc(bool value){
+    public void SetServerRpc(bool value) {
         m_State.Value = value;
+    }
+
+    [ClientRpc()]
+    public void UnreadyPlayersClientRpc() {
+        if (IsOwner) {
+            FlipPlayerCondition();
+        }
     }
 
     public void Countdown(bool isrunning) {
