@@ -12,9 +12,11 @@ public class HullBreachInstance : RangedInteractableBase {
 
     private readonly float LARGE_HULLBREACH_SCALE = 3.2f;
 
+    public const float BASE_DRAIN = 0.4f;
+    public const float GROW_INTERVAL_SECS = 45f;
 
     public float DrainFactor() {
-        return m_Size == EventParameters.HullBreachSize.LARGE ? 1.8f : 0.7f;
+        return BASE_DRAIN * (m_Size == EventParameters.HullBreachSize.LARGE ? 1.5f : 1f);
     }
 
     public override void OnDestroy() {
@@ -70,7 +72,9 @@ public class HullBreachInstance : RangedInteractableBase {
     }
 
     private IEnumerator Grow() {
-        yield return new WaitForSeconds(Random.Range(10f, 20f));
+        Debug.Log("Hullbrach " + name + " spawned.");
+        yield return new WaitForSeconds(GROW_INTERVAL_SECS + Random.Range(-5f, 5f));
+        Debug.Log("Hullbrach " + name + " expanded.");
         GrowHoleClientRpc(EventParameters.HullBreachSize.LARGE);
     }
 
