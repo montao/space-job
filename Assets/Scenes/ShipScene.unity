@@ -880,7 +880,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70842671}
-  m_LocalRotation: {x: 0.17896947, y: -0.04319851, z: 0.007865923, w: 0.98287433}
+  m_LocalRotation: {x: 0.17896947, y: -0.04319848, z: 0.007865917, w: 0.98287433}
   m_LocalPosition: {x: -1.095, y: 2.628, z: -28.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -10561,6 +10561,14 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 2882683080
       objectReference: {fileID: 0}
+    - target: {fileID: 5049299245706620805, guid: e6a8387f4f004aade9314edbf1c79a2d, type: 3}
+      propertyPath: dryPlant
+      value: 
+      objectReference: {fileID: 119302499102753868, guid: 0300992dbf40facd58e2576f31b17522, type: 3}
+    - target: {fileID: 5049299245706620805, guid: e6a8387f4f004aade9314edbf1c79a2d, type: 3}
+      propertyPath: plantStage1
+      value: 
+      objectReference: {fileID: 3909233067320746374, guid: 71f52ee58e2610b75a48d1919cc250df, type: 3}
     - target: {fileID: 5049299245769467768, guid: e6a8387f4f004aade9314edbf1c79a2d, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3073967220
