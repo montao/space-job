@@ -9,6 +9,7 @@ public class Plant : Interactable<bool> {
     private AudioClip plantSound;
     private AudioSource audioSource;
 
+    private Mesh plantPot;
     [SerializeField]
     private Mesh seedInPot;
     [SerializeField]
@@ -22,14 +23,34 @@ public class Plant : Interactable<bool> {
     private NetworkObject seed;
     private NetworkVariable<bool> seedPlanted = new NetworkVariable<bool>(false);
     private NetworkVariable<bool> watered = new NetworkVariable<bool>(false);
+    private NetworkVariable<bool> dry = new NetworkVariable<bool>(false);
+    private NetworkVariable<bool> dead = new NetworkVariable<bool>(false);
 
     void Awake() {
+        plantPot = GetComponent<MeshFilter>().mesh;
         currentMesh = GetComponent<MeshFilter>();
         audioSource = GetComponent<AudioSource>();    
+    }
+    private void Update() {
+        if(dry.Value && (!watered.Value)) {
+            PlantDyingServerRpc();
+        }
+
+        if(seedPlanted.Value && watered.Value){
+            GrowPlantServerRpc();
+        }
+        
     }
 
     protected override void Interaction(){
         SetServerRpc(!Value);
+        if(dead.Value){
+            currentMesh.mesh = plantPot;
+            seedPlanted.Value = false;
+            watered.Value = false;
+            dry.Value = false;
+            dead.Value = false;
+        }
         if (PlayerAvatar.IsHolding<Seed>()) {
             seed = PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY);
             currentMesh.mesh = seedInPot;
@@ -41,11 +62,14 @@ public class Plant : Interactable<bool> {
         if (PlayerAvatar.IsHolding<WateringCan>()){
             if(seedPlanted.Value){
                 watered.Value = true;
+                Debug.Log("plant has been watered");
                 WaterPlantServerRpc();
             }
             
         }
-        DespawnServerRpc();
+        if (seed != null) {
+            DespawnServerRpc();
+        }
         GrowPlantServerRpc();
     }
 
@@ -58,24 +82,26 @@ public class Plant : Interactable<bool> {
 
     IEnumerator WaitForPlantGrow(float maxtime){
         float growIn = UnityEngine.Random.Range(2, maxtime);
-        Debug.Log(growIn);
+        Debug.Log("plant grows in " + growIn + "sec");
         yield return new WaitForSeconds(growIn);
-        Debug.Log("change mesh");
+        Debug.Log("change into stage 1 plant mesh");
         currentMesh.mesh = plantStage1;
+        dry.Value = true;
     }
     IEnumerator TimeTillPlantDry(float maxtime){
         float dryIn = UnityEngine.Random.Range(2, maxtime);
-        Debug.Log(dryIn);
+        Debug.Log("plant ist dry in " + dryIn + "secs");
         yield return new WaitForSeconds(dryIn);
-        Debug.Log("change mesh");
+        Debug.Log("changing into dry plant mesh");
         currentMesh.mesh = dryPlant;
         watered.Value = false;
+        dry.Value = true;
     }
     IEnumerator TimeTillPlantDead(float maxtime){
         float deadIn = UnityEngine.Random.Range(2, maxtime);
-        Debug.Log(deadIn);
+        Debug.Log("plant is dead in " + deadIn + " secs");
         yield return new WaitForSeconds(deadIn);
-        Debug.Log("change mesh");
+        Debug.Log("dead plant mesh");
         currentMesh.mesh = deadPlant;
     }
 
@@ -86,21 +112,24 @@ public class Plant : Interactable<bool> {
     [ServerRpc(RequireOwnership = false)]
     public void GrowPlantServerRpc() {
         if(seedPlanted.Value) {
-            Debug.Log("starting Plant Corountine");
+            Debug.Log("growing seed");
             StartCoroutine(WaitForPlantGrow(10));
         }
     }
     [ServerRpc(RequireOwnership = false)]
     public void WaterPlantServerRpc() {
-        if(watered.Value){
-            currentMesh.mesh = healthyPlant;
-        }
-        Debug.Log("starting Plant Corountine");
+        Debug.Log("plant watered");
         StartCoroutine(TimeTillPlantDry(10));
-        if(!watered.Value){
+        
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void PlantDyingServerRpc() {
+        if((!watered.Value) && dry.Value){
             Debug.Log("Plant starting to die");
             StartCoroutine(TimeTillPlantDead(10));
-        }
+        } 
+        
     }
+    
 
 }
