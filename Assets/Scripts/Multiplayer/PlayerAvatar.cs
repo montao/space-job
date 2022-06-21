@@ -79,6 +79,8 @@ public class PlayerAvatar : NetworkBehaviour {
     private bool m_HasDied = false;  // used to avoid triggering death sequence multiple times
     [SerializeField]
     private HealthBar m_HealthBar;
+    [SerializeField]
+    private HealthBar m_OxygenBar;  // TODO remove, this is just temporary
     private float m_LungOxygen = 1f;
 
     /* === ANIMATION === */
@@ -323,6 +325,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
     private void UpdateHealthBar() {
         m_HealthBar.UpdateHealthBar(m_Health.Value);
+        m_OxygenBar.UpdateHealthBar(IsOwner ? m_LungOxygen : 0f);
     }
 
 
