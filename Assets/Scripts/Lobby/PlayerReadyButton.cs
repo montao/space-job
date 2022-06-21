@@ -50,7 +50,7 @@ public class PlayerReadyButton : Interactable<bool> {
         }
         else {
             ShowCountdown(false);
-            if (PlayersReady.Value > PlayerManager.Instance.ConnectedPlayerCount) {
+            if (PlayersReady.Value > PlayerManager.Instance.ConnectedPlayerCount && IsServer) {
                 Debug.Log("a player left during the countdown" + PlayerManager.Instance.Players.Count.ToString());
                 var avatars = FindObjectsOfType<PlayerAvatar>();
                     foreach (var avatar in avatars) {
