@@ -3,7 +3,7 @@ using Unity.Netcode;
 
 
 public class FloppyInsertPort : InteractableBase {
-    private NetworkVariable<NetworkObjectReference> m_PlayerData = new NetworkVariable<NetworkObjectReference>();
+    public NetworkVariable<NetworkObjectReference> PlayerData = new NetworkVariable<NetworkObjectReference>();
 
     protected override void Interaction(){
         PlayerAvatar activePlayer = PlayerManager.Instance.LocalPlayer.Avatar;
@@ -13,7 +13,6 @@ public class FloppyInsertPort : InteractableBase {
             SetPlayerReferenceServerRpc(floppy.Player.Value);
             activePlayer.DropItem(PlayerAvatar.Slot.PRIMARY);
             floppy.DespawnServerRpc();
-            Debug.Log("Cromch");
         }
     }
 
@@ -21,6 +20,6 @@ public class FloppyInsertPort : InteractableBase {
     private void SetPlayerReferenceServerRpc(NetworkObjectReference reference) {
         var player = Util.TryGet<PlayerAvatar>(reference);
         Debug.Log("Floppy Inserted to revive " + (player != null ? player.name : "null") + "!");
-        m_PlayerData.Value = reference;
+        PlayerData.Value = reference;
     }
 }

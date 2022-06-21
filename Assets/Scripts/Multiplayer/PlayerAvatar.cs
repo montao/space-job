@@ -229,7 +229,7 @@ public class PlayerAvatar : NetworkBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.R) && m_Health.Value <= 0) {
-            Revive(transform.position);
+            Revive(transform.position, transform.rotation);
         }
 
         if (MovementLocked) {
@@ -431,9 +431,9 @@ public class PlayerAvatar : NetworkBehaviour {
         Debug.Log(name + " took " + damage + " damage.");
     }
 
-    public void Revive(Vector3 position) {
+    public void Revive(Vector3 position, Quaternion rotation) {
         Debug.Log(name + " revived");
-        Teleport(position, Quaternion.identity);
+        Teleport(position, rotation);
         m_HasDied = false;
         m_Health.Value = 1f;
         SetPlayerAlive(alive: true);
@@ -492,14 +492,14 @@ public class PlayerAvatar : NetworkBehaviour {
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void ReviveServerRpc(Vector3 position) {
-        ReviveClientRpc(position);
+    public void ReviveServerRpc(Vector3 position, Quaternion rotation) {
+        ReviveClientRpc(position, rotation);
     }
 
     [ClientRpc]
-    public void ReviveClientRpc(Vector3 position) {
+    public void ReviveClientRpc(Vector3 position, Quaternion rotation) {
         if (IsOwner) {
-            Revive(position);
+            Revive(position, rotation);
         }
     }
 

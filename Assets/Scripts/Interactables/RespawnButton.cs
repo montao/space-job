@@ -1,11 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class RespawnButton : InteractableBase
-{
-    private int m_RespawnID;
+public class RespawnButton : InteractableBase {
 
-    protected override void Interaction(){
+    public Transform RevivePos;
+
+    [SerializeField]
+    private FloppyInsertPort m_Port;
+
+    protected override bool PlayerCanInteract() {
+        bool floppy_inserted = !Util.NetworkObjectReferenceIsEmpty(m_Port.PlayerData.Value);
+        return floppy_inserted && base.PlayerCanInteract();
+    }
+
+    protected override void Interaction() {
+        ReviveServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void ReviveServerRpc() {
+        // setup
+        var avatar = Util.TryGet<PlayerAvatar>(m_Port.PlayerData.Value);
+        if (avatar == null) {
+            Debug.LogError("Tried to revive, but could not find PlayerAvatar in FloppyInsertPort.m_Port");
+            return;
+        }
+
+        // revive
+        avatar.GetComponent<PlayerAvatar>().ReviveServerRpc(RevivePos.position, RevivePos.rotation);
+
+        // cleanup
+        m_Port.PlayerData.Value = new NetworkObjectReference();
     }
 }
