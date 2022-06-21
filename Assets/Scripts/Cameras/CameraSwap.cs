@@ -45,6 +45,10 @@ public class CameraSwap : MonoBehaviour {
         m_Instances.Add(this);
     }
 
+    void OnDestroy() {
+        m_Instances.Remove(this);
+    }
+
     public void LookAtPlayer(PlayerAvatar avatar) {
         m_Camera.LookAt = avatar.CameraLookAt.transform;
     }
