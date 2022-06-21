@@ -22,14 +22,17 @@ public class GameManager : MonoBehaviour {
     }
 
     void Start() {
+        /*
         NetworkManager.Singleton.OnInitialized += () => {
-            NetworkManager.Singleton.SceneManager.OnLoad += OnSceneLoad;
+            Debug.Log("Network initialized");
+            // NetworkManager.Singleton.SceneManager.OnLoad += OnSceneLoad;
         };
+        */
     }
 
     private void OnSceneLoad(ulong clientId, string scene, LoadSceneMode loadSceneMode, AsyncOperation op) {
         //m_LoadingScreen.enabled = true;  TODO re-enable
-        StartCoroutine(LoadingScreenCoroutine(op));
+        //StartCoroutine(LoadingScreenCoroutine(op));
     }
 
     private IEnumerator LoadingScreenCoroutine(AsyncOperation op) {
