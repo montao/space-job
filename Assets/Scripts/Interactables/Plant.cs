@@ -46,7 +46,7 @@ public class Plant : Interactable<bool> {
     protected override void Interaction(){
         SetServerRpc(!Value);
         if(dead.Value){
-            currentMesh.mesh = plantPot;
+            ChangeMeshServerRpc(plantPot);
             seedPlanted.Value = false;
             watered.Value = false;
             dry.Value = false;
@@ -54,7 +54,7 @@ public class Plant : Interactable<bool> {
         }
         if (PlayerAvatar.IsHolding<Seed>()) {
             seed = PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY);
-            currentMesh.mesh = seedInPot;
+            ChangeMeshServerRpc(seedInPot);
             Debug.Log("change plant mesh");
             PlayerManager.Instance.LocalPlayer.Avatar.DropItem(PlayerAvatar.Slot.PRIMARY);
             seedPlanted.Value = true;
@@ -86,7 +86,7 @@ public class Plant : Interactable<bool> {
         Debug.Log("plant grows in " + growIn + "sec");
         yield return new WaitForSeconds(growIn);
         Debug.Log("change into stage 1 plant mesh");
-        currentMesh.mesh = plantStage1;
+        ChangeMeshServerRpc(plantStage1);
         dry.Value = true;
     }
     IEnumerator TimeTillPlantDry(float maxtime){
@@ -94,7 +94,7 @@ public class Plant : Interactable<bool> {
         Debug.Log("plant ist dry in " + dryIn + "secs");
         yield return new WaitForSeconds(dryIn);
         Debug.Log("changing into dry plant mesh");
-        currentMesh.mesh = dryPlant;
+        ChangeMeshServerRpc(dryPlant);
         watered.Value = false;
         dry.Value = true;
     }
@@ -103,7 +103,7 @@ public class Plant : Interactable<bool> {
         Debug.Log("plant is dead in " + deadIn + " secs");
         yield return new WaitForSeconds(deadIn);
         Debug.Log("dead plant mesh");
-        currentMesh.mesh = deadPlant;
+        ChangeMeshServerRpc(deadPlant);
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -127,7 +127,11 @@ public class Plant : Interactable<bool> {
     public void PlantDyingServerRpc() {
         Debug.Log("Plant starting to die");
         StartCoroutine(TimeTillPlantDead(10));
-        
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void ChangeMeshServerRpc(Mesh mesh) {
+        Debug.Log("changed mesh");
+        currentMesh.mesh = mesh;
     }
     
 
