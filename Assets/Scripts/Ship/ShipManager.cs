@@ -40,6 +40,8 @@ public class ShipManager : NetworkBehaviour {
     [SerializeField]
     private AudioClip lampSound;
 
+    private Plant[] plants;
+
     public static string PowerSolutionCode(char error_code) {
         return Convert.ToByte((error_code >> 1) ^ 'a').ToString("x2").ToUpper()
                 + Convert.ToByte(error_code | 'B').ToString("x2").ToUpper();
@@ -171,7 +173,17 @@ public class ShipManager : NetworkBehaviour {
         m_Steering = GetComponent<ShipSteering>();
         m_TransitionColorNormal = m_TransitionMaterial.GetColor("_WireColor");
     }
-
+    public float GetPlantOxygen(){
+        float oxygen = 0.0f;
+        plants = FindObjectsOfType<Plant>();
+        foreach (Plant p in plants){
+            if(p.seedPlanted.Value){
+                oxygen += 1.0f;
+            }
+        }
+        Debug.Log(oxygen/10);
+        return oxygen/10;
+    }
     public override void OnDestroy() {
         base.OnDestroy();
         m_TransitionMaterial.SetColor("_WireColor", m_TransitionColorNormal);
@@ -205,6 +217,7 @@ public class ShipManager : NetworkBehaviour {
     }
 
     private void Update() {
+        GetPlantOxygen();
         if(Input.GetKeyDown(KeyCode.P) && IsServer){
             if (HasPower) {
                 TriggerPowerOutageEvent();

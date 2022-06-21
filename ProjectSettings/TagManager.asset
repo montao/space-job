@@ -15,6 +15,7 @@ TagManager:
   - Normal Lamp
   - Backup Lamp
   - PlayerMeshRenderer
+  - Plant
   layers:
   - Default
   - TransparentFX

@@ -21,7 +21,7 @@ public class Plant : Interactable<bool> {
     private Mesh healthyPlant;
     private MeshFilter currentMesh;
     private NetworkObject seed;
-    private NetworkVariable<bool> seedPlanted = new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> seedPlanted = new NetworkVariable<bool>(false);
     private NetworkVariable<bool> watered = new NetworkVariable<bool>(false);
     private NetworkVariable<bool> dry = new NetworkVariable<bool>(false);
     private NetworkVariable<bool> dead = new NetworkVariable<bool>(false);
