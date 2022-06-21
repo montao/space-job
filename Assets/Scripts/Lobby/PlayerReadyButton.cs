@@ -43,6 +43,7 @@ public class PlayerReadyButton : Interactable<bool> {
 
     public override void Update() {
         base.Update();
+        Debug.Log(PlayerManager.Instance.Players.Count);
         if(PlayersReady.Value == PlayerManager.Instance.Players.Count){
             if (! countdownInAction) {
                 countdownInAction = true;
@@ -51,8 +52,8 @@ public class PlayerReadyButton : Interactable<bool> {
             if (playerNumber == PlayerManager.Instance.Players.Count) {
                 ShowCountdown(true);
             }
-            // a player left during the countdown
             else {
+                Debug.Log("a player left during the countdown" + PlayerManager.Instance.Players.Count.ToString());
                 var avatars = FindObjectsOfType<PlayerAvatar>();
                     foreach (var avatar in avatars) {
                         avatar.ready.Value = !avatar.ready.Value;
