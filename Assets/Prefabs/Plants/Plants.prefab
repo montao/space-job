@@ -501,9 +501,11 @@ MonoBehaviour:
   CanInteract: 1
   plantSound: {fileID: 0}
   seedInPot: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  plantStage1: {fileID: -1238218227891777710, guid: f66ebde549fdfbf3eb8a56af127e7053, type: 3}
+  plantStage1: {fileID: 8691780276856062721, guid: a8077c149af7e2949a77d3ab596d5a83, type: 3}
   deadPlant: {fileID: -4119317738140548247, guid: 71f52ee58e2610b75a48d1919cc250df, type: 3}
   dryPlant: {fileID: -1144757092387211653, guid: 23e69f78171c35edea148f432f2530a8, type: 3}
+  seedPlanted:
+    m_InternalValue: 0
 --- !u!114 &5049299245706620802
 MonoBehaviour:
   m_ObjectHideFlags: 0

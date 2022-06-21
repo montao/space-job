@@ -33,13 +33,13 @@ public class Plant : Interactable<bool> {
     }
     private void Update() {
         // Debug.Log(watered.Value);
-        if(dry.Value && (!watered.Value)) {
+/*         if(dry.Value && (!watered.Value)) {
             PlantDyingServerRpc();
         }
 
         if(seedPlanted.Value && watered.Value){
             GrowPlantServerRpc();
-        }
+        } */
         
     }
 
@@ -64,17 +64,20 @@ public class Plant : Interactable<bool> {
             if(seedPlanted.Value){
                 watered.Value = true;
                 Debug.Log("plant has been watered");
-                WaterPlantServerRpc();
+                WaterPlantServerRpc(Value);
             }
             
         }
         if (seed != null) {
             DespawnServerRpc();
         }
-        GrowPlantServerRpc();
+        GrowPlantServerRpc(Value);
     }
 
+
     public override void OnStateChange(bool previous, bool current) {
+        PlantDyingServerRpc(current);
+        GrowPlantServerRpc(current);
     }
     [ServerRpc(RequireOwnership = false)]
     public void SetServerRpc(bool value){
@@ -111,22 +114,26 @@ public class Plant : Interactable<bool> {
         seed.GetComponentInParent<NetworkObject>().Despawn(destroy: true);   
     }
     [ServerRpc(RequireOwnership = false)]
-    public void GrowPlantServerRpc() {
-        if(seedPlanted.Value) {
+    public void GrowPlantServerRpc(bool smol) {
+        if(seedPlanted.Value && smol && watered.Value) {
             Debug.Log("growing seed");
             StartCoroutine(WaitForPlantGrow(10));
         }
     }
     [ServerRpc(RequireOwnership = false)]
-    public void WaterPlantServerRpc() {
-        Debug.Log("plant watered");
-        StartCoroutine(TimeTillPlantDry(10));
-        
+    public void WaterPlantServerRpc(bool wet) {
+        if(wet){
+            Debug.Log("plant watered");
+            StartCoroutine(TimeTillPlantDry(10));
+        } 
     }
     [ServerRpc(RequireOwnership = false)]
-    public void PlantDyingServerRpc() {
-        Debug.Log("Plant starting to die");
-        StartCoroutine(TimeTillPlantDead(10));
+    public void PlantDyingServerRpc(bool dying) {
+        if(dying && dry.Value && (!watered.Value)){
+            Debug.Log("Plant starting to die");
+            StartCoroutine(TimeTillPlantDead(10));
+        }
+        
     }
     [ServerRpc(RequireOwnership = false)]
     public void ChangeMeshServerRpc(int mesh) {

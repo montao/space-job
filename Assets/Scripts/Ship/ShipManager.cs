@@ -217,7 +217,6 @@ public class ShipManager : NetworkBehaviour {
     }
 
     private void Update() {
-        GetPlantOxygen();
         if(Input.GetKeyDown(KeyCode.P) && IsServer){
             if (HasPower) {
                 TriggerPowerOutageEvent();
