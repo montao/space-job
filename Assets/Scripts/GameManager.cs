@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Unity.Netcode;
+// using Unity.Netcode;
 using TMPro;
 
 public class GameManager : MonoBehaviour {
@@ -30,6 +30,14 @@ public class GameManager : MonoBehaviour {
         */
     }
 
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.G)) {
+            int n = QualitySettings.names.Length;
+            int i = QualitySettings.GetQualityLevel();
+            QualitySettings.SetQualityLevel((i + 1) % n, true);
+        }
+    }
+
     private void OnSceneLoad(ulong clientId, string scene, LoadSceneMode loadSceneMode, AsyncOperation op) {
         //m_LoadingScreen.enabled = true;  TODO re-enable
         //StartCoroutine(LoadingScreenCoroutine(op));
@@ -48,5 +56,6 @@ public class GameManager : MonoBehaviour {
         Debug.Log("!ydaer pihS");
         m_LoadingScreen.enabled = false;
     }
+
 
 }
