@@ -12,7 +12,7 @@ public class PlayerReadyButton : Interactable<bool> {
     private static float countdownTime = 5.9f;
     private float timeRemaining = countdownTime;
     private bool countdownInAction = false;
-    //int readyCouter = 0;
+    private int playerNumber;
     public NetworkVariable<int> PlayersReady =
         new NetworkVariable<int>(0);
     public NetworkVariable<int> TimeShown =
@@ -31,14 +31,13 @@ public class PlayerReadyButton : Interactable<bool> {
     }
 
     protected override void Interaction(){
-        Debug.Log("ready" + PlayersReady.Value);
         m_LocalPlayerInteracting = !m_LocalPlayerInteracting;
-        SetServerRpc(m_LocalPlayerInteracting);
-        SetPlayerConditions(m_LocalPlayerInteracting);
+        SetServerRpc(m_LocalPlayerInteracting); //?
+        FlipPlayerCondition();
         ModReadyServerRpc(PlayerManager.Instance.LocalPlayer.Avatar.ready.Value ? 1 : -1);
         Debug.Log("ready" + PlayersReady.Value);
     }
-    void SetPlayerConditions(bool on){
+    void FlipPlayerCondition(){
         PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = !PlayerManager.Instance.LocalPlayer.Avatar.ready.Value;  
     }
 
@@ -47,19 +46,31 @@ public class PlayerReadyButton : Interactable<bool> {
         if(PlayersReady.Value == PlayerManager.Instance.Players.Count){
             if (! countdownInAction) {
                 countdownInAction = true;
+                playerNumber = PlayerManager.Instance.Players.Count;
             }
-            if (IsServer) {     
-                Countdown(true);
+            if (playerNumber == PlayerManager.Instance.Players.Count) {
+                ShowCountdown(true);
             }
-            canvas.gameObject.SetActive(true);
+            // a player left during the countdown
+            else {
+                var avatars = FindObjectsOfType<PlayerAvatar>();
+                    foreach (var avatar in avatars) {
+                        avatar.ready.Value = !avatar.ready.Value;
+                }
+                ShowCountdown(false);
+            }        
         }
         else {
-            if(IsServer) {
-                Countdown(false);               
-            }
-            countdownInAction = false; 
-            canvas.gameObject.SetActive(false);
+            ShowCountdown(false);
         }
+    }
+
+    public void ShowCountdown(bool on) {
+        if (IsServer) {     
+            Countdown(on);
+        }
+        countdownInAction = on;
+        canvas.gameObject.SetActive(on);
     }
     public override void OnStateChange(bool previous, bool current){
         //SetPlayerConditions(current);
