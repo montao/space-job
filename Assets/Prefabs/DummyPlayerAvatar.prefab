@@ -1013,6 +1013,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cbb20b78870fcf9b49c84ea6913d5553, type: 3}
   - {fileID: 8300000, guid: 4c3feb33bfabf9d60bd1753285fc108b, type: 3}
   - {fileID: 8300000, guid: f4b25ec7a4e0d3ce0a0381774da45d1c, type: 3}
+  m_DeathSounds:
+  - {fileID: 8300000, guid: 3fd177a26d536183c80488e1280c3aad, type: 3}
+  m_FallSounds:
+  - {fileID: 8300000, guid: 1066eae8e724cc0c78980a6159b778dd, type: 3}
+  m_DamageSounds:
+  - {fileID: 8300000, guid: 2fac2ffe2d4c9837cbe68a6c0dbcd5eb, type: 3}
+  - {fileID: 8300000, guid: 884d4c418f3f49c65903d96a8ea97c4d, type: 3}
+  - {fileID: 8300000, guid: c647596e570555d2290d70260261ffa8, type: 3}
+  - {fileID: 8300000, guid: 7052487ca7315d042bedc0c15c5803e6, type: 3}
+  - {fileID: 8300000, guid: 9193a788fa5acd06888195a1ba8ada0f, type: 3}
 --- !u!222 &7404256255760437957
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1049,7 +1059,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1674,7 +1684,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000000055878933, y: -0.0000000074505526, z: -0.36664888}
+  m_ConnectedAnchor: {x: -0.000000012107102, y: -0.000000012107144, z: -0.3666489}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -1750,7 +1760,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000014901159, y: -0.000000018626453, z: -0.35410923}
+  m_ConnectedAnchor: {x: 0.000000044703476, y: 0.00000004470349, z: -0.35410923}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -2157,7 +2167,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000011175789, y: -0.000000016763744, z: -0.36664885}
+  m_ConnectedAnchor: {x: 0.0000000046565787, y: 0.000000037252764, z: -0.36664876}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
