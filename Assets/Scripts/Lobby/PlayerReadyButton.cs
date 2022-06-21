@@ -43,7 +43,6 @@ public class PlayerReadyButton : Interactable<bool> {
 
     public override void Update() {
         base.Update();
-        Debug.Log(PlayerManager.Instance.Players.Count);
         if(PlayersReady.Value == PlayerManager.Instance.Players.Count){
             if (! countdownInAction) {
                 countdownInAction = true;

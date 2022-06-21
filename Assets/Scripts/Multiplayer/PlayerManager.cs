@@ -75,7 +75,7 @@ public class PlayerManager : NetworkBehaviour {
         NetworkManager.Singleton.OnClientConnectedCallback +=
             (id) => {
                 if (IsServer) {
-                    m_PlayerCount.Value++;
+                    m_PlayerCount.Value = m_PlayerCount.Value + 1;
 
                     NetworkObject po = NetworkManager.Singleton.ConnectedClients[id].PlayerObject;
                     PersistentPlayer player = po.GetComponent<PersistentPlayer>();
@@ -93,7 +93,7 @@ public class PlayerManager : NetworkBehaviour {
         NetworkManager.Singleton.OnClientDisconnectCallback +=
             (id) => {
                 if (IsServer) {
-                    m_PlayerCount.Value--;
+                    m_PlayerCount.Value = m_PlayerCount.Value - 1;
                     NetworkObject po = NetworkManager.Singleton.ConnectedClients[id].PlayerObject;
                     PersistentPlayer player = po.GetComponent<PersistentPlayer>();
                     PlayerAvatar avatar = player.Avatar;
