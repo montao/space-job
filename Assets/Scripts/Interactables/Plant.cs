@@ -21,6 +21,7 @@ public class Plant : Interactable<bool> {
     private Mesh healthyPlant;
     private MeshFilter currentMesh;
     private NetworkObject seed;
+    public NetworkVariable<int> m_mesh = new NetworkVariable<int>(0);
     public NetworkVariable<bool> seedPlanted = new NetworkVariable<bool>(false);
     private NetworkVariable<bool> watered = new NetworkVariable<bool>(false);
     private NetworkVariable<bool> dry = new NetworkVariable<bool>(false);
@@ -31,22 +32,11 @@ public class Plant : Interactable<bool> {
         currentMesh = GetComponent<MeshFilter>();
         audioSource = GetComponent<AudioSource>();    
     }
-    private void Update() {
-        // Debug.Log(watered.Value);
-/*         if(dry.Value && (!watered.Value)) {
-            PlantDyingServerRpc();
-        }
-
-        if(seedPlanted.Value && watered.Value){
-            GrowPlantServerRpc();
-        } */
-        
-    }
 
     protected override void Interaction(){
         SetServerRpc(!Value);
         if(dead.Value){
-            ChangeMeshServerRpc(1);
+            m_mesh.Value = 1;
             seedPlanted.Value = false;
             watered.Value = false;
             dry.Value = false;
@@ -54,7 +44,7 @@ public class Plant : Interactable<bool> {
         }
         if (PlayerAvatar.IsHolding<Seed>()) {
             seed = PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY);
-            ChangeMeshServerRpc(2);
+            m_mesh.Value = 2;
             Debug.Log("change plant mesh");
             PlayerManager.Instance.LocalPlayer.Avatar.DropItem(PlayerAvatar.Slot.PRIMARY);
             seedPlanted.Value = true;
@@ -73,8 +63,9 @@ public class Plant : Interactable<bool> {
         }
         GrowPlantServerRpc(Value);
     }
-
-
+     public void OnMeshChange(int previous, int current){
+        ChangeMeshServerRpc(current);
+     }
     public override void OnStateChange(bool previous, bool current) {
         PlantDyingServerRpc(current);
         GrowPlantServerRpc(current);
@@ -89,7 +80,7 @@ public class Plant : Interactable<bool> {
         Debug.Log("plant grows in " + growIn + "sec");
         yield return new WaitForSeconds(growIn);
         Debug.Log("change into stage 1 plant mesh");
-        ChangeMeshServerRpc(3);
+        m_mesh.Value = 3;
         dry.Value = true;
     }
     IEnumerator TimeTillPlantDry(float maxtime){
@@ -97,7 +88,7 @@ public class Plant : Interactable<bool> {
         Debug.Log("plant ist dry in " + dryIn + "secs");
         yield return new WaitForSeconds(dryIn);
         Debug.Log("changing into dry plant mesh");
-        ChangeMeshServerRpc(4);
+        m_mesh.Value = 4;
         watered.Value = false;
         dry.Value = true;
     }
@@ -106,7 +97,7 @@ public class Plant : Interactable<bool> {
         Debug.Log("plant is dead in " + deadIn + " secs");
         yield return new WaitForSeconds(deadIn);
         Debug.Log("dead plant mesh");
-        ChangeMeshServerRpc(6);
+        m_mesh.Value = 6;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -159,5 +150,21 @@ public class Plant : Interactable<bool> {
         
     }
     
-
+    
+    public override void OnNetworkSpawn(){
+        base.OnNetworkSpawn();
+        dry.OnValueChanged += OnStateChange;
+        dead.OnValueChanged += OnStateChange;
+        watered.OnValueChanged += OnStateChange;
+        seedPlanted.OnValueChanged += OnStateChange;
+        m_mesh.OnValueChanged += OnMeshChange;
+        OnMeshChange(m_mesh.Value, m_mesh.Value);
+        OnStateChange(false, false);
+    } 
+    public override void OnNetworkDespawn(){
+        dry.OnValueChanged -= OnStateChange;
+        dead.OnValueChanged -= OnStateChange;
+        watered.OnValueChanged -= OnStateChange;
+        seedPlanted.OnValueChanged -= OnStateChange;
+    }
 }
