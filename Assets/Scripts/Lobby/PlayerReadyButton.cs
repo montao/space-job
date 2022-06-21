@@ -53,8 +53,8 @@ public class PlayerReadyButton : Interactable<bool> {
             if (PlayersReady.Value > PlayerManager.Instance.ConnectedPlayerCount && IsServer) {
                 Debug.Log("a player left during the countdown" + PlayerManager.Instance.Players.Count.ToString());
                 UnreadyPlayersClientRpc();
+                PlayersReady.Value = 0;
             }
-            PlayersReady.Value = 0;
 
         }
     }
