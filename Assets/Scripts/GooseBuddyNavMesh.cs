@@ -49,6 +49,9 @@ public class GooseBuddyNavMesh : NetworkBehaviour {
         List<Transform> targets = new List<Transform>();
         if (state == GooseState.CHASE_PLAYER) {
             foreach (var pplayer in PlayerManager.Instance.Players) {
+                if (!pplayer || !pplayer.Avatar) {
+                    continue;
+                }
                 Transform t = pplayer.Avatar.transform;
                 targets.Add(t);
             }
