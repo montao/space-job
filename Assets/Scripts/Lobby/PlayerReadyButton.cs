@@ -12,7 +12,6 @@ public class PlayerReadyButton : Interactable<bool> {
     private static float countdownTime = 5.9f;
     private float timeRemaining = countdownTime;
     private bool countdownInAction = false;
-    private int playerNumber;
     public NetworkVariable<int> PlayersReady =
         new NetworkVariable<int>(0);
     public NetworkVariable<int> TimeShown =
@@ -43,26 +42,20 @@ public class PlayerReadyButton : Interactable<bool> {
 
     public override void Update() {
         base.Update();
-        Debug.Log(PlayerManager.Instance.ConnectedPlayerCount);
-        if(PlayersReady.Value == PlayerManager.Instance.ConnectedPlayerCount){
+        if(PlayersReady.Value == PlayerManager.Instance.ConnectedPlayerCount) {
             if (! countdownInAction) {
                 countdownInAction = true;
-                playerNumber = PlayerManager.Instance.ConnectedPlayerCount;
             }
-            if (playerNumber == PlayerManager.Instance.ConnectedPlayerCount) {
-                ShowCountdown(true);
-            }
-            else {
-                Debug.Log("a player left during the countdown" + PlayerManager.Instance.Players.Count.ToString());
-                var avatars = FindObjectsOfType<PlayerAvatar>();
-                    foreach (var avatar in avatars) {
-                        avatar.ready.Value = !avatar.ready.Value;
-                }
-                ShowCountdown(false);
-            }        
+            ShowCountdown(true);       
         }
         else {
             ShowCountdown(false);
+            if (PlayersReady.Value > PlayerManager.Instance.ConnectedPlayerCount && IsServer) {
+                Debug.Log("a player left during the countdown" + PlayerManager.Instance.Players.Count.ToString());
+                UnreadyPlayersClientRpc();
+                PlayersReady.Value = 0;
+            }
+
         }
     }
 
@@ -78,8 +71,15 @@ public class PlayerReadyButton : Interactable<bool> {
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SetServerRpc(bool value){
+    public void SetServerRpc(bool value) {
         m_State.Value = value;
+    }
+
+    [ClientRpc()]
+    public void UnreadyPlayersClientRpc() {
+        if (IsOwner) {
+            FlipPlayerCondition();
+        }
     }
 
     public void Countdown(bool isrunning) {

@@ -23,6 +23,7 @@ public class GooseBuddyNavMesh : NetworkBehaviour {
 
     public LayerMask GroundLayer;
     public Transform ItemDepositTarget;  // create an empty child here
+    public bool VerboseLog = false;
 
     public enum GooseState {
         ITEM_GET,
@@ -42,13 +43,15 @@ public class GooseBuddyNavMesh : NetworkBehaviour {
 
     public static GooseState RandomState() {
         int i = UnityEngine.Random.Range(0, Enum.GetValues(typeof(GooseState)).Length);
-        //Debug.Log("Goose " + i);
         return (GooseState)Enum.ToObject(typeof(GooseState), i);
     }
     public static Transform RandomTarget(GooseState state) {
         List<Transform> targets = new List<Transform>();
         if (state == GooseState.CHASE_PLAYER) {
             foreach (var pplayer in PlayerManager.Instance.Players) {
+                if (!pplayer || !pplayer.Avatar) {
+                    continue;
+                }
                 Transform t = pplayer.Avatar.transform;
                 targets.Add(t);
             }
@@ -89,7 +92,7 @@ public class GooseBuddyNavMesh : NetworkBehaviour {
                 m_Target = ItemDepositTarget;
             }
 
-            Debug.Log("Goose is now " + value);
+            if (VerboseLog) Debug.Log("Goose is now " + value);
 
             __State = value;
         }
@@ -97,7 +100,7 @@ public class GooseBuddyNavMesh : NetworkBehaviour {
 
     private Vector3 RandomPointOnNavMesh(float max_distance) {
         if (max_distance < 0) {
-            Debug.LogWarning("No target position found for the Goose :(");
+            if (VerboseLog) Debug.LogWarning("No target position found for the Goose :(");
             return transform.position;
         }
 
@@ -107,7 +110,7 @@ public class GooseBuddyNavMesh : NetworkBehaviour {
             return hit.position;
         }
 
-        // Debug.Log("No Goose destination found, trying again with maxdist=" + (max_distance - 10) + "...");
+        // if (VerboseLog) Debug.Log("No Goose destination found, trying again with maxdist=" + (max_distance - 10) + "...");
         return RandomPointOnNavMesh(max_distance - 10);
     }
 
@@ -124,7 +127,7 @@ public class GooseBuddyNavMesh : NetworkBehaviour {
 
 
     private void OnCollisionEnter(Collision other) {
-        Debug.Log(m_Target.position + "; " + other.gameObject.name);
+        if (VerboseLog) Debug.Log(m_Target.position + "; " + other.gameObject.name);
         if (other.gameObject.GetComponent<PlayerAvatar>() != null){
             m_Target = other.transform;
         }

@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 8714609274574202879}
   - component: {fileID: 5925904446885500564}
   - component: {fileID: 7322659894487231795}
+  - component: {fileID: 7745100485619797536}
   m_Layer: 0
   m_Name: SavetyThingy
   m_TagString: Untagged
@@ -276,6 +277,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7745100485619797536
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718790050928581653}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.25875038, y: 0.26063618, z: 0.1026339}
+  m_Center: {x: -0.0018551946, y: 0.12519346, z: -0.007912412}
 --- !u!1 &2153230084940241576
 GameObject:
   m_ObjectHideFlags: 0

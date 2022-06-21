@@ -32,7 +32,7 @@ public class Plant : Interactable<bool> {
         audioSource = GetComponent<AudioSource>();    
     }
     private void Update() {
-        Debug.Log(watered.Value);
+        // Debug.Log(watered.Value);
         if(dry.Value && (!watered.Value)) {
             PlantDyingServerRpc();
         }

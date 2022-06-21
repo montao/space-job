@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Unity.Netcode;
+// using Unity.Netcode;
 using TMPro;
 
 public class GameManager : MonoBehaviour {
@@ -22,14 +22,25 @@ public class GameManager : MonoBehaviour {
     }
 
     void Start() {
+        /*
         NetworkManager.Singleton.OnInitialized += () => {
-            NetworkManager.Singleton.SceneManager.OnLoad += OnSceneLoad;
+            Debug.Log("Network initialized");
+            // NetworkManager.Singleton.SceneManager.OnLoad += OnSceneLoad;
         };
+        */
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.G)) {
+            int n = QualitySettings.names.Length;
+            int i = QualitySettings.GetQualityLevel();
+            QualitySettings.SetQualityLevel((i + 1) % n, true);
+        }
     }
 
     private void OnSceneLoad(ulong clientId, string scene, LoadSceneMode loadSceneMode, AsyncOperation op) {
         //m_LoadingScreen.enabled = true;  TODO re-enable
-        StartCoroutine(LoadingScreenCoroutine(op));
+        //StartCoroutine(LoadingScreenCoroutine(op));
     }
 
     private IEnumerator LoadingScreenCoroutine(AsyncOperation op) {
@@ -45,5 +56,6 @@ public class GameManager : MonoBehaviour {
         Debug.Log("!ydaer pihS");
         m_LoadingScreen.enabled = false;
     }
+
 
 }

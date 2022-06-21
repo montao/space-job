@@ -39,13 +39,13 @@ public class Room : NetworkBehaviour {
     }
 
     public void DisplayText(string text) {
-        if (m_RoomDisplay != null) {
-            m_RoomDisplay.text = text;
-        }
+        m_RoomDisplay.text = text;
     }
 
     private void Update() {
-        DisplayText("Oxygen Capacity: " + RoomOxygen);
+        if (m_RoomDisplay != null) {
+            DisplayText("Oxygen Capacity: " + RoomOxygen);
+        }
     }
 
     private void FixedUpdate() {
