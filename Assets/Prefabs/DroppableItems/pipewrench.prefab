@@ -45,7 +45,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6105532201919271807}
-  m_Mesh: {fileID: -5495902117074765545, guid: 9750d5ed1ba495543a96a7c1eb3d6b58, type: 3}
+  m_Mesh: {fileID: -2632513842479890946, guid: 9750d5ed1ba495543a96a7c1eb3d6b58, type: 3}
 --- !u!23 &5745407027878097578
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -98,8 +98,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.014884874, y: 0.30593386, z: 0.060893826}
-  m_Center: {x: 0.0000000050591895, y: -0.037250765, z: 0.010604105}
+  m_Size: {x: 0.014884874, y: 0.34003663, z: 0.060893826}
+  m_Center: {x: 0.0000000051379088, y: -0.02019942, z: 0.010604095}
 --- !u!54 &6105532201919271803
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -215,8 +215,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.030364737, y: 0.31882295, z: 0.06602257}
-  m_Center: {x: -0.00010479061, y: -0.037293863, z: 0.011437287}
+  m_Size: {x: 0.040078003, y: 0.53751564, z: 0.09177935}
+  m_Center: {x: 0.0047518476, y: -0.07148952, z: 0.014399124}
 --- !u!114 &6375510347268210878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,7 +231,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NeedsPower: 0
   TriggeredAnimation: 2
+  LastUse: 0
+  CanInteract: 1
   Velocity: 100
+  PrimaryPos: {x: 0, y: 0, z: 0}
+  PrimaryRot: {x: 0, y: 0, z: 0}
+  SecondaryPos: {x: 0, y: 0, z: 0}
+  SecondaryRot: {x: 0, y: 0, z: 0}
   pickupSounds:
   - {fileID: 8300000, guid: 2febf34916db4709fb409562ac961bd4, type: 3}
   - {fileID: 8300000, guid: 0a6801426f8aab1128e2c2ff417f5193, type: 3}
