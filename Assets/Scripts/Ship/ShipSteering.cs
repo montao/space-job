@@ -141,9 +141,9 @@ public class ShipSteering : NetworkBehaviour {
             Debug.Log(audioSourceLeft.clip);
             audioSourceLeft.Play(0);
             audioSourceRight.Play(0);
-            CameraBrain.Instance.SetNoiseParameters(0.3f);
+            CameraBrain.Instance.SetNoiseParameters(0.1f);
         } else if (GetThrusterState(Thruster.ROTATE_LEFT) || GetThrusterState(Thruster.ROTATE_RIGHT)) {
-            CameraBrain.Instance.SetNoiseParameters(0.3f);
+            CameraBrain.Instance.SetNoiseParameters(0.05f);
         } else {
             CameraBrain.Instance.SetNoiseParameters(0.0f);
             Debug.Log("zero'");
