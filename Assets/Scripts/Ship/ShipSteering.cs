@@ -62,8 +62,10 @@ public class ShipSteering : NetworkBehaviour {
         float speed_prev = prev.magnitude;
         float speed_curr = curr.magnitude;
 
-        if (Mathf.Abs(speed_prev - speed_curr) > EPSILON) {
-            CameraBrain.Instance.QuickShake(0.6f, 0.3f);
+        if (Mathf.Abs(speed_prev - speed_curr) > 0.01f) {
+            CameraBrain.Instance.SetNoiseParameters(0.3f);
+        } else {
+            CameraBrain.Instance.SetNoiseParameters(0.0f);
         }
     }
 
