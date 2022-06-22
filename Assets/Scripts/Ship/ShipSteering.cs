@@ -48,27 +48,6 @@ public class ShipSteering : NetworkBehaviour {
         audioSource = GetComponent<AudioSource>();
     }
 
-    public override void OnNetworkSpawn() {
-        base.OnNetworkSpawn();
-        m_Velocity.OnValueChanged += OnVelocityChanged;
-    }
-
-    public override void OnNetworkDespawn() {
-        base.OnNetworkDespawn();
-        m_Velocity.OnValueChanged -= OnVelocityChanged;
-    }
-
-    private void OnVelocityChanged(Vector3 prev, Vector3 curr) {
-        float speed_prev = prev.magnitude;
-        float speed_curr = curr.magnitude;
-
-        if (Mathf.Abs(speed_prev - speed_curr) > 0.01f) {
-            CameraBrain.Instance.SetNoiseParameters(0.3f);
-        } else {
-            CameraBrain.Instance.SetNoiseParameters(0.0f);
-        }
-    }
-
     public bool GetThrusterState(Thruster t) {
         return (m_ThrusterStatesNetwork.Value & (1 << (int)t)) != 0;
     }
@@ -162,7 +141,14 @@ public class ShipSteering : NetworkBehaviour {
             Debug.Log(audioSourceLeft.clip);
             audioSourceLeft.Play(0);
             audioSourceRight.Play(0);
+            CameraBrain.Instance.SetNoiseParameters(0.3f);
+        } else if (GetThrusterState(Thruster.ROTATE_LEFT) || GetThrusterState(Thruster.ROTATE_RIGHT)) {
+            CameraBrain.Instance.SetNoiseParameters(0.3f);
+        } else {
+            CameraBrain.Instance.SetNoiseParameters(0.0f);
+            Debug.Log("zero'");
         }
+
         if(GetThrusterState(Thruster.ROTATE_LEFT)){
             if(audioSourceLeft.isPlaying) {
                 Debug.Log("left thruster");
