@@ -19,7 +19,7 @@ public class EventManager : MonoBehaviour {
     public static EventManager Instance;
     [SerializeField]
     private Map m_Map;
-    private float risk = 0.02f;
+    private float risk = 0.02f * 0.05f;
 
     private Vector2 m_LastSpaceEventCoords = new Vector2(1, 1) * -10000;
 
