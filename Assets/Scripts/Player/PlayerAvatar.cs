@@ -487,6 +487,7 @@ public class PlayerAvatar : NetworkBehaviour {
                 ReleaseMovementLock(GetHashCode());
             } else {
                 LockMovement(GetHashCode());
+                DropAllItems();
             }
         }
 
@@ -680,6 +681,15 @@ public class PlayerAvatar : NetworkBehaviour {
         AnimationController.TriggerAnimation(PlayerAnimation.INTERACT);
         cup.InvokeOnDrop(this);
         InvokeOnDropServerRpc(item);
+    }
+
+    public void DropAllItems() {
+        if (!HasInventorySpace(Slot.PRIMARY)) {
+            DropItem(Slot.PRIMARY);
+        }
+        if (!HasInventorySpace(Slot.SECONDARY)) {
+            DropItem(Slot.SECONDARY);
+        }
     }
 
     public void SwapInventorySlots() {

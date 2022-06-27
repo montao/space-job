@@ -102,12 +102,7 @@ public class PlayerManager : NetworkBehaviour {
                     po.ChangeOwnership(OwnerClientId);
                     avatar.GetComponent<NetworkObject>().ChangeOwnership(OwnerClientId);
 
-                    if (!avatar.HasInventorySpace(PlayerAvatar.Slot.PRIMARY)) {
-                        avatar.DropItem(PlayerAvatar.Slot.PRIMARY);
-                    }
-                    if (!avatar.HasInventorySpace(PlayerAvatar.Slot.SECONDARY)) {
-                        avatar.DropItem(PlayerAvatar.Slot.SECONDARY);
-                    }
+                    avatar.DropAllItems();
 
                     // destroy
                     po.ChangeOwnership(id);
