@@ -34,7 +34,8 @@ public class Plant : Interactable<bool> {
         currentMesh = GetComponent<MeshFilter>();
         audioSource = GetComponent<AudioSource>();    
     }
-    void Update() {
+    public override void Update() {
+        base.Update();
         ChangeMeshServerRpc();
     }
     protected override void Interaction(){
