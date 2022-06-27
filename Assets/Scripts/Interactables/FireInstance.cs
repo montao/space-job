@@ -1,13 +1,17 @@
 using UnityEngine;
 using Unity.Netcode;
-
+using System.Collections;
+using System;
+using System.Collections.Generic;
 public class FireInstance : RangedInteractableBase
 {
     private float m_DamagePerTick;
-    private Collider DeathField;
+    private Collider m_DeathField;
+    private bool m_IsActive;
+    public List<FireInstance> FireNeighbours;
     public override void Start() {
         base.Start();
-        DeathField = GetComponent<Collider>();
+        m_DeathField = GetComponent<Collider>();
     }
 
     protected override void Interaction() {
