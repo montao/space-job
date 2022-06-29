@@ -9,13 +9,16 @@ public class FireInstance : RangedInteractableBase
     private Collider m_DeathField;
     private bool m_IsActive;
     public List<FireInstance> FireNeighbours;
+
     public override void Start() {
         base.Start();
         m_DeathField = GetComponent<Collider>();
     }
 
-    protected override void Interaction() {
-        
+
+
+    protected override void Interaction(){
+
     }
 
     private void OnTriggerStay(Collider other) {
