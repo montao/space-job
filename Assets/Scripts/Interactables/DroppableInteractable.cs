@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
@@ -86,6 +87,24 @@ public abstract class DroppableInteractable : Interactable<int>{
         if (IsServer) {
             m_State.Value = IN_WORLD;
         }
+    }
+
+    public override void OnNetworkDespawn() {
+        // check if in players inventory, if true, update accordingly
+        if (m_State.Value != IN_WORLD) {
+            var local_ava = PlayerManager.Instance.LocalPlayer?.Avatar;
+            if (local_ava) {
+                foreach (var slot in Enum.GetValues(typeof(PlayerAvatar.Slot))) {
+                    var item = local_ava.GetInventoryItem((PlayerAvatar.Slot) slot);
+                    if (Util.GetDroppableInteractable(item) == this) {
+                        Debug.Log("Player holds item about to despawn. clearing");
+                        local_ava.DropItem((PlayerAvatar.Slot) slot);
+                    }
+                }
+            }
+        }
+
+        base.OnNetworkDespawn();
     }
 
 

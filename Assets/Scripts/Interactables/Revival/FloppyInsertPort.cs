@@ -39,7 +39,6 @@ public class FloppyInsertPort : InteractableBase {
             DroppableInteractable item = Util.GetDroppableInteractable(activePlayer.GetInventoryItem(PlayerAvatar.Slot.PRIMARY));
             RevivalFloppy floppy = item.GetComponent<RevivalFloppy>();
             SetPlayerReferenceServerRpc(floppy.Player.Value);
-            activePlayer.DropItem(PlayerAvatar.Slot.PRIMARY);
             floppy.DespawnServerRpc();
         }
     }

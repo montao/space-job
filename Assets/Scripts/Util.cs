@@ -61,7 +61,7 @@ public class Util {
     }
 
     public static DroppableInteractable GetDroppableInteractable(NetworkObject network_object) {
-        return network_object.GetComponentInChildren<DroppableInteractable>();
+        return network_object?.GetComponentInChildren<DroppableInteractable>();
     }
 
     public static T TryGet<T>(NetworkObjectReference reference) where T: MonoBehaviour  {
