@@ -30,7 +30,7 @@ public class Room : NetworkBehaviour {
         foreach (HullBreachSpawnLocation hullspawnloc in GetComponentsInChildren<HullBreachSpawnLocation>()) {
             m_HullBreachSpawnLocations.Add(hullspawnloc.transform);
         }
-        foreach (FireInstanceSpawnLocation firespawnloc in GetComponentInChildren<FireInstanceSpawnLocation>()){
+        foreach (FireInstanceSpawnLocation firespawnloc in GetComponentsInChildren<FireInstanceSpawnLocation>()){
             if(firespawnloc != null){
                 m_FireSpawnLocations.Add(firespawnloc.transform);
             }
