@@ -21,7 +21,7 @@ public class FireInstance : RangedInteractableBase
 
     protected override void Interaction(){
         if (PlayerAvatar.IsHolding<FireExtinguisher>()) {
-            transform.localScale = transform.localScale * 1.6f;
+            transform.localScale = transform.localScale * 100f;
         }
     }
 
