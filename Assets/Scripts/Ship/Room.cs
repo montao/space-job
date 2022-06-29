@@ -16,8 +16,9 @@ public class Room : NetworkBehaviour {
     private TMP_Text m_RoomDisplay;
 
     private List<Transform> m_HullBreachSpawnLocations = new List<Transform>();
+    private List<Transform> m_FireSpawnLocations = new List<Transform>();
     private List<HullBreachInstance> m_HullBreaches = new List<HullBreachInstance>();
-
+    private List<FireInstance> m_Fires = new List<FireInstance>();
 
     void Start() {
         ShipManager.Instance.Rooms.Add(this);
@@ -26,8 +27,13 @@ public class Room : NetworkBehaviour {
         }
         m_RoomDisplay = GetComponentInChildren<TMP_Text>();
 
-        foreach (HullBreachSpawnLocation spawnloc in GetComponentsInChildren<HullBreachSpawnLocation>()) {
-            m_HullBreachSpawnLocations.Add(spawnloc.transform);
+        foreach (HullBreachSpawnLocation hullspawnloc in GetComponentsInChildren<HullBreachSpawnLocation>()) {
+            m_HullBreachSpawnLocations.Add(hullspawnloc.transform);
+        }
+        foreach (FireInstanceSpawnLocation firespawnloc in GetComponentInChildren<FireInstanceSpawnLocation>()){
+            if(firespawnloc != null){
+                m_FireSpawnLocations.Add(firespawnloc.transform);
+            }
         }
     }
 
