@@ -6,16 +6,18 @@ using System.Collections.Generic;
 public class FireInstance : RangedInteractableBase
 {
     private float m_DamagePerTick;
-    private Collider m_DeathField;
+    private DeathZone m_DeathField;
     private bool m_IsActive;
     public List<FireInstance> FireNeighbours;
 
     public override void Start() {
         base.Start();
-        m_DeathField = GetComponent<Collider>();
+        m_DeathField = GetComponentInChildren<DeathZone>();
     }
 
-
+    public void SetActive(bool new_state){
+        
+    }
 
     protected override void Interaction(){
 

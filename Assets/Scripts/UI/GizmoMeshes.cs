@@ -4,7 +4,7 @@ using UnityEngine;
 public class GizmoMeshes : MonoBehaviour {
 
     public Mesh HullBreach;
-
+    public Mesh Fire;
     public static GizmoMeshes Instance;
 
     void Update() {
