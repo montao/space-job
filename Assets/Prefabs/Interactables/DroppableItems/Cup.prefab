@@ -99,7 +99,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NeedsPower: 0
   TriggeredAnimation: 2
+  LastUse: 0
+  CanInteract: 1
   Velocity: 100
+  PrimaryPos: {x: -0.0101, y: 0.0708, z: -0.1359}
+  PrimaryRot: {x: 358.14624, y: 90.671555, z: 186.98956}
+  SecondaryPos: {x: 0.0355, y: 0.1588, z: -0.1696}
+  SecondaryRot: {x: 79.89542, y: 105.621605, z: 254.88028}
   pickupSounds:
   - {fileID: 8300000, guid: f113628dbe2ca633b98cf5e1b01cf36e, type: 3}
   - {fileID: 8300000, guid: a1ab87f048c506a638c5d9a8243e2b29, type: 3}

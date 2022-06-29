@@ -274,6 +274,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NeedsPower: 0
   TriggeredAnimation: 2
+  LastUse: 0
+  CanInteract: 1
   Velocity: 100
+  PrimaryPos: {x: 0.0328, y: -0.0025, z: -0.1049}
+  PrimaryRot: {x: 8.679434, y: 90.89106, z: 87.97161}
+  SecondaryPos: {x: -0.0035, y: 0.0993, z: -0.2538}
+  SecondaryRot: {x: 80.263985, y: 137.98874, z: 286.80933}
   pickupSounds: []
   interactionSounds: []

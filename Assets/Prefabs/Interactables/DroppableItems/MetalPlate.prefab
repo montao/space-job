@@ -115,6 +115,10 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Velocity: 100
+  PrimaryPos: {x: 0.009, y: -0.052, z: -0.294}
+  PrimaryRot: {x: 8.061459, y: 15.856396, z: 200.33119}
+  SecondaryPos: {x: 0.008, y: 0.093, z: -0.176}
+  SecondaryRot: {x: 1.2673126, y: 20.568329, z: 91.73172}
   pickupSounds:
   - {fileID: 8300000, guid: 2febf34916db4709fb409562ac961bd4, type: 3}
   - {fileID: 8300000, guid: 0a6801426f8aab1128e2c2ff417f5193, type: 3}
@@ -126,10 +130,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 31029ec79abcdffccb9f3eb657fb76a7, type: 3}
   interactionSounds:
   - {fileID: 8300000, guid: 5bebffbb5a722dbd89f862c5f8eb24c1, type: 3}
-  PrimaryPos: {x: 0.009, y: -0.052, z: -0.294}
-  PrimaryRot: {x: 8.061459, y: 15.856396, z: 200.33119}
-  SecondaryPos: {x: 0, y: 0, z: 0}
-  SecondaryRot: {x: 0, y: 0, z: 0}
 --- !u!82 &955131968250568111
 AudioSource:
   m_ObjectHideFlags: 0

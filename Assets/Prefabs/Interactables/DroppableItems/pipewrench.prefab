@@ -234,10 +234,10 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Velocity: 100
-  PrimaryPos: {x: 0, y: 0, z: 0}
-  PrimaryRot: {x: 0, y: 0, z: 0}
-  SecondaryPos: {x: 0, y: 0, z: 0}
-  SecondaryRot: {x: 0, y: 0, z: 0}
+  PrimaryPos: {x: 0.0106, y: -0.1659, z: -0.1003}
+  PrimaryRot: {x: 346.5634, y: 170.43883, z: 190.97054}
+  SecondaryPos: {x: -0.0045, y: 0.098, z: -0.2007}
+  SecondaryRot: {x: 3.8224869, y: 292.3935, z: 85.591675}
   pickupSounds:
   - {fileID: 8300000, guid: 2febf34916db4709fb409562ac961bd4, type: 3}
   - {fileID: 8300000, guid: 0a6801426f8aab1128e2c2ff417f5193, type: 3}
