@@ -159,7 +159,6 @@ public class Plant : Interactable<bool> {
     }
     [ServerRpc(RequireOwnership = false)]
     public void ChangeMeshServerRpc() {
-        Debug.Log("changed mesh");
         if (dead.Value) {
             m_mesh.Value = 6;
         }
