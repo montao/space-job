@@ -9,9 +9,12 @@ public enum PlayerAnimation {
     JUMP,
     DRINK,
     SPRAY,
-    PLATE_HOLD,
     HIT,
     SIT_IDLE,
+}
+
+public enum PlayerAminationBool {
+    HOLDING_PLATE,
 }
 
 public class PlayerAnimationController : NetworkBehaviour {
@@ -27,9 +30,16 @@ public class PlayerAnimationController : NetworkBehaviour {
         m_PlayerAnimator.SetTrigger(animation.ToString().ToLower());
     }
 
+    private void SetBoolLocally(PlayerAminationBool anim_bool, bool val) {
+        m_PlayerAnimator.SetBool(anim_bool.ToString().ToLower(), val);
+    }
+
     public void TriggerAnimation(PlayerAnimation animation) {
         if (!IsOwner) {
             Debug.LogWarning("Only owner should call TriggerAnimation!");
+            return;
+        }
+        if (animation == PlayerAnimation.NONE) {
             return;
         }
         var state = m_PlayerAnimator.GetCurrentAnimatorStateInfo(layerIndex: 0);
@@ -38,6 +48,17 @@ public class PlayerAnimationController : NetworkBehaviour {
             TriggerAnimationLocally(animation);
             TriggerAnimationServerRpc(animation);
         }
+    }
+
+    public void SetBool(PlayerAminationBool anim_bool, bool val) {
+        if (!IsOwner) {
+            Debug.LogWarning("Only owner should call SetBool!");
+            return;
+        }
+        var state = m_PlayerAnimator.GetCurrentAnimatorStateInfo(layerIndex: 0);
+        var transition = m_PlayerAnimator.GetAnimatorTransitionInfo(layerIndex: 0);
+        SetBoolLocally(anim_bool, val);
+        SetBoolServerRpc(anim_bool, val);
     }
 
     [ClientRpc]
@@ -52,9 +73,24 @@ public class PlayerAnimationController : NetworkBehaviour {
         TriggerAnimationLocally(animation);
     }
 
+    [ClientRpc]
+    private void SetBoolClientRpc(PlayerAminationBool anim_bool, bool val) {
+        if (IsOwner) {
+            return;  // Animation already triggered locally
+        }
+
+        SetBoolLocally(anim_bool, val);
+    }
+
     [ServerRpc]
     private void TriggerAnimationServerRpc(PlayerAnimation animation) {
         TriggerAnimationClientRpc(animation);
+    }
+
+
+    [ServerRpc]
+    private void SetBoolServerRpc(PlayerAminationBool anim_bool, bool val) {
+        SetBoolClientRpc(anim_bool, val);
     }
 
     public void OnSpeedChange(float speed){

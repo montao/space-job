@@ -9,11 +9,16 @@ public class HullBreachInstance : RangedInteractableBase {
     private EventParameters.HullBreachSize m_Size = EventParameters.HullBreachSize.SMALL;
     private bool m_PlayerIsHoldingPlate = false;  // server-only!
     private Coroutine m_GrowCoroutine;
+    private PlayerAnimation m_DefaultAnim;
 
     private readonly float LARGE_HULLBREACH_SCALE = 3.2f;
 
     public const float BASE_DRAIN = 0.4f;
     public const float GROW_INTERVAL_SECS = 45f;
+
+    public void Awake() {
+        m_DefaultAnim = TriggeredAnimation;
+    }
 
     public float DrainFactor() {
         return BASE_DRAIN * (m_Size == EventParameters.HullBreachSize.LARGE ? 1.5f : 1f);
@@ -46,7 +51,9 @@ public class HullBreachInstance : RangedInteractableBase {
     }
 
     private void InteractionLarge() {
+        TriggeredAnimation = m_DefaultAnim;
         if (PlayerAvatar.IsHolding<MetalPlate>()) {
+            TriggeredAnimation = PlayerAnimation.NONE;
             StartCoroutine(HoldPlate());
         } else if (PlayerAvatar.IsHolding<PipeWrench>()) {  // TODO add welder
             AttemptWeldPlateServerRpc();
@@ -54,11 +61,13 @@ public class HullBreachInstance : RangedInteractableBase {
     }
 
     private IEnumerator HoldPlate() {
-        // TODO: Trigger a holding animation
-        PlayerManager.Instance.LocalPlayer.Avatar.LockMovement(GetHashCode());
+        var ava = PlayerManager.Instance.LocalPlayer.Avatar;
+        ava.AnimationController.SetBool(PlayerAminationBool.HOLDING_PLATE, true);
+        ava.LockMovement(GetHashCode());
         SetIsHoldingServerRpc(true);
         yield return new WaitForSeconds(2.0f);
-        PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
+        ava.AnimationController.SetBool(PlayerAminationBool.HOLDING_PLATE, false);
+        ava.ReleaseMovementLock(GetHashCode());
         SetIsHoldingServerRpc(false);
     }
 
