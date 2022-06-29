@@ -62,7 +62,8 @@ public class GooseBuddyNavMesh : NetworkBehaviour {
         }
 
         int i = UnityEngine.Random.Range(0, targets.Count);
-        if (i < 0) {
+        if (i < 0 || i >= targets.Count) {
+            Debug.LogWarning("Goose choose " + i + " in (0, ..., " + (targets.Count - 1) +")");
             return null;
         }
         return targets[i];
