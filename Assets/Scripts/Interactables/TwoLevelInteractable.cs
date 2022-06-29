@@ -32,6 +32,11 @@ public class TwoLevelInteractable : Interactable<int> {
         SetSecondaryButtonsActive(false);
     }
 
+    public override void OnNetworkSpawn() {
+        base.OnNetworkSpawn();
+        m_State.Value = NOT_OCCUPIED;
+    }
+
     protected override bool PlayerCanInteract() {
         return base.PlayerCanInteract() && !LocalPlayerIsInteracting();
     }
