@@ -73,6 +73,26 @@ public class Room : NetworkBehaviour {
             }
         }
     }
+    public void SpawnFire(){
+        if (!IsServer) {
+            Debug.LogWarning("SpawnHullBreach should only be called on server!");
+            return;       
+        }
+        if (m_HullBreachSpawnLocations.Count == 0) {
+            Debug.Log("You're in luck(?), there's no places for fire in " + name);
+            return;
+        }
+        Transform location = Util.RandomChoice(m_FireSpawnLocations);
+        m_FireSpawnLocations.Remove(location);
+        GameObject breach = Instantiate(
+                EventManager.Instance.HullBreachPrefab,
+                location.position,
+                location.rotation
+            );
+        breach.GetComponent<NetworkObject>().Spawn();
+        breach.GetComponent<HullBreachInstance>().Setup(this, location);
+        m_HullBreaches.Add(breach.GetComponent<HullBreachInstance>());
+    }
     public void SpawnHullBreach(EventParameters.HullBreachSize size) {
         if (!IsServer) {
             Debug.LogWarning("SpawnHullBreach should only be called on server!");

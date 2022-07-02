@@ -24,6 +24,7 @@ public class EventManager : MonoBehaviour {
     private Vector2 m_LastSpaceEventCoords = new Vector2(1, 1) * -10000;
 
     public GameObject HullBreachPrefab;
+    public GameObject FirePrefab;
 
     void Awake() {
         if (Instance == null) {
@@ -51,15 +52,19 @@ public class EventManager : MonoBehaviour {
         if(Vector2.Distance(m_LastSpaceEventCoords, ship_pos) > 1 && state.spaceEvent == Event.POWER_OUTAGE){
             ShipManager.Instance.TriggerPowerOutageEvent();
             m_LastSpaceEventCoords = ship_pos;
-        }        
-        
+        }
         float hull_breach_dice = Random.value;
+        float fire_dice = Random.value;
+
         float ship_speed = ShipManager.Instance.GetShipSpeed()/ShipSteering.MAX_TRANSLATION_VELOCITY;
         float hull_breach_risk = (0.3f*Mathf.Atan(4.3f*(ship_speed-0.4f))+0.5f);
         hull_breach_risk = risk * hull_breach_risk * m_Map.GetState(ShipManager.Instance.GetShipPosition()).risk;
 
         if (hull_breach_dice < hull_breach_risk) {
             ShipManager.Instance.TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
+        }
+        if (fire_dice < hull_breach_risk) {
+            ShipManager.Instance.TriggerFireEvent();
         }
     }
 }

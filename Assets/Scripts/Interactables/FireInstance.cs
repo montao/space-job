@@ -15,13 +15,9 @@ public class FireInstance : RangedInteractableBase
         m_DeathField = GetComponentInChildren<DeathZone>();
     }
 
-    public void SetActive(bool new_state){
-        
-    }
-
     protected override void Interaction(){
         if (PlayerAvatar.IsHolding<FireExtinguisher>()) {
-            transform.localScale = transform.localScale * 100f;
+            
         }
     }
 

@@ -163,6 +163,11 @@ public class ShipManager : NetworkBehaviour {
         room.SpawnHullBreach(size);
     }
 
+    public void TriggerFireEvent() {
+        Room room = Util.RandomChoice(Rooms);
+        room.SpawnFire();
+    }
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
