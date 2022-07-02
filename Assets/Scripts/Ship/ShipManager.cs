@@ -234,6 +234,9 @@ public class ShipManager : NetworkBehaviour {
         if(Input.GetKeyDown(KeyCode.U) && IsServer){
             TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
         }
+        if(Input.GetKeyDown(KeyCode.F) && IsServer){
+            TriggerFireEvent();
+        }
 
         if (Input.GetKeyDown(KeyCode.O)) {
             Rooms[0].RoomOxygen = 0;

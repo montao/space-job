@@ -75,23 +75,23 @@ public class Room : NetworkBehaviour {
     }
     public void SpawnFire(){
         if (!IsServer) {
-            Debug.LogWarning("SpawnHullBreach should only be called on server!");
+            Debug.LogWarning("Fire should only be called on server!");
             return;       
         }
-        if (m_HullBreachSpawnLocations.Count == 0) {
+        if (m_FireSpawnLocations.Count == 0) {
             Debug.Log("You're in luck(?), there's no places for fire in " + name);
             return;
         }
         Transform location = Util.RandomChoice(m_FireSpawnLocations);
         m_FireSpawnLocations.Remove(location);
-        GameObject breach = Instantiate(
-                EventManager.Instance.HullBreachPrefab,
+        GameObject fire = Instantiate(
+                EventManager.Instance.FirePrefab,
                 location.position,
                 location.rotation
             );
-        breach.GetComponent<NetworkObject>().Spawn();
-        breach.GetComponent<HullBreachInstance>().Setup(this, location);
-        m_HullBreaches.Add(breach.GetComponent<HullBreachInstance>());
+        fire.GetComponent<NetworkObject>().Spawn();
+        fire.GetComponent<FireInstance>().Setup(this, location);
+        m_Fires.Add(fire.GetComponent<FireInstance>());
     }
     public void SpawnHullBreach(EventParameters.HullBreachSize size) {
         if (!IsServer) {
@@ -119,5 +119,10 @@ public class Room : NetworkBehaviour {
     public void HullBreachResolved(HullBreachInstance breach, Transform freed_up_spawn_location) {
         m_HullBreaches.Remove(breach);
         m_HullBreachSpawnLocations.Add(freed_up_spawn_location);  // location availble again
+    }
+
+    public void FireResolved(FireInstance breach, Transform freed_up_spawn_location) {
+        m_Fires.Remove(breach);
+        m_FireSpawnLocations.Add(freed_up_spawn_location);  // location availble again
     }
 }
