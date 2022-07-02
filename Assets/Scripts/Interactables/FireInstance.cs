@@ -19,7 +19,7 @@ public class FireInstance : RangedInteractableBase
 
     protected override void Interaction(){
         if (PlayerAvatar.IsHolding<FireExtinguisher>()) {
-            
+            ResolvedServerRpc();
         }
     }
 
