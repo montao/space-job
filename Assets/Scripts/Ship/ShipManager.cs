@@ -198,6 +198,7 @@ public class ShipManager : NetworkBehaviour {
 
     private void Start() {
         if (IsServer) {
+            Debug.Log("Lets Start Event Corutine");
             GetComponent<EventManager>().StartDiceRollCoroutine();
         }
     }

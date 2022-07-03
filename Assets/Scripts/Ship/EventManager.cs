@@ -40,6 +40,7 @@ public class EventManager : MonoBehaviour {
     }
 
     IEnumerator DiceRollCorutine() {
+        //Debug.Log("Start Corutine");
         while(true){
             DiceRoll();
             yield return new WaitForSeconds(0.1f);
@@ -47,6 +48,7 @@ public class EventManager : MonoBehaviour {
     }
 
     public void DiceRoll(){
+        Debug.Log("Make Diceroll");
         var ship_pos = ShipManager.Instance.GetShipPosition();
         MapState state = m_Map.GetState(ship_pos);
         if(Vector2.Distance(m_LastSpaceEventCoords, ship_pos) > 1 && state.spaceEvent == Event.POWER_OUTAGE){
@@ -60,10 +62,14 @@ public class EventManager : MonoBehaviour {
         float hull_breach_risk = (0.3f*Mathf.Atan(4.3f*(ship_speed-0.4f))+0.5f);
         hull_breach_risk = risk * hull_breach_risk * m_Map.GetState(ShipManager.Instance.GetShipPosition()).risk;
 
+        float fire_risk = (0.5f*Mathf.Atan(4.3f*(ship_speed-0.4f))+0.5f);
+        fire_risk = risk * fire_risk * m_Map.GetState(ShipManager.Instance.GetShipPosition()).risk;
+
         if (hull_breach_dice < hull_breach_risk) {
             ShipManager.Instance.TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
         }
-        if (fire_dice < hull_breach_risk) {
+        if (fire_dice < fire_risk) {
+            Debug.Log("Fire Risk Peak");
             ShipManager.Instance.TriggerFireEvent();
         }
     }
