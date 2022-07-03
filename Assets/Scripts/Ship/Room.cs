@@ -93,6 +93,28 @@ public class Room : NetworkBehaviour {
         fire.GetComponent<FireInstance>().Setup(this, location);
         m_Fires.Add(fire.GetComponent<FireInstance>());
     }
+
+    public void FireJumpOver(FireInstance origin){
+        if (!IsServer) {
+            Debug.LogWarning("Fire should only spread from server!");
+            return;       
+        }
+        if (origin.NeighbourTransforms.Count == 0) {
+            //Debug.Log("You're in luck(?), there's no places for fire in " + name);
+            return;
+        }
+        Transform location = Util.RandomChoice(origin.NeighbourTransforms);
+        origin.NeighbourTransforms.Remove(location);
+        GameObject fire = Instantiate(
+                EventManager.Instance.FirePrefab,
+                location.position,
+                location.rotation
+            );
+        fire.GetComponent<NetworkObject>().Spawn();
+        fire.GetComponent<FireInstance>().Setup(origin.GetRoom(), location); //not sure how to make roomspecifik now
+        origin.BurningNeighbours.Add(fire.GetComponent<FireInstance>());
+    }
+
     public void SpawnHullBreach(EventParameters.HullBreachSize size) {
         if (!IsServer) {
             Debug.LogWarning("SpawnHullBreach should only be called on server!");
@@ -121,8 +143,8 @@ public class Room : NetworkBehaviour {
         m_HullBreachSpawnLocations.Add(freed_up_spawn_location);  // location availble again
     }
 
-    public void FireResolved(FireInstance breach, Transform freed_up_spawn_location) {
-        m_Fires.Remove(breach);
+    public void FireResolved(FireInstance fire, Transform freed_up_spawn_location) {
+        m_Fires.Remove(fire);
         m_FireSpawnLocations.Add(freed_up_spawn_location);  // location availble again
     }
 }
