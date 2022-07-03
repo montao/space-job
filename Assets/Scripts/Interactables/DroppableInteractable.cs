@@ -38,6 +38,9 @@ public abstract class DroppableInteractable : Interactable<int>{
     [SerializeField]
     protected AudioClip[] interactionSounds;
     protected AudioSource audioSource;
+    [SerializeField]
+    protected AudioSource interactionAudioSource;
+    
 
     /// <summary>
     /// Delegate for OnPickup and OnDrop events.

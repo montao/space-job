@@ -5,9 +5,10 @@ using UnityEngine;
 public class PipeWrench : DroppableInteractable{
 
     public override PlayerAnimation SelfInteraction(PlayerAvatar avatar) {
+        interactionAudioSource.gameObject.transform.position = PlayerManager.Instance.LocalPlayer.Avatar.gameObject.transform.position;
         AudioClip sound = GetRandomInteractionClip();
-        audioSource.PlayOneShot(sound);
-        return PlayerAnimation.INTERACT;
+        interactionAudioSource.PlayOneShot(sound);
+    return PlayerAnimation.INTERACT;
     }
 
 }

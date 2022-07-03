@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Kasette : DroppableInteractable{
     public override PlayerAnimation SelfInteraction(PlayerAvatar avatar) {
+        interactionAudioSource.gameObject.transform.position = PlayerManager.Instance.LocalPlayer.Avatar.gameObject.transform.position;
         AudioClip sound = GetRandomInteractionClip();
-        audioSource.PlayOneShot(sound);
+        interactionAudioSource.PlayOneShot(sound);
         return PlayerAnimation.INTERACT;
     }
 
