@@ -3,6 +3,8 @@ using Unity.Netcode;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using Random=UnityEngine.Random;
+
 
 public class FireInstance : RangedInteractableBase
 {
@@ -12,9 +14,12 @@ public class FireInstance : RangedInteractableBase
     private Room m_Room;
     private bool m_IsActive;
     private float m_MaxSize = 1.5f;
+    private bool m_CanJump = false;
     private Vector3 m_InitialSize;
     private Coroutine m_GrowCoroutine;
-    public List<FireInstance> FireNeighbours;
+    private Coroutine m_JumpCoroutine;
+    public List<FireInstanceSpawnLocation> NeighbourFireLocation;
+    private List<FireInstance> m_NeighbourFires;
 
 
 
@@ -22,6 +27,7 @@ public class FireInstance : RangedInteractableBase
         base.Start();
         m_DeathField = GetComponentInChildren<DeathZone>();
         m_InitialSize = transform.localScale;
+        m_DeathField.SetDamage(0.005f);
     }
 
     protected override void Interaction(){
@@ -36,14 +42,29 @@ public class FireInstance : RangedInteractableBase
         m_SpawnLocation = spawn;
         if (IsServer) {
             m_GrowCoroutine = StartCoroutine(Grow());
+            m_JumpCoroutine = StartCoroutine(Jump());
         }
     }
 
     private IEnumerator Grow() {
         while(transform.localScale.x < m_MaxSize){
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f + Random.Range(-0.5f, 0.5f));
             GrowFireClientRpc();
+            if(transform.localScale.x >= 1f){
+                m_CanJump = true;
+            }
         }
+        //Debug.Log("Grown to compleation");
+    }
+    private IEnumerator Jump() {
+        while(!m_CanJump){
+            yield return new WaitForSeconds(1f);
+        }
+        while(m_CanJump){
+            yield return new WaitForSeconds(5f + Random.Range(0f, 30f));
+
+        }
+
     }
 
     [ServerRpc(RequireOwnership=false)]
