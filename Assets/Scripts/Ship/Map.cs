@@ -8,6 +8,9 @@ public struct MapState {
 }
 
 public class Map : MonoBehaviour {
+    public static int MIN = 0;
+    public static int MAX = 1024;
+
     public Texture2D MapTexture;
     public Texture2D IngameMapTexture;
 
@@ -20,7 +23,7 @@ public class Map : MonoBehaviour {
 
     public MapState GetState(Vector2 pos) {
         MapState state = new MapState();
-        if (pos.x < 0 || pos.y < 0 || pos.x > 1024 || pos.y > 1024) {
+        if (pos.x < MIN || pos.y < MIN || pos.x > MAX || pos.y > MAX) {
             state.spaceEvent = Event.COSMIC_HORROR;
             state.risk = 1;
         } else {
