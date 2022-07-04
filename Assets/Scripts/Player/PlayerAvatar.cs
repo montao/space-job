@@ -245,6 +245,7 @@ public class PlayerAvatar : NetworkBehaviour {
         }
 
         if (MovementLocked) {
+            HorizontalSpeed.Value = 0.0f;
             return;
         }
 

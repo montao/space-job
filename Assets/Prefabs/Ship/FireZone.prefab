@@ -4941,7 +4941,6 @@ MonoBehaviour:
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
-  NeighbourFireLocation: []
 --- !u!114 &7745358585242318901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4966,11 +4965,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8299654265141273011}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3.0230703, y: 3.060138, z: 0}
-  m_Center: {x: 0.009266585, y: -0.009265914, z: -0.009975013}
+  m_Center: {x: 0.009266585, y: -0.009265839, z: -0.00045316466}
 --- !u!33 &5594316015040103538
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -94,7 +94,8 @@ public class TwoLevelInteractable : Interactable<int> {
     public override void Update() {
         base.Update();
         if (LocalPlayerIsInteracting()) { // local player at terminal
-            if (Util.PlayerIsPressingMoveButton() || Input.GetKeyDown(KeyCode.Escape)) {
+            float interacting_for = Time.fixedTime - LastUse;  // been interacting for ... seconds
+            if (Input.GetKeyDown(KeyCode.Escape) || (Util.PlayerIsPressingMoveButton() && interacting_for > 1.0f)) {
                 TryExitLocalPlayer();
             }
         }

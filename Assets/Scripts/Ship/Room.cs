@@ -16,7 +16,7 @@ public class Room : NetworkBehaviour {
     private TMP_Text m_RoomDisplay;
 
     private List<Transform> m_HullBreachSpawnLocations = new List<Transform>();
-    private List<Transform> m_FireSpawnLocations = new List<Transform>();
+    public List<Transform> m_FireSpawnLocations = new List<Transform>();
     private List<HullBreachInstance> m_HullBreaches = new List<HullBreachInstance>();
     private List<FireInstance> m_Fires = new List<FireInstance>();
 
@@ -93,6 +93,34 @@ public class Room : NetworkBehaviour {
         fire.GetComponent<FireInstance>().Setup(this, location);
         m_Fires.Add(fire.GetComponent<FireInstance>());
     }
+
+    public void FireJumpOver(List<Transform> spawnLocations){
+        List<Transform> spawns = spawnLocations;
+        foreach(Transform spawn in spawns){
+            if(!m_FireSpawnLocations.Contains(spawn)){
+                spawns.Remove(spawn);
+            }
+        }
+        if (!IsServer) {
+            Debug.LogWarning("Fire should only be called on server!");
+            return;       
+        }
+        if (spawnLocations.Count == 0) {
+            Debug.Log("You're in luck(?), there's no places for fire in " + name);
+            return;
+        }
+        Transform location = Util.RandomChoice(spawnLocations);
+        m_FireSpawnLocations.Remove(location);
+        GameObject fire = Instantiate(
+                EventManager.Instance.FirePrefab,
+                location.position,
+                location.rotation
+            );
+        fire.GetComponent<NetworkObject>().Spawn();
+        fire.GetComponent<FireInstance>().Setup(this, location);
+        m_Fires.Add(fire.GetComponent<FireInstance>());
+    }
+
     public void SpawnHullBreach(EventParameters.HullBreachSize size) {
         if (!IsServer) {
             Debug.LogWarning("SpawnHullBreach should only be called on server!");
@@ -121,8 +149,8 @@ public class Room : NetworkBehaviour {
         m_HullBreachSpawnLocations.Add(freed_up_spawn_location);  // location availble again
     }
 
-    public void FireResolved(FireInstance breach, Transform freed_up_spawn_location) {
-        m_Fires.Remove(breach);
+    public void FireResolved(FireInstance fire, Transform freed_up_spawn_location) {
+        m_Fires.Remove(fire);
         m_FireSpawnLocations.Add(freed_up_spawn_location);  // location availble again
     }
 }

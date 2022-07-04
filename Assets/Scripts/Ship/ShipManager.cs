@@ -125,8 +125,13 @@ public class ShipManager : NetworkBehaviour {
     public void Rotate(float delta_angle) {
         m_Rotation.Value += delta_angle;
     }
-    public void Move(Vector2 delta_pos) {
-        m_Position.Value += delta_pos;
+    public void Move(Vector2 delta_pos_raw) {
+        var new_pos = m_Position.Value + delta_pos_raw;
+        new_pos.x = Mathf.Clamp(new_pos.x, Map.MIN, Map.MAX);
+        new_pos.y = Mathf.Clamp(new_pos.y, Map.MIN, Map.MAX);
+
+        var delta_pos = new_pos - m_Position.Value;
+        m_Position.Value = new_pos;
         m_Odometer.Value += Vector3.Magnitude(delta_pos);
         m_DistSinceLastBreadcrumb += Vector3.Magnitude(delta_pos);
 
