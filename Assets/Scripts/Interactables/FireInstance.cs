@@ -13,7 +13,8 @@ public class FireInstance : RangedInteractableBase
     private Transform m_SpawnLocation;
     private Room m_Room;
     private bool m_IsActive;
-    private float m_MaxSize = 1f;
+    private float m_MaxSize = 2f;
+    private float m_size;
     private bool m_CanJump = false;
     private Vector3 m_InitialSize;
     private Coroutine m_GrowCoroutine;
@@ -49,23 +50,30 @@ public class FireInstance : RangedInteractableBase
 
     private IEnumerator Grow() {
         while(transform.localScale.x < m_MaxSize){
-            yield return new WaitForSeconds(2f + Random.Range(-0.5f, 0.5f));
+            yield return new WaitForSeconds(1f + Random.Range(-0.5f, 0.5f));
             GrowFireClientRpc();
-            if(transform.localScale.x >= 0.8f){
+            if(transform.localScale.x >= m_MaxSize-0.1f){
+                
                 m_CanJump = true;
             }
         }
         //Debug.Log("Grown to compleation");
     }
     private IEnumerator Jump() {
-        while(!m_CanJump){
+        while(true){
             yield return new WaitForSeconds(1f);
-        }
-        while(m_CanJump){
-            //yield return new WaitForSeconds(2f);
-            yield return new WaitForSeconds(10f + Random.Range(0f, 30f));
-            m_Room.SpawnFire();
-            //m_Room.FireJumpOver(this);
+            if(m_CanJump){
+                List<Transform> Neighbours = new List<Transform>();
+                foreach(Transform spawn in m_Room.m_FireSpawnLocations){
+                    float distance = (transform.position - spawn.position).magnitude;
+                    if(distance <= 2f * m_size){
+                        Debug.Log("distance: " + distance + ", Scale:" + m_size);
+                        Neighbours.Add(spawn);
+                    }
+                }
+                yield return new WaitForSeconds(5f);
+                m_Room.FireJumpOver(Neighbours);
+            }
         }
     }
 
@@ -74,11 +82,13 @@ public class FireInstance : RangedInteractableBase
     public void ResolvedServerRpc() {
         Debug.Log("Fire extinguished in " + m_Room);
         m_Room.FireResolved(this, m_SpawnLocation);
+        this.StopAllCoroutines();
         GetComponent<NetworkObject>().Despawn(destroy: true);  // breach do be gone
     }
 
     [ClientRpc]
     public void GrowFireClientRpc() {
         transform.localScale = 1.1f * transform.localScale;
+        m_size = transform.localScale.x;
     }
 }
