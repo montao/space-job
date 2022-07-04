@@ -19,17 +19,7 @@ public class FireInstance : RangedInteractableBase
     private Coroutine m_GrowCoroutine;
     private Coroutine m_JumpCoroutine;
     //public List<FireInstanceSpawnLocation> NeighbourFireLocations;
-    private List<Transform> m_NeighbourTranforms;
-    public List<Transform> NeighbourTransforms{
-        get => m_NeighbourTranforms;
-        set => m_NeighbourTranforms = value;
-    } 
-    private List<FireInstance> m_BurningNeighbours;
-    public List<FireInstance> BurningNeighbours{
-        get => m_BurningNeighbours;
-        set => m_BurningNeighbours = value;
-    }     
-    public List<FireInstanceSpawnLocation> NeighbourSpawnLocations;
+
     public Room GetRoom(){
         return m_Room;
     }
@@ -39,9 +29,6 @@ public class FireInstance : RangedInteractableBase
         m_DeathField = GetComponentInChildren<DeathZone>();
         m_InitialSize = transform.localScale;
         m_DeathField.SetDamage(0.005f);
-        foreach(FireInstanceSpawnLocation neighbour in NeighbourSpawnLocations){
-            m_NeighbourTranforms.Add(neighbour.transform);
-        } 
     }
 
     protected override void Interaction(){
