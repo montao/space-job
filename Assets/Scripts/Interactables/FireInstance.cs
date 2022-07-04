@@ -49,13 +49,25 @@ public class FireInstance : RangedInteractableBase
     }
 
     private IEnumerator Grow() {
-        while(transform.localScale.x < m_MaxSize){
-            yield return new WaitForSeconds(1f + Random.Range(-0.5f, 0.5f));
-            GrowFireClientRpc();
-            if(transform.localScale.x >= m_MaxSize-0.1f){
-                
-                m_CanJump = true;
+        while(true){
+            if(transform.localScale.x <= 0.15f){
+                m_Room.FireResolved(this, transform);
+                m_CanJump = false;
             }
+            else if(m_Room.RoomOxygen <= 0.5f){
+                GrowFireClientRpc(0.8f);
+                m_CanJump = false;
+            }
+            else if(transform.localScale.x < m_MaxSize){
+                yield return new WaitForSeconds(Random.Range(0f, 1f));
+                GrowFireClientRpc(1.1f);
+                if(transform.localScale.x >= m_MaxSize-0.1f){
+                    
+                    m_CanJump = true;
+                }
+            }
+            yield return new WaitForEndOfFrame();
+            //yield return new WaitForSeconds(0.5f);
         }
         //Debug.Log("Grown to compleation");
     }
@@ -71,7 +83,8 @@ public class FireInstance : RangedInteractableBase
                         Neighbours.Add(spawn);
                     }
                 }
-                yield return new WaitForSeconds(5f);
+                yield return new WaitForSeconds(10f + Random.Range(0f, 30f));
+                //yield return new WaitForSeconds(10f + Random.Range(0f, 30f));
                 m_Room.FireJumpOver(Neighbours);
             }
         }
@@ -81,14 +94,14 @@ public class FireInstance : RangedInteractableBase
     [ServerRpc(RequireOwnership=false)]
     public void ResolvedServerRpc() {
         Debug.Log("Fire extinguished in " + m_Room);
-        m_Room.FireResolved(this, m_SpawnLocation);
         this.StopAllCoroutines();
+        m_Room.FireResolved(this, m_SpawnLocation);
         GetComponent<NetworkObject>().Despawn(destroy: true);  // breach do be gone
     }
 
     [ClientRpc]
-    public void GrowFireClientRpc() {
-        transform.localScale = 1.1f * transform.localScale;
+    public void GrowFireClientRpc(float scaling_factor) {
+        transform.localScale = scaling_factor * transform.localScale;
         m_size = transform.localScale.x;
     }
 }
