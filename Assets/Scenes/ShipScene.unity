@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.040637374, g: 0.24334216, b: 0.31317982, a: 1}
+  m_IndirectSpecularColor: {r: 0.040689424, g: 0.24335492, b: 0.31316802, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -884,7 +884,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70842671}
-  m_LocalRotation: {x: 0.17896947, y: -0.04319848, z: 0.007865917, w: 0.98287433}
+  m_LocalRotation: {x: 0.17896944, y: -0.043198463, z: 0.007865914, w: 0.98287433}
   m_LocalPosition: {x: -1.095, y: 2.628, z: -28.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -14146,11 +14146,23 @@ PrefabInstance:
       propertyPath: m_Door
       value: 
       objectReference: {fileID: 199553127}
+    - target: {fileID: 502642956490721544, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 199553127}
     - target: {fileID: 745736699357875326, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
       propertyPath: m_Name
       value: OxygenStatusPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 1853773641792350450, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 228387594}
     - target: {fileID: 2372325243482526465, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 228387594}
+    - target: {fileID: 3209137982316584011, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
       propertyPath: m_Door
       value: 
       objectReference: {fileID: 228387594}
@@ -14158,6 +14170,10 @@ PrefabInstance:
       propertyPath: m_Door
       value: 
       objectReference: {fileID: 2088623122}
+    - target: {fileID: 3731645333387165105, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 199553127}
     - target: {fileID: 4196807148112828501, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
       propertyPath: m_Door
       value: 
@@ -14170,6 +14186,10 @@ PrefabInstance:
       propertyPath: m_Room
       value: 
       objectReference: {fileID: 2850231745491440415}
+    - target: {fileID: 4880577415293044948, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 2088623122}
     - target: {fileID: 4915305600360774944, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
       propertyPath: m_Room
       value: 
@@ -14190,6 +14210,26 @@ PrefabInstance:
       propertyPath: m_Door
       value: 
       objectReference: {fileID: 730247409}
+    - target: {fileID: 6100700536965427688, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 730247409}
+    - target: {fileID: 6659553028784560411, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 2107389189}
+    - target: {fileID: 6775745550480213298, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 2072889618}
+    - target: {fileID: 6821118258357048553, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 1661427825}
+    - target: {fileID: 7033147498699523409, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 730247409}
     - target: {fileID: 7573259272736415675, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
       propertyPath: m_Room
       value: 
@@ -14198,6 +14238,18 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 1931678507
       objectReference: {fileID: 0}
+    - target: {fileID: 7591860066926914978, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 2107389189}
+    - target: {fileID: 7726066027275809163, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 2072889618}
+    - target: {fileID: 7753424329932529744, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 1661427825}
     - target: {fileID: 7805102640654940654, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
       propertyPath: m_Door
       value: 
@@ -14206,6 +14258,10 @@ PrefabInstance:
       propertyPath: m_Room
       value: 
       objectReference: {fileID: 2850231745491440413}
+    - target: {fileID: 8542066248595569773, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
+      propertyPath: m_Door
+      value: 
+      objectReference: {fileID: 2088623122}
     - target: {fileID: 8711559594764255366, guid: 7edb0c8b0c04566839a64d5aea3292e2, type: 3}
       propertyPath: m_Room
       value: 
