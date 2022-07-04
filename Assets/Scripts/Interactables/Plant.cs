@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 
 public class Plant : Interactable<bool> {
+    private NetworkObject startingSeed;
     [SerializeField]
     private AudioClip plantSound;
     private AudioSource audioSource;
@@ -35,6 +36,10 @@ public class Plant : Interactable<bool> {
         plant = plantList[1];
         dryPlant = plantList[2];
         deadPlant = plantList[3];
+        seed.SetActive(false);
+        plant.SetActive(false);
+        dryPlant.SetActive(false);
+        deadPlant.SetActive(false);
         audioSource = GetComponent<AudioSource>();    
     }
     public override void Update() {
@@ -45,10 +50,8 @@ public class Plant : Interactable<bool> {
         SetServerRpc(!Value);
         if (PlayerAvatar.IsHolding<Seed>()) {
             PlantingServerRpc();
-            /* seed = PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY); */
-            seed.transform.position = seedPlantedTrans.transform.position;
-            seed.transform.rotation = seedPlantedTrans.transform.rotation;
-            seed.transform.localScale = seedPlantedTrans.transform.localScale;
+            startingSeed = PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY); 
+
            /*  audioSource.PlayOneShot(plantSound); */
         }
         if (PlayerAvatar.IsHolding<WateringCan>()){
@@ -57,38 +60,15 @@ public class Plant : Interactable<bool> {
                 Debug.Log("plant has been watered");   
             } 
         }
-/*         if (seed != null) {
+        if (seed != null) {
             DespawnServerRpc();
-        } */
+        } 
         
     }
-      public void OnPlantChange(bool previous, bool current){
-        if (dead.Value) {
-            deadPlant.SetActive(current);
-        }
-        if (seedPlanted.Value && !notPlanted.Value) {
-            seed.SetActive(current);
-            Debug.Log("seed is in pot");
 
-            /* m_mesh.Value = 2; */
-        }
-        if (grown.Value && watered.Value && !dry.Value) {
-            plant.SetActive(current);
-            /* m_mesh.Value = 3; */
-        }
-        if (dry.Value && (!watered.Value)) {
-            dryPlant.SetActive(current);
-            /* m_mesh.Value = 4; */
-        }
-        if (notPlanted.Value){
-            seed.transform.position = seedNotPlantedTrans.transform.position;
-            seed.transform.rotation = seedNotPlantedTrans.transform.rotation;
-            seed.transform.localScale = seedNotPlantedTrans.transform.localScale;
-            /* m_mesh.Value = 1; */
-        }
-     } 
     public override void OnStateChange(bool previous, bool current) {
         if(seedPlanted.Value && (!notPlanted.Value) ){
+            SeedInPotServerRpc();
             if (!grown.Value && watered.Value){
                 GrowPlantServerRpc();
             }
@@ -99,7 +79,11 @@ public class Plant : Interactable<bool> {
         if (dead.Value) {
             PlantDeadServerRpc();
         }
+        ChangePlantServerRpc(current);
         
+        if(seedPlanted.Value && (!notPlanted.Value) ){
+            seed.SetActive(true);
+         }
     }
     [ServerRpc(RequireOwnership = false)]
     public void SetServerRpc(bool value){
@@ -126,10 +110,14 @@ public class Plant : Interactable<bool> {
         dead.Value = true;
     }
 
-/*     [ServerRpc(RequireOwnership = false)]
-        public void DespawnServerRpc() {
-        seed.GetComponentInParent<NetworkObject>().Despawn(destroy: true);   
-    } */
+   [ServerRpc(RequireOwnership = false)]
+    public void DespawnServerRpc() {
+        startingSeed.GetComponentInParent<NetworkObject>().Despawn(destroy: true);   
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void SeedInPotServerRpc() {
+        seed.SetActive(true);
+    }
     [ServerRpc(RequireOwnership = false)]
     public void GrowPlantServerRpc() {
         Debug.Log("growing seed");
@@ -142,6 +130,8 @@ public class Plant : Interactable<bool> {
     public void PlantingServerRpc() {
         seedPlanted.Value = true;
         notPlanted.Value = false;
+         
+        Debug.Log("Planting");
     }
     [ServerRpc(RequireOwnership = false)]
     public void WaterPlantServerRpc(bool wet) {
@@ -170,43 +160,33 @@ public class Plant : Interactable<bool> {
         StopCoroutine(WaitForPlantGrow(60));
     }
     [ServerRpc(RequireOwnership = false)]
-    public void ChangePlantServerRpc() {
+    public void ChangePlantServerRpc(bool active) {
         if (dead.Value) {
-            m_mesh.Value = 6;
-        }
-        if (seedPlanted.Value && !notPlanted.Value) {
-            Debug.Log("seed is in pot");
-            m_mesh.Value = 2;
+            deadPlant.SetActive(active);
+        } 
+        if (!seedPlanted.Value && notPlanted.Value) {
+            seed.SetActive(!active);
         }
         if (grown.Value && watered.Value && !dry.Value) {
-            m_mesh.Value = 3;
+            plant.SetActive(active);
         }
         if (dry.Value && (!watered.Value)) {
-            m_mesh.Value = 4;
+            dryPlant.SetActive(active);
         }
         if (notPlanted.Value){
-            m_mesh.Value = 1;
+            Debug.Log("not planted");
         }
-        
-        
-    }
+    } 
     
     
     public override void OnNetworkSpawn(){
         base.OnNetworkSpawn();
         dry.OnValueChanged += OnStateChange;
-        dry.OnValueChanged += OnPlantChange;
         dead.OnValueChanged += OnStateChange;
-        dead.OnValueChanged += OnPlantChange;
         watered.OnValueChanged += OnStateChange;
-        watered.OnValueChanged += OnPlantChange;
         seedPlanted.OnValueChanged += OnStateChange;
-        seedPlanted.OnValueChanged += OnPlantChange;
         grown.OnValueChanged += OnStateChange;
-        grown.OnValueChanged += OnPlantChange;
-        /* m_mesh.OnValueChanged += OnPlantChange; */
         notPlanted.OnValueChanged += OnStateChange;
-        OnPlantChange(false, false);
         OnStateChange(false, false);
     } 
     public override void OnNetworkDespawn(){
