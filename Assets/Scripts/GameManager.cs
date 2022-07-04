@@ -7,10 +7,12 @@ using TMPro;
 public class GameManager : MonoBehaviour {
     public static GameManager Instance = null;
 
+    public ControllerInputHelper ControllerInput;
     [SerializeField]
     private Canvas m_LoadingScreen;
     [SerializeField]
     private TMP_Text m_LoadingScreenText;
+
 
     void Awake() {
         if (Instance == null) {
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour {
             Destroy(this);
         }
         DontDestroyOnLoad(this);
+        ControllerInput = GetComponent<ControllerInputHelper>();
     }
 
     void Start() {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class RangedInteractableBase : InteractableBase {
@@ -29,6 +27,9 @@ public abstract class RangedInteractableBase : InteractableBase {
         PlayerAvatar player = other.GetComponent<PlayerAvatar>();
         if(player != null && player.IsOwner){
             m_IsInArea = true;
+            if (PlayerCanInteract()) {
+                GameManager.Instance.ControllerInput.MarkInteractableAvailable(this);
+            }
         }
     }
 
@@ -37,6 +38,7 @@ public abstract class RangedInteractableBase : InteractableBase {
         PlayerAvatar player = other.GetComponent<PlayerAvatar>();
         if(player != null && player.IsOwner){
             m_IsInArea = false;
+            GameManager.Instance.ControllerInput.MarkInteractableUnavailable(this);
         }
     }
 }
