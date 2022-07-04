@@ -96,7 +96,8 @@ public class Room : NetworkBehaviour {
 
     public void FireJumpOver(List<Transform> spawnLocations){
         List<Transform> spawns = spawnLocations;
-        foreach(Transform spawn in spawns){
+        List<Transform> checkspawns = spawnLocations;
+        foreach(Transform spawn in checkspawns){
             if(!m_FireSpawnLocations.Contains(spawn)){
                 spawns.Remove(spawn);
             }
@@ -105,11 +106,11 @@ public class Room : NetworkBehaviour {
             Debug.LogWarning("Fire should only be called on server!");
             return;       
         }
-        if (spawnLocations.Count == 0) {
+        if (spawns.Count == 0) {
             Debug.Log("You're in luck(?), there's no places for fire in " + name);
             return;
         }
-        Transform location = Util.RandomChoice(spawnLocations);
+        Transform location = Util.RandomChoice(spawns);
         m_FireSpawnLocations.Remove(location);
         GameObject fire = Instantiate(
                 EventManager.Instance.FirePrefab,
