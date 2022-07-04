@@ -88,6 +88,11 @@ public class TwoLevelInteractable : Interactable<int> {
     private void SetSecondaryButtonsActive(bool active) {
         foreach (var button in m_Interactables) {
             button.CanInteract = active;
+            if (active) {
+                GameManager.Instance.ControllerInput.MarkInteractableAvailable(button);
+            } else {
+                GameManager.Instance.ControllerInput.MarkInteractableUnavailable(button);
+            }
         }
     }
 
