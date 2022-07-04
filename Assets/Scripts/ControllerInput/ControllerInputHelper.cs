@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine;
 using TMPro;
 
@@ -26,17 +27,21 @@ public class ControllerInputHelper : MonoBehaviour {
     }
 
     void OnGUI() {
-        int button_idx = 0;
         foreach (var button in m_Buttons) {
             button.transform.position = new Vector2(-1000, -1000);
             button.interactable = false;
             button.enabled = false;
         }
+        int button_idx = 0;
         foreach (var interactable in m_AvailableInteractables) {
-            if (++button_idx >= m_Buttons.Count) {
-                break;  // only one for testing now
-            }
             DrawInteractionUI(interactable, m_Buttons[button_idx]);
+            if (button_idx == 0 && !EventSystem.current.currentSelectedGameObject) {  // TODO and selected object not visible
+                Debug.Log("selceted: " + m_Buttons[button_idx].gameObject);
+                EventSystem.current.SetSelectedGameObject(m_Buttons[button_idx].gameObject);
+            }
+            if (++button_idx >= m_Buttons.Count) {
+                break;
+            }
         }
     }
 
