@@ -13,7 +13,7 @@ public class FireInstance : RangedInteractableBase
     private Transform m_SpawnLocation;
     private Room m_Room;
     private bool m_IsActive;
-    private float m_MaxSize = 1f;
+    private float m_MaxSize = 2f;
     private float m_size;
     private bool m_CanJump = false;
     private Vector3 m_InitialSize;
