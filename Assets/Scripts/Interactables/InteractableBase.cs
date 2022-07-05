@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using System;
 
 public abstract class InteractableBase : NetworkBehaviour {
 
@@ -15,6 +16,7 @@ public abstract class InteractableBase : NetworkBehaviour {
     public PlayerAnimation TriggeredAnimation = PlayerAnimation.INTERACT;
     public float LastUse = 0;
     public bool CanInteract = true;
+    public event Action OnDestroyCallback;
 
     // Called when item is held in hand and right mouse button pressed
     // Returns animation to play upon interaction
@@ -51,6 +53,11 @@ public abstract class InteractableBase : NetworkBehaviour {
         } else {
             Debug.LogWarning("No renderer found for " + gameObject.name);
         }
+    }
+
+    public override void OnDestroy() {
+        OnDestroyCallback?.Invoke();
+        base.OnDestroy();
     }
 
     protected void SetHighlight(bool highlighted) {

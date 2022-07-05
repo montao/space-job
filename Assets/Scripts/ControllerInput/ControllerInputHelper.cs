@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
@@ -47,6 +47,9 @@ public class ControllerInputHelper : MonoBehaviour {
 
     public void MarkInteractableAvailable(InteractableBase interactable) {
         m_AvailableInteractables.Add(interactable);
+        interactable.OnDestroyCallback += () => {
+            MarkInteractableUnavailable(interactable);
+        };
     }
 
     public bool MarkInteractableUnavailable(InteractableBase interactable) {
