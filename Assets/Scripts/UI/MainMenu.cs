@@ -57,6 +57,9 @@ public class MainMenu : MonoBehaviour {
             serverAddress.text = "192.168.0.10";
             ServerAddressChanged();
         }
+#if UNITY_SERVER
+        StartHost();
+#endif
     }
 
     void Update() {
@@ -74,7 +77,11 @@ public class MainMenu : MonoBehaviour {
             startHost.SetActive(true);
             startHostTMP.text = "Start Lobby!"; 
         }
-
+#if UNITY_SERVER
+        if (PlayerManager.Instance.ConnectedPlayerCount > 2) {
+            StartGame();
+        }
+#endif
     }
 
     public void PlayerNameChanged() {

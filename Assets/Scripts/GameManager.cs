@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
 using TMPro;
@@ -22,6 +23,9 @@ public class GameManager : MonoBehaviour {
         }
         DontDestroyOnLoad(this);
         ControllerInput = GetComponent<ControllerInputHelper>();
+#if !UNITY_SERVER
+        GetComponentInChildren<VideoPlayer>().enabled = true;
+#endif
     }
 
     void Start() {
