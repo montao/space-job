@@ -207,7 +207,7 @@ public class Plant : Interactable<bool> {
         grown.OnValueChanged -= OnStateChange;
         notPlanted.OnValueChanged -= OnStateChange;
     }
-/*     private void OnGUI() {
+    private void OnGUI() {
         if (seedPlanted.Value && !notPlanted.Value) {
             plantStatus.text = "Please water your plant";
         }
@@ -227,5 +227,5 @@ public class Plant : Interactable<bool> {
             plantStatus.text = "Your plant is growing";
         }
 
-    }  */
+    } 
 }

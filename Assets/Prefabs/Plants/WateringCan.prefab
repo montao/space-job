@@ -150,7 +150,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 7662453222706169385}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2660295028531684334
 MonoBehaviour:
@@ -229,6 +229,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a012265eb7c541a06ad4c57c629bba87, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a012265eb7c541a06ad4c57c629bba87, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ede176ab2375a171ac24c757665905c, type: 2}
     - target: {fileID: 919132149155446097, guid: a012265eb7c541a06ad4c57c629bba87, type: 3}
       propertyPath: m_Name
       value: WateringCan
@@ -245,6 +253,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a012265eb7c541a06ad4c57c629bba87, type: 3}
   m_PrefabInstance: {fileID: 7916265907998925250}
   m_PrefabAsset: {fileID: 0}
+--- !u!135 &9091896696160324942
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6997837594595859603}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1113206975738023267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,16 +290,3 @@ MonoBehaviour:
   pickupSounds: []
   interactionSounds: []
   interactionAudioSource: {fileID: 0}
---- !u!135 &9091896696160324942
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6997837594595859603}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
