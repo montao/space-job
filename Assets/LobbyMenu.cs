@@ -25,6 +25,7 @@ public class LobbyMenu : MonoBehaviour
     void Update()
     {
         if (PopupBool) {
+            Pause();
             PopupUI.SetActive(false);
             PopupIsOpen = false;
             if (mode == 1) {
@@ -78,6 +79,7 @@ public class LobbyMenu : MonoBehaviour
     public void PopupText(string message) {
         text.text = message;
         PopupIsOpen = true;
+        Resume();
         PopupUI.SetActive(true);
     }
 
@@ -85,6 +87,7 @@ public class LobbyMenu : MonoBehaviour
         PopupUI.SetActive(false);
         PopupIsOpen = false;
         mode = 0;
+        Pause();
     }
 
     public void Accept() {
