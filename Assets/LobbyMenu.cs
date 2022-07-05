@@ -21,13 +21,18 @@ public class LobbyMenu : MonoBehaviour
     public GameObject MenuUI;
     public GameObject PopupUI;
 
+    public GameObject SettingsUI;
+
+    public GameObject UIBackground;
+
     // Update is called once per frame
     void Update()
     {
         if (PopupBool) {
-            Pause();
             PopupUI.SetActive(false);
+            SettingsUI.SetActive(false);
             PopupIsOpen = false;
+            ShowUI();
             if (mode == 1) {
                 Debug.Log("bye");
                 Application.Quit();
@@ -41,23 +46,32 @@ public class LobbyMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (PopupIsOpen) {
                 PopupIsOpen = false;
+                SettingsUI.SetActive(false);
                 PopupUI.SetActive(false);
+                mode = 0;
+                ShowUI();
             }
             else if (MenuIsOpen) {
                 Resume();
             }
             else {
-                Pause();
+                UIBackground.SetActive(true);
+                ShowUI();
             }
         }
     }
 
-    public void Resume() {
+    public void HideUI() {
         MenuUI.SetActive(false);
         MenuIsOpen = false;
     }
 
-    public void Pause() {
+    public void Resume() {
+        HideUI();
+        UIBackground.SetActive(false);
+    }
+
+    public void ShowUI() {
         MenuUI.SetActive(true);
         MenuIsOpen = true;
     }
@@ -68,7 +82,10 @@ public class LobbyMenu : MonoBehaviour
     }
 
     public void OpenSettings() {
-
+        mode = 3;
+        HideUI();
+        PopupIsOpen = true;
+        SettingsUI.SetActive(true);
     }
 
     public void QuitGame() {
@@ -79,7 +96,7 @@ public class LobbyMenu : MonoBehaviour
     public void PopupText(string message) {
         text.text = message;
         PopupIsOpen = true;
-        Resume();
+        HideUI();
         PopupUI.SetActive(true);
     }
 
@@ -87,7 +104,7 @@ public class LobbyMenu : MonoBehaviour
         PopupUI.SetActive(false);
         PopupIsOpen = false;
         mode = 0;
-        Pause();
+        ShowUI();
     }
 
     public void Accept() {
