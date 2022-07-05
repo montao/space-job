@@ -96,8 +96,8 @@ public class Room : NetworkBehaviour {
 
     public void FireJumpOver(List<Transform> spawnLocations){
         List<Transform> spawns = spawnLocations;
-        List<Transform> checkspawns = spawnLocations;
-        foreach(Transform spawn in checkspawns){
+        //List<Transform> checkspawns = spawnLocations;
+        foreach(Transform spawn in spawnLocations){
             if(!m_FireSpawnLocations.Contains(spawn)){
                 spawns.Remove(spawn);
             }
