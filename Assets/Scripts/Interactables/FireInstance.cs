@@ -81,12 +81,12 @@ public class FireInstance : RangedInteractableBase
                 foreach(Transform spawn in m_Room.m_FireSpawnLocations){
                     float distance = (transform.position - spawn.position).magnitude;
                     if(distance <= 2f * m_size){
-                        Debug.Log("distance: " + distance + ", Scale:" + m_size);
+                        //Debug.Log("distance: " + distance + ", Scale:" + m_size);
                         Neighbours.Add(spawn);
                     }
                 }
-                yield return new WaitForSeconds(1f + Random.Range(0f, 2f));
-                //yield return new WaitForSeconds(10f + Random.Range(0f, 30f));
+                //yield return new WaitForSeconds(1f + Random.Range(0f, 2f));
+                yield return new WaitForSeconds(5f + Random.Range(0f, 30f));
                 if(m_CanJump){
                     m_Room.FireJumpOver(Neighbours);
                 }
