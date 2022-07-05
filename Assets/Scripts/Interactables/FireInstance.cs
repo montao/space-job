@@ -13,7 +13,7 @@ public class FireInstance : RangedInteractableBase
     private Transform m_SpawnLocation;
     private Room m_Room;
     private bool m_IsActive;
-    private float m_MaxSize = 2f;
+    private float m_MaxSize = 1f;
     private float m_size;
     private bool m_CanJump = false;
     private Vector3 m_InitialSize;
@@ -83,7 +83,7 @@ public class FireInstance : RangedInteractableBase
                         Neighbours.Add(spawn);
                     }
                 }
-                yield return new WaitForSeconds(10f + Random.Range(0f, 30f));
+                yield return new WaitForSeconds(1f + Random.Range(0f, 2f));
                 //yield return new WaitForSeconds(10f + Random.Range(0f, 30f));
                 m_Room.FireJumpOver(Neighbours);
             }
