@@ -1,10 +1,12 @@
 using UnityEngine;
 using Unity.Netcode;
-using Unity.Netcode;
 using System.Collections.Generic;
 using System.Collections;
+using TMPro;
 
 public class Plant : Interactable<bool> {
+    [SerializeField]
+    private TMP_Text plantStatus;
     private NetworkObject startingSeed;
     [SerializeField]
     private AudioClip plantSound;
@@ -87,20 +89,21 @@ public class Plant : Interactable<bool> {
     }
 
     IEnumerator WaitForPlantGrow(float maxtime){
-        float growIn = UnityEngine.Random.Range(2, maxtime);
+        float growIn = UnityEngine.Random.Range(60, maxtime);
         Debug.Log("plant grows in " + growIn + "sec");
         yield return new WaitForSeconds(growIn);
         grown.Value = true;
+
     }
     IEnumerator TimeTillPlantDry(float maxtime){
-        float dryIn = UnityEngine.Random.Range(2, maxtime);
+        float dryIn = UnityEngine.Random.Range(120, maxtime);
         Debug.Log("plant ist dry in " + dryIn + "secs");
         yield return new WaitForSeconds(dryIn);
         watered.Value = false;
         dry.Value = true;
     }
     IEnumerator TimeTillPlantDead(float maxtime){
-        float deadIn = UnityEngine.Random.Range(2, maxtime);
+        float deadIn = UnityEngine.Random.Range(200, maxtime);
         Debug.Log("plant is dead in " + deadIn + " secs");
         yield return new WaitForSeconds(deadIn);
         dead.Value = true;
@@ -118,8 +121,8 @@ public class Plant : Interactable<bool> {
     public void GrowPlantServerRpc() {
         Debug.Log("growing seed");
         if (!dry.Value && watered.Value) {
-            StartCoroutine(WaitForPlantGrow(60));
-        } else StopCoroutine(WaitForPlantGrow(60));
+            StartCoroutine(WaitForPlantGrow(120));
+        } else StopCoroutine(WaitForPlantGrow(120));
         
     }
     [ServerRpc(RequireOwnership = false)]
@@ -133,13 +136,13 @@ public class Plant : Interactable<bool> {
         watered.Value = wet;
         dry.Value = !wet;
         Debug.Log("plant watered");
-        StartCoroutine(TimeTillPlantDry(60));
+        StartCoroutine(TimeTillPlantDry(200));
     }
     [ServerRpc(RequireOwnership = false)]
     public void PlantDyingServerRpc() {
         if (dry.Value && !watered.Value){
-            StartCoroutine(TimeTillPlantDead(60));
-        } else StopCoroutine(TimeTillPlantDead(60));
+            StartCoroutine(TimeTillPlantDead(400));
+        } else StopCoroutine(TimeTillPlantDead(400));
         
     }
     [ServerRpc(RequireOwnership = false)]
@@ -150,9 +153,9 @@ public class Plant : Interactable<bool> {
         dead.Value = false;
         grown.Value = false;
         notPlanted.Value = true;
-        StopCoroutine(TimeTillPlantDead(60));
-        StopCoroutine(TimeTillPlantDry(60));
-        StopCoroutine(WaitForPlantGrow(60));
+        StopCoroutine(TimeTillPlantDead(400));
+        StopCoroutine(TimeTillPlantDry(200));
+        StopCoroutine(WaitForPlantGrow(120));
     }
     [ServerRpc(RequireOwnership = false)]
     public void ChangePlantServerRpc() {
@@ -204,4 +207,25 @@ public class Plant : Interactable<bool> {
         grown.OnValueChanged -= OnStateChange;
         notPlanted.OnValueChanged -= OnStateChange;
     }
+/*     private void OnGUI() {
+        if (seedPlanted.Value && !notPlanted.Value) {
+            plantStatus.text = "Please water your plant";
+        }
+        if (dry.Value && (!watered.Value)) {
+            plantStatus.text = "Your plant is getting dry please water it soon";
+        }
+        if (!seedPlanted.Value && notPlanted.Value) {
+            plantStatus.text = "Plant your seed";
+        }
+        if (grown.Value && watered.Value && !dry.Value) {
+            plantStatus.text = "Your plant looks good";
+        }
+        if (dead.Value) {
+            plantStatus.text = "plants gone unfortunatly";
+        }
+        if (seedPlanted.Value && watered.Value){
+            plantStatus.text = "Your plant is growing";
+        }
+
+    }  */
 }
