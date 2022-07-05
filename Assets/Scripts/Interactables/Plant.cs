@@ -46,11 +46,11 @@ public class Plant : Interactable<bool> {
     }
     protected override void Interaction(){
         SetServerRpc(!Value);
-        if (PlayerAvatar.IsHolding<Seed>()) {
-            
+        if (PlayerAvatar.IsHolding<Seed>() && FindObjectOfType<Seed>() != null) {
+        
             startingSeed = PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY); 
             PlantingServerRpc();
-           /*  audioSource.PlayOneShot(plantSound); */
+            /*  audioSource.PlayOneShot(plantSound); */
         }
         if (PlayerAvatar.IsHolding<WateringCan>()){
             if(seedPlanted.Value){
@@ -61,12 +61,14 @@ public class Plant : Interactable<bool> {
         if (startingSeed != null) {
             DespawnServerRpc();
         } 
+        if (dead.Value) {
+            PlantDeadServerRpc();
+        }
         
     }
 
     public override void OnStateChange(bool previous, bool current) {
         if(seedPlanted.Value && (!notPlanted.Value) ){
-            SeedInPotServerRpc();
             if (!grown.Value && watered.Value){
                 GrowPlantServerRpc();
             }
@@ -74,14 +76,9 @@ public class Plant : Interactable<bool> {
         if (dry.Value && (!watered.Value)){
             PlantDyingServerRpc();
         }
-        if (dead.Value) {
-            PlantDeadServerRpc();
-        }
+        
         ChangePlantServerRpc();
         
-        if(seedPlanted.Value && (!notPlanted.Value) ){
-            seed.SetActive(true);
-         }
     }
     [ServerRpc(RequireOwnership = false)]
     public void SetServerRpc(bool value){
@@ -114,10 +111,6 @@ public class Plant : Interactable<bool> {
         startingSeed.GetComponentInParent<NetworkObject>().Despawn(destroy: true);   
     }
     [ServerRpc(RequireOwnership = false)]
-    public void SeedInPotServerRpc() {
-        seed.SetActive(true);
-    }
-    [ServerRpc(RequireOwnership = false)]
     public void GrowPlantServerRpc() {
         Debug.Log("growing seed");
         if (!dry.Value && watered.Value) {
@@ -141,8 +134,8 @@ public class Plant : Interactable<bool> {
     [ServerRpc(RequireOwnership = false)]
     public void PlantDyingServerRpc() {
         if (dry.Value && !watered.Value){
-            StartCoroutine(TimeTillPlantDead(400));
-        } else StopCoroutine(TimeTillPlantDead(400));
+            StartCoroutine(TimeTillPlantDead(300));
+        } else StopCoroutine(TimeTillPlantDead(300));
         
     }
     [ServerRpc(RequireOwnership = false)]
@@ -153,19 +146,19 @@ public class Plant : Interactable<bool> {
         dead.Value = false;
         grown.Value = false;
         notPlanted.Value = true;
-        StopCoroutine(TimeTillPlantDead(400));
+        StopCoroutine(TimeTillPlantDead(300));
         StopCoroutine(TimeTillPlantDry(200));
         StopCoroutine(WaitForPlantGrow(120));
     }
     [ServerRpc(RequireOwnership = false)]
     public void ChangePlantServerRpc() {
-        if (dead.Value) {
+        if (dead.Value /* && grown.Value && dry.Value && !watered.Value */) {
             seed.SetActive(false);
-            deadPlant.SetActive(true);
+            deadPlant.SetActive(true); 
             plant.SetActive(false);
             dryPlant.SetActive(false);
         } 
-        if (seedPlanted.Value && notPlanted.Value) {
+        if (seedPlanted.Value && !notPlanted.Value && !grown.Value) {
             seed.SetActive(true);
             deadPlant.SetActive(false);
             plant.SetActive(false);
@@ -177,13 +170,17 @@ public class Plant : Interactable<bool> {
             dryPlant.SetActive(false);
             seed.SetActive(false);
         }
-        if (dry.Value && (!watered.Value)) {
+        if (dry.Value && (!watered.Value) && grown.Value && !dead.Value) {
             dryPlant.SetActive(true);
             plant.SetActive(false);
             deadPlant.SetActive(false);
             seed.SetActive(false);
         }
         if (notPlanted.Value){
+            dryPlant.SetActive(false);
+            plant.SetActive(false);
+            deadPlant.SetActive(false);
+            seed.SetActive(false);
             Debug.Log("not planted");
         }
     } 
@@ -209,7 +206,7 @@ public class Plant : Interactable<bool> {
     }
     private void OnGUI() {
         if (seedPlanted.Value && !notPlanted.Value) {
-            plantStatus.text = "Please water your plant";
+            plantStatus.text = "Please water your seed";
         }
         if (dry.Value && (!watered.Value)) {
             plantStatus.text = "Your plant is getting dry please water it soon";
@@ -223,7 +220,7 @@ public class Plant : Interactable<bool> {
         if (dead.Value) {
             plantStatus.text = "plants gone unfortunatly";
         }
-        if (seedPlanted.Value && watered.Value){
+        if (seedPlanted.Value && watered.Value && !grown.Value && !notPlanted.Value){
             plantStatus.text = "Your plant is growing";
         }
 

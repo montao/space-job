@@ -884,7 +884,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70842671}
-  m_LocalRotation: {x: 0.17896947, y: -0.043198492, z: 0.00786592, w: 0.98287433}
+  m_LocalRotation: {x: 0.17896947, y: -0.04319848, z: 0.007865917, w: 0.98287433}
   m_LocalPosition: {x: -1.095, y: 2.628, z: -28.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8114,6 +8114,17 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 4057359}
+--- !u!114 &1116803285 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9118500235187483479, guid: 3e0fad7b94169fea79ed720d8a444876, type: 3}
+  m_PrefabInstance: {fileID: 4656668133319753212}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1122543377
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8607,7 +8618,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2660295028531684323, guid: d1fa43de5db2d5207afd8c2c0de26779, type: 3}
   m_PrefabInstance: {fileID: 627135527}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &1190581256
+--- !u!135 &1190581257
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17043,7 +17054,7 @@ PrefabInstance:
     - target: {fileID: 4656668132733633224, guid: 3e0fad7b94169fea79ed720d8a444876, type: 3}
       propertyPath: plantStatus
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1116803285}
     - target: {fileID: 4656668132733633224, guid: 3e0fad7b94169fea79ed720d8a444876, type: 3}
       propertyPath: seedPlantedTrans
       value: 
