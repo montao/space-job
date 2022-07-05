@@ -13,7 +13,7 @@ public class FireInstance : RangedInteractableBase
     private Transform m_SpawnLocation;
     private Room m_Room;
     private bool m_IsActive;
-    private float m_MaxSize = 2f;
+    private float m_MaxSize = 1.8f;
     private float m_size;
     private bool m_CanJump = false;
     private Vector3 m_InitialSize;
@@ -51,16 +51,18 @@ public class FireInstance : RangedInteractableBase
     private IEnumerator Grow() {
         while(true){
             if(transform.localScale.x <= 0.15f){
-                m_Room.FireResolved(this, transform);
                 m_CanJump = false;
+                Debug.Log("FireDie");
+                ResolvedServerRpc();
             }
             else if(m_Room.RoomOxygen <= 0.5f){
-                GrowFireClientRpc(0.8f);
+                yield return new WaitForSeconds(1f);
+                GrowFireClientRpc(0.1f);
                 m_CanJump = false;
             }
             else if(transform.localScale.x < m_MaxSize){
-                yield return new WaitForSeconds(Random.Range(0f, 1f));
-                GrowFireClientRpc(1.1f);
+                yield return new WaitForSeconds(Random.Range(0.5f, 2f));
+                GrowFireClientRpc(1.05f);
                 if(transform.localScale.x >= m_MaxSize-0.1f){
                     
                     m_CanJump = true;
@@ -85,7 +87,9 @@ public class FireInstance : RangedInteractableBase
                 }
                 yield return new WaitForSeconds(1f + Random.Range(0f, 2f));
                 //yield return new WaitForSeconds(10f + Random.Range(0f, 30f));
-                m_Room.FireJumpOver(Neighbours);
+                if(m_CanJump){
+                    m_Room.FireJumpOver(Neighbours);
+                }
             }
         }
     }
