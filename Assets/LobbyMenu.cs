@@ -11,12 +11,13 @@ public class LobbyMenu : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text text;
+    [SerializeField]
+    private TMP_Text desc;
     public static bool MenuIsOpen = false;
     public static bool PopupIsOpen = false;
 
     static bool PopupBool = false;
-    static int mode = 0;
-
+    static int mode = 0; 
 
     public GameObject MenuUI;
     public GameObject PopupUI;
@@ -24,6 +25,13 @@ public class LobbyMenu : MonoBehaviour
     public GameObject SettingsUI;
 
     public GameObject UIBackground;
+
+
+    public GameObject SUIAudio;
+    public GameObject SUIVideo;
+    public GameObject SUIControls;
+    public GameObject SUITips;
+
 
     // Update is called once per frame
     void Update()
@@ -43,6 +51,7 @@ public class LobbyMenu : MonoBehaviour
             }
         }
 
+        // todo for controller
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (PopupIsOpen) {
                 PopupIsOpen = false;
@@ -86,6 +95,14 @@ public class LobbyMenu : MonoBehaviour
         HideUI();
         PopupIsOpen = true;
         SettingsUI.SetActive(true);
+        Control();
+    }
+
+    public void CloseSettings() {
+        mode = 0;
+        PopupIsOpen = false;
+        SettingsUI.SetActive(false);
+        ShowUI();
     }
 
     public void QuitGame() {
@@ -109,5 +126,37 @@ public class LobbyMenu : MonoBehaviour
 
     public void Accept() {
         PopupBool = true;
+    }
+
+    public void Video() {
+        HideSettingUI();
+        desc.text = "Video";
+        SUIVideo.SetActive(true);
+    }
+
+    public void Audio() {
+        HideSettingUI();
+        desc.text = "Audio";
+        SUIAudio.SetActive(true);
+    }
+
+    public void Tips() {
+        HideSettingUI();
+        desc.text = "Tips";
+        SUITips.SetActive(true);
+    }
+
+    public void Control() {
+        HideSettingUI();
+        desc.text = "Controls";
+        SUIControls.SetActive(true);
+    }
+
+    public void HideSettingUI() {
+        SUIAudio.SetActive(false);
+        SUIVideo.SetActive(false);
+        SUIControls.SetActive(false);
+        SUITips.SetActive(false);
+
     }
 }
