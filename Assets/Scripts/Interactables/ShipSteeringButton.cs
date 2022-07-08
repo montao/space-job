@@ -7,6 +7,11 @@ public class ShipSteeringButton : InteractableBase {
         TOGGLE_THRUSTER_TURN_RIGHT,
         TARGET_SPEED_UP,
         TARGET_SPEED_DOWN,
+        TARGET_SPEED_SET_STOP,
+        TARGET_SPEED_SET_AHEAD_SLOW,
+        TARGET_SPEED_SET_AHEAD_FULL,
+        TARGET_SPEED_SET_REVERSE_SLOW,
+        TARGET_SPEED_SET_REVERSE_FULL,
     }
 
     [SerializeField]
@@ -29,6 +34,21 @@ public class ShipSteeringButton : InteractableBase {
                 break;
             case (Action.TARGET_SPEED_DOWN):
                 ShipManager.Instance.Steering.ChangeTargetVelocityServerRpc(up: false);
+                break;
+            case (Action.TARGET_SPEED_SET_REVERSE_FULL):
+                ShipManager.Instance.Steering.SetTargetVelocityServerRpc(0);
+                break;
+            case (Action.TARGET_SPEED_SET_REVERSE_SLOW):
+                ShipManager.Instance.Steering.SetTargetVelocityServerRpc(1);
+                break;
+            case (Action.TARGET_SPEED_SET_STOP):
+                ShipManager.Instance.Steering.SetTargetVelocityServerRpc(2);
+                break;
+            case (Action.TARGET_SPEED_SET_AHEAD_SLOW):
+                ShipManager.Instance.Steering.SetTargetVelocityServerRpc(3);
+                break;
+            case (Action.TARGET_SPEED_SET_AHEAD_FULL):
+                ShipManager.Instance.Steering.SetTargetVelocityServerRpc(4);
                 break;
             default:
                 break;
