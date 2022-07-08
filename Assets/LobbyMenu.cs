@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.Audio;
 
-
 public class LobbyMenu : MonoBehaviour
 {
     [SerializeField]
@@ -34,6 +33,28 @@ public class LobbyMenu : MonoBehaviour
 
     public AudioMixer mix;
 
+    Resolution[] resolutions;
+
+    public TMPro.TMP_Dropdown resDD;
+
+    void Start() {
+        resolutions = Screen.resolutions;
+        resDD.ClearOptions();
+        List<string> resOpt = new List<string>();
+        int resIdx = 0;
+
+        for (int i = 0; i < resolutions.Length; i++) {
+            resOpt.Add(resolutions[i].width + "x" 
+                        + resolutions[i].height 
+                        + "@" + resolutions[i].refreshRate + "hz");
+            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height) {
+                resIdx = i;
+            }
+        }
+        resDD.AddOptions(resOpt);
+        resDD.value = resIdx;
+        resDD.RefreshShownValue();
+    }
 
     // Update is called once per frame
     void Update()
@@ -130,17 +151,47 @@ public class LobbyMenu : MonoBehaviour
         PopupBool = true;
     }
 
+    // Video Settings
     public void Video() {
         HideSettingUI();
         desc.text = "Video";
         SUIVideo.SetActive(true);
     }
 
+    public void setQuality(int qualityIdx) {
+        QualitySettings.SetQualityLevel(qualityIdx);
+    }
+
+    public void setFullscreen(bool yah) {
+        Screen.fullScreen = yah;
+    }
+
+    public void setResIdx(int idx) {
+        Resolution chosenRes = resolutions[idx];
+        Screen.SetResolution(chosenRes.width, chosenRes.height, Screen.fullScreen);
+    }
+
+    // Audio Settings
     public void Audio() {
         HideSettingUI();
         desc.text = "Audio";
         SUIAudio.SetActive(true);
     }
+
+    public void SetMasterVol(float vol) {
+        mix.SetFloat("MasterVol", vol);
+    }
+
+    public void SetMusicVol(float vol) {
+        mix.SetFloat("MusicVol", vol);
+    }
+    public void SetSoundVol(float vol) {
+        mix.SetFloat("SoundVol", vol);
+    }
+    public void SetAmbientVol(float vol) {
+        mix.SetFloat("AmbientVol", vol);
+    }
+    
 
     public void Tips() {
         HideSettingUI();
@@ -162,21 +213,5 @@ public class LobbyMenu : MonoBehaviour
 
     }
 
-    public void SetMasterVol(float vol) {
-        mix.SetFloat("MasterVol", vol);
-    }
 
-    public void SetMusicVol(float vol) {
-        mix.SetFloat("MusicVol", vol);
-    }
-    public void SetSoundVol(float vol) {
-        mix.SetFloat("SoundVol", vol);
-    }
-    public void SetAmbientVol(float vol) {
-        mix.SetFloat("AmbientVol", vol);
-    }
-    
-    public void setQuality(int qualityIdx) {
-        QualitySettings.SetQualityLevel(qualityIdx);
-    }
 }
