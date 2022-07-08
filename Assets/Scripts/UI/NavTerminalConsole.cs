@@ -4,10 +4,6 @@ public class NavTerminalConsole : MonoBehaviour {
 
     [SerializeField]
     private SevenSegmentDisplay m_AngleDisp;
-    [SerializeField]
-    private SevenSegmentDisplay m_TargetSpeedDisp;
-    [SerializeField]
-    private SevenSegmentDisplay m_SpeedDisp;
 
     [SerializeField]
     private SpriteRenderer m_SpriteRendererFwd;
@@ -21,9 +17,6 @@ public class NavTerminalConsole : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         m_AngleDisp.DisplayNumber(ShipManager.Instance.Steering.GetAngularSpeed(), 1);
-        m_TargetSpeedDisp.DisplayNumber(ShipManager.Instance.GetTargetShipSpeed(), 1);
-        m_SpeedDisp.DisplayNumber(ShipManager.Instance.GetShipSpeed(), 1);
-
         m_SpriteRendererFwd.enabled = ShipManager.Instance.Steering.GetThrusterState(ShipSteering.Thruster.TRANSLATE_FORWARD);
         m_SpriteRendererRev.enabled = ShipManager.Instance.Steering.GetThrusterState(ShipSteering.Thruster.TRANSLATE_BACKWARD);
         m_SpriteRendererLeft.enabled = ShipManager.Instance.Steering.GetThrusterState(ShipSteering.Thruster.ROTATE_LEFT);
