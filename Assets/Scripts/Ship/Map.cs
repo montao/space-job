@@ -13,6 +13,7 @@ public class Map : MonoBehaviour {
 
     public Texture2D MapTexture;
     public Texture2D IngameMapTexture;
+    public Texture2D DangerTexture;
 
     [SerializeField]
     private MapCam m_MapCam;
@@ -40,8 +41,15 @@ public class Map : MonoBehaviour {
         for (int x = 0; x < IngameMapTexture.width; ++x) {
             for (int y = 0; y < IngameMapTexture.width; ++y) {
                 var state = GetState(new Vector2(x, y));
-                float risk = (int)(state.risk*8)/8.0f;
-                Color col = new Color(0.2f, risk, 0.2f);
+                float risk = (int)(state.risk*16)/16.0f;
+                Color col = new Color(risk * 0.9f, 0.2f, 0.2f);
+
+                if (risk > 0.5f) {
+                    var dangersize = DangerTexture.width;
+                    Color danger_col = DangerTexture.GetPixel(x % dangersize, -y % dangersize);
+                    col.r = Mathf.Clamp01(col.r + (danger_col.r * danger_col.a));
+                }
+
                 IngameMapTexture.SetPixel(x, y, col);
             }
         }
