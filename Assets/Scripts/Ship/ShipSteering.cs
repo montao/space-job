@@ -7,7 +7,7 @@ public class ShipSteering : NetworkBehaviour {
 
     public static readonly float TRANSLATION_ACCELERATION = 5.0f;
     public static readonly float ROTATION_ACCELERATION = 2.0f;
-    public static readonly float[] TARGET_VELOCITY_STEPS = {-1f, 0, 1f, 5f, 10f, 20f};
+    public static readonly float[] TARGET_VELOCITY_STEPS = {-5f, -1f, 0, 1f, 5f};
     public static readonly float MAX_TRANSLATION_VELOCITY = 20f;
     public static readonly float MAX_ABS_ANGULAR_VELOCITY = 30.0f;
     public static readonly float EPSILON = 0.05f;
@@ -82,8 +82,17 @@ public class ShipSteering : NetworkBehaviour {
         m_TargetVelocityIdx.Value = Mathf.Clamp(m_TargetVelocityIdx.Value += delta_idx, 0, TARGET_VELOCITY_STEPS.Length - 1);
     }
 
+    [ServerRpc(RequireOwnership=false)]
+    public void SetTargetVelocityServerRpc(int velocity_idx) {
+        m_TargetVelocityIdx.Value = Mathf.Clamp(velocity_idx, 0, TARGET_VELOCITY_STEPS.Length - 1);
+    }
+
     public float GetTargetSpeed() {
         return TARGET_VELOCITY_STEPS[m_TargetVelocityIdx.Value];
+    }
+
+    public int GetTargetSpeedIndex() {
+        return m_TargetVelocityIdx.Value;
     }
 
     public float GetSpeed() {
