@@ -24,8 +24,14 @@ public class MechanicalSpeedLever : TwoLevelInteractable {
         }
         if (rot_z < angle) {
             rot_z += ANIMATION_SPEED * Time.deltaTime;
+            if (rot_z > angle) {  // no over-correction!
+                rot_z = angle;
+            }
         } else if (rot_z > angle) {
             rot_z -= ANIMATION_SPEED * Time.deltaTime;
+            if (rot_z < angle) {
+                rot_z = angle;
+            }
         }
         rot_z = Mathf.Clamp(rot_z, -30f, 210f);
         if (Mathf.Abs(rot_z - angle) < 1f) {

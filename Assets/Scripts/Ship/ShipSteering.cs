@@ -36,7 +36,7 @@ public class ShipSteering : NetworkBehaviour {
 
     // z ignored, but using Vector3 for ez rotation~
     private NetworkVariable<Vector3> m_Velocity = new NetworkVariable<Vector3>();
-    private NetworkVariable<int> m_TargetVelocityIdx = new NetworkVariable<int>(1);
+    private NetworkVariable<int> m_TargetVelocityIdx = new NetworkVariable<int>(2);
     private NetworkVariable<float> m_AngularVelocity = new NetworkVariable<float>(0);
     private bool[] m_ThrusterStates;  // kept up-to-date server-side only
     // updated server-side to reflect m_ThrusterStates:
