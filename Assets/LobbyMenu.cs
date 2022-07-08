@@ -176,4 +176,7 @@ public class LobbyMenu : MonoBehaviour
         mix.SetFloat("AmbientVol", vol);
     }
     
+    public void setQuality(int qualityIdx) {
+        QualitySettings.SetQualityLevel(qualityIdx);
+    }
 }

@@ -7,7 +7,7 @@ QualitySettings:
   m_CurrentQuality: 1
   m_QualitySettings:
   - serializedVersion: 2
-    name: Very High
+    name: High
     pixelLightCount: 3
     shadows: 2
     shadowResolution: 2
@@ -43,7 +43,7 @@ QualitySettings:
     customRenderPipeline: {fileID: 11400000, guid: 82d50e16a695c214d8025c47c33a0d1f, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
-    name: Mid
+    name: Medium
     pixelLightCount: 3
     shadows: 2
     shadowResolution: 2
@@ -79,7 +79,7 @@ QualitySettings:
     customRenderPipeline: {fileID: 11400000, guid: 82d50e16a695c214d8025c47c33a0d1f, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
-    name: Garbage
+    name: Low
     pixelLightCount: 3
     shadows: 2
     shadowResolution: 2
