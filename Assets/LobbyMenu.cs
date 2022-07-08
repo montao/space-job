@@ -4,7 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-
+using UnityEngine.Audio;
 
 
 public class LobbyMenu : MonoBehaviour
@@ -31,6 +31,8 @@ public class LobbyMenu : MonoBehaviour
     public GameObject SUIVideo;
     public GameObject SUIControls;
     public GameObject SUITips;
+
+    public AudioMixer masterMix;
 
 
     // Update is called once per frame
@@ -159,4 +161,19 @@ public class LobbyMenu : MonoBehaviour
         SUITips.SetActive(false);
 
     }
+
+    public void SetMasterVol(float vol) {
+        masterMix.SetFloat("MasterVol", vol);
+    }
+
+    public void SetMusicVol(float vol) {
+        masterMix.SetFloat("MusicVol", vol);
+    }
+    public void SetSoundVol(float vol) {
+        masterMix.SetFloat("SoundVol", vol);
+    }
+    public void SetAmbientVol(float vol) {
+        masterMix.SetFloat("AmbientVol", vol);
+    }
+    
 }

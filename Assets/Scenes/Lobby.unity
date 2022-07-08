@@ -207,13 +207,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 1824382041}
   m_HandleRect: {fileID: 199649962}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 786659311}
+        m_TargetAssemblyTypeName: LobbyMenu, Assembly-CSharp
+        m_MethodName: SetMasterVol
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &30232878
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,13 +1014,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 1957547358}
   m_HandleRect: {fileID: 1250829988}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 786659311}
+        m_TargetAssemblyTypeName: LobbyMenu, Assembly-CSharp
+        m_MethodName: SetSoundVol
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &192124043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1301,13 +1325,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 972161770}
   m_HandleRect: {fileID: 917379707}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 786659311}
+        m_TargetAssemblyTypeName: LobbyMenu, Assembly-CSharp
+        m_MethodName: SetMusicVol
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &213450917
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,6 +1593,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7125714971065593813, guid: 6a45d708ab572ca109168fe3970b24d5, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 2944238365009193308, guid: 638ea7c8fc8dec2d1a7966fd519edcc7, type: 2}
     - target: {fileID: 9204123625600447561, guid: 6a45d708ab572ca109168fe3970b24d5, type: 3}
       propertyPath: m_Name
       value: ShipManager
@@ -4021,6 +4061,7 @@ MonoBehaviour:
   SUIVideo: {fileID: 1995463467}
   SUIControls: {fileID: 1803881712}
   SUITips: {fileID: 42092447}
+  masterMix: {fileID: 24100000, guid: 638ea7c8fc8dec2d1a7966fd519edcc7, type: 2}
 --- !u!1 &822315954
 GameObject:
   m_ObjectHideFlags: 0
@@ -5765,13 +5806,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 482953142}
   m_HandleRect: {fileID: 1354546828}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 786659311}
+        m_TargetAssemblyTypeName: LobbyMenu, Assembly-CSharp
+        m_MethodName: SetSfxVol
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1074879752
 GameObject:
   m_ObjectHideFlags: 0
@@ -5829,7 +5882,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '   ambient'
+  m_text: '   sounds'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5bc7c323c2cb202c9b92d6ad31867e99, type: 2}
   m_sharedMaterial: {fileID: 3691657298897300434, guid: 5bc7c323c2cb202c9b92d6ad31867e99, type: 2}
@@ -7265,6 +7318,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5447447755118420593, guid: 4a05141723b086b5c8226935f1759d65, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e624fd355280edc1899131bd276cdf6c, type: 3}
+    - target: {fileID: 5447447755118420593, guid: 4a05141723b086b5c8226935f1759d65, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 2944238365009193308, guid: 638ea7c8fc8dec2d1a7966fd519edcc7, type: 2}
     - target: {fileID: 8163297081521745328, guid: 4a05141723b086b5c8226935f1759d65, type: 3}
       propertyPath: m_Name
       value: lightswitch
@@ -8556,7 +8617,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '   sfx'
+  m_text: '   ambient'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5bc7c323c2cb202c9b92d6ad31867e99, type: 2}
   m_sharedMaterial: {fileID: 3691657298897300434, guid: 5bc7c323c2cb202c9b92d6ad31867e99, type: 2}
@@ -9960,7 +10021,7 @@ AudioSource:
   m_GameObject: {fileID: 2131200128}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2091007586623170542, guid: 638ea7c8fc8dec2d1a7966fd519edcc7, type: 2}
   m_audioClip: {fileID: 8300000, guid: 16b2e4ffebe95ce5ead233324742d41a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
