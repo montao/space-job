@@ -48,6 +48,7 @@ public class LobbyMenu : MonoBehaviour
                         + resolutions[i].height 
                         + "@" + resolutions[i].refreshRate + "hz");
             if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height) {
+            //if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height) {
                 resIdx = i;
             }
         }
