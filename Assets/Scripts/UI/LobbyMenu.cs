@@ -37,6 +37,7 @@ public class LobbyMenu : MonoBehaviour
 
     public TMPro.TMP_Dropdown resDD;
 
+
     void Start() {
         resolutions = Screen.resolutions;
         resDD.ClearOptions();
@@ -70,6 +71,8 @@ public class LobbyMenu : MonoBehaviour
                 Application.Quit();
             }
             else if (mode == 2) {
+                mode = 0;
+                Resume();
                 SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
                 NetworkManager.Singleton.Shutdown();
             }
@@ -88,7 +91,9 @@ public class LobbyMenu : MonoBehaviour
                 Resume();
             }
             else {
-                PlayerManager.Instance.LocalPlayer.Avatar.LockMovement(GetHashCode());
+                if (SceneManager.GetActiveScene().name != "MainMenu") {
+                    PlayerManager.Instance.LocalPlayer.Avatar.LockMovement(GetHashCode());
+                }
                 UIBackground.SetActive(true);
                 ShowUI();
             }
@@ -101,7 +106,9 @@ public class LobbyMenu : MonoBehaviour
     }
 
     public void Resume() {
-        PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
+        if (SceneManager.GetActiveScene().name != "MainMenu") {
+            PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
+        }
         HideUI();
         UIBackground.SetActive(false);
     }
@@ -113,7 +120,7 @@ public class LobbyMenu : MonoBehaviour
 
     public void LoadMenu() {
         mode = 2;
-        PopupText("are you sure that you want to return to the menu?");    
+        PopupText("are you sure that you want to return to the menu?");
     }
 
     public void OpenSettings() {
@@ -152,6 +159,7 @@ public class LobbyMenu : MonoBehaviour
 
     public void Accept() {
         PopupBool = true;
+        Resume();
     }
 
     // Video Settings
