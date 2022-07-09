@@ -2,7 +2,13 @@ fileFormatVersion: 2
 guid: 6cc4e2c8ef61c513793faedcf5c8bd86
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 1757445619195527046
+    second: Screen|EmptyAction
+  - first:
+      74: -3019408494718416330
+    second: Screen|EscapePodDoorAction
   externalObjects: {}
   materials:
     materialImportMode: 0
