@@ -32,13 +32,7 @@ public class PowerTerminal : TwoLevelInteractable
         m_InCounter = 0;
     }
     public void DisplayError(string err) {
-        m_ErrorText = err;
-        UpdateText();
-    }
-    private void UpdateText() {
-        InputDisplay.text = m_ErrorText;
-        if (!ShipManager.Instance.HasPower) {
-            InputDisplay.text += "\n>" + Value + "|";
-        }
+        Debug.Log("Error Displayed");
+        ErrorText.text = err;
     }
 }

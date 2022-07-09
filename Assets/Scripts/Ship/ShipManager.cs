@@ -66,10 +66,11 @@ public class ShipManager : NetworkBehaviour {
         
 
         if(PowerTerminal != null){   
+            Debug.Log("Display Error");
             if (!hasPower) {
                 PowerTerminal.DisplayError("0x" + ErrorCodeDisplay(power));
             } else {
-                PowerTerminal.DisplayError("Power:\n100%");
+                PowerTerminal.DisplayError("Power: 100%");
             }
         } 
 
