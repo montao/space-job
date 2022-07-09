@@ -47,8 +47,8 @@ public class LobbyMenu : MonoBehaviour
             resOpt.Add(resolutions[i].width + "x" 
                         + resolutions[i].height 
                         + "@" + resolutions[i].refreshRate + "hz");
-            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height) {
-            //if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height) {
+            //if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height) {
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height) {
                 resIdx = i;
             }
         }
@@ -131,7 +131,7 @@ public class LobbyMenu : MonoBehaviour
 
     public void QuitGame() {
         mode = 1;
-        PopupText("are you sure that you want to quit the game?");    
+        PopupText("Are you sure that you want to quit the game?");    
     }
 
     public void PopupText(string message) {
