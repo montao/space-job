@@ -65,8 +65,10 @@ public class LobbyMenu : MonoBehaviour
             PopupUI.SetActive(false);
             SettingsUI.SetActive(false);
             PopupIsOpen = false;
-            ShowUI();
+            // maybe needed in the future
+            // ShowUI();
             if (mode == 1) {
+                mode = 0;
                 Debug.Log("bye");
                 Application.Quit();
             }
