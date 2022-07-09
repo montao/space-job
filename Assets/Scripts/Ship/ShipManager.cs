@@ -26,7 +26,7 @@ public class ShipManager : NetworkBehaviour {
     private NetworkVariable<Vector2> m_Destination = new NetworkVariable<Vector2>(new Vector2(84f, 155f));
     private float m_DistanceToWin;
 
-    public Terminal PowerTerminal;
+    public PowerTerminal PowerTerminal;
     public Canvas WinCanvas;
 
     [SerializeField]

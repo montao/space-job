@@ -157,7 +157,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 1
-  VendingNumPad: {fileID: 6906210449779933720}
+  IsPowerTerminal: 1
+  VendingNumPad: {fileID: 0}
+  PowerTerminal: {fileID: 8782776126009344529}
 --- !u!65 &8430121425391751890
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -271,7 +273,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 5
-  VendingNumPad: {fileID: 6906210449779933720}
+  IsPowerTerminal: 1
+  VendingNumPad: {fileID: 0}
+  PowerTerminal: {fileID: 8782776126009344529}
 --- !u!65 &5451147593508271764
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -384,8 +388,10 @@ MonoBehaviour:
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
-  Number: 69
-  VendingNumPad: {fileID: 6906210449779933720}
+  Number: 99
+  IsPowerTerminal: 1
+  VendingNumPad: {fileID: 0}
+  PowerTerminal: {fileID: 8782776126009344529}
 --- !u!65 &2895751521536977570
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -410,10 +416,6 @@ GameObject:
   - component: {fileID: 2279574346282280910}
   - component: {fileID: 2279574346282280904}
   - component: {fileID: 2279574346282280911}
-  - component: {fileID: 2279574346282280905}
-  - component: {fileID: 2279574346282280907}
-  - component: {fileID: 1753079517882771466}
-  - component: {fileID: 6906210449779933720}
   m_Layer: 0
   m_Name: numpad
   m_TagString: Untagged
@@ -428,8 +430,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2279574346282280909}
-  m_LocalRotation: {x: 0.000000087544315, y: -0.000000020489095, z: -0.71210116, w: 0.702077}
-  m_LocalPosition: {x: -0.3768, y: -0.0961, z: 0.0754}
+  m_LocalRotation: {x: 0.12145602, y: -0.123190045, z: -0.70136464, w: 0.6914914}
+  m_LocalPosition: {x: -0.351, y: -0.097, z: 0.148}
   m_LocalScale: {x: 0.12610416, y: 0.19533211, z: 0.023707053}
   m_Children:
   - {fileID: 5478786638323439966}
@@ -444,10 +446,9 @@ Transform:
   - {fileID: 3199014196605331346}
   - {fileID: 6553531734058583280}
   - {fileID: 7046733691318118557}
-  - {fileID: 3864075982478402712}
   m_Father: {fileID: 9187531067706769493}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90.812}
+  m_LocalEulerAnglesHint: {x: -0.277, y: -19.922, z: -90.764}
 --- !u!33 &2279574346282280904
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -497,79 +498,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2279574346282280905
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2279574346282280909}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9999999, y: 2, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2279574346282280907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2279574346282280909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b63d50dee883698789c54e33b96f43c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Camera: {fileID: 0}
-  InRoom: 1
---- !u!114 &1753079517882771466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2279574346282280909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
---- !u!114 &6906210449779933720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2279574346282280909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d4db775f4d536ecb877bd349f3bb7a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NeedsPower: 0
-  TriggeredAnimation: 2
-  LastUse: 0
-  CanInteract: 1
-  m_Interactables:
-  - {fileID: 5406005815086807827}
-  - {fileID: 8283861259464061456}
-  - {fileID: 8418616043428752547}
-  - {fileID: 2169141946117788160}
-  - {fileID: 7177591438092190972}
-  - {fileID: 7717440400292616620}
-  - {fileID: 3699059900214994217}
-  - {fileID: 1439171175007087967}
-  - {fileID: 5962246567161987200}
-  - {fileID: 4848801036075912067}
-  - {fileID: 4886438557720078202}
-  - {fileID: 5541820248535781904}
-  InputDisplay: {fileID: 7025279418581880920}
 --- !u!1 &2318798550263824457
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,7 +598,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 8
-  VendingNumPad: {fileID: 6906210449779933720}
+  IsPowerTerminal: 1
+  VendingNumPad: {fileID: 0}
+  PowerTerminal: {fileID: 8782776126009344529}
 --- !u!65 &7677168322951193004
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -684,6 +614,140 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.011, y: 0.010999999, z: 0.011}
   m_Center: {x: 0.000000059604645, y: 0, z: 0}
+--- !u!1 &2517799587214151554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2803236032672159536}
+  - component: {fileID: 7354098746692253892}
+  - component: {fileID: 3568848659589308325}
+  m_Layer: 0
+  m_Name: ErrorScreen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 1
+  m_IsActive: 1
+--- !u!224 &2803236032672159536
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517799587214151554}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7025279417776828997}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -34, y: 161}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7354098746692253892
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517799587214151554}
+  m_CullTransparentMesh: 1
+--- !u!114 &3568848659589308325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517799587214151554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 5bc7c323c2cb202c9b92d6ad31867e99, type: 2}
+  m_sharedMaterial: {fileID: 3691657298897300434, guid: 5bc7c323c2cb202c9b92d6ad31867e99, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4284940134
+  m_fontColor: {r: 0.4, g: 1, b: 0.4, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 122.1
+  m_fontSizeBase: 122.1
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 3
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: -162.50798, y: -45.81573, z: -224.09076, w: -99.86931}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2944213009083397676
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,7 +848,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 4
-  VendingNumPad: {fileID: 6906210449779933720}
+  IsPowerTerminal: 1
+  VendingNumPad: {fileID: 0}
+  PowerTerminal: {fileID: 8782776126009344529}
 --- !u!65 &5161478083015055151
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -898,7 +964,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 7
-  VendingNumPad: {fileID: 6906210449779933720}
+  IsPowerTerminal: 1
+  VendingNumPad: {fileID: 0}
+  PowerTerminal: {fileID: 8782776126009344529}
 --- !u!65 &7198871470906207730
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -912,63 +980,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.011, y: 0.010999999, z: 0.011}
   m_Center: {x: 0.000000059604645, y: 0, z: 0}
---- !u!1 &3277968342948634641
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3864075982478402712}
-  - component: {fileID: 8857013375646543341}
-  - component: {fileID: 263875906010232745}
-  m_Layer: 2
-  m_Name: InteractionRange
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3864075982478402712
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3277968342948634641}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2279574346282280910}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8857013375646543341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3277968342948634641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4ceea88e0d1dea9d9c80dab60320315, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!135 &263875906010232745
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3277968342948634641}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 8
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3336868610939737101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,7 +1080,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 3
-  VendingNumPad: {fileID: 6906210449779933720}
+  IsPowerTerminal: 1
+  VendingNumPad: {fileID: 0}
+  PowerTerminal: {fileID: 8782776126009344529}
 --- !u!65 &4742344913117074050
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1182,8 +1195,10 @@ MonoBehaviour:
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
-  Number: 420
-  VendingNumPad: {fileID: 6906210449779933720}
+  Number: 21
+  IsPowerTerminal: 1
+  VendingNumPad: {fileID: 0}
+  PowerTerminal: {fileID: 8782776126009344529}
 --- !u!65 &8492921653838075795
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1505,7 +1520,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 0
-  VendingNumPad: {fileID: 6906210449779933720}
+  IsPowerTerminal: 1
+  VendingNumPad: {fileID: 0}
+  PowerTerminal: {fileID: 8782776126009344529}
 --- !u!65 &2670901393060752246
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1532,9 +1549,9 @@ GameObject:
   - component: {fileID: 7996054981159298302}
   - component: {fileID: 2642598905343310945}
   - component: {fileID: 3693059703453968222}
-  - component: {fileID: 5120196103404334753}
   - component: {fileID: 6264508187916427561}
   - component: {fileID: 7319059120955009620}
+  - component: {fileID: 8782776126009344529}
   m_Layer: 0
   m_Name: Power Terminal
   m_TagString: Untagged
@@ -1642,24 +1659,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 0}
   InRoom: 1
---- !u!114 &5120196103404334753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5975474183653316272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5f57d4e7844da124aa456ed45b2eb48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NeedsPower: 0
-  TriggeredAnimation: 2
-  LastUse: 0
-  CanInteract: 1
-  Text: {fileID: 7025279418581880920}
-  pressSound: {fileID: 0}
 --- !u!65 &6264508187916427561
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1769,6 +1768,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8782776126009344529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5975474183653316272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd87e8410e4d0a0eb66cb487d738e5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NeedsPower: 0
+  TriggeredAnimation: 2
+  LastUse: 0
+  CanInteract: 1
+  m_Interactables:
+  - {fileID: 5406005815086807827}
+  - {fileID: 8283861259464061456}
+  - {fileID: 8418616043428752547}
+  - {fileID: 2169141946117788160}
+  - {fileID: 7177591438092190972}
+  - {fileID: 7717440400292616620}
+  - {fileID: 3699059900214994217}
+  - {fileID: 1439171175007087967}
+  - {fileID: 5962246567161987200}
+  - {fileID: 4848801036075912067}
+  - {fileID: 4886438557720078202}
+  - {fileID: 5541820248535781904}
+  InputDisplay: {fileID: 7025279418581880920}
+  ErrorText: {fileID: 3568848659589308325}
 --- !u!1 &6273392269582918545
 GameObject:
   m_ObjectHideFlags: 0
@@ -1895,6 +1925,7 @@ RectTransform:
   m_LocalScale: {x: 0.00048146708, y: 0.00048146708, z: 0.00048146708}
   m_Children:
   - {fileID: 7025279418581880921}
+  - {fileID: 2803236032672159536}
   m_Father: {fileID: 9187531067706769493}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 93.965, z: 90}
@@ -2092,7 +2123,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -162.50798, y: -259.3154, z: -224.09076, w: -99.86931}
+  m_margin: {x: -162.50798, y: -45.81573, z: -224.09076, w: -99.86931}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2198,7 +2229,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 9
-  VendingNumPad: {fileID: 6906210449779933720}
+  IsPowerTerminal: 1
+  VendingNumPad: {fileID: 0}
+  PowerTerminal: {fileID: 8782776126009344529}
 --- !u!65 &20819963572709081
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2405,7 +2438,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 2
-  VendingNumPad: {fileID: 6906210449779933720}
+  IsPowerTerminal: 1
+  VendingNumPad: {fileID: 0}
+  PowerTerminal: {fileID: 8782776126009344529}
 --- !u!65 &7092214358786728312
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2519,7 +2554,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 6
-  VendingNumPad: {fileID: 6906210449779933720}
+  IsPowerTerminal: 1
+  VendingNumPad: {fileID: 0}
+  PowerTerminal: {fileID: 8782776126009344529}
 --- !u!65 &6452308896139671498
 BoxCollider:
   m_ObjectHideFlags: 0
