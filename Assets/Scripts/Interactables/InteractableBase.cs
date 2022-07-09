@@ -71,7 +71,9 @@ public abstract class InteractableBase : NetworkBehaviour {
     }
 
     public void SetHighlight(bool highlighted) {
-        m_Renderer.gameObject.layer = highlighted ? m_HighlightedLayer : m_DefaultLayer;
+        if (m_Renderer) {
+            m_Renderer.gameObject.layer = highlighted ? m_HighlightedLayer : m_DefaultLayer;
+        }
     }
 
 
