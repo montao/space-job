@@ -86,7 +86,7 @@ public class Plant : Interactable<bool> {
     }
 
     IEnumerator WaitForPlantGrow(float maxtime){
-        float growIn = UnityEngine.Random.Range(60, maxtime);
+        float growIn = UnityEngine.Random.Range(5, maxtime);
         Debug.Log("plant grows in " + growIn + "sec");
         yield return new WaitForSeconds(growIn);
         grown.Value = true;
@@ -114,8 +114,8 @@ public class Plant : Interactable<bool> {
     public void GrowPlantServerRpc() {
         Debug.Log("growing seed");
         if (!dry.Value && watered.Value) {
-            StartCoroutine(WaitForPlantGrow(120));
-        } else StopCoroutine(WaitForPlantGrow(120));
+            StartCoroutine(WaitForPlantGrow(10));
+        } else StopCoroutine(WaitForPlantGrow(10));
         
     }
     [ServerRpc(RequireOwnership = false)]
@@ -148,7 +148,7 @@ public class Plant : Interactable<bool> {
         notPlanted.Value = true;
         StopCoroutine(TimeTillPlantDead(300));
         StopCoroutine(TimeTillPlantDry(200));
-        StopCoroutine(WaitForPlantGrow(120));
+        StopCoroutine(WaitForPlantGrow(10));
     }
     [ServerRpc(RequireOwnership = false)]
     public void ChangePlantServerRpc() {
