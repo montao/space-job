@@ -20,7 +20,7 @@ public class PowerTerminal : TwoLevelInteractable
 
     }
     public void DisplayInputText(int input_number){
-        if(m_InCounter == 6){
+        if(m_InCounter == 4){
             if (ShipManager.Instance.TryResolvePowerOutageEvent(input_number.ToString()))
             ClearInput();
         }
