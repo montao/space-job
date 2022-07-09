@@ -4,7 +4,7 @@ using UnityEngine;
 using Unity.Netcode;
 using System.Collections.Generic;
 
-public class Terminal : Interactable<FixedString32Bytes> {
+public class Terminal : TwoLevelInteractable {
     public TMP_Text Text;
     private string m_ErrorText;
     private string m_TextEntered = "";
@@ -42,13 +42,6 @@ public class Terminal : Interactable<FixedString32Bytes> {
         {KeyCode.F, "F"},
     };
 
-    public override void OnStateChange(FixedString32Bytes previous, FixedString32Bytes current) {
-        UpdateText();
-        if (m_LocalPlayerIsInteracting && !ShipManager.Instance.HasPower) {
-            PlayerManager.Instance.LocalPlayer.Avatar.LockMovement(GetHashCode());
-        }
-    }
-
     protected override void Interaction() {
         m_LocalPlayerIsInteracting = !m_LocalPlayerIsInteracting;
         if (m_LocalPlayerIsInteracting) {
@@ -68,20 +61,6 @@ public class Terminal : Interactable<FixedString32Bytes> {
         if(PlayerManager.IsLocalPlayerAvatar(other)){
             m_CameraSwap.SwitchAway();
             m_LocalPlayerIsInteracting = false;
-        }
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void SetEnteredTextServerRpc(string text, bool entered) {
-        if (entered) {
-            if (ShipManager.Instance.TryResolvePowerOutageEvent(Value.ToString())) {
-                // HCI:  Switch away from terminal on successful power restoration
-                PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
-                m_CameraSwap.SwitchAway();
-            }
-            m_State.Value = "";
-        } else {
-            m_State.Value = text;
         }
     }
 
