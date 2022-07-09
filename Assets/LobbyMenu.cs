@@ -88,6 +88,7 @@ public class LobbyMenu : MonoBehaviour
                 Resume();
             }
             else {
+                PlayerManager.Instance.LocalPlayer.Avatar.LockMovement(GetHashCode());
                 UIBackground.SetActive(true);
                 ShowUI();
             }
@@ -100,6 +101,7 @@ public class LobbyMenu : MonoBehaviour
     }
 
     public void Resume() {
+        PlayerManager.Instance.LocalPlayer.Avatar.ReleaseMovementLock(GetHashCode());
         HideUI();
         UIBackground.SetActive(false);
     }
@@ -213,6 +215,5 @@ public class LobbyMenu : MonoBehaviour
         SUITips.SetActive(false);
 
     }
-
 
 }
