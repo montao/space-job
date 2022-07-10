@@ -947,7 +947,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70842671}
-  m_LocalRotation: {x: 0.17896944, y: -0.043198522, z: 0.007865923, w: 0.98287433}
+  m_LocalRotation: {x: 0.17896947, y: -0.043198477, z: 0.007865918, w: 0.98287433}
   m_LocalPosition: {x: -1.095, y: 2.628, z: -28.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -17833,6 +17833,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 531287513353709633, guid: 3e0fad7b94169fea79ed720d8a444876, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 66351130
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143844101914538277, guid: 3e0fad7b94169fea79ed720d8a444876, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1633853953
+      objectReference: {fileID: 0}
     - target: {fileID: 4656668132733633224, guid: 3e0fad7b94169fea79ed720d8a444876, type: 3}
       propertyPath: plantStatus
       value: 
@@ -17912,6 +17920,14 @@ PrefabInstance:
     - target: {fileID: 4656668133424014715, guid: 3e0fad7b94169fea79ed720d8a444876, type: 3}
       propertyPath: m_Name
       value: Plant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749527766747216673, guid: 3e0fad7b94169fea79ed720d8a444876, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2858938561
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741530559977882039, guid: 3e0fad7b94169fea79ed720d8a444876, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 949215731
       objectReference: {fileID: 0}
     - target: {fileID: 8464437660512493897, guid: 3e0fad7b94169fea79ed720d8a444876, type: 3}
       propertyPath: m_IsActive
