@@ -206,8 +206,16 @@ public class ShipManager : NetworkBehaviour {
 
     private void Start() {
         if (IsServer) {
-            Debug.Log("Lets Start Event Corutine");
             GetComponent<EventManager>().StartDiceRollCoroutine();
+        }
+
+        if (!IsServer && !IsClient) {  // not started yeeet
+            Debug.Log("Will start dice rolling when server ready");
+            NetworkManager.Singleton.OnServerStarted += () => {
+                if (IsServer) {
+                    GetComponent<EventManager>().StartDiceRollCoroutine();
+                }
+            };
         }
     }
 

@@ -39,6 +39,7 @@ public class ControllerInputHelper : MonoBehaviour {
         text += "\nSHIP POS:  " + pos.x + ", " + pos.y;
         text += "\nDISTANCE TO GOAL:  " + ShipManager.Instance?.GetDistantToWin();
         text += "\nRISK LEVEL:  " + ShipManager.Instance?.GetComponent<EventManager>().CurrentRisk();
+        text += "\nDICE:  " + ShipManager.Instance?.GetComponent<EventManager>().DiceRollDebugInfo;
         text += "\n\nSELECTED UI ELEMENT:\n";
         text += EventSystem.current.currentSelectedGameObject + "\n\n";
         text += "AVAILABLE INTERACTABLES (" + m_AvailableInteractables.Count + ", " + m_AvailableInteractables.GetHashCode() + "):\n";

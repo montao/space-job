@@ -17,9 +17,11 @@ namespace EventParameters {
 
 public class EventManager : MonoBehaviour {
     public static EventManager Instance;
+
+    public string DiceRollDebugInfo = "";
     [SerializeField]
     private Map m_Map;
-    private float risk = 0.02f * 0.3f;
+    private float risk = 0.2f;
 
     private Vector2 m_LastSpaceEventCoords = new Vector2(1, 1) * -10000;
 
@@ -36,6 +38,7 @@ public class EventManager : MonoBehaviour {
 
     // Called by ShipManager, and only if current user is hosting
     public void StartDiceRollCoroutine() {
+        Debug.Log("Lets Start Event Corutine");
         StartCoroutine(DiceRollCorutine());
     }
 
@@ -43,7 +46,7 @@ public class EventManager : MonoBehaviour {
         //Debug.Log("Start Corutine");
         while(true){
             DiceRoll();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -52,6 +55,10 @@ public class EventManager : MonoBehaviour {
     }
 
     public void DiceRoll(){
+
+        DiceRollDebugInfo = "";
+        DiceRollDebugInfo += "t = " + Time.fixedTime + "\n";
+
         Debug.Log("Make Diceroll");
         var ship_pos = ShipManager.Instance.GetShipPosition();
         MapState state = m_Map.GetState(ship_pos);
@@ -62,14 +69,17 @@ public class EventManager : MonoBehaviour {
         float hull_breach_dice = Random.value;
         float fire_dice = Random.value;
 
-        float ship_speed = ShipManager.Instance.GetShipSpeed()/ShipSteering.MAX_TRANSLATION_VELOCITY;
-        float hull_breach_risk = (0.3f*Mathf.Atan(4.3f*(ship_speed-0.4f))+0.5f);
-        hull_breach_risk = risk * hull_breach_risk * CurrentRisk();
+        float ship_speed = Mathf.Abs(ShipManager.Instance.GetShipSpeed())/ShipSteering.MAX_TRANSLATION_VELOCITY;
+        float speed_risk = (0.3f*Mathf.Atan(4.3f*(ship_speed-0.4f))+0.5f);
 
-        float fire_risk = (0.5f*Mathf.Atan(4.3f*(ship_speed-0.4f))+0.5f);
-        fire_risk = risk * fire_risk * m_Map.GetState(ShipManager.Instance.GetShipPosition()).risk;
+        float hull_breach_risk = risk * speed_risk * CurrentRisk();
+        float fire_risk = hull_breach_risk;
+
+        DiceRollDebugInfo += "speed_risk = " + speed_risk + "\n";
+        DiceRollDebugInfo += "fire_risk = " + fire_risk + "\n";
 
         if (hull_breach_dice < hull_breach_risk) {
+            Debug.Log("Hull Risk Peak");
             ShipManager.Instance.TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
         }
         if (fire_dice < fire_risk) {
