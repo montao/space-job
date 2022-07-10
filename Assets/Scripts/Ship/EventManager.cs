@@ -82,14 +82,17 @@ public class EventManager : MonoBehaviour {
         if (power_dice < power_risk) {
             ShipManager.Instance.TriggerPowerOutageEvent();
             ShipManager.Instance.Steering.SetTargetVelocityServerRpc(2);
+            DiceRollDebugInfo += "POWER OUTAGE";
         }
         if (hull_breach_dice < hull_breach_risk) {
             Debug.Log("Hull Risk Peak");
             ShipManager.Instance.TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
+            DiceRollDebugInfo += "HULL BREACH";
         }
         if (fire_dice < fire_risk) {
             Debug.Log("Fire Risk Peak");
             ShipManager.Instance.TriggerFireEvent();
+            DiceRollDebugInfo += "FIRE";
         }
     }
 }
