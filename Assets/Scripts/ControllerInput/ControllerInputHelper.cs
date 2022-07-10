@@ -7,6 +7,11 @@ using UnityEngine;
 using TMPro;
 
 public class ControllerInputHelper : MonoBehaviour {
+
+    private WallTerminal cockpit;
+    private int cockpit_value = TwoLevelInteractable.NOT_OCCUPIED;
+    private string cockpit_hist = "";
+
     [SerializeField]
     private TMP_Text m_DebugText;
     [SerializeField]
@@ -26,6 +31,13 @@ public class ControllerInputHelper : MonoBehaviour {
     }
 
     void Update() {
+        if (cockpit == null) {
+            foreach (var term in FindObjectsOfType<WallTerminal>()) {
+                if (term.transform.parent.name == "WallTerminal (Cockpit <-> HW Front)") {
+                    cockpit = term;
+                }
+            }
+        }
         if (Input.GetKeyDown(KeyCode.F12)) {
             m_DebugText.gameObject.SetActive(!m_DebugText.IsActive());
         }
@@ -42,6 +54,16 @@ public class ControllerInputHelper : MonoBehaviour {
         text += "\n\nACTION MAP:  " + map;
         var scheme = GameManager.Instance.Input.currentControlScheme;
         text += "\n\nCONTROLE SCHEME:  " + scheme;
+
+        if (cockpit_value != cockpit.Value) {
+            cockpit_hist += "" + cockpit.Value + " (t=" + Time.fixedTime + " secs)\n";
+        }
+        cockpit_value = cockpit.Value;
+
+        text += "\n\nCOCKPIT WALLTERMINAL CURRENT USER:  ";
+        text += cockpit_value;
+        text += "\nHISTORY:\n" + cockpit_hist;
+
         m_DebugText.text = text;
     }
 
