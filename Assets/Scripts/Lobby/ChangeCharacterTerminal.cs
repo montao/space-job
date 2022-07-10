@@ -31,5 +31,7 @@ public class ChangeCharacterTerminal : Interactable<bool> {
         m_State.Value = value;
     }
 
-
+    public override string FriendlyName() {
+        return "Metal Plate";
+    }
 }

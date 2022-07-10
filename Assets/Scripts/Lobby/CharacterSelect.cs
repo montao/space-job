@@ -5,7 +5,7 @@ using Cinemachine;
 using UnityEngine.UI;
 
 public class CharacterSelect : MonoBehaviour {
-    private GameObject[] characterList;
+    public List<Material> shirtColor;
     private int index;
     public GameObject canvas;
     public CinemachineVirtualCamera cam;
@@ -13,42 +13,31 @@ public class CharacterSelect : MonoBehaviour {
 
     void Start() {
         index = PlayerPrefs.GetInt("CharacterSelected");
-        characterList = new GameObject[transform.childCount];
-        for(int i = 0; i< transform.childCount; i++){
-            characterList[i] = transform.GetChild(i).gameObject;
-        }
-
-        foreach(GameObject go in characterList){
-            go.SetActive(false);
-        }
-        if(characterList[index]){
-            characterList[index].SetActive(true);
-        }
     }
 
-    public void SelectButton(bool right){
-        characterList[index].SetActive(false);
+    public void SelectButton(bool right){/* 
+        shirtColor[index].SetActive(false);
         if(right){
             index++;
-            if(index == characterList.Length){
+            if(index == shirtColor.Length){
                 index = 0;
             }
         } else {
             index--;
             if(index < 0){
-                index = characterList.Length -1;  
+                index = shirtColor.Length -1;  
             }
         }
-        characterList[index].SetActive(true);
+        shirtColor[index].SetActive(true); */
         
     }
 
     public void Select(){
         PlayerPrefs.SetInt("CharacterSelected", index);
-        var characters = GameObject.FindGameObjectsWithTag("CharacterList");
+        var characters = GameObject.FindGameObjectsWithTag("shirtColor");
         Debug.Log(characters[0].name);
         for(int i = 0; i< characters[0].transform.childCount; i++){
-            if(characterList[index].name == characters[0].transform.GetChild(i).name){
+            if(shirtColor[index].name == characters[0].transform.GetChild(i).name){
                 PlayerManager.Instance.LocalPlayer.Avatar.SetActiveCharacter(i);
                 /* PlayerManager.Instance.LocalPlayer.GetComponent<Animator>().avatar =; */
             }
