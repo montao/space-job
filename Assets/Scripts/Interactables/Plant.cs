@@ -54,44 +54,44 @@ public class Plant : Interactable<bool> {
     protected override void Interaction(){
         SetServerRpc(!Value);
         if (PlayerAvatar.IsHolding<Scanner>()){
-            //scanner = FindObjectOfType<Scanner>();
             
-            if(Input.GetButtonDown("Fire1")){
+            if(Input.GetButton("Fire1")){
                 hologram.SetActive(true);
                 m_CameraSwap.SwitchTo();
                 hologram.transform.GetChild(0).rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
-            } else {
+            } 
+            //if(Input.GetButton("Fire1") || Input.GetButtonDown("Horizontal") || Input.GetButtonDown("Vertical"))
+            else {
+                Debug.Log("released");
                 hologram.SetActive(false); 
                 m_CameraSwap.SwitchAway();
             }
-            
 
-            plantStatus.text = "Status:";
-            instruction.text = "Instruction:";
             if (seedPlanted.Value && !notPlanted.Value) {
-                plantStatus.text += " seed planted";
-                instruction.text += " water the seed for it to grow";
+                plantStatus.text = "Status: seed planted";
+                instruction.text = "Instruction: water the seed for it to grow";
             }
             if (dry.Value && (!watered.Value)) {
-                plantStatus.text += " plant is dry";
-                instruction.text += " water the plant";
+                plantStatus.text = "Status: plant is dry";
+                instruction.text = "Instruction: water the plant";
             }
             if (!seedPlanted.Value && notPlanted.Value) {
-                plantStatus.text += " just soil";
-                instruction.text += " get some seeds and plant them";
+                plantStatus.text = "Status: just soil";
+                instruction.text = "Instruction: get some seeds and plant them";
             }
             if (grown.Value && watered.Value && !dry.Value) {
-                plantStatus.text += " plant is healthy";
-                instruction.text += " good job, keep it that way";
+                plantStatus.text = "Status: plant is healthy";
+                instruction.text = "Instruction: good job, keep it that way";
             }
             if (dead.Value) {
-                plantStatus.text += " plant is dead";
-                instruction.text += " clean the pot to plant a new one";
+                plantStatus.text = "Status: plant is dead";
+                instruction.text = "Instruction: clean the pot to plant a new one";
             }
             if (seedPlanted.Value && watered.Value && !grown.Value && !notPlanted.Value){
-                plantStatus.text += " plant is growing";
-                instruction.text += " just wait for a while";
+                plantStatus.text = "Status: plant is growing";
+                instruction.text = "Instruction: just wait for a while";
             }
+            
         } 
         if (PlayerAvatar.IsHolding<Seed>() && FindObjectOfType<Seed>() != null) {
             startingSeed = PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY); 
