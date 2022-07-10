@@ -6,6 +6,7 @@ public enum Event {
     POWER_OUTAGE,
     COSMIC_HORROR,
     HULL_BREACH,
+    SYSTEM_FAILURE,
 }
 
 namespace EventParameters {
@@ -17,6 +18,9 @@ namespace EventParameters {
 
 public class EventManager : MonoBehaviour {
     public static EventManager Instance;
+
+    public static float SYSTEM_FAILURE_COOLDOWN = 20f;
+    private float m_LastSystemFailure = -100f;
 
     public string DiceRollDebugInfo = "";
     [SerializeField]
@@ -66,33 +70,42 @@ public class EventManager : MonoBehaviour {
         float hull_breach_dice = Random.value;
         float fire_dice = Random.value;
         float power_dice = Random.value;
+        float sysfail_dice = Random.value;
 
         float ship_speed = Mathf.Abs(ShipManager.Instance.GetShipSpeed())/ShipSteering.MAX_TRANSLATION_VELOCITY;
         float speed_risk = 0.03f + (ship_speed * 0.85f);
+        float map_risk = CurrentRisk();
 
-        float hull_breach_risk = risk * speed_risk * CurrentRisk();
+        float hull_breach_risk = risk * speed_risk * map_risk;
         float fire_risk = hull_breach_risk;
         float power_risk = 0.5f * hull_breach_risk;
+        float sysfail_risk = (map_risk > Map.DANGER_THRESHOLD ? 0.2f : 0.00001f);
 
         DiceRollDebugInfo += "speed_risk = " + speed_risk + "\n";
         DiceRollDebugInfo += "fire_risk = " + fire_risk + "\n";
         DiceRollDebugInfo += "hull_risk = " + hull_breach_risk + "\n";
         DiceRollDebugInfo += "power_risk = " + power_risk + "\n";
+        DiceRollDebugInfo += "sysfail_risk = " + sysfail_risk + "\t" + sysfail_dice + "\n";
 
         if (power_dice < power_risk) {
             ShipManager.Instance.TriggerPowerOutageEvent();
             ShipManager.Instance.Steering.SetTargetVelocityServerRpc(2);
-            DiceRollDebugInfo += "POWER OUTAGE";
+            DiceRollDebugInfo += "POWER OUTAGE ";
         }
         if (hull_breach_dice < hull_breach_risk) {
             Debug.Log("Hull Risk Peak");
             ShipManager.Instance.TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
-            DiceRollDebugInfo += "HULL BREACH";
+            DiceRollDebugInfo += "HULL BREACH ";
         }
         if (fire_dice < fire_risk) {
             Debug.Log("Fire Risk Peak");
             ShipManager.Instance.TriggerFireEvent();
-            DiceRollDebugInfo += "FIRE";
+            DiceRollDebugInfo += "FIRE ";
+        }
+        if (sysfail_dice < sysfail_risk && (m_LastSystemFailure + SYSTEM_FAILURE_COOLDOWN) < Time.fixedTime) {
+            m_LastSystemFailure = Time.fixedTime;
+            ShipManager.Instance.TriggerSystemFailureEvent();
+            DiceRollDebugInfo += "SYSFAIL ";
         }
     }
 }

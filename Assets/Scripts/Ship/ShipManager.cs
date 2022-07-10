@@ -149,7 +149,10 @@ public class ShipManager : NetworkBehaviour {
         m_Map.DropBreadcrumb(ship_pos);
     }
 
-    public void TriggerPowerOutageEvent(){
+    public void TriggerPowerOutageEvent() {
+        if (!HasPower) {
+            return;
+        }
         int error_idx = UnityEngine.Random.Range(0, ERROR_CODES.Length - 1);
         m_Power.Value = ERROR_CODES[error_idx];
     }
@@ -176,6 +179,18 @@ public class ShipManager : NetworkBehaviour {
     public void TriggerFireEvent() {
         Room room = Util.RandomChoice(Rooms);
         room.SpawnFire();
+    }
+
+    public void TriggerSystemFailureEvent() {
+        int n_breaches = UnityEngine.Random.Range(1, 5);
+        int n_fires = UnityEngine.Random.Range(1, 5);
+        for (int i = 0; i < n_breaches; ++i) {
+            TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
+        }
+        for (int i = 0; i < n_fires; ++i) {
+            TriggerFireEvent();
+        }
+        TriggerPowerOutageEvent();
     }
 
     private void Awake() {

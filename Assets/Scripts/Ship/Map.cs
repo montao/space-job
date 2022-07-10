@@ -10,6 +10,7 @@ public struct MapState {
 public class Map : MonoBehaviour {
     public static int MIN = 0;
     public static int MAX = 1024;
+    public static float DANGER_THRESHOLD = 0.5f;
 
     public Texture2D MapTexture;
     public Texture2D IngameMapTexture;
@@ -33,7 +34,7 @@ public class Map : MonoBehaviour {
                 y = MAX - y;
             }
             Color color = MapTexture.GetPixel(Mathf.RoundToInt(pos.x), y);
-            if(color.g >= 0.5){
+            if(color.g >= DANGER_THRESHOLD){
                 state.spaceEvent = Event.POWER_OUTAGE;
             }
             state.risk = color.r;
@@ -48,7 +49,7 @@ public class Map : MonoBehaviour {
                 float risk = (int)(state.risk*16)/16.0f;
                 Color col = new Color(risk * 0.9f, 0.2f, 0.2f);
 
-                if (state.risk > 0.5f) {
+                if (state.risk > DANGER_THRESHOLD) {
                     var dangersize = DangerTexture.width;
                     Color danger_col = DangerTexture.GetPixel(x % dangersize, -y % dangersize);
                     col.r = Mathf.Clamp01(col.r + (danger_col.r * danger_col.a));
