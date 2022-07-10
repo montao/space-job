@@ -54,15 +54,15 @@ public class Plant : Interactable<bool> {
     protected override void Interaction(){
         SetServerRpc(!Value);
         if (PlayerAvatar.IsHolding<Scanner>()){
-            scanner = FindObjectOfType<Scanner>();
+            //scanner = FindObjectOfType<Scanner>();
             
             if(Input.GetButtonDown("Fire1")){
                 hologram.SetActive(true);
-                //m_CameraSwap.SwitchTo();
+                m_CameraSwap.SwitchTo();
                 hologram.transform.GetChild(0).rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
             } else {
                 hologram.SetActive(false); 
-                //m_CameraSwap.SwitchAway();
+                m_CameraSwap.SwitchAway();
             }
             
 
