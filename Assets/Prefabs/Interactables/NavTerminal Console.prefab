@@ -920,7 +920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NeedsPower: 1
-  TriggeredAnimation: 2
+  TriggeredAnimation: 0
   LastUse: 0
   CanInteract: 0
   m_Action: 1
@@ -1702,7 +1702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NeedsPower: 1
-  TriggeredAnimation: 2
+  TriggeredAnimation: 0
   LastUse: 0
   CanInteract: 0
   m_Action: 2

@@ -1221,7 +1221,7 @@ GameObject:
   - component: {fileID: 1726602859827306570}
   - component: {fileID: 2689558653602983575}
   m_Layer: 0
-  m_Name: NavTerminal Console
+  m_Name: NavTerminal Console UNUSED
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
