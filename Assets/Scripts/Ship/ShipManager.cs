@@ -324,7 +324,7 @@ public class ShipManager : NetworkBehaviour {
         }
 #endif
         
-        CheckWinCondition();
+        //CheckWinCondition();
 
         if (IsServer) {
 #if !DISABLE_DEBUG_KEYS
