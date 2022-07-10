@@ -106,6 +106,7 @@ public class ShipManager : NetworkBehaviour {
         OnWinChange(false, false);
 
         if (IsServer) {
+            // setup destinations for all clients
             var dests = new List<Destination>();
             foreach (var dest_pos in m_Map.Destinations) {
                 Destination d = new Destination();
@@ -114,6 +115,47 @@ public class ShipManager : NetworkBehaviour {
                 dests.Add(d);
             }
             SetDestinationsClientRpc(dests.ToArray());
+
+            // spawn ship at random location
+            float risk_thres = 0.08f;
+            float distance_goal_thres = 150f;
+            // debug: show possible spawn locations
+            /*
+            for (int x = Map.MIN; x < Map.MAX; ++x) {
+                for (int y = Map.MIN; y < Map.MAX; ++y) {
+                    if (m_Map.GetState(new Vector2(x, y)).risk < risk_thres) {
+                        var pos = new Vector2(x, y);
+                        var dist = (pos - GetNearestDestination(pos).pos).magnitude;
+                        if (x == 0 && y == 0) {
+                            Debug.Log("DIST:  " + dist);
+                        }
+                        if (dist > distance_goal_thres) {
+                            var col = m_Map.IngameMapTexture.GetPixel(x, y);
+                            col.b = 1f;
+                            m_Map.IngameMapTexture.SetPixel(x, y, col);
+                        }
+                    }
+                }
+            }
+            m_Map.IngameMapTexture.Apply(); */
+            // // //
+
+            int n = 0;
+            float risk = 1f;
+            float distance_goal = 0f;
+            Vector2 spawn = Vector2.zero;
+            while (risk > risk_thres || distance_goal < distance_goal_thres) {
+                spawn = Util.RandomVec2(Map.MIN, Map.MAX);
+                risk = m_Map.GetState(spawn).risk;
+                distance_goal = (spawn - GetNearestDestination(spawn).pos).magnitude;
+                if (n > 30) {
+                    risk_thres += 0.001f;
+                    distance_goal_thres -= 1.0f;
+                }
+                ++n;
+            }
+            m_Position.Value = spawn;
+            Debug.Log("Found ship spawn in " + n + " iterations.");
         }
     }
     public override void OnNetworkDespawn(){
@@ -142,14 +184,18 @@ public class ShipManager : NetworkBehaviour {
     }
 
     public Destination GetNearestDestination() {
+        return GetNearestDestination(GetShipPosition());
+    }
+
+    public Destination GetNearestDestination(Vector2 to) {
         Destination nearest = new Destination();
         nearest.pos = Vector2.one * -100000;
         foreach (var dest in m_Destinations) {
             if (dest.reached) {
                 continue;
             }
-            var dist = (GetShipPosition() - dest.pos).magnitude;
-            var dist_min = (GetShipPosition() - nearest.pos).magnitude;
+            var dist = (to - dest.pos).magnitude;
+            var dist_min = (to - nearest.pos).magnitude;
             if (dist < dist_min) {
                 nearest = dest;
             }
