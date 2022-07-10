@@ -101,7 +101,9 @@ public class EventManager : MonoBehaviour {
             ShipManager.Instance.TriggerFireEvent();
             DiceRollDebugInfo += "FIRE ";
         }
-        if (sysfail_dice < sysfail_risk && (m_LastSystemFailure + SYSTEM_FAILURE_COOLDOWN) < Time.fixedTime) {
+        if (sysfail_dice < sysfail_risk
+                && (m_LastSystemFailure + SYSTEM_FAILURE_COOLDOWN) < Time.fixedTime
+                && ShipManager.Instance.HasPower) {
             m_LastSystemFailure = Time.fixedTime;
             ShipManager.Instance.TriggerSystemFailureEvent();
             DiceRollDebugInfo += "SYSFAIL ";
