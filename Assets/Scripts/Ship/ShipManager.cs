@@ -115,6 +115,9 @@ public class ShipManager : NetworkBehaviour {
                 dests.Add(d);
             }
             SetDestinationsClientRpc(dests.ToArray());
+            NetworkManager.Singleton.OnClientConnectedCallback += (ulong client_id) => {
+                SetDestinationsClientRpc(m_Destinations.ToArray());
+            };
 
             // spawn ship at random location
             float risk_thres = 0.08f;
