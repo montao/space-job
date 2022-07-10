@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
         if (Instance == null) {
             Instance = this;
         } else {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
         DontDestroyOnLoad(this);
         ControllerInput = GetComponent<ControllerInputHelper>();
