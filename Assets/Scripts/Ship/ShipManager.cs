@@ -174,6 +174,7 @@ public class ShipManager : NetworkBehaviour {
     private void ResolvePowerOutageEvent() {
         m_Power.Value = HAS_POWER;
         audioSourceLamps.PlayOneShot(lampSound);
+        m_LastPowerOutage = Time.fixedTime;
     }
 
     public void TriggerHullBreachEvent(EventParameters.HullBreachSize size) {
