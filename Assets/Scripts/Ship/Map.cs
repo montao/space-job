@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public struct MapState {
     public float risk; // red
     public Event spaceEvent; //represented green
+    public bool destination;
     // TODO Biomes (blue)
 
 }
@@ -10,10 +12,16 @@ public struct MapState {
 public class Map : MonoBehaviour {
     public static int MIN = 0;
     public static int MAX = 1024;
+    public static float DANGER_THRESHOLD = 0.5f;
 
     public Texture2D MapTexture;
     public Texture2D IngameMapTexture;
     public Texture2D DangerTexture;
+
+    private List<Vector2> m_Destinations = new List<Vector2>();
+    public List<Vector2> Destinations {
+        get => m_Destinations;
+    }
 
     [SerializeField]
     private MapCam m_MapCam;
@@ -28,11 +36,19 @@ public class Map : MonoBehaviour {
             state.spaceEvent = Event.COSMIC_HORROR;
             state.risk = 1;
         } else {
-            Color color = MapTexture.GetPixel(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y));
-            if(color.g >= 0.5){
+            int y = Mathf.RoundToInt(pos.y);
+            if (!SystemInfo.graphicsUVStartsAtTop) {
+                y = MAX - y;
+            }
+            Color color = MapTexture.GetPixel(Mathf.RoundToInt(pos.x), y);
+            if(color.g >= DANGER_THRESHOLD){
                 state.spaceEvent = Event.POWER_OUTAGE;
             }
             state.risk = color.r;
+
+            if (color.b > 0.5f) {
+                state.destination = true;
+            }
         }
         return state;
     }
@@ -44,15 +60,20 @@ public class Map : MonoBehaviour {
                 float risk = (int)(state.risk*16)/16.0f;
                 Color col = new Color(risk * 0.9f, 0.2f, 0.2f);
 
-                if (risk > 0.5f) {
+                if (state.risk > DANGER_THRESHOLD) {
                     var dangersize = DangerTexture.width;
                     Color danger_col = DangerTexture.GetPixel(x % dangersize, -y % dangersize);
                     col.r = Mathf.Clamp01(col.r + (danger_col.r * danger_col.a));
                 }
 
+                if (state.destination) {
+                    m_Destinations.Add(new Vector2(x, y));
+                }
+
                 IngameMapTexture.SetPixel(x, y, col);
             }
         }
+        Debug.Log("Generated map with " + m_Destinations.Count + " destinations.");
         IngameMapTexture.Apply();
     }
 

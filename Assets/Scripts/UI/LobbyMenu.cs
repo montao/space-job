@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
+using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.Audio;
 
-public class LobbyMenu : MonoBehaviour
+public class LobbyMenu : NetworkBehaviour
 {
     [SerializeField]
     private TMP_Text text;
@@ -65,6 +65,7 @@ public class LobbyMenu : MonoBehaviour
             PopupUI.SetActive(false);
             SettingsUI.SetActive(false);
             PopupIsOpen = false;
+            PopupBool = false;
             // maybe needed in the future
             // ShowUI();
             if (mode == 1) {
@@ -122,7 +123,15 @@ public class LobbyMenu : MonoBehaviour
 
     public void LoadMenu() {
         mode = 2;
-        PopupText("are you sure that you want to return to the menu?");
+        if (IsServer) {
+            PopupText("you are the host. closing the game will end it for all players. are you sure that you want to return to the menu?");
+        }
+        if (SceneManager.GetActiveScene().name != "ShipScene") {
+            PopupText("are you sure that you want to return to the menu?");
+        }
+        if (SceneManager.GetActiveScene().name == "ShipScene") {
+            PopupText("do you really want to abandon your coworkers and the ship to return to the menu?");
+        }
     }
 
     public void OpenSettings() {
@@ -142,7 +151,15 @@ public class LobbyMenu : MonoBehaviour
 
     public void QuitGame() {
         mode = 1;
-        PopupText("Are you sure that you want to quit the game?");    
+        if (IsServer) {
+            PopupText("you are the host. closing the game will end it for all players. are you sure that you want to quit?");
+        }
+        else if (SceneManager.GetActiveScene().name != "ShipScene") {
+            PopupText("are you sure that you want to quit the game?");
+        }
+        else if (SceneManager.GetActiveScene().name == "ShipScene") {
+            PopupText("do you really want to abandon your coworkers and the ship to quit the game?");
+        }
     }
 
     public void PopupText(string message) {

@@ -464,12 +464,15 @@ public class PlayerAvatar : NetworkBehaviour {
         if (m_CurrentRoom == null) return;
 
         float breathing_rate = 0.6f * delta_time;
-        float oxygen = ((m_LungOxygen - breathing_rate + ((1.1f * breathing_rate) * m_CurrentRoom.RoomOxygen)));
+
+        float oxygen_lost = breathing_rate;
+        float oxygen_gained = (1.1f * breathing_rate) * m_CurrentRoom.RoomOxygen;
+        float oxygen = m_LungOxygen - oxygen_lost + oxygen_gained;
 
         m_LungOxygen = Mathf.Clamp(oxygen, 0f, 1f);
 
-        if (m_LungOxygen < 0.2f) {
-            float dps = 0.08f;
+        if (m_LungOxygen < 0.15f) {
+            float dps = 0.04f;
             TakeDamage(dps * delta_time);
         }
     }

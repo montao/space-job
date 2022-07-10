@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
+[System.Serializable]
+public struct Destination : INetworkSerializeByMemcpy {
+    public Vector2 pos;
+    public bool reached;
+}
+
 public class ShipManager : NetworkBehaviour {
     public static ShipManager Instance;
     private ShipSteering m_Steering;
     public ShipSteering Steering {
         get => m_Steering;
     }
+
+    public static float WIN_DISTANCE_THRESHOLD = 15f;
 
     public const char HAS_POWER = '\0';
 
@@ -23,8 +31,9 @@ public class ShipManager : NetworkBehaviour {
     private NetworkVariable<bool> m_Won = new NetworkVariable<bool>(false);
     private float m_DistSinceLastBreadcrumb = 0;
     private Map m_Map;
-    private NetworkVariable<Vector2> m_Destination = new NetworkVariable<Vector2>(new Vector2(84f, 155f));
     private float m_DistanceToWin;
+
+    private List<Destination> m_Destinations = new List<Destination>();
 
     public PowerTerminal PowerTerminal;
 
@@ -42,6 +51,9 @@ public class ShipManager : NetworkBehaviour {
     private AudioSource audioSourceLamps;
     [SerializeField]
     private AudioClip lampSound;
+
+    public static float POWER_OUTAGE_COOLDOWN = 20f;
+    private float m_LastPowerOutage = -100f;
 
     private Plant[] plants;
 
@@ -92,6 +104,17 @@ public class ShipManager : NetworkBehaviour {
         m_Won.OnValueChanged += OnWinChange;
         OnPowerChange(HAS_POWER, HAS_POWER);
         OnWinChange(false, false);
+
+        if (IsServer) {
+            var dests = new List<Destination>();
+            foreach (var dest_pos in m_Map.Destinations) {
+                Destination d = new Destination();
+                d.pos = dest_pos;
+                d.reached = false;
+                dests.Add(d);
+            }
+            SetDestinationsClientRpc(dests.ToArray());
+        }
     }
     public override void OnNetworkDespawn(){
         m_Power.OnValueChanged -= OnPowerChange;
@@ -118,11 +141,24 @@ public class ShipManager : NetworkBehaviour {
         return m_DistanceToWin;
     }
 
-    public void SetGoal(Vector2 new_destination){
-        m_Destination.Value = new_destination;
+    public Destination GetNearestDestination() {
+        Destination nearest = new Destination();
+        nearest.pos = Vector2.one * -100000;
+        foreach (var dest in m_Destinations) {
+            if (dest.reached) {
+                continue;
+            }
+            var dist = (GetShipPosition() - dest.pos).magnitude;
+            var dist_min = (GetShipPosition() - nearest.pos).magnitude;
+            if (dist < dist_min) {
+                nearest = dest;
+            }
+        }
+        return nearest;
     }
+
     public Vector2 GetGoal(){
-        return m_Destination.Value;
+        return GetNearestDestination().pos;
     }
 
     public void Rotate(float delta_angle) {
@@ -149,10 +185,17 @@ public class ShipManager : NetworkBehaviour {
         m_Map.DropBreadcrumb(ship_pos);
     }
 
-    public void TriggerPowerOutageEvent(){
+    public bool TriggerPowerOutageEvent() {
+        if (!HasPower || (m_LastPowerOutage + POWER_OUTAGE_COOLDOWN) >= Time.fixedTime) {
+            return false;
+        }
+        m_LastPowerOutage = Time.fixedTime;
+        ShipManager.Instance.Steering.SetTargetVelocityServerRpc(2);
         int error_idx = UnityEngine.Random.Range(0, ERROR_CODES.Length - 1);
         m_Power.Value = ERROR_CODES[error_idx];
+        return true;
     }
+
     public bool TryResolvePowerOutageEvent(string solution_attempt) {
         if (solution_attempt == PowerSolutionCode(m_Power.Value)) {
             ResolvePowerOutageEvent();
@@ -164,16 +207,33 @@ public class ShipManager : NetworkBehaviour {
     private void ResolvePowerOutageEvent() {
         m_Power.Value = HAS_POWER;
         audioSourceLamps.PlayOneShot(lampSound);
+        m_LastPowerOutage = Time.fixedTime;
     }
 
     public void TriggerHullBreachEvent(EventParameters.HullBreachSize size) {
         Room room = Util.RandomChoice(Rooms);
-        room.SpawnHullBreach(size);
+        if (room != null) {
+            room.SpawnHullBreach(size);
+        }
     }
 
     public void TriggerFireEvent() {
         Room room = Util.RandomChoice(Rooms);
         room.SpawnFire();
+    }
+
+    public void TriggerSystemFailureEvent() {
+        if (!TriggerPowerOutageEvent()) {
+            return;
+        }
+        int n_breaches = UnityEngine.Random.Range(1, 3);
+        int n_fires = UnityEngine.Random.Range(1, 7);
+        for (int i = 0; i < n_breaches; ++i) {
+            TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
+        }
+        for (int i = 0; i < n_fires; ++i) {
+            TriggerFireEvent();
+        }
     }
 
     private void Awake() {
@@ -206,8 +266,16 @@ public class ShipManager : NetworkBehaviour {
 
     private void Start() {
         if (IsServer) {
-            Debug.Log("Lets Start Event Corutine");
             GetComponent<EventManager>().StartDiceRollCoroutine();
+        }
+
+        if (!IsServer && !IsClient) {  // not started yeeet
+            Debug.Log("Will start dice rolling when server ready");
+            NetworkManager.Singleton.OnServerStarted += () => {
+                if (IsServer) {
+                    GetComponent<EventManager>().StartDiceRollCoroutine();
+                }
+            };
         }
     }
 
@@ -224,9 +292,12 @@ public class ShipManager : NetworkBehaviour {
 
 
     private void CheckWinCondition(){
-        m_DistanceToWin = (m_Destination.Value - m_Position.Value).magnitude; 
-        if (m_DistanceToWin <= 15){
+        m_DistanceToWin = (GetNearestDestination().pos - m_Position.Value).magnitude; 
+        if (m_DistanceToWin <= WIN_DISTANCE_THRESHOLD){
             if (IsServer) {
+                if (!m_Won.Value) {
+                    MarkNearestDestinationAsReached();
+                }
                 m_Won.Value = true;
             }
         } 
@@ -283,14 +354,45 @@ public class ShipManager : NetworkBehaviour {
     [ServerRpc(RequireOwnership=false)]
     public void StartNewGameServerRpc() {
         m_Won.Value = false;
+        /*
         Steering.ResetSteering();
         Vector2 ship_pos = Util.RandomVec2(256, 1024-256);
         Vector2 destination;
         do {
             destination = Util.RandomVec2(256, 1024-256);
         } while(Vector2.Distance(ship_pos, destination) < 32);
-        SetGoal(destination);
         m_Position.Value = ship_pos;
         m_Rotation.Value = 0;
+        */
+    }
+
+    public void MarkNearestDestinationAsReached() {
+        if (!IsServer) {
+            Debug.LogWarning("MarkNearestDestinationAsReached should only be called by server.");
+            return;
+        }
+        var dest = GetNearestDestination();
+        if (m_DistanceToWin <= (WIN_DISTANCE_THRESHOLD * 1.02f)) {
+            var idx = m_Destinations.IndexOf(dest);
+            MarkDestinationReachedClientRpc((uint)idx);
+        }
+    }
+
+    [ClientRpc]
+    public void SetDestinationsClientRpc(Destination[] dests)  {
+        Debug.Log("Got " + dests.Length + " destinations!");
+        m_Destinations = new List<Destination>(dests);
+    }
+
+    [ClientRpc]
+    public void MarkDestinationReachedClientRpc(uint idx) {
+        if (idx >= m_Destinations.Count) {
+            Debug.LogError("Cannot mark dest " + idx + " as reached, index out of bounds.");
+            return;
+        }
+        var dest = m_Destinations[(int)idx];
+        dest.reached = true;
+        m_Destinations[(int)idx] = dest;
+        Debug.Log("Marked destination #" + idx + " as reached.");
     }
 }
