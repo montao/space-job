@@ -35,12 +35,15 @@ public class Util {
         return !r.TryGet(out _);
     }
 
-    public static T RandomChoice<T>(List<T> list) {
+    public static T RandomChoice<T>(List<T> list) where T: MonoBehaviour {
         if (list.Count < 0) {
             Debug.LogError("RandomChoice called for an empty list of " + typeof(T) + ".  This will crash, goodbye.");
         }
 
         int idx = UnityEngine.Random.Range(0, list.Count);
+        if (idx < 0 || idx >= list.Count) {
+            return null;
+        }
         return list[idx];
     }
 

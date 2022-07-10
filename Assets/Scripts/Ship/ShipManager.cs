@@ -168,7 +168,9 @@ public class ShipManager : NetworkBehaviour {
 
     public void TriggerHullBreachEvent(EventParameters.HullBreachSize size) {
         Room room = Util.RandomChoice(Rooms);
-        room.SpawnHullBreach(size);
+        if (room != null) {
+            room.SpawnHullBreach(size);
+        }
     }
 
     public void TriggerFireEvent() {
