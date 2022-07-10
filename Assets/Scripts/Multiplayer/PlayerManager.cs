@@ -19,6 +19,8 @@ public class PlayerManager : NetworkBehaviour {
         get => m_PlayerCount.Value;
     }
 
+    private bool hasLocalPlayer = false;
+
     private List<PersistentPlayer> m_Players;
     public List<PersistentPlayer> Players {
         get => m_Players;
@@ -129,9 +131,14 @@ public class PlayerManager : NetworkBehaviour {
     }
 
     public void RegisterPlayer(PersistentPlayer player, bool isLocal) {
+        if (isLocal == hasLocalPlayer) {
+            m_Players.Clear();   
+        }
         m_Players.Add(player);
+
         Debug.Log("Registered Player '" + player.PlayerName + "'");
         if (isLocal) {
+            hasLocalPlayer = true;
             player.gameObject.transform.position = transform.position;
             player.gameObject.transform.rotation = transform.rotation;
             m_LocalPlayer = player;
