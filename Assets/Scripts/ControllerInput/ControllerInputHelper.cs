@@ -126,4 +126,8 @@ public class ControllerInputHelper : MonoBehaviour {
         var interactbutton = button.GetComponent<ControllerInteractionButton>();
         interactbutton.SetText(interactable.FriendlyName());
     }
+
+    public void ClearAvailableInteractables() {
+        m_AvailableInteractables.Clear();
+    }
 }

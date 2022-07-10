@@ -54,6 +54,8 @@ public class GameManager : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         }
 
+        ControllerInput.ClearAvailableInteractables();
+
         m_LoadingScreenText.text = "Loading done.  Waiting for players...";
         while (!PlayerManager.Instance.AllPlayerAvatarsSpawned) {
             yield return new WaitForEndOfFrame();
