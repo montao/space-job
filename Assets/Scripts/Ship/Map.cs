@@ -28,7 +28,11 @@ public class Map : MonoBehaviour {
             state.spaceEvent = Event.COSMIC_HORROR;
             state.risk = 1;
         } else {
-            Color color = MapTexture.GetPixel(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y));
+            int y = Mathf.RoundToInt(pos.y);
+            if (!SystemInfo.graphicsUVStartsAtTop) {
+                y = MAX - y;
+            }
+            Color color = MapTexture.GetPixel(Mathf.RoundToInt(pos.x), y);
             if(color.g >= 0.5){
                 state.spaceEvent = Event.POWER_OUTAGE;
             }
@@ -44,7 +48,7 @@ public class Map : MonoBehaviour {
                 float risk = (int)(state.risk*16)/16.0f;
                 Color col = new Color(risk * 0.9f, 0.2f, 0.2f);
 
-                if (risk > 0.5f) {
+                if (state.risk > 0.5f) {
                     var dangersize = DangerTexture.width;
                     Color danger_col = DangerTexture.GetPixel(x % dangersize, -y % dangersize);
                     col.r = Mathf.Clamp01(col.r + (danger_col.r * danger_col.a));

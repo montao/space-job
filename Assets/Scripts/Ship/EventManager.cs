@@ -47,6 +47,10 @@ public class EventManager : MonoBehaviour {
         }
     }
 
+    public float CurrentRisk() {
+        return m_Map.GetState(ShipManager.Instance.GetShipPosition()).risk;
+    }
+
     public void DiceRoll(){
         Debug.Log("Make Diceroll");
         var ship_pos = ShipManager.Instance.GetShipPosition();
@@ -60,7 +64,7 @@ public class EventManager : MonoBehaviour {
 
         float ship_speed = ShipManager.Instance.GetShipSpeed()/ShipSteering.MAX_TRANSLATION_VELOCITY;
         float hull_breach_risk = (0.3f*Mathf.Atan(4.3f*(ship_speed-0.4f))+0.5f);
-        hull_breach_risk = risk * hull_breach_risk * m_Map.GetState(ShipManager.Instance.GetShipPosition()).risk;
+        hull_breach_risk = risk * hull_breach_risk * CurrentRisk();
 
         float fire_risk = (0.5f*Mathf.Atan(4.3f*(ship_speed-0.4f))+0.5f);
         fire_risk = risk * fire_risk * m_Map.GetState(ShipManager.Instance.GetShipPosition()).risk;
