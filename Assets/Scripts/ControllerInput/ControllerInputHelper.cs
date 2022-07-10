@@ -26,12 +26,15 @@ public class ControllerInputHelper : MonoBehaviour {
     }
 
     void Update() {
+        if (Input.GetKeyDown(KeyCode.F12)) {
+            m_DebugText.gameObject.SetActive(!m_DebugText.IsActive());
+        }
         if (!m_DebugText.IsActive()) {
             return;
         }
         string text = "SELECTED UI ELEMENT:\n";
         text += EventSystem.current.currentSelectedGameObject + "\n\n";
-        text += "AVAILABLE INTERACTABLES:\n";
+        text += "AVAILABLE INTERACTABLES (" + m_AvailableInteractables.Count + ", " + m_AvailableInteractables.GetHashCode() + "):\n";
         foreach (var i in m_AvailableInteractables) {
             text += i.FriendlyName() + "\n";
         }
