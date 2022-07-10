@@ -97,6 +97,9 @@ public class ControllerInputHelper : MonoBehaviour {
     }
 
     public void MarkInteractableAvailable(InteractableBase interactable) {
+        if (m_AvailableInteractables.Contains(interactable)) {
+            return;
+        }
         m_AvailableInteractables.Add(interactable);
         interactable.OnDestroyCallback += () => {
             MarkInteractableUnavailable(interactable);
