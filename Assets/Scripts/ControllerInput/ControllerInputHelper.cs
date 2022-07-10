@@ -49,6 +49,15 @@ public class ControllerInputHelper : MonoBehaviour {
         if (SceneManager.GetActiveScene().name == "MainMenu") {
             return;
         }
+
+        if (PlayerManager.Instance?.LocalPlayer?.Avatar?.m_Health.Value <= 0f) {
+            foreach (var button in m_Buttons) {
+                button.gameObject.SetActive(false);
+            }
+            EventSystem.current.SetSelectedGameObject(null);
+            return;
+        }
+
         int interactable_idx = 0;
         foreach (var button in m_Buttons) {
             var interactable = interactable_idx < m_AvailableInteractables.Count ? m_AvailableInteractables[interactable_idx] : null;
