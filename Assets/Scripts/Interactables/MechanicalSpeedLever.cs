@@ -42,4 +42,8 @@ public class MechanicalSpeedLever : TwoLevelInteractable {
         rot.z = rot_z;
         m_SpinningThingy.eulerAngles = rot;
     }
+
+    public override string FriendlyName() {
+        return "Speed Lever";
+    }
 }

@@ -78,6 +78,16 @@ public class ShipSteeringButton : InteractableBase {
                 return "Increase Speed";
             case (Action.TARGET_SPEED_DOWN):
                 return "Decrease Speed";
+            case (Action.TARGET_SPEED_SET_STOP):
+                return "Stop";
+            case (Action.TARGET_SPEED_SET_AHEAD_SLOW):
+                return "Slow Ahead";
+            case (Action.TARGET_SPEED_SET_AHEAD_FULL):
+                return "Fast Ahead";
+            case (Action.TARGET_SPEED_SET_REVERSE_SLOW):
+                return "Slow Reverse";
+            case (Action.TARGET_SPEED_SET_REVERSE_FULL):
+                return "Fast Reverse";
             default:
                 return "Ship Steering";
         }
