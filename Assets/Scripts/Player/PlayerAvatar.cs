@@ -771,7 +771,7 @@ public class PlayerAvatar : NetworkBehaviour {
     private void InvokeOnSlotChangedClientRpc(NetworkObjectReference reference, Slot slot) {
         if (IsOwner) { return; }  // already invoked
         DroppableInteractable interactable = Util.GetDroppableInteractable(reference);
-        interactable.InvokeOnSlotChange(this, slot);
+        interactable?.InvokeOnSlotChange(this, slot);
     }
 
     public static bool IsHolding<T>() where T: DroppableInteractable {
