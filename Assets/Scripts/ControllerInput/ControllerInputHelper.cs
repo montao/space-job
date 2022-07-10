@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -42,6 +43,9 @@ public class ControllerInputHelper : MonoBehaviour {
     }
 
     void OnGUI() {
+        if (SceneManager.GetActiveScene().name == "MainMenu") {
+            return;
+        }
         int interactable_idx = 0;
         foreach (var button in m_Buttons) {
             var interactable = interactable_idx < m_AvailableInteractables.Count ? m_AvailableInteractables[interactable_idx] : null;
