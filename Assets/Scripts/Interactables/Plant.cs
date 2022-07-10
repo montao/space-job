@@ -5,18 +5,20 @@ using System.Collections;
 using TMPro;
 
 public class Plant : Interactable<bool> {
+    private CameraSwap m_CameraSwap;
+    private Scanner scanner;
     [SerializeField]
-    private TMP_Text plantStatus;
+    protected TMP_Text plantStatus;
+    [SerializeField]
+    protected TMP_Text instruction;
+    [SerializeField]
+    protected GameObject hologram;
     private NetworkObject startingSeed;
     [SerializeField]
     private AudioClip plantSound;
     private AudioSource audioSource;
     [SerializeField]
     protected GameObject[] plantList;
-    [SerializeField]
-    protected Transform seedPlantedTrans;
-    [SerializeField]
-    protected Transform seedNotPlantedTrans;
     private GameObject seed;
     private GameObject plant;
     private GameObject deadPlant;
@@ -43,15 +45,55 @@ public class Plant : Interactable<bool> {
         plant.SetActive(false);
         dryPlant.SetActive(false);
         deadPlant.SetActive(false);
-        audioSource = GetComponent<AudioSource>();    
+        audioSource = GetComponent<AudioSource>();   
+        m_CameraSwap = GetComponent<CameraSwap>(); 
     }
     public override void Update() {
         base.Update();
     }
     protected override void Interaction(){
         SetServerRpc(!Value);
+        if (PlayerAvatar.IsHolding<Scanner>()){
+            scanner = FindObjectOfType<Scanner>();
+            
+            if(Input.GetButtonDown("Fire1")){
+                hologram.SetActive(true);
+                //m_CameraSwap.SwitchTo();
+                hologram.transform.GetChild(0).rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+            } else {
+                hologram.SetActive(false); 
+                //m_CameraSwap.SwitchAway();
+            }
+            
+
+            plantStatus.text = "Status:";
+            instruction.text = "Instruction:";
+            if (seedPlanted.Value && !notPlanted.Value) {
+                plantStatus.text += " seed planted";
+                instruction.text += " water the seed for it to grow";
+            }
+            if (dry.Value && (!watered.Value)) {
+                plantStatus.text += " plant is dry";
+                instruction.text += " water the plant";
+            }
+            if (!seedPlanted.Value && notPlanted.Value) {
+                plantStatus.text += " just soil";
+                instruction.text += " get some seeds and plant them";
+            }
+            if (grown.Value && watered.Value && !dry.Value) {
+                plantStatus.text += " plant is healthy";
+                instruction.text += " good job, keep it that way";
+            }
+            if (dead.Value) {
+                plantStatus.text += " plant is dead";
+                instruction.text += " clean the pot to plant a new one";
+            }
+            if (seedPlanted.Value && watered.Value && !grown.Value && !notPlanted.Value){
+                plantStatus.text += " plant is growing";
+                instruction.text += " just wait for a while";
+            }
+        } 
         if (PlayerAvatar.IsHolding<Seed>() && FindObjectOfType<Seed>() != null) {
-        
             startingSeed = PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY); 
             PlantingServerRpc();
             /*  audioSource.PlayOneShot(plantSound); */
@@ -208,7 +250,7 @@ public class Plant : Interactable<bool> {
         grown.OnValueChanged -= OnStateChange;
         notPlanted.OnValueChanged -= OnStateChange;
     }
-    private void OnGUI() {
+/*     private void OnGUI() {
         if (seedPlanted.Value && !notPlanted.Value) {
             plantStatus.text = "Please water your seed";
         }
@@ -228,5 +270,5 @@ public class Plant : Interactable<bool> {
             plantStatus.text = "Your plant is growing";
         }
 
-    } 
+    }  */
 }
