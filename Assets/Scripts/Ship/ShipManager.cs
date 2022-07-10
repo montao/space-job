@@ -43,6 +43,9 @@ public class ShipManager : NetworkBehaviour {
     [SerializeField]
     private AudioClip lampSound;
 
+    public static float POWER_OUTAGE_COOLDOWN = 20f;
+    private float m_LastPowerOutage = -100f;
+
     private Plant[] plants;
 
     public static string PowerSolutionCode(char error_code) {
@@ -149,14 +152,17 @@ public class ShipManager : NetworkBehaviour {
         m_Map.DropBreadcrumb(ship_pos);
     }
 
-    public void TriggerPowerOutageEvent() {
-        if (!HasPower) {
-            return;
+    public bool TriggerPowerOutageEvent() {
+        if (!HasPower || (m_LastPowerOutage + POWER_OUTAGE_COOLDOWN) >= Time.fixedTime) {
+            return false;
         }
+        m_LastPowerOutage = Time.fixedTime;
         ShipManager.Instance.Steering.SetTargetVelocityServerRpc(2);
         int error_idx = UnityEngine.Random.Range(0, ERROR_CODES.Length - 1);
         m_Power.Value = ERROR_CODES[error_idx];
+        return true;
     }
+
     public bool TryResolvePowerOutageEvent(string solution_attempt) {
         if (solution_attempt == PowerSolutionCode(m_Power.Value)) {
             ResolvePowerOutageEvent();
@@ -183,6 +189,9 @@ public class ShipManager : NetworkBehaviour {
     }
 
     public void TriggerSystemFailureEvent() {
+        if (!TriggerPowerOutageEvent()) {
+            return;
+        }
         int n_breaches = UnityEngine.Random.Range(1, 5);
         int n_fires = UnityEngine.Random.Range(1, 5);
         for (int i = 0; i < n_breaches; ++i) {
@@ -191,7 +200,6 @@ public class ShipManager : NetworkBehaviour {
         for (int i = 0; i < n_fires; ++i) {
             TriggerFireEvent();
         }
-        TriggerPowerOutageEvent();
     }
 
     private void Awake() {

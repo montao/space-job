@@ -19,9 +19,6 @@ namespace EventParameters {
 public class EventManager : MonoBehaviour {
     public static EventManager Instance;
 
-    public static float SYSTEM_FAILURE_COOLDOWN = 20f;
-    private float m_LastSystemFailure = -100f;
-
     public string DiceRollDebugInfo = "";
     [SerializeField]
     private Map m_Map;
@@ -101,10 +98,7 @@ public class EventManager : MonoBehaviour {
             ShipManager.Instance.TriggerFireEvent();
             DiceRollDebugInfo += "FIRE ";
         }
-        if (sysfail_dice < sysfail_risk
-                && (m_LastSystemFailure + SYSTEM_FAILURE_COOLDOWN) < Time.fixedTime
-                && ShipManager.Instance.HasPower) {
-            m_LastSystemFailure = Time.fixedTime;
+        if (sysfail_dice < sysfail_risk && ShipManager.Instance.HasPower) {
             ShipManager.Instance.TriggerSystemFailureEvent();
             DiceRollDebugInfo += "SYSFAIL ";
         }
