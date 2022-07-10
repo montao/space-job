@@ -15,9 +15,15 @@ public class WinScreen : MonoBehaviour {
     }
 
     public void SetEnabled(bool enabled) {
-        foreach (var button in m_Buttons) {
-            button.gameObject.SetActive(enabled);
+        if (m_Buttons != null) {
+            foreach (var button in m_Buttons) {
+                if (button) {
+                    button.gameObject.SetActive(enabled);
+                }
+            }
         }
-        m_Canvas.enabled = enabled;
+        if (m_Canvas != null) {
+            m_Canvas.enabled = enabled;
+        }
     }
 }
