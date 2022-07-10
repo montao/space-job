@@ -180,7 +180,7 @@ public class ShipManager : NetworkBehaviour {
         if (Instance == null) {
             Instance = this;
         } else {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
 
         m_Map = GetComponent<Map>();

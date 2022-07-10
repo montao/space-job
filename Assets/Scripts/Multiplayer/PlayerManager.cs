@@ -55,7 +55,7 @@ public class PlayerManager : NetworkBehaviour {
         if (Instance == null) {
             Instance = this;
         } else {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
         DontDestroyOnLoad(this);
 
