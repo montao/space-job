@@ -295,9 +295,6 @@ public class ShipManager : NetworkBehaviour {
         m_DistanceToWin = (GetNearestDestination().pos - m_Position.Value).magnitude; 
         if (m_DistanceToWin <= WIN_DISTANCE_THRESHOLD){
             if (IsServer) {
-                if (!m_Won.Value) {
-                    MarkNearestDestinationAsReached();
-                }
                 m_Won.Value = true;
             }
         } 
