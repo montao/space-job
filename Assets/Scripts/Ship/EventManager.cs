@@ -68,7 +68,7 @@ public class EventManager : MonoBehaviour {
         float power_dice = Random.value;
 
         float ship_speed = Mathf.Abs(ShipManager.Instance.GetShipSpeed())/ShipSteering.MAX_TRANSLATION_VELOCITY;
-        float speed_risk = (0.3f*Mathf.Atan(4.3f*(ship_speed-0.4f))+0.5f);
+        float speed_risk = 0.03f + (ship_speed * 0.85f);
 
         float hull_breach_risk = risk * speed_risk * CurrentRisk();
         float fire_risk = hull_breach_risk;
