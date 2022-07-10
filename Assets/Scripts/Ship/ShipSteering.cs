@@ -8,7 +8,7 @@ public class ShipSteering : NetworkBehaviour {
     public static readonly float TRANSLATION_ACCELERATION = 5.0f;
     public static readonly float ROTATION_ACCELERATION = 2.0f;
     public static readonly float[] TARGET_VELOCITY_STEPS = {-5f, -1f, 0, 1f, 5f};
-    public static readonly float MAX_TRANSLATION_VELOCITY = 20f;
+    public static readonly float MAX_TRANSLATION_VELOCITY = 5f;
     public static readonly float MAX_ABS_ANGULAR_VELOCITY = 30.0f;
     public static readonly float EPSILON = 0.05f;
 
@@ -28,8 +28,8 @@ public class ShipSteering : NetworkBehaviour {
     public enum Thruster {
         ROTATE_LEFT,
         ROTATE_RIGHT,
-        TRANSLATE_LEFT,
-        TRANSLATE_RIGHT,
+        TRANSLATE_LEFT,  // unused
+        TRANSLATE_RIGHT,  // unused
         TRANSLATE_FORWARD,
         TRANSLATE_BACKWARD,
     }
@@ -194,6 +194,12 @@ public class ShipSteering : NetworkBehaviour {
         // translate
         Quaternion rot = Quaternion.AngleAxis(ShipManager.Instance.GetShipAngle(), Vector3.forward);
         ShipManager.Instance.Move(rot * m_Velocity.Value * delta);
+
+        // snap to target value if close enough
+        if (Mathf.Abs(target_x_velocity - m_Velocity.Value.x) <= EPSILON
+            || Mathf.Abs(m_Velocity.Value.x) > MAX_TRANSLATION_VELOCITY) {
+            m_Velocity.Value = new Vector3(target_x_velocity, 0, 0);
+        }
     }
 
     private void Debug_MoveWithKeys(float delta_time) {
