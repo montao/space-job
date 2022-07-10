@@ -193,8 +193,8 @@ public class ShipManager : NetworkBehaviour {
         if (!TriggerPowerOutageEvent()) {
             return;
         }
-        int n_breaches = UnityEngine.Random.Range(1, 5);
-        int n_fires = UnityEngine.Random.Range(1, 5);
+        int n_breaches = UnityEngine.Random.Range(1, 3);
+        int n_fires = UnityEngine.Random.Range(1, 7);
         for (int i = 0; i < n_breaches; ++i) {
             TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
         }
