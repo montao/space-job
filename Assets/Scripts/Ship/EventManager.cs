@@ -89,7 +89,6 @@ public class EventManager : MonoBehaviour {
 
         if (power_dice < power_risk) {
             ShipManager.Instance.TriggerPowerOutageEvent();
-            ShipManager.Instance.Steering.SetTargetVelocityServerRpc(2);
             DiceRollDebugInfo += "POWER OUTAGE ";
         }
         if (hull_breach_dice < hull_breach_risk) {

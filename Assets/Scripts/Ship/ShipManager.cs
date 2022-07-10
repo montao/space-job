@@ -153,6 +153,7 @@ public class ShipManager : NetworkBehaviour {
         if (!HasPower) {
             return;
         }
+        ShipManager.Instance.Steering.SetTargetVelocityServerRpc(2);
         int error_idx = UnityEngine.Random.Range(0, ERROR_CODES.Length - 1);
         m_Power.Value = ERROR_CODES[error_idx];
     }
