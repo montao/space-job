@@ -12,6 +12,10 @@ public class DropPod : RangedInteractableBase {
     [ServerRpc(RequireOwnership = false)]
     public void FullFillOrderServerRpc(){
         ShipManager.Instance.MarkNearestDestinationAsReached();
+        if (ShipManager.Instance.GetNearestDestination().pos.magnitude > 2.0f * (Map.MAX - Map.MIN)) {
+            // all destinations reached
+            ShipManager.Instance.SetWon();
+        }
     }
 
     public override void Update() {

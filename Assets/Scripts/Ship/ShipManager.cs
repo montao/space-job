@@ -344,7 +344,7 @@ public class ShipManager : NetworkBehaviour {
         m_DistanceToWin = (GetNearestDestination().pos - m_Position.Value).magnitude; 
         if (m_DistanceToWin <= WIN_DISTANCE_THRESHOLD){
             if (IsServer) {
-                m_Won.Value = true;
+                //m_Won.Value = true;
             }
         } 
     }
@@ -395,6 +395,10 @@ public class ShipManager : NetworkBehaviour {
 
             UpdatePosition();
         }
+    }
+
+    public void SetWon() {
+        m_Won.Value = true;
     }
 
     [ServerRpc(RequireOwnership=false)]
