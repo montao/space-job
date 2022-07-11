@@ -6,7 +6,7 @@ using System;
 public class ShipSteering : NetworkBehaviour {
 
     public static readonly float TRANSLATION_ACCELERATION = 5.0f;
-    public static readonly float ROTATION_ACCELERATION = 7f;
+    public static readonly float ROTATION_ACCELERATION = 10f;
     public static readonly float[] TARGET_VELOCITY_STEPS = {-5f, -1f, 0, 1f, 5f};
     public static readonly float MAX_TRANSLATION_VELOCITY = 5f;
     public static readonly float MAX_ABS_ANGULAR_VELOCITY = 20.0f;
@@ -190,7 +190,8 @@ public class ShipSteering : NetworkBehaviour {
 
         // rotate
         if (!GetThrusterState(Thruster.ROTATE_LEFT) && !GetThrusterState(Thruster.ROTATE_RIGHT)) {
-            m_AngularVelocity.Value = 0.0f;
+            var sign = Mathf.Sign(m_AngularVelocity.Value);
+            m_AngularVelocity.Value = m_AngularVelocity.Value - (delta * m_AngularVelocity.Value);
         }
         ShipManager.Instance.Rotate(m_AngularVelocity.Value * delta);
 
