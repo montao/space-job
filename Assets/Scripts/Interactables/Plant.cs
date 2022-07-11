@@ -123,7 +123,7 @@ public class Plant : Interactable<bool> {
             PlantDyingServerRpc();
         }
         
-        ChangePlant/* ServerRpc*/() ;
+        ChangePlant() ;
         
     }
     [ServerRpc(RequireOwnership = false)]
@@ -204,8 +204,7 @@ public class Plant : Interactable<bool> {
         StopCoroutine(TimeTillPlantDry(200));
         StopCoroutine(WaitForPlantGrow(10));
     }
-    //[ServerRpc(RequireOwnership = false)]
-    public void ChangePlant/* ServerRpc */() {
+    public void ChangePlant() {
         if (dead.Value) {
             seed.SetActive(false);
             deadPlant.SetActive(true); 
