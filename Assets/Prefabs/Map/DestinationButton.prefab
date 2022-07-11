@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3134779451952537444}
   - component: {fileID: 509121932821001155}
   - component: {fileID: 4613101254746125654}
+  - component: {fileID: 1056862434158196562}
   m_Layer: 0
   m_Name: DestinationButton
   m_TagString: Untagged
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 12c7cd6267e933acc8c884eb11df2db2, type: 2}
+  - {fileID: 2100000, guid: 404c4afa95ad95d4183baf174c727bea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,11 +92,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4242742328474957896}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.039554726, z: 1}
+  m_Center: {x: 0.0000005476575, y: 0.48806763, z: 6.229697e-10}
 --- !u!114 &4613101254746125654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,3 +113,19 @@ MonoBehaviour:
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
+--- !u!114 &1056862434158196562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4242742328474957896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

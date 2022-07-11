@@ -26,9 +26,13 @@ public class BigSpaceMap : TwoLevelInteractable {
         UpdateDestinations();
     }
 
+    public override string FriendlyName() {
+        return "Big Space Map";
+    }
+
     void UpdateDestinations() {
         var destinations = ShipManager.Instance.GetDestinations();
-        var y = m_ShipIndicator.localPosition.y;
+        float y = 0.0f;
         for (int i = 0; i < Mathf.Max(destinations.Count, m_DestinationButtons.Count); ++i) {
             if (i >= m_DestinationButtons.Count) {
                 Debug.LogWarning("BigSpaceMap: There are not enough DestinationButtons.  Please add more!");

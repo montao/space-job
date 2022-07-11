@@ -6,7 +6,11 @@ public class DestinationButton : InteractableBase {
     }
 
     protected override void Interaction() {
+        ShipManager.Instance.SetDestinationIndexServerRpc(DestinationIndex);
+    }
 
+    public override string FriendlyName() {
+        return "Destination #" + DestinationIndex;
     }
 
 }
