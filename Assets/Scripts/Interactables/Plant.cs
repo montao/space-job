@@ -104,9 +104,9 @@ public class Plant : Interactable<bool> {
                 Debug.Log("plant has been watered");   
             } 
         }
-/*         if (startingSeed != null) {
+        if (startingSeed != null) {
             DespawnServerRpc();
-        }  */
+        }
         if (dead.Value) {
             PlantDeadServerRpc();
         }
@@ -123,7 +123,7 @@ public class Plant : Interactable<bool> {
             PlantDyingServerRpc();
         }
         
-        ChangePlantServerRpc();
+        ChangePlant/* ServerRpc*/() ;
         
     }
     [ServerRpc(RequireOwnership = false)]
@@ -204,9 +204,9 @@ public class Plant : Interactable<bool> {
         StopCoroutine(TimeTillPlantDry(200));
         StopCoroutine(WaitForPlantGrow(10));
     }
-    [ServerRpc(RequireOwnership = false)]
-    public void ChangePlantServerRpc() {
-        if (dead.Value /* && grown.Value && dry.Value && !watered.Value */) {
+    //[ServerRpc(RequireOwnership = false)]
+    public void ChangePlant/* ServerRpc */() {
+        if (dead.Value) {
             seed.SetActive(false);
             deadPlant.SetActive(true); 
             plant.SetActive(false);
