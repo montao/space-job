@@ -619,6 +619,7 @@ public class PlayerAvatar : NetworkBehaviour {
     public void OnPrimaryItemChanged(NetworkObjectReference prev, NetworkObjectReference current) {
         if (Util.NetworkObjectReferenceIsEmpty(current)) {  // dropped item
             HideInventorySlot(PrimaryItemDisplay);
+            PlayerManager.Instance.hud.SetVisible(true, false);
         } else {  // picked up item
             ShowInInventory(PrimaryItemDisplay, current);
         }
@@ -627,6 +628,7 @@ public class PlayerAvatar : NetworkBehaviour {
     public void OnSecondaryItemChanged(NetworkObjectReference prev, NetworkObjectReference current) {
         if (Util.NetworkObjectReferenceIsEmpty(current)) {  // dropped item
             HideInventorySlot(SecondaryItemDisplay);
+            PlayerManager.Instance.hud.SetVisible(false, false);
         } else {  // picked up item
             ShowInInventory(SecondaryItemDisplay, current);
         }
