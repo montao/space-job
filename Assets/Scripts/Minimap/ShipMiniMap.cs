@@ -22,9 +22,24 @@ public class ShipMiniMap : MonoBehaviour {
     }
 
     void Update() {
-        var local_player_pos = PlayerManager.Instance.LocalPlayer.Avatar.transform.position;
-        m_PlayerIcons[0].localPosition = WorldToCanvas(local_player_pos);
-        m_PlayerNames[0].text = PlayerManager.Instance.LocalPlayer.PlayerName;
+        int i = 0;
+        foreach (var pplayer in PlayerManager.Instance.Players) {
+            var ava = pplayer.Avatar;
+            if (i >= m_PlayerIcons.Count) {
+                Debug.LogWarning("More players than minimap icons!");
+                continue;
+            }
+            if (ava) {
+                m_PlayerIcons[i].gameObject.SetActive(true);
+                m_PlayerIcons[i].localPosition = WorldToCanvas(ava.transform.position);
+                m_PlayerNames[i].text = pplayer.PlayerName;
+                ++i;
+            }
+        }
+        while (i < m_PlayerIcons.Count) {
+            m_PlayerIcons[i].gameObject.SetActive(false);
+            ++i;
+        }
     }
 
     public static Vector3 WorldToCanvas(Vector3 world_3d) {
