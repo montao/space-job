@@ -104,9 +104,9 @@ public class Plant : Interactable<bool> {
                 Debug.Log("plant has been watered");   
             } 
         }
-        if (startingSeed != null) {
+/*         if (startingSeed != null) {
             DespawnServerRpc();
-        } 
+        }  */
         if (dead.Value) {
             PlantDeadServerRpc();
         }
