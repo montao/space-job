@@ -17,6 +17,7 @@ public class ShipManager : NetworkBehaviour {
     }
 
     public static float WIN_DISTANCE_THRESHOLD = 15f;
+    public static int DESTINATION_NONE = -1;
 
     public const char HAS_POWER = '\0';
 
@@ -29,6 +30,7 @@ public class ShipManager : NetworkBehaviour {
     private NetworkVariable<float> m_Speed = new NetworkVariable<float>(0f);
     private NetworkVariable<float> m_Odometer = new NetworkVariable<float>(0f);
     private NetworkVariable<bool> m_Won = new NetworkVariable<bool>(false);
+    private NetworkVariable<int> m_DestinationIndex = new NetworkVariable<int>(0);  // might init to DESTINATION_NONE?
     private float m_DistSinceLastBreadcrumb = 0;
     private Map m_Map;
     private float m_DistanceToWin;
@@ -186,6 +188,22 @@ public class ShipManager : NetworkBehaviour {
         return m_DistanceToWin;
     }
 
+    public List<Destination> GetDestinations() {
+        return m_Destinations;
+    }
+
+    public Destination GetCurrentDestination() {
+        if (m_DestinationIndex.Value == DESTINATION_NONE) {
+            return new Destination();
+        }
+        return m_Destinations[m_DestinationIndex.Value];
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetDestinationIndexServerRpc(int index) {
+        m_DestinationIndex.Value = index;
+    }
+
     public Destination GetNearestDestination() {
         return GetNearestDestination(GetShipPosition());
     }
@@ -207,7 +225,7 @@ public class ShipManager : NetworkBehaviour {
     }
 
     public Vector2 GetGoal(){
-        return GetNearestDestination().pos;
+        return GetCurrentDestination().pos;
     }
 
     public void Rotate(float delta_angle) {

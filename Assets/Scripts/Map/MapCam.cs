@@ -29,7 +29,7 @@ public class MapCam : MonoBehaviour {
         float unclamped = ((map_pos - 512.0f) / 512.0f) * m_MaxValue;
         return Mathf.Clamp(unclamped, -2 * m_MaxValue, 2 * m_MaxValue);
     }
-    private static Vector3 Convert3(Vector2 map_pos, float y) {
+    public static Vector3 Convert3(Vector2 map_pos, float y) {
         float x = Convert(map_pos.x);
         float z = Convert(map_pos.y);
         return new Vector3(x, y, z);
