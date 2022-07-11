@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 3387754480270950803}
   - component: {fileID: 3387754480270950800}
   - component: {fileID: 3387754480270950801}
-  - component: {fileID: 3387754480270950802}
+  - component: {fileID: 1557738940076903261}
   m_Layer: 0
   m_Name: EnergyDrinkOrange
   m_TagString: Untagged
@@ -374,7 +374,7 @@ CapsuleCollider:
   m_Height: 0.2546608
   m_Direction: 1
   m_Center: {x: 6.065315e-26, y: 0.11655858, z: 6.065315e-26}
---- !u!114 &3387754480270950802
+--- !u!114 &1557738940076903261
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -383,7 +383,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3387754480270950807}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d689557b20057f744be27ea0864c084b, type: 3}
+  m_Script: {fileID: 11500000, guid: 04cfbfd6507455226af801eb5d1504d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   NeedsPower: 0
@@ -391,14 +391,15 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Velocity: 100
-  PrimaryPos: {x: 0.055, y: 0.132, z: -0.117}
-  PrimaryRot: {x: 358.21118, y: 90.307304, z: 183.17276}
-  SecondaryPos: {x: 0.0378, y: 0.1451, z: -0.1703}
-  SecondaryRot: {x: 79.89542, y: 105.621605, z: 254.88028}
+  PrimaryPos: {x: 0, y: 0, z: 0}
+  PrimaryRot: {x: 0, y: 0, z: 0}
+  SecondaryPos: {x: 0, y: 0, z: 0}
+  SecondaryRot: {x: 0, y: 0, z: 0}
   pickupSounds: []
   interactionSounds: []
-  interactionAudioSource: {fileID: 7044427016432882902}
+  interactionAudioSource: {fileID: 0}
   Materials: []
+  Strawberry: 0
   gulpSounds: []
 --- !u!1 &3387754481354241210
 GameObject:

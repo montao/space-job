@@ -497,10 +497,10 @@ MonoBehaviour:
   InputDisplay: {fileID: 4757427381770575749}
   DropPod: {fileID: 1656258615254841460}
   MetalPlate: {fileID: 4833168134056114408, guid: 36345ab600bafa41d850cd4667d4daa4, type: 3}
-  Seed: {fileID: 0}
-  EnergyOne: {fileID: 0}
-  EnergyTwo: {fileID: 0}
-  Balls: {fileID: 0}
+  Seed: {fileID: 3711902948296566208, guid: a1c8fd7142219efd8898caad2377c4b5, type: 3}
+  EnergyOne: {fileID: 5911476510565316355, guid: 834a7a163f4bdcac5a1f7f4740c9fe24, type: 3}
+  EnergyTwo: {fileID: 3387754479898786637, guid: d11c73cbe8de3a69b8f8ea8e542d6b17, type: 3}
+  Balls: {fileID: 5023061960400236582, guid: e51338b90502c000b974772be44de87e, type: 3}
 --- !u!1 &1824027022868491407
 GameObject:
   m_ObjectHideFlags: 0
