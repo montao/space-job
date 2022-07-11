@@ -10,6 +10,7 @@ public class HullBreachInstance : RangedInteractableBase {
     private bool m_PlayerIsHoldingPlate = false;  // server-only!
     private Coroutine m_GrowCoroutine;
     private PlayerAnimation m_DefaultAnim;
+    private bool m_LocalPlayerHoldingPlate = false;
 
     private readonly float LARGE_HULLBREACH_SCALE = 3.2f;
 
@@ -36,6 +37,12 @@ public class HullBreachInstance : RangedInteractableBase {
         var ava = PlayerManager.Instance.LocalPlayer.Avatar;
         if (ava) {
             ava.AnimationController.SetBool(PlayerAminationBool.HOLDING_PLATE, false);
+            if (m_LocalPlayerHoldingPlate) {
+                MetalPlate plate = ava.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).GetComponent<MetalPlate>();
+                if (plate != null) {
+                    plate.StickToWallServerRpc(transform.position);
+                }
+            }
             ava.ReleaseMovementLock(GetHashCode());
         }
         base.OnDestroy();
@@ -71,6 +78,7 @@ public class HullBreachInstance : RangedInteractableBase {
 
     private IEnumerator HoldPlate() {
         var ava = PlayerManager.Instance.LocalPlayer.Avatar;
+        m_LocalPlayerHoldingPlate = true;
         ava.AnimationController.SetBool(PlayerAminationBool.HOLDING_PLATE, true);
         ava.LockMovement(GetHashCode());
         SetIsHoldingServerRpc(true);
@@ -79,6 +87,7 @@ public class HullBreachInstance : RangedInteractableBase {
         yield return new WaitForSeconds(1.5f);
         ava.ReleaseMovementLock(GetHashCode());
         SetIsHoldingServerRpc(false);
+        m_LocalPlayerHoldingPlate = false;
     }
 
     // called by room

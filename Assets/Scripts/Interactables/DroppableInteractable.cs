@@ -22,6 +22,7 @@ public abstract class DroppableInteractable : Interactable<int>{
      * or this value if the item is not held by anyone.
      */
     public const int IN_WORLD = -1;
+    public const int IN_WORLD_NO_RIGIDBODY = -2;
 
     [Tooltip("Position of PrimaryItemDisplay when Item is held")]
     public Vector3 PrimaryPos;
@@ -93,8 +94,13 @@ public abstract class DroppableInteractable : Interactable<int>{
     }
 
     public override void OnNetworkDespawn() {
+        DropFromLocalPlayer();
+        base.OnNetworkDespawn();
+    }
+
+    public void DropFromLocalPlayer() {
         // check if in players inventory, if true, update accordingly
-        if (m_State.Value != IN_WORLD) {
+        if (m_State.Value != IN_WORLD && m_State.Value != IN_WORLD_NO_RIGIDBODY) {
             var local_ava = PlayerManager.Instance.LocalPlayer?.Avatar;
             if (local_ava) {
                 foreach (var slot in Enum.GetValues(typeof(PlayerAvatar.Slot))) {
@@ -106,8 +112,6 @@ public abstract class DroppableInteractable : Interactable<int>{
                 }
             }
         }
-
-        base.OnNetworkDespawn();
     }
 
 
@@ -116,7 +120,7 @@ public abstract class DroppableInteractable : Interactable<int>{
     public override void OnStateChange(int previous, int current) {
         if (current != previous) {
             // inWorld changed, i.e. item was dropped or picked up
-            UpdateWorldstate(current == IN_WORLD);
+            UpdateWorldstate(current == IN_WORLD, current == IN_WORLD_NO_RIGIDBODY);
         }
     }
 
@@ -182,7 +186,7 @@ public abstract class DroppableInteractable : Interactable<int>{
     }
 
 
-    public void UpdateWorldstate(bool inWorld) {
+    public void UpdateWorldstate(bool inWorld, bool override_disable_rigidbody = false) {
         foreach(Collider colli in m_AllCollider){
             colli.enabled = inWorld;
         }
@@ -192,7 +196,7 @@ public abstract class DroppableInteractable : Interactable<int>{
             // its mesh and materials
             m_Mesh.enabled = true;
         }
-        m_Rigidbody.isKinematic = !inWorld; // TODO does this work? 
+        m_Rigidbody.isKinematic = override_disable_rigidbody || !inWorld; // TODO does this work? (yeah, it does :D)
         m_NetTransform.enabled = inWorld;
     }
 
