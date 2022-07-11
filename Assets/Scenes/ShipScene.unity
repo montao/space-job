@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.040689424, g: 0.24335492, b: 0.31316802, a: 1}
+  m_IndirectSpecularColor: {r: 0.040637374, g: 0.24334216, b: 0.31317982, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11934,6 +11934,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 55
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1424133614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 1737505429915027782, guid: 8399d7a166d03e007b3f293117ee6d12, type: 3}
+  m_PrefabInstance: {fileID: 1503553746176295527}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1424133615}
+  m_Layer: 0
+  m_Name: 'EnergyDrinkStrawberry (Missing Prefab with guid: 8399d7a166d03e007b3f293117ee6d12)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1424133615
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 1393595078048846844, guid: 8399d7a166d03e007b3f293117ee6d12, type: 3}
+  m_PrefabInstance: {fileID: 1503553746176295527}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424133614}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 114
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1448641087
 GameObject:
   m_ObjectHideFlags: 0
@@ -13267,7 +13297,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1602352833}
-  m_LocalRotation: {x: 0.16491261, y: -0.018996727, z: 0.0031768947, w: 0.9861201}
+  m_LocalRotation: {x: 0.1649126, y: -0.018996757, z: 0.0031768994, w: 0.9861201}
   m_LocalPosition: {x: -1.07, y: 2.7, z: 2.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -14841,7 +14871,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814098728}
-  m_LocalRotation: {x: 0.07421769, y: -0.3955203, z: 0.032085348, w: 0.91489124}
+  m_LocalRotation: {x: 0.074217685, y: -0.39552027, z: 0.032085344, w: 0.91489124}
   m_LocalPosition: {x: -1.095, y: 2.628, z: -28.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -17733,6 +17763,10 @@ PrefabInstance:
     - target: {fileID: 8299654265141273011, guid: 06ea1785ee1126a5f89ae9441f122196, type: 3}
       propertyPath: m_Name
       value: FireZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8299654265141273011, guid: 06ea1785ee1126a5f89ae9441f122196, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8299654265141273023, guid: 06ea1785ee1126a5f89ae9441f122196, type: 3}
       propertyPath: m_RootOrder
