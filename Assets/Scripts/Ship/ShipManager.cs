@@ -192,6 +192,10 @@ public class ShipManager : NetworkBehaviour {
         return m_Destinations;
     }
 
+    public int GetCurrentDestinationIndex() {
+        return m_DestinationIndex.Value;
+    }
+
     public Destination GetCurrentDestination() {
         if (m_DestinationIndex.Value == DESTINATION_NONE) {
             return new Destination();

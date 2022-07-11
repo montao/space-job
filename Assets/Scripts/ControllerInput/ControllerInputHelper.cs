@@ -70,7 +70,7 @@ public class ControllerInputHelper : MonoBehaviour {
         int interactable_idx = 0;
         foreach (var button in m_Buttons) {
             var interactable = interactable_idx < m_AvailableInteractables.Count ? m_AvailableInteractables[interactable_idx] : null;
-            if (interactable) {
+            if (interactable && interactable.PlayerCanInteract()) {
                 if (!button.gameObject.activeSelf) {
                     button.gameObject.SetActive(true);
                 }

@@ -19,6 +19,8 @@ public class BigSpaceMap : TwoLevelInteractable {
 
     // Update is called once per frame
     public override void Update() {
+        base.Update();
+
         var y = m_ShipIndicator.localPosition.y;
         var shippos = ShipManager.Instance.GetShipPosition();
         m_ShipIndicator.localPosition = MapCam.Convert3(shippos, y);
@@ -47,6 +49,9 @@ public class BigSpaceMap : TwoLevelInteractable {
                 var dest_pos_map_local = MapCam.Convert3(dest.pos, y);
                 button.transform.localPosition = dest_pos_map_local;
                 button.DestinationIndex = i;
+
+                bool is_current_destination = (i == ShipManager.Instance.GetCurrentDestinationIndex());
+                button.SetCircleEnabled(is_current_destination);
             }
         }
     }
