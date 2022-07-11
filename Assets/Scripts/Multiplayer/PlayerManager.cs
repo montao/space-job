@@ -152,6 +152,7 @@ public class PlayerManager : NetworkBehaviour {
             List<ulong> clientsCompleted,
             List<ulong> clientsTimedOut) {
 
+        Debug.Log("MovePlayersToSpawns");
         TeleportPlayerAvatarsToSpawnLocations();
         ShipReadyClientRpc();
         foreach (var pplayer in PlayerManager.Instance.Players) {
@@ -211,6 +212,7 @@ public class PlayerManager : NetworkBehaviour {
 
     [ClientRpc]
     private void ShipReadyClientRpc() {
+        PlayerManager.Instance.LocalPlayer.Avatar.ready.Value = false;
         Debug.Log("Ship ready!");
     }
 

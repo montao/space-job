@@ -15,6 +15,9 @@ public class InteractableExitCanvas : MonoBehaviour {
     }
 
     public void SetVisible(bool visible) {
+        if (!m_Canvas) {
+            return;
+        }
         m_Canvas.enabled = visible;
         foreach (var button in m_Buttons) {
             button.gameObject.SetActive(visible);

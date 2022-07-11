@@ -55,7 +55,6 @@ public class MapCam : MonoBehaviour {
 
     void UpdateGoal() {
         Vector2 goal_pos = ShipManager.Instance.GetGoal();
-        Debug.Log("GOAL:  " + goal_pos);
         m_FlagIcon.position = Convert3(goal_pos, m_ShipIcon.transform.position.y);
 
         Vector2 target_direction = (ShipManager.Instance.GetGoal() - ShipManager.Instance.GetShipPosition());

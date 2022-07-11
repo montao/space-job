@@ -391,9 +391,16 @@ public class ShipManager : NetworkBehaviour {
             if (Input.GetKey(KeyCode.RightArrow)){
                 m_Rotation.Value -= 1f;
             }
+            if (Input.GetKeyDown(KeyCode.U)) {
+                MarkNearestDestinationAsReached();
+            }
 #endif
 
             UpdatePosition();
+            if (GetNearestDestination().pos.magnitude > 5.0f * (Map.MAX - Map.MIN)) {
+                // all destinations reached
+                ShipManager.Instance.SetWon();
+            }
         }
     }
 
@@ -403,7 +410,20 @@ public class ShipManager : NetworkBehaviour {
 
     [ServerRpc(RequireOwnership=false)]
     public void StartNewGameServerRpc() {
+
+        if (!m_Won.Value) {
+            // already called
+            return;
+        }
+
+        // TODO any more setup we need to do?
+        Debug.Log("All players ready, moving to Lobby...");
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= PlayerManager.Instance.StartShip;
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.Instance.MovePlayersToSpawns;
+        NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
+
         m_Won.Value = false;
+
         /*
         Steering.ResetSteering();
         Vector2 ship_pos = Util.RandomVec2(256, 1024-256);

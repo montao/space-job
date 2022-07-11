@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Try another!
+  m_text: Return to Lobby (x/y)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5bc7c323c2cb202c9b92d6ad31867e99, type: 2}
   m_sharedMaterial: {fileID: 3691657298897300434, guid: 5bc7c323c2cb202c9b92d6ad31867e99, type: 2}
@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 1113649713902085603}
   - component: {fileID: 1113649713902085602}
   - component: {fileID: 4220908224105410972}
+  - component: {fileID: 36400423349966668}
   m_Layer: 5
   m_Name: WinScreen
   m_TagString: Untagged
@@ -249,6 +250,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18765243ce20d62a9bbdbefbddf37995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ButtonText: {fileID: 1113649713862485260}
+--- !u!114 &36400423349966668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113649713902085597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &1113649714334771532
 GameObject:
   m_ObjectHideFlags: 0
