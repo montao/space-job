@@ -597,8 +597,9 @@ public class PlayerAvatar : NetworkBehaviour {
         bool primary = hand == PrimaryItemDisplay;
         var handRendPos = primary ? interactable.PrimaryPos : interactable.SecondaryPos;
         var handRendRot = primary ? interactable.PrimaryRot : interactable.SecondaryRot;
-        PlayerManager.Instance.hud.setMesh(handRend.GetComponent<MeshFilter>().mesh, primary);
-       
+        if (primary) {
+            PlayerManager.Instance.hud.setName(interactable.FriendlyName());
+        }
         handRend.transform.localPosition = handRendPos;
         Quaternion rot = Quaternion.identity;
         rot.eulerAngles = handRendRot;
@@ -607,7 +608,7 @@ public class PlayerAvatar : NetworkBehaviour {
         // Make overall world scale of object in hand match the item's scale.
         float itemscale = SceneManager.GetActiveScene().name == "SampleScene" ? 0.4f: 1.0f;
         handRend.transform.localScale = Vector3.Scale(transform.localScale, item.transform.lossyScale) * itemscale;
-
+        PlayerManager.Instance.hud.setMesh(handRend.GetComponent<MeshFilter>().mesh, primary);
         handRend.enabled = true;
     }
     private void HideInventorySlot(Transform hand) {
@@ -620,6 +621,7 @@ public class PlayerAvatar : NetworkBehaviour {
         if (Util.NetworkObjectReferenceIsEmpty(current)) {  // dropped item
             HideInventorySlot(PrimaryItemDisplay);
             PlayerManager.Instance.hud.SetVisible(true, false);
+            PlayerManager.Instance.hud.setName("");
         } else {  // picked up item
             ShowInInventory(PrimaryItemDisplay, current);
         }
@@ -629,6 +631,7 @@ public class PlayerAvatar : NetworkBehaviour {
         if (Util.NetworkObjectReferenceIsEmpty(current)) {  // dropped item
             HideInventorySlot(SecondaryItemDisplay);
             PlayerManager.Instance.hud.SetVisible(false, false);
+            PlayerManager.Instance.hud.setName("");
         } else {  // picked up item
             ShowInInventory(SecondaryItemDisplay, current);
         }
@@ -734,6 +737,10 @@ public class PlayerAvatar : NetworkBehaviour {
         GetInventoryItem(Slot.SECONDARY)
                 ?.GetComponentInChildren<DroppableInteractable>()
                 ?.InvokeOnSlotChange(this, Slot.SECONDARY);
+        NetworkObject o;
+        if (m_PrimaryItem.Value.TryGet(out o)) {
+            PlayerManager.Instance.hud.setName(o.GetComponentInChildren<DroppableInteractable>().FriendlyName());
+        }
         // ...and for all other players
         InvokeOnSlotChangedServerRpc(m_PrimaryItem.Value, Slot.PRIMARY);
         InvokeOnSlotChangedServerRpc(m_SecondaryItem.Value, Slot.SECONDARY);

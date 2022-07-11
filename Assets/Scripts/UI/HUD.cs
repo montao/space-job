@@ -14,6 +14,8 @@ public class HUD : NetworkBehaviour
     private Vector3 rotDir;
     private float speed;
 
+    public TMP_Text primName;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +46,10 @@ public class HUD : NetworkBehaviour
         else {
             secObj.GetComponent<MeshFilter>().mesh = mesh;
         }
+    }
+
+    public void setName(string name) {
+        primName.text = name;
     }
 
 }
