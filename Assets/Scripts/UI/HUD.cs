@@ -18,7 +18,7 @@ public class HUD : NetworkBehaviour
     void Start()
     {
         rotDir = new Vector3(0.0f, 1.0f, 0.0f);
-        speed = 10.0f;
+        speed = 20.0f;
     }
 
     // Update is called once per frame
@@ -27,7 +27,17 @@ public class HUD : NetworkBehaviour
         primObj.transform.Rotate(rotDir * Time.deltaTime * speed);
     }
 
+    public void SetVisible(bool prim, bool vis) {
+        if (prim) {
+            primObj.SetActive(vis);
+        }
+        else {
+            secObj.SetActive(vis);
+        }
+    }
+
     public void setMesh(Mesh mesh, bool prim) {
+        SetVisible(prim, true);
         if (prim) {
             primObj.GetComponent<MeshFilter>().mesh = mesh;
         }
