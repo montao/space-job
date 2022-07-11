@@ -24,11 +24,7 @@ public class DropPod : RangedInteractableBase {
         }
     }
 
-    public void SetState(bool new_state){
-        m_CanBeUsed = new_state;
-    }
-
     public override string FriendlyName() {
-        return "CargoDropPod";
+        return "Delivery Airlock";
     }
 }
