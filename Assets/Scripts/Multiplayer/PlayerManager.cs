@@ -13,6 +13,8 @@ public class PlayerManager : NetworkBehaviour {
 
     public GameObject RevivalFloppyPrefab;
 
+    public HUD hud;
+
     private NetworkVariable<int> m_PlayerCount =
             new NetworkVariable<int>(1);
     public int ConnectedPlayerCount {

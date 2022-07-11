@@ -617,16 +617,20 @@ public class PlayerAvatar : NetworkBehaviour {
     public void OnPrimaryItemChanged(NetworkObjectReference prev, NetworkObjectReference current) {
         if (Util.NetworkObjectReferenceIsEmpty(current)) {  // dropped item
             HideInventorySlot(PrimaryItemDisplay);
+            PlayerManager.Instance?.hud.setPMesh(null);
         } else {  // picked up item
             ShowInInventory(PrimaryItemDisplay, current);
+            PlayerManager.Instance?.hud.setPMesh(current);
         }
     }
     // Called for both local and other players
     public void OnSecondaryItemChanged(NetworkObjectReference prev, NetworkObjectReference current) {
         if (Util.NetworkObjectReferenceIsEmpty(current)) {  // dropped item
             HideInventorySlot(SecondaryItemDisplay);
+            PlayerManager.Instance?.hud.setSMesh(null);
         } else {  // picked up item
             ShowInInventory(SecondaryItemDisplay, current);
+            PlayerManager.Instance?.hud.setSMesh(current);
         }
     }
 
