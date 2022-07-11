@@ -21,10 +21,14 @@ public class MetalPlate : DroppableInteractable {
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void StickToWallServerRpc(Vector3 pos) {
+    public void StickToWallServerRpc(Vector3 pos, Quaternion rot) {
         DropFromLocalPlayer();
         m_OnWall.Value = true;
         m_State.Value = IN_WORLD_NO_RIGIDBODY;
         transform.position = pos;
+
+        var euler = rot.eulerAngles;
+        euler.z += 90f;
+        transform.rotation = Quaternion.Euler(euler);
     }
 }

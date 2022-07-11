@@ -38,9 +38,9 @@ public class HullBreachInstance : RangedInteractableBase {
         if (ava) {
             ava.AnimationController.SetBool(PlayerAminationBool.HOLDING_PLATE, false);
             if (m_LocalPlayerHoldingPlate) {
-                MetalPlate plate = ava.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).GetComponent<MetalPlate>();
+                var plate = Util.GetDroppableInteractable(ava.GetInventoryItem(PlayerAvatar.Slot.PRIMARY)).GetComponent<MetalPlate>();
                 if (plate != null) {
-                    plate.StickToWallServerRpc(transform.position);
+                    plate.StickToWallServerRpc(transform.position, transform.rotation);
                 }
             }
             ava.ReleaseMovementLock(GetHashCode());
@@ -82,9 +82,9 @@ public class HullBreachInstance : RangedInteractableBase {
         ava.AnimationController.SetBool(PlayerAminationBool.HOLDING_PLATE, true);
         ava.LockMovement(GetHashCode());
         SetIsHoldingServerRpc(true);
-        yield return new WaitForSeconds(0.5f);
-        ava.AnimationController.SetBool(PlayerAminationBool.HOLDING_PLATE, false);
         yield return new WaitForSeconds(1.5f);
+        ava.AnimationController.SetBool(PlayerAminationBool.HOLDING_PLATE, false);
+        yield return new WaitForSeconds(0.5f);
         ava.ReleaseMovementLock(GetHashCode());
         SetIsHoldingServerRpc(false);
         m_LocalPlayerHoldingPlate = false;
@@ -133,5 +133,14 @@ public class HullBreachInstance : RangedInteractableBase {
         if (m_PlayerIsHoldingPlate) {
             ResolvedServerRpc();
         }
+    }
+
+    public override void Update() {
+        base.Update();
+#if !DISABLE_DEBUG_KEYS
+        if (Input.GetKeyDown(KeyCode.M)) {
+            AttemptWeldPlateServerRpc();
+        }
+#endif
     }
 }
