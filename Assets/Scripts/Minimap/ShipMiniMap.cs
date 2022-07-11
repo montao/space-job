@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ShipMiniMap : MonoBehaviour {
     // NOTE: Y is up in Unity!
@@ -11,10 +12,19 @@ public class ShipMiniMap : MonoBehaviour {
 
     [SerializeField]
     private List<RectTransform> m_PlayerIcons = new List<RectTransform>();
+    private List<TMP_Text> m_PlayerNames = new List<TMP_Text>();
+
+    void Awake() {
+        foreach (var icon in m_PlayerIcons) {
+            // TODO!! handle re-joining players
+            m_PlayerNames.Add(icon.GetComponentInChildren<TMP_Text>());
+        }
+    }
 
     void Update() {
         var local_player_pos = PlayerManager.Instance.LocalPlayer.Avatar.transform.position;
         m_PlayerIcons[0].localPosition = WorldToCanvas(local_player_pos);
+        m_PlayerNames[0].text = PlayerManager.Instance.LocalPlayer.PlayerName;
     }
 
     public static Vector3 WorldToCanvas(Vector3 world_3d) {
