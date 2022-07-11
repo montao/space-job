@@ -143,6 +143,7 @@ public class MainMenu : MonoBehaviour {
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.Instance.StartShip;
             if (playerName.text != "Demo") {
                 NetworkManager.Singleton.SceneManager.LoadScene("ShipScene", LoadSceneMode.Single);
+
             }
             else {
                 NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);

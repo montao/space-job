@@ -117,9 +117,7 @@ public class ShipManager : NetworkBehaviour {
                 dests.Add(d);
             }
             SetDestinationsClientRpc(dests.ToArray());
-            NetworkManager.Singleton.OnClientConnectedCallback += (ulong client_id) => {
-                SetDestinationsClientRpc(m_Destinations.ToArray());
-            };
+            NetworkManager.Singleton.OnClientConnectedCallback += SendDestinations;
 
             // spawn ship at random location
             float risk_thres = 0.08f;
@@ -166,6 +164,11 @@ public class ShipManager : NetworkBehaviour {
     public override void OnNetworkDespawn(){
         m_Power.OnValueChanged -= OnPowerChange;
         m_Won.OnValueChanged -= OnWinChange;
+        NetworkManager.Singleton.OnClientConnectedCallback -= SendDestinations;
+    }
+
+    public void SendDestinations(ulong client_id) {
+        SetDestinationsClientRpc(m_Destinations.ToArray());
     }
 
     public float GetShipSpeed(){

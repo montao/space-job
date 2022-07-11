@@ -50,6 +50,7 @@ MonoBehaviour:
   LocalPlayerStatus: 
   RevivalFloppyPrefab: {fileID: 8232772551422847912, guid: a7e67851b8ee2a66a96234e69a6bc441, type: 3}
   hud: {fileID: 3108325924862818011}
+  hudCanvas: {fileID: 7651087848499268864}
 --- !u!114 &4897828791138947273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +123,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4385069832318802962, guid: 0a8b353bc1af1f224bdd0ad9e5a1aee3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4385069832318802962, guid: 0a8b353bc1af1f224bdd0ad9e5a1aee3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4385069832318802962, guid: 0a8b353bc1af1f224bdd0ad9e5a1aee3, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4385069832318802962, guid: 0a8b353bc1af1f224bdd0ad9e5a1aee3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -175,6 +188,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a8b353bc1af1f224bdd0ad9e5a1aee3, type: 3}
+--- !u!1 &7651087848499268864 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4385069832318802966, guid: 0a8b353bc1af1f224bdd0ad9e5a1aee3, type: 3}
+  m_PrefabInstance: {fileID: 6265907979439018262}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7651087848499268868 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4385069832318802962, guid: 0a8b353bc1af1f224bdd0ad9e5a1aee3, type: 3}
@@ -185,7 +203,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9067443619214550989, guid: 0a8b353bc1af1f224bdd0ad9e5a1aee3, type: 3}
   m_PrefabInstance: {fileID: 6265907979439018262}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7651087848499268864}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c717d3f22077f601b411d78d910801a, type: 3}
