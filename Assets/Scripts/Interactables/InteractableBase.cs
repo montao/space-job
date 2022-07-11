@@ -6,10 +6,12 @@ using UnityEngine.InputSystem;
 public abstract class InteractableBase : NetworkBehaviour {
 
     public enum Mode { SINGLE_CLICK, HOLD_DOWN};
-    protected Mode m_Mode = Mode.SINGLE_CLICK;  // set to HOLD_DOWN in Awake if needed.
+    public Mode m_Mode = Mode.SINGLE_CLICK;  // set to HOLD_DOWN in Awake if needed.
 
     public const float DEFAULT_INTERACT_COOLDOWN_TIME = 1.0f;
 
+    private bool m_IsHighlighted = false;
+    private bool m_IsHeldDown = false;
     protected LayerMask m_HighlightedLayer;
     protected LayerMask m_DefaultLayer;
     protected Renderer m_Renderer;
@@ -71,6 +73,7 @@ public abstract class InteractableBase : NetworkBehaviour {
     }
 
     public void SetHighlight(bool highlighted) {
+        m_IsHighlighted = highlighted;
         if (m_Renderer) {
             m_Renderer.gameObject.layer = highlighted ? m_HighlightedLayer : m_DefaultLayer;
         }
@@ -109,6 +112,16 @@ public abstract class InteractableBase : NetworkBehaviour {
     }
 
     public virtual void Update() {
+        if (m_IsHeldDown && (m_InteractAction.action.WasReleasedThisFrame() || !m_IsHighlighted)) {
+            StopInteraction();
+            m_IsHeldDown = false;
+        }
+        if (m_IsHighlighted && m_Mode == Mode.HOLD_DOWN && Util.UsingGamepad()) {
+            if (m_InteractAction.action.WasPressedThisFrame()) {
+                Interaction();
+                m_IsHeldDown = true;
+            }
+        }
     }
 
 }

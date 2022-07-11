@@ -141,7 +141,9 @@ public class ControllerInputHelper : MonoBehaviour {
 
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => {
-            interactable.Invoke("Interaction", 0);  // irgh
+                if (interactable.m_Mode == InteractableBase.Mode.SINGLE_CLICK) {
+                    interactable.Invoke("Interaction", 0);  // irgh
+                }
         });
 
         var interactbutton = button.GetComponent<ControllerInteractionButton>();
