@@ -323,7 +323,7 @@ public class ShipManager : NetworkBehaviour {
         float oxygen = 0.0f;
         plants = FindObjectsOfType<Plant>();
         foreach (Plant p in plants){
-            if(p.seedPlanted.Value){
+            if(p.grown.Value){
                 oxygen += 1.0f;
             }
         }

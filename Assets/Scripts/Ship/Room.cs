@@ -60,7 +60,7 @@ public class Room : NetworkBehaviour {
             foreach (var breach in m_HullBreaches) {
                 new_oxygen -= breach.DrainFactor() * Time.fixedDeltaTime * 0.06f;
             }
-            new_oxygen += Time.fixedDeltaTime * 0.01f;
+            new_oxygen += ShipManager.Instance.GetPlantOxygen() + Time.fixedDeltaTime * 0.01f;
             m_RoomOxygen.Value = Mathf.Clamp(new_oxygen, 0f, 1f);
 
             foreach (var door in Doors) {
