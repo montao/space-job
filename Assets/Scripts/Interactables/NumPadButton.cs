@@ -13,6 +13,7 @@ public class NumPadButton : InteractableBase
             VendingNumPad.ClearInput();
         }
         else if(Number == 69){
+            VendingNumPad.CheckInputText();
             VendingNumPad.ClearInput();
         }
         else if(Number == 21){

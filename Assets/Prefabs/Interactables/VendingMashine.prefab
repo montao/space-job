@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 570469861363116446}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -157,7 +157,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 1
+  IsPowerTerminal: 0
   VendingNumPad: {fileID: 6423641546541964723}
+  PowerTerminal: {fileID: 0}
 --- !u!65 &8218889989309123961
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -271,7 +273,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 5
+  IsPowerTerminal: 0
   VendingNumPad: {fileID: 6423641546541964723}
+  PowerTerminal: {fileID: 0}
 --- !u!65 &5572307307324467519
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -315,6 +319,7 @@ Transform:
   - {fileID: 1824027023352313209}
   - {fileID: 1824027022017820773}
   - {fileID: 1824027022868491406}
+  - {fileID: 1656258615254841460}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -490,6 +495,12 @@ MonoBehaviour:
   - {fileID: 4981702301212686545}
   - {fileID: 5339600119310355899}
   InputDisplay: {fileID: 4757427381770575749}
+  DropPod: {fileID: 1656258615254841460}
+  MetalPlate: {fileID: 4833168134056114408, guid: 36345ab600bafa41d850cd4667d4daa4, type: 3}
+  Seed: {fileID: 0}
+  EnergyOne: {fileID: 0}
+  EnergyTwo: {fileID: 0}
+  Balls: {fileID: 0}
 --- !u!1 &1824027022868491407
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,7 +727,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 753dbc1610379be7d83da5f2ee2cfb9c, type: 2}
+  - {fileID: 2100000, guid: 79a8a0872a7e0c127bb11a15d3eed29c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -955,7 +966,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 69
+  IsPowerTerminal: 0
   VendingNumPad: {fileID: 6423641546541964723}
+  PowerTerminal: {fileID: 0}
 --- !u!65 &3376948244162049289
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -969,6 +982,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.011, y: 0.010999999, z: 0.011}
   m_Center: {x: 0.000000059604645, y: 0, z: 0}
+--- !u!1 &2190401891475881839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1656258615254841460}
+  m_Layer: 0
+  m_Name: DropPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1656258615254841460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2190401891475881839}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1, y: -0.473, z: 0.632}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1824027021691336710}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2218876706000803821
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,7 +1212,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 8
+  IsPowerTerminal: 0
   VendingNumPad: {fileID: 6423641546541964723}
+  PowerTerminal: {fileID: 0}
 --- !u!65 &7816091478488874503
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1283,7 +1328,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 3
+  IsPowerTerminal: 0
   VendingNumPad: {fileID: 6423641546541964723}
+  PowerTerminal: {fileID: 0}
 --- !u!65 &5125839307941285161
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1454,7 +1501,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 7
+  IsPowerTerminal: 0
   VendingNumPad: {fileID: 6423641546541964723}
+  PowerTerminal: {fileID: 0}
 --- !u!65 &7283751431421866585
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1568,7 +1617,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 4
+  IsPowerTerminal: 0
   VendingNumPad: {fileID: 6423641546541964723}
+  PowerTerminal: {fileID: 0}
 --- !u!65 &4707337876243335300
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1682,7 +1733,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 420
+  IsPowerTerminal: 0
   VendingNumPad: {fileID: 6423641546541964723}
+  PowerTerminal: {fileID: 0}
 --- !u!65 &8299704328534853688
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1796,7 +1849,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 0
+  IsPowerTerminal: 0
   VendingNumPad: {fileID: 6423641546541964723}
+  PowerTerminal: {fileID: 0}
 --- !u!65 &2585735280314103005
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1910,7 +1965,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 9
+  IsPowerTerminal: 0
   VendingNumPad: {fileID: 6423641546541964723}
+  PowerTerminal: {fileID: 0}
 --- !u!65 &485093012646836594
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2158,7 +2215,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 2
+  IsPowerTerminal: 0
   VendingNumPad: {fileID: 6423641546541964723}
+  PowerTerminal: {fileID: 0}
 --- !u!65 &7250242628367826643
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2272,7 +2331,9 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Number: 6
+  IsPowerTerminal: 0
   VendingNumPad: {fileID: 6423641546541964723}
+  PowerTerminal: {fileID: 0}
 --- !u!65 &6879713397765908577
 BoxCollider:
   m_ObjectHideFlags: 0
