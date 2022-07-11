@@ -498,6 +498,9 @@ public class PlayerAvatar : NetworkBehaviour {
             audioSource.PlayOneShot(GetRandomDeathClip());
             audioSource.PlayOneShot(GetRandomFallClip());
             m_DeathReviveCoroutine = StartCoroutine(SetPlayerAliveCoroutine(alive, alive ? 0.0f : 2.0f));
+            if (!alive) {
+                GameManager.Instance.ControllerInput.ClearAvailableInteractables();
+            }
         }
     }
 

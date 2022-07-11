@@ -409,7 +409,7 @@ public class ShipManager : NetworkBehaviour {
             if (Input.GetKey(KeyCode.RightArrow)){
                 m_Rotation.Value -= 1f;
             }
-            if (Input.GetKeyDown(KeyCode.U)) {
+            if (Input.GetKeyDown(KeyCode.Y)) {
                 MarkNearestDestinationAsReached();
             }
 #endif
