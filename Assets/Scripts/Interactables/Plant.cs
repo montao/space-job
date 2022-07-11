@@ -54,8 +54,8 @@ public class Plant : Interactable<bool> {
     protected override void Interaction(){
         SetServerRpc(!Value);
         if (PlayerAvatar.IsHolding<Scanner>()){
-            
-            if(Input.GetButton("Fire1")){
+            StartCoroutine(HologramActive(5.0f));
+            /* if(Input.GetButton("Fire1")){
                 hologram.SetActive(true);
                 m_CameraSwap.SwitchTo();
                 hologram.transform.GetChild(0).rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
@@ -65,7 +65,7 @@ public class Plant : Interactable<bool> {
                 Debug.Log("released");
                 hologram.SetActive(false); 
                 m_CameraSwap.SwitchAway();
-            }
+            } */
 
             if (seedPlanted.Value && !notPlanted.Value) {
                 plantStatus.text = "Status: seed planted";
@@ -130,7 +130,15 @@ public class Plant : Interactable<bool> {
     public void SetServerRpc(bool value){
         m_State.Value = value;
     }
+    IEnumerator HologramActive(float maxtime){
+        hologram.SetActive(true);
+        m_CameraSwap.SwitchTo();
+        hologram.transform.GetChild(0).rotation = CameraBrain.Instance.ActiveCameraTransform.rotation;
+        yield return new WaitForSeconds(maxtime);
+        hologram.SetActive(false); 
+        m_CameraSwap.SwitchAway();
 
+    }
     IEnumerator WaitForPlantGrow(float maxtime){
         float growIn = UnityEngine.Random.Range(5, maxtime);
         Debug.Log("plant grows in " + growIn + "sec");
