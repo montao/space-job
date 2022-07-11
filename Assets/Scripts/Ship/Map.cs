@@ -26,7 +26,7 @@ public class Map : MonoBehaviour {
     [SerializeField]
     private MapCam m_MapCam;
 
-    void Start() {
+    void Awake() {
         GenerateMap();
     }
 
