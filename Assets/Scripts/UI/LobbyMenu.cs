@@ -76,8 +76,9 @@ public class LobbyMenu : NetworkBehaviour
             else if (mode == 2) {
                 mode = 0;
                 Resume();
-                SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+                PlayerManager.Instance.hudCanvas.SetActive(false);
                 NetworkManager.Singleton.Shutdown();
+                SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
             }
         }
 

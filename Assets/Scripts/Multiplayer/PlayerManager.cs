@@ -15,6 +15,8 @@ public class PlayerManager : NetworkBehaviour {
 
     public HUD hud;
 
+    public GameObject hudCanvas;
+
     private NetworkVariable<int> m_PlayerCount =
             new NetworkVariable<int>(1);
     public int ConnectedPlayerCount {

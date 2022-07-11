@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour {
         while (!PlayerManager.Instance.AllPlayerAvatarsSpawned) {
             yield return new WaitForEndOfFrame();
         }
+        PlayerManager.Instance.hudCanvas.SetActive(true);
         m_LoadingScreen.enabled = false;
     }
 
