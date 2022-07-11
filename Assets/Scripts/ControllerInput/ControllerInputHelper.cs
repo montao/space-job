@@ -35,6 +35,7 @@ public class ControllerInputHelper : MonoBehaviour {
         }
         string text = "";
         text += "SHIP SPEED:  " + ShipManager.Instance?.GetShipSpeed();
+        text += "\nSHIP ANGVEL:  " + ShipManager.Instance?.GetShipAngleSpeed();
         var pos = ShipManager.Instance.GetShipPosition();
         text += "\nSHIP POS:  " + pos.x + ", " + pos.y;
         text += "\nDISTANCE TO GOAL:  " + ShipManager.Instance?.GetDistantToWin();
