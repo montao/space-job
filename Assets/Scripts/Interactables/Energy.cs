@@ -4,16 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-/**
-  * Mjam, that's some good coffee~
-
-  Feckn delicious shit, oh no..
-  */
-
 public class Energy : DroppableInteractable{
-    private Int32 m_CupMaterialPattern = ~0x42CAFE43;
-    private static int m_CupNumber = 0;
-    public List<Material> Materials = new List<Material>();
     public bool Strawberry;
     private bool m_PickedUp = false;  // Server-Only
     [SerializeField]
@@ -21,8 +12,6 @@ public class Energy : DroppableInteractable{
 
     public override void Awake() {
         base.Awake();
-        int mat_idx = (m_CupMaterialPattern >> (m_CupNumber++ % 32)) & 1;
-        GetComponent<MeshRenderer>().material = Materials[mat_idx];  
     }
 
     public override string FriendlyName() {
