@@ -330,7 +330,7 @@ public class ShipManager : NetworkBehaviour {
                 oxygen += 1.0f;
             }
         }
-        Debug.Log(oxygen/10);
+        //Debug.Log(oxygen/10);
         return oxygen/10;
     }
     public override void OnDestroy() {

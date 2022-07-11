@@ -597,13 +597,8 @@ public class PlayerAvatar : NetworkBehaviour {
         bool primary = hand == PrimaryItemDisplay;
         var handRendPos = primary ? interactable.PrimaryPos : interactable.SecondaryPos;
         var handRendRot = primary ? interactable.PrimaryRot : interactable.SecondaryRot;
-        if (primary) {
-            PlayerManager.Instance.hud.primMesh = handRend.GetComponent<MeshFilter>().mesh;
-        }
-        else {
-            PlayerManager.Instance.hud.secMesh = handRend.GetComponent<MeshFilter>().mesh;
-        }
-
+        PlayerManager.Instance.hud.setMesh(handRend.GetComponent<MeshFilter>().mesh, primary);
+       
         handRend.transform.localPosition = handRendPos;
         Quaternion rot = Quaternion.identity;
         rot.eulerAngles = handRendRot;

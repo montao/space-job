@@ -5,6 +5,8 @@ public class ShipSteeringButton : InteractableBase {
         NONE,
         TOGGLE_THRUSTER_TURN_LEFT,
         TOGGLE_THRUSTER_TURN_RIGHT,
+        TOGGLE_TURN_LEFT,
+        TOGGLE_TURN_RIGHT,
         TARGET_SPEED_UP,
         TARGET_SPEED_DOWN,
         TARGET_SPEED_SET_STOP,

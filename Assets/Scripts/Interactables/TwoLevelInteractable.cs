@@ -110,7 +110,6 @@ public class TwoLevelInteractable : Interactable<int> {
     public override void Update() {
         base.Update();
         if (LocalPlayerIsInteracting()) { // local player at terminal
-            Debug.Log("Player exiting " + FriendlyName() + ".");
             float interacting_for = Time.fixedTime - LastUse;  // been interacting for ... seconds
             var inputhelper = GameManager.Instance.ControllerInput;
             if (inputhelper.CancelActionUI.action.WasPerformedThisFrame()
