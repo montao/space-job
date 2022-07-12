@@ -16,8 +16,6 @@ public class FotoboothDisplay : TwoLevelInteractable {
     public override void Start() {
         base.Start();
         /* index = PlayerPrefs.GetInt("CharacterSelected"); */
-        OnStateChange(0, 0);
-        selectedMaterial = PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<Renderer>().material;
 
         foreach(GameObject go in textureModels){
             go.SetActive(false);
