@@ -324,7 +324,7 @@ public class ShipManager : NetworkBehaviour {
 
     public float GetPlantOxygen(){
         float oxygen = 0.0f;
-        plants = FindObjectsOfType<Plant>();
+        //plants = FindObjectsOfType<Plant>();
         foreach (Plant p in plants){
             if(p.grown.Value){
                 oxygen += 1.0f;
@@ -351,6 +351,8 @@ public class ShipManager : NetworkBehaviour {
                 }
             };
         }
+
+        plants = FindObjectsOfType<Plant>();
     }
 
     private void UpdatePosition() {

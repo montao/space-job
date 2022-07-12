@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using System.Collections.Generic;
+using System.Collections;
 using TMPro;
 
 [RequireComponent(typeof(BoxCollider))]
@@ -19,6 +20,9 @@ public class Room : NetworkBehaviour {
     public List<Transform> m_FireSpawnLocations = new List<Transform>();
     private List<HullBreachInstance> m_HullBreaches = new List<HullBreachInstance>();
     private List<FireInstance> m_Fires = new List<FireInstance>();
+
+    public static float OXYGEN_UPDATE_DELAY = 1.0f;
+    private Coroutine m_OxygenRegulationCoroutine = null;
 
     void Start() {
         ShipManager.Instance.Rooms.Add(this);
@@ -52,22 +56,32 @@ public class Room : NetworkBehaviour {
         if (m_RoomDisplay != null) {
             DisplayText("Oxygen Capacity: " + RoomOxygen);
         }
+        if (m_OxygenRegulationCoroutine == null) {
+            StartCoroutine(OxygenRegulationCoroutine(OXYGEN_UPDATE_DELAY));
+        }
     }
 
-    private void FixedUpdate() {
+    private IEnumerator OxygenRegulationCoroutine(float delta) {
+        while (true) {
+            UpdateOxygen(delta);
+            yield return new WaitForSeconds(delta);
+        }
+    }
+
+    private void UpdateOxygen(float delta) {
         if (IsServer) {
             float new_oxygen = m_RoomOxygen.Value;
             foreach (var breach in m_HullBreaches) {
-                new_oxygen -= breach.DrainFactor() * Time.fixedDeltaTime * 0.06f;
+                new_oxygen -= breach.DrainFactor() * delta * 0.06f;
             }
-            new_oxygen += ShipManager.Instance.GetPlantOxygen() + Time.fixedDeltaTime * 0.01f;
+            new_oxygen += ShipManager.Instance.GetPlantOxygen() + delta * 0.01f;
             m_RoomOxygen.Value = Mathf.Clamp(new_oxygen, 0f, 1f);
 
             foreach (var door in Doors) {
                 if (!door.IsOpen) continue;
                 Room other = door.GetOtherRoom(this);
                 float oxygen_gradient = this.RoomOxygen - other.RoomOxygen; // positive: this room has higher O2
-                float exchange_amount = oxygen_gradient * Time.fixedDeltaTime * 0.1f;
+                float exchange_amount = oxygen_gradient * delta * 0.1f;
                 this.RoomOxygen = this.RoomOxygen - exchange_amount;
                 other.RoomOxygen = other.RoomOxygen + exchange_amount;
             }
