@@ -5,39 +5,51 @@ using Cinemachine;
 using UnityEngine.UI;
 
 public class CharacterSelect : MonoBehaviour {
-    public List<Material> shirtColor;
+    private GameObject[] characterList;
     private int index;
     public GameObject canvas;
     public CinemachineVirtualCamera cam;
 
-
-    void Start() {
+    public void Start() {
         index = PlayerPrefs.GetInt("CharacterSelected");
+        characterList = new GameObject[transform.childCount];
+        for(int i = 0; i< transform.childCount; i++){
+            characterList[i] = transform.GetChild(i).gameObject;
+        }
+
+        foreach(GameObject go in characterList){
+            go.SetActive(false);
+        }
+        if(characterList[index]){
+            characterList[index].SetActive(true);
+        }  
     }
 
-    public void SelectButton(bool right){/* 
-        shirtColor[index].SetActive(false);
+
+
+    public void SelectButton(bool right){
+        characterList[index].SetActive(false);
         if(right){
             index++;
-            if(index == shirtColor.Length){
+            if(index == characterList.Length){
                 index = 0;
             }
         } else {
             index--;
             if(index < 0){
-                index = shirtColor.Length -1;  
+                index = characterList.Length -1;  
             }
         }
-        shirtColor[index].SetActive(true); */
+        characterList[index].SetActive(true);
         
     }
 
     public void Select(){
         PlayerPrefs.SetInt("CharacterSelected", index);
-        var characters = GameObject.FindGameObjectsWithTag("shirtColor");
+        var characters = GameObject.FindGameObjectsWithTag("CharacterList");
         Debug.Log(characters[0].name);
         for(int i = 0; i< characters[0].transform.childCount; i++){
-            if(shirtColor[index].name == characters[0].transform.GetChild(i).name){
+            if(characterList[index].name == characters[0].transform.GetChild(i).name){
                 PlayerManager.Instance.LocalPlayer.Avatar.SetActiveCharacter(i);
                 /* PlayerManager.Instance.LocalPlayer.GetComponent<Animator>().avatar =; */
             }
@@ -52,3 +64,4 @@ public class CharacterSelect : MonoBehaviour {
     }
 
 }
+
