@@ -157,8 +157,8 @@ public abstract class DroppableInteractable : Interactable<int>{
     }
 
     /// <summary>
-    /// Despawn the item.  Note that until #55 is fixed, calling this while the item is in a player's hand is likely to
-    /// cause ugly undefined behavior. https://github.com/GooseGirlGames/space-job/issues/55
+    /// Despawn the item.  Also clears from player's inventory.
+    /// See https://github.com/GooseGirlGames/space-job/issues/55
     /// </summary>
     [ServerRpc(RequireOwnership = false)]
     public void DespawnServerRpc() {
