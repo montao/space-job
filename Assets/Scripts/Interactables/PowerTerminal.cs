@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 using TMPro;
 
 public class PowerTerminal : TwoLevelInteractable
@@ -21,7 +22,7 @@ public class PowerTerminal : TwoLevelInteractable
     }
     public void DisplayInputText(int input_number){
         if(m_InCounter == 4){
-            if (ShipManager.Instance.TryResolvePowerOutageEvent(input_number.ToString()))
+            CheckIfPowerIsResolvedServerRPC();
             ClearInput();
         }
         InputDisplay.text += input_number;
@@ -30,6 +31,10 @@ public class PowerTerminal : TwoLevelInteractable
     public void ClearInput(){
         InputDisplay.text = ">";
         m_InCounter = 0;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void CheckIfPowerIsResolvedServerRPC(){
+        ShipManager.Instance.TryResolvePowerOutageEvent(InputDisplay.text);
     }
     public void DisplayError(string err) {
         Debug.Log("Error Displayed");

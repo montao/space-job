@@ -16,17 +16,19 @@ public class NumPadButton : InteractableBase
             VendingNumPad.CheckInputText();
             VendingNumPad.ClearInput();
         }
-        else if(Number == 21){
-            PowerTerminal.ClearInput();
-        }
-        else if(Number == 99){
-            PowerTerminal.ClearInput();
-        }
-        else if(IsPowerTerminal){
-            PowerTerminal.DisplayInputText(Number);
-        }
-        else{
+        else if(!PowerTerminal){
             VendingNumPad.DisplayInputText(Number);
+        }
+        else if(IsPowerTerminal && !ShipManager.Instance.HasPower){
+            if(Number == 21){
+                PowerTerminal.ClearInput();
+            }
+            else if(Number == 99){
+                PowerTerminal.ClearInput();
+            }
+            else{
+                PowerTerminal.DisplayInputText(Number);
+            }
         }
     }
     public override float CooldownTime()
