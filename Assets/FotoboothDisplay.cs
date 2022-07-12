@@ -9,7 +9,7 @@ public class FotoboothDisplay : TwoLevelInteractable {
     protected GameObject[] textureModels;
     private int index = 0;
     private Material selectedMaterial;
-    private NetworkVariable<int> m_textureInt = new NetworkVariable<int>(0,NetworkVariableBase.DefaultReadPerm, NetworkVariableWritePermission.Server);
+    private NetworkVariable<int> m_textureInt = new NetworkVariable<int>(0);
 
 
 
@@ -55,7 +55,8 @@ public class FotoboothDisplay : TwoLevelInteractable {
     }
     public void Select(){
         /* PlayerPrefs.SetInt("CharacterSelected", index); */
-        m_textureInt.Value = index;
+        /* m_textureInt.Value = index; */
+        OnStateChange(index,index);
         /* PlayerManager.Instance.LocalPlayer.Avatar.normalMaterial = textureModels[index].GetComponent<Renderer>().material;
         selectedMaterial = PlayerManager.Instance.LocalPlayer.Avatar.normalMaterial; */
 /*         var characters = GameObject.FindGameObjectsWithTag("CharacterList"); */
