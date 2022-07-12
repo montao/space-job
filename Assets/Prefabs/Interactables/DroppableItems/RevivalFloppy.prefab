@@ -302,8 +302,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.42690593, y: 0.04235725, z: 0.42581415}
-  m_Center: {x: 0.0014793053, y: 0.0015138239, z: 0.0025220811}
+  m_Size: {x: 0.43568105, y: 0.44221818, z: 0.024972446}
+  m_Center: {x: -0.001970403, y: -0.0311279, z: -0.0013470463}
 --- !u!1001 &8232772550629504821
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -386,8 +386,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.46673715, y: 0.07031911, z: 0.5610577}
-  m_Center: {x: 0.00044077635, y: 0.00034058467, z: 0.0129160285}
+  m_Size: {x: 0.45941693, y: 0.4660999, z: 0.051880427}
+  m_Center: {x: -0.0018099844, y: -0.032301143, z: 0.0013086451}
 --- !u!114 &8232772550629504825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,15 +400,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ac4664e7a19e8be9df959b76f6a9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
   Velocity: 100
-  PrimaryPos: {x: 0.035, y: -0.0241, z: -0.2519}
-  PrimaryRot: {x: 86.10318, y: 7.283581, z: 94.46281}
+  PrimaryPos: {x: 0.01, y: -0.025, z: -0.212}
+  PrimaryRot: {x: 6.0999975, y: 95.03002, z: 95.799995}
   SecondaryPos: {x: 0.005, y: 0.101, z: -0.191}
-  SecondaryRot: {x: -0.0000032140647, y: 80.59388, z: 0.000005110406}
+  SecondaryRot: {x: 90, y: 80.59388, z: 270}
   pickupSounds:
   - {fileID: 8300000, guid: 4975d9304318e6106aea8c3b3449edd0, type: 3}
   interactionSounds:
