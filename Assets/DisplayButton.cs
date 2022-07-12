@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 public class DisplayButton : InteractableBase {
+    
     public string buttonName;
     [SerializeField]
     protected FotoboothDisplay display;
