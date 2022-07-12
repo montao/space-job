@@ -107,9 +107,6 @@ public class PlayerAvatar : NetworkBehaviour {
     public Material normalMaterial;
     public Material transparentMaterial;
     public Transform CameraLookAt;
-    private Material[] m_PrimaryMaterials;
-    private Material[] m_SecondaryMaterials;
-    private bool m_IsHidden = false;
 
     /* === AUDIO === */
     [SerializeField]
@@ -583,26 +580,14 @@ public class PlayerAvatar : NetworkBehaviour {
             return; // too early
         }
 
+        pri_rend.enabled = !on && !HasInventorySpace(Slot.PRIMARY);
+        sec_rend.enabled = !on && !HasInventorySpace(Slot.SECONDARY);
+
         if(on) {
             m_PlayerMesh.sharedMaterial = transparentMaterial;
-
-            if (!AllInventorySlotsEmpty()) {
-                if (!m_IsHidden) {
-                    m_PrimaryMaterials = pri_rend.materials;
-                    m_SecondaryMaterials = sec_rend.materials;
-                }
-                pri_rend.material = transparentMaterial;
-                sec_rend.material = transparentMaterial;
-            }
         } else {
             m_PlayerMesh.sharedMaterial = normalMaterial;
-            if (!AllInventorySlotsEmpty() && m_PrimaryMaterials != null && m_SecondaryMaterials != null) {
-                pri_rend.materials = m_PrimaryMaterials;
-                sec_rend.materials = m_SecondaryMaterials;
-            }
         }
-
-        m_IsHidden = on;
 
     }
 
@@ -774,9 +759,6 @@ public class PlayerAvatar : NetworkBehaviour {
         NetworkObject o;
         if (m_PrimaryItem.Value.TryGet(out o) && IsOwner) {
             PlayerManager.Instance.hud.SetName(o.GetComponentInChildren<DroppableInteractable>().FriendlyName());
-        }
-        if (m_IsHidden) {
-            HidePlayer(true);  // update item materials
         }
         // ...and for all other players
         InvokeOnSlotChangedServerRpc(m_PrimaryItem.Value, Slot.PRIMARY);
