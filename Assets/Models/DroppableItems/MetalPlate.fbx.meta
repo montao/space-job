@@ -9,6 +9,18 @@ ModelImporter:
   - first:
       74: -2235298856490809118
     second: Cube|EmptyAction
+  - first:
+      74: 6997882522552206460
+    second: Circle|CircleAction
+  - first:
+      74: 7011660925208157499
+    second: Circle|CubeAction
+  - first:
+      74: 6623994645874457253
+    second: Circle|EmptyAction
+  - first:
+      74: 4801908350565761361
+    second: Cube|CircleAction
   externalObjects: {}
   materials:
     materialImportMode: 0

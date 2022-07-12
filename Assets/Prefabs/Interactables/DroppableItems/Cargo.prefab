@@ -116,10 +116,10 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Velocity: 100
-  PrimaryPos: {x: 0, y: 0, z: 0}
-  PrimaryRot: {x: 0, y: 0, z: 0}
-  SecondaryPos: {x: 0, y: 0, z: 0}
-  SecondaryRot: {x: 0, y: 0, z: 0}
+  PrimaryPos: {x: 0.168, y: -0.373, z: -0.113}
+  PrimaryRot: {x: 310.33554, y: 71.7485, z: 89.83198}
+  SecondaryPos: {x: 0.009, y: 0.093, z: -0.242}
+  SecondaryRot: {x: 3.9670086, y: 191.54999, z: 3.0000076}
   pickupSounds: []
   interactionSounds: []
   interactionAudioSource: {fileID: 0}
