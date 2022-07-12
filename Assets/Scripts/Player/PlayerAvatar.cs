@@ -423,7 +423,7 @@ public class PlayerAvatar : NetworkBehaviour {
     } 
 
     public void OnTextureChanged(int previous, int current) {
-        normalMaterial = m_TextureList[current];
+        normalMaterial = m_TextureList[m_TextureInt.Value];
 
         Debug.Log(m_TextureList[current]);
     }
