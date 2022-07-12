@@ -154,6 +154,15 @@ public class Room : NetworkBehaviour {
                 location.position,
                 location.rotation
             );
+
+        foreach (var plate in FindObjectsOfType<MetalPlate>()) {
+            var dist = (location.position - plate.transform.position).magnitude;
+            if (dist < 0.05f) {
+                Debug.Log("Despawning plate to make room for hullbreach");
+                plate.DespawnServerRpc();
+            }
+        }
+
         breach.GetComponent<NetworkObject>().Spawn();
         breach.GetComponent<HullBreachInstance>().Setup(this, location);
         m_HullBreaches.Add(breach.GetComponent<HullBreachInstance>());
