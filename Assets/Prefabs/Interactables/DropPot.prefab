@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7792373351411727655}
   - component: {fileID: 3708661359890269558}
   - component: {fileID: 6082423129674276851}
+  - component: {fileID: 3990827467326050991}
   m_Layer: 0
   m_Name: DropPot
   m_TagString: Untagged
@@ -162,6 +163,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8506217, y: 1.8025978, z: 0.8532963}
   m_Center: {x: 0.0024888515, y: 0.9016808, z: -0.0026750565}
+--- !u!95 &3990827467326050991
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4185603325594371512}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 667933db30ca73be2ba7a38c425c00ed, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5217608873407674207
 GameObject:
   m_ObjectHideFlags: 0
