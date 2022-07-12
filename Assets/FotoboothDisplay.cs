@@ -9,14 +9,15 @@ public class FotoboothDisplay : TwoLevelInteractable {
     protected GameObject[] textureModels;
     private int index = 0;
     private Material selectedMaterial;
-    private NetworkVariable<int> m_textureInt = new NetworkVariable<int>(0);
+    private CameraSwap cam;
+
 
 
 
     public override void Start() {
         base.Start();
         /* index = PlayerPrefs.GetInt("CharacterSelected"); */
-
+        cam = GetComponent<CameraSwap>();
         foreach(GameObject go in textureModels){
             go.SetActive(false);
         }
@@ -45,10 +46,14 @@ public class FotoboothDisplay : TwoLevelInteractable {
     }
     public void Select(){
         PlayerManager.Instance.LocalPlayer.Avatar.SetTexture(index);
+        cam.SwitchAway();
+        
 
     }
     public void Back(){
-        m_textureInt.Value = 0;
+        PlayerManager.Instance.LocalPlayer.Avatar.SetTexture(0);
+        index = 0;
+        cam.SwitchAway();
         Debug.Log("Cancel");
     }
 
