@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.040689424, g: 0.24331626, b: 0.3131782, a: 1}
+  m_IndirectSpecularColor: {r: 0.040689424, g: 0.24335492, b: 0.31316802, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -391,6 +391,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3852151563223858346, guid: 1f363d548b051bd96802be48d726c415, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2203001891
+      objectReference: {fileID: 0}
     - target: {fileID: 4897828791138947272, guid: 1f363d548b051bd96802be48d726c415, type: 3}
       propertyPath: m_Name
       value: PlayerManager
@@ -445,10 +449,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7651087848499268864, guid: 1f363d548b051bd96802be48d726c415, type: 3}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7651087848499268870, guid: 1f363d548b051bd96802be48d726c415, type: 3}
-      propertyPath: m_UiScaleMode
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -981,7 +981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8360783671612329739, guid: a339225bb65c91b0bbd73dae924999da, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 12.4882
+      value: 12.488159
       objectReference: {fileID: 0}
     - target: {fileID: 8360783672167849249, guid: a339225bb65c91b0bbd73dae924999da, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1094,6 +1094,10 @@ PrefabInstance:
     - target: {fileID: 8360783672804244978, guid: a339225bb65c91b0bbd73dae924999da, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8360783672835000190, guid: a339225bb65c91b0bbd73dae924999da, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 6.270752
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a339225bb65c91b0bbd73dae924999da, type: 3}
