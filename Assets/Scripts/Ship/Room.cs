@@ -57,7 +57,7 @@ public class Room : NetworkBehaviour {
             DisplayText("Oxygen Capacity: " + RoomOxygen);
         }
         if (m_OxygenRegulationCoroutine == null) {
-            StartCoroutine(OxygenRegulationCoroutine(OXYGEN_UPDATE_DELAY));
+            m_OxygenRegulationCoroutine = StartCoroutine(OxygenRegulationCoroutine(OXYGEN_UPDATE_DELAY));
         }
     }
 
