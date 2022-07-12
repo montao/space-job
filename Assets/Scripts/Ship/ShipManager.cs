@@ -17,18 +17,20 @@ public class ShipManager : NetworkBehaviour {
     }
 
     public static float WIN_DISTANCE_THRESHOLD = 15f;
+    public static int DESTINATION_NONE = -1;
 
-    public const char HAS_POWER = '\0';
+    public const int HAS_POWER = -1;
 
     public List<Room> Rooms = new List<Room>();
 
     private NetworkVariable<float> m_Oxygen = new NetworkVariable<float>(1f);
-    private NetworkVariable<char> m_Power = new NetworkVariable<char>(HAS_POWER);
+    private NetworkVariable<int> m_Power = new NetworkVariable<int>(HAS_POWER);
     private NetworkVariable<Vector2> m_Position = new NetworkVariable<Vector2>(new Vector2(512f, 512f));
     private NetworkVariable<float> m_Rotation = new NetworkVariable<float>(0f);
     private NetworkVariable<float> m_Speed = new NetworkVariable<float>(0f);
     private NetworkVariable<float> m_Odometer = new NetworkVariable<float>(0f);
     private NetworkVariable<bool> m_Won = new NetworkVariable<bool>(false);
+    private NetworkVariable<int> m_DestinationIndex = new NetworkVariable<int>(0);  // might init to DESTINATION_NONE?
     private float m_DistSinceLastBreadcrumb = 0;
     private Map m_Map;
     private float m_DistanceToWin;
@@ -46,8 +48,7 @@ public class ShipManager : NetworkBehaviour {
     [SerializeField]
     private Color m_TransitionColorOutage;
 
-    public static int[] ERROR_CODES_NEW = {814356, 898583, 250754, 073227, 181194, 579721};
-    public static char[] ERROR_CODES = {'2', 'e', (char)0xba, (char)42, '\n'};
+    public static int[] ERROR_CODES = {814356, 898583, 250754, 073227, 181194, 579721};
     [SerializeField]
     private AudioSource audioSourceLamps;
     [SerializeField]
@@ -58,36 +59,22 @@ public class ShipManager : NetworkBehaviour {
 
     private Plant[] plants;
 
-    public static string PowerSolutionCode(char error_code) {
-        return Convert.ToByte((error_code >> 1) ^ 'a').ToString("x2").ToUpper()
-                + Convert.ToByte(error_code | 'B').ToString("x2").ToUpper();
-    }
-    public static string ErrorCodeDisplay(char power) {
-        return Convert.ToByte(power ^ 'L').ToString("x2").ToUpper()
-                + Convert.ToByte(power).ToString("x2").ToUpper();
-    }
-
     public bool HasPower{
         get => m_Power.Value == HAS_POWER;
     }
 
-    protected void OnPowerChange(char _, char power){
+    protected void OnPowerChange(int _, int power){
         bool hasPower = power == HAS_POWER;
         
         if(LightManager.Instance != null){
             LightManager.Instance.SetBackup(!hasPower);
             LightManager.Instance.SetNormal(hasPower);
         }
-        
 
-        if(PowerTerminal != null){   
-            Debug.Log("Display Error");
-            if (!hasPower) {
-                PowerTerminal.DisplayError("0x" + ErrorCodeDisplay(power));
-            } else {
-                PowerTerminal.DisplayError("Power: 100%");
-            }
-        } 
+
+        if (PowerTerminal != null) {
+            PowerTerminal.DisplayError(m_Power.Value);
+        }
 
         if (m_TransitionMaterial != null) {
             var col = hasPower ? m_TransitionColorNormal : m_TransitionColorOutage;
@@ -107,6 +94,7 @@ public class ShipManager : NetworkBehaviour {
         OnWinChange(false, false);
 
         if (IsServer) {
+            // setup destinations for all clients
             var dests = new List<Destination>();
             foreach (var dest_pos in m_Map.Destinations) {
                 Destination d = new Destination();
@@ -115,11 +103,58 @@ public class ShipManager : NetworkBehaviour {
                 dests.Add(d);
             }
             SetDestinationsClientRpc(dests.ToArray());
+            NetworkManager.Singleton.OnClientConnectedCallback += SendDestinations;
+
+            // spawn ship at random location
+            float risk_thres = 0.08f;
+            float distance_goal_thres = 150f;
+            // debug: show possible spawn locations
+            /*
+            for (int x = Map.MIN; x < Map.MAX; ++x) {
+                for (int y = Map.MIN; y < Map.MAX; ++y) {
+                    if (m_Map.GetState(new Vector2(x, y)).risk < risk_thres) {
+                        var pos = new Vector2(x, y);
+                        var dist = (pos - GetNearestDestination(pos).pos).magnitude;
+                        if (x == 0 && y == 0) {
+                            Debug.Log("DIST:  " + dist);
+                        }
+                        if (dist > distance_goal_thres) {
+                            var col = m_Map.IngameMapTexture.GetPixel(x, y);
+                            col.b = 1f;
+                            m_Map.IngameMapTexture.SetPixel(x, y, col);
+                        }
+                    }
+                }
+            }
+            m_Map.IngameMapTexture.Apply(); */
+            // // //
+
+            int n = 0;
+            float risk = 1f;
+            float distance_goal = 0f;
+            Vector2 spawn = Vector2.zero;
+            while (risk > risk_thres || distance_goal < distance_goal_thres) {
+                spawn = Util.RandomVec2(Map.MIN, Map.MAX);
+                risk = m_Map.GetState(spawn).risk;
+                distance_goal = (spawn - GetNearestDestination(spawn).pos).magnitude;
+                if (n > 30) {
+                    risk_thres += 0.001f;
+                    distance_goal_thres -= 1.0f;
+                }
+                ++n;
+            }
+            m_Position.Value = spawn;
+            Debug.Log("Found ship spawn in " + n + " iterations.");
         }
     }
     public override void OnNetworkDespawn(){
         m_Power.OnValueChanged -= OnPowerChange;
         m_Won.OnValueChanged -= OnWinChange;
+        NetworkManager.Singleton.OnClientConnectedCallback -= SendDestinations;
+    }
+
+    public void SendDestinations(ulong client_id) {
+        SetDestinationsClientRpc(m_Destinations.ToArray());
     }
 
     public float GetShipSpeed(){
@@ -142,15 +177,39 @@ public class ShipManager : NetworkBehaviour {
         return m_DistanceToWin;
     }
 
+    public List<Destination> GetDestinations() {
+        return m_Destinations;
+    }
+
+    public int GetCurrentDestinationIndex() {
+        return m_DestinationIndex.Value;
+    }
+
+    public Destination GetCurrentDestination() {
+        if (m_DestinationIndex.Value == DESTINATION_NONE) {
+            return new Destination();
+        }
+        return m_Destinations[m_DestinationIndex.Value];
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetDestinationIndexServerRpc(int index) {
+        m_DestinationIndex.Value = index;
+    }
+
     public Destination GetNearestDestination() {
+        return GetNearestDestination(GetShipPosition());
+    }
+
+    public Destination GetNearestDestination(Vector2 to) {
         Destination nearest = new Destination();
         nearest.pos = Vector2.one * -100000;
         foreach (var dest in m_Destinations) {
             if (dest.reached) {
                 continue;
             }
-            var dist = (GetShipPosition() - dest.pos).magnitude;
-            var dist_min = (GetShipPosition() - nearest.pos).magnitude;
+            var dist = (to - dest.pos).magnitude;
+            var dist_min = (to - nearest.pos).magnitude;
             if (dist < dist_min) {
                 nearest = dest;
             }
@@ -159,7 +218,7 @@ public class ShipManager : NetworkBehaviour {
     }
 
     public Vector2 GetGoal(){
-        return GetNearestDestination().pos;
+        return GetCurrentDestination().pos;
     }
 
     public void Rotate(float delta_angle) {
@@ -197,8 +256,8 @@ public class ShipManager : NetworkBehaviour {
         return true;
     }
 
-    public bool TryResolvePowerOutageEvent(string solution_attempt) {
-        if (solution_attempt == PowerSolutionCode(m_Power.Value)) {
+    public bool TryResolvePowerOutageEvent(int solution_attempt) {
+        if (solution_attempt == m_Power.Value) {
             ResolvePowerOutageEvent();
             return true;
         } else {
@@ -253,11 +312,11 @@ public class ShipManager : NetworkBehaviour {
         float oxygen = 0.0f;
         //plants = FindObjectsOfType<Plant>();
         foreach (Plant p in plants){
-            if(p.seedPlanted.Value){
+            if(p.grown.Value){
                 oxygen += 1.0f;
             }
         }
-        Debug.Log(oxygen/10);
+        //Debug.Log(oxygen/10);
         return oxygen/10;
     }
     public override void OnDestroy() {
@@ -298,10 +357,7 @@ public class ShipManager : NetworkBehaviour {
         m_DistanceToWin = (GetNearestDestination().pos - m_Position.Value).magnitude; 
         if (m_DistanceToWin <= WIN_DISTANCE_THRESHOLD){
             if (IsServer) {
-                if (!m_Won.Value) {
-                    MarkNearestDestinationAsReached();
-                }
-                m_Won.Value = true;
+                //m_Won.Value = true;
             }
         } 
     }
@@ -348,15 +404,39 @@ public class ShipManager : NetworkBehaviour {
             if (Input.GetKey(KeyCode.RightArrow)){
                 m_Rotation.Value -= 1f;
             }
+            if (Input.GetKeyDown(KeyCode.Y)) {
+                MarkNearestDestinationAsReached();
+            }
 #endif
 
             UpdatePosition();
+            if (GetNearestDestination().pos.magnitude > 5.0f * (Map.MAX - Map.MIN)) {
+                // all destinations reached
+                ShipManager.Instance.SetWon();
+            }
         }
+    }
+
+    public void SetWon() {
+        m_Won.Value = true;
     }
 
     [ServerRpc(RequireOwnership=false)]
     public void StartNewGameServerRpc() {
+
+        if (!m_Won.Value) {
+            // already called
+            return;
+        }
+
+        // TODO any more setup we need to do?
+        Debug.Log("All players ready, moving to Lobby...");
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= PlayerManager.Instance.StartShip;
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += PlayerManager.Instance.MovePlayersToSpawns;
+        NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
+
         m_Won.Value = false;
+
         /*
         Steering.ResetSteering();
         Vector2 ship_pos = Util.RandomVec2(256, 1024-256);

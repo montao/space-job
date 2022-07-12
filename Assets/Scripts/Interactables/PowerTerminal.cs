@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,23 +22,26 @@ public class PowerTerminal : TwoLevelInteractable
 
     }
     public void DisplayInputText(int input_number){
-        if(m_InCounter == 6){
-            CheckIfPowerIsResolvedServerRPC();
+        InputDisplay.text += input_number;
+        m_InCounter++;
+        if (m_InCounter >= 6){
+            CheckIfPowerIsResolvedServerRpc();
             ClearInput();
         }
-        InputDisplay.text += input_number;
-        m_InCounter ++;
     }
     public void ClearInput(){
         InputDisplay.text = ">";
         m_InCounter = 0;
     }
+
     [ServerRpc(RequireOwnership = false)]
-    public void CheckIfPowerIsResolvedServerRPC(){
-        ShipManager.Instance.TryResolvePowerOutageEvent(InputDisplay.text);
+    public void CheckIfPowerIsResolvedServerRpc(){
+        int number = Int32.Parse(InputDisplay.text.Substring(1));
+        Debug.Log("Trying to resolve power outage with: " + number);
+        ShipManager.Instance.TryResolvePowerOutageEvent(number);
     }
-    public void DisplayError(string err) {
-        Debug.Log("Error Displayed");
-        ErrorText.text = err;
+
+    public void DisplayError(int room) {
+        ErrorText.text = "" + room;
     }
 }
