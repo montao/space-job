@@ -27,14 +27,6 @@ public class FotoboothDisplay : TwoLevelInteractable {
         } 
     }
 
-    public override void Update()
-    {
-        base.Update();
-        Debug.Log(index);
-
-    }
-
-
     public void SelectButtonRight(){
         textureModels[index].SetActive(false);
         index++;
@@ -55,7 +47,7 @@ public class FotoboothDisplay : TwoLevelInteractable {
     }
     public void Select(){
         /* PlayerPrefs.SetInt("CharacterSelected", index); */
-        m_textureInt.Value = index;
+        PlayerManager.Instance.LocalPlayer.Avatar.SetTexture(index);
         /* PlayerManager.Instance.LocalPlayer.Avatar.normalMaterial = textureModels[index].GetComponent<Renderer>().material;
         selectedMaterial = PlayerManager.Instance.LocalPlayer.Avatar.normalMaterial; */
 /*         var characters = GameObject.FindGameObjectsWithTag("CharacterList"); */
@@ -76,27 +68,7 @@ public class FotoboothDisplay : TwoLevelInteractable {
     public void Test(){
         Debug.Log("working");
     }
-    public void OnStateChange(int previous, int current) {
-        if(index == 0){
-            m_textureInt.Value = 0;
-        }
-        if(index == 1){
-            m_textureInt.Value = 1;
-        }
-        if(index == 2){
-            m_textureInt.Value = 2;
-        }
-        
-        PlayerManager.Instance.LocalPlayer.Avatar.normalMaterial = textureModels[m_textureInt.Value].GetComponent<Renderer>().material;
-        selectedMaterial = PlayerManager.Instance.LocalPlayer.Avatar.normalMaterial;
-    }
-    public override void OnNetworkSpawn(){
-        base.OnNetworkSpawn();
-        m_textureInt.OnValueChanged += OnStateChange;
-    } 
-    public override void OnNetworkDespawn(){
-        m_textureInt.OnValueChanged -= OnStateChange;
-    }
+
     public override string FriendlyName() {
         return "Display";
     }

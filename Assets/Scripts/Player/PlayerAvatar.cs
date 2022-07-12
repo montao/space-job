@@ -77,6 +77,8 @@ public class PlayerAvatar : NetworkBehaviour {
     /* === LOBBY & CHARACTER SELECT === */
     [SerializeField]
     private GameObject m_CharacterList;
+    [SerializeField]
+    private Material[] m_TextureList;
     public GameObject isready;
     public GameObject notready;
     public CharacterSelect chara_select;
@@ -84,8 +86,8 @@ public class PlayerAvatar : NetworkBehaviour {
             = new NetworkVariable<int>(3, default, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> ready
             = new NetworkVariable<bool>(default, default, NetworkVariableWritePermission.Owner);
-
-
+    public NetworkVariable<int> m_TextureInt
+            = new NetworkVariable<int>(0, default, NetworkVariableWritePermission.Owner);
     /* === HEALTH, OXYGEN & RELATED UI === */
     public NetworkVariable<float> m_Health
             = new NetworkVariable<float>(1f, default, NetworkVariableWritePermission.Owner);
@@ -224,6 +226,7 @@ public class PlayerAvatar : NetworkBehaviour {
         m_PrimaryItem.OnValueChanged += OnPrimaryItemChanged;
         m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
         m_ActiveCharacter.OnValueChanged += OnCharacterChanged;
+        m_TextureInt.OnValueChanged += OnTextureChanged;
         HorizontalSpeed.OnValueChanged += (float _, float curr) => {
             if (!m_AnimationController) {
                 m_AnimationController = GetComponent<PlayerAnimationController>();
@@ -244,6 +247,7 @@ public class PlayerAvatar : NetworkBehaviour {
         base.OnNetworkDespawn();
         m_PrimaryItem.OnValueChanged -= OnPrimaryItemChanged;
         m_SecondaryItem.OnValueChanged -= OnSecondaryItemChanged;
+        m_TextureInt.OnValueChanged -= OnTextureChanged;
         m_ActiveCharacter.OnValueChanged -= OnCharacterChanged;
         m_Health.OnValueChanged -= OnHealthChanged;
     }
@@ -415,10 +419,18 @@ public class PlayerAvatar : NetworkBehaviour {
         m_CharacterList.transform.GetChild(current).gameObject.SetActive(true);
         m_PlayerMesh = GetComponentInChildren<MeshRenderer>(includeInactive: false);
         SetupRagdoll();
-    }
+    } 
 
     public void SetActiveCharacter(int characterIndex) {
         m_ActiveCharacter.Value = characterIndex;
+    } 
+
+    public void OnTextureChanged(int previous, int current) {
+        normalMaterial = m_TextureList[current];
+    }
+
+    public void SetTexture(int textureInt) {
+        m_TextureInt.Value = textureInt;
     }
 
 

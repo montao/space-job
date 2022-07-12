@@ -45,13 +45,13 @@ public class CharacterSelect : MonoBehaviour {
     }
 
     public void Select(){
-        PlayerPrefs.SetInt("CharacterSelected", index);
+       /*  PlayerPrefs.SetInt("CharacterSelected", index);
         var characters = GameObject.FindGameObjectsWithTag("CharacterList");
         Debug.Log(characters[0].name);
         for(int i = 0; i< characters[0].transform.childCount; i++){
             if(characterList[index].name == characters[0].transform.GetChild(i).name){
                 PlayerManager.Instance.LocalPlayer.Avatar.SetActiveCharacter(i);
-                /* PlayerManager.Instance.LocalPlayer.GetComponent<Animator>().avatar =; */
+                /PlayerManager.Instance.LocalPlayer.GetComponent<Animator>().avatar =; 
             }
             //else characters[0].transform.GetChild(i).gameObject.SetActive(false);
         }
@@ -60,8 +60,8 @@ public class CharacterSelect : MonoBehaviour {
     }
     public void Back(){
         canvas.SetActive(false);
-        cam.Priority = 0;
-    }
+        cam.Priority = 0;*/
+    } 
 
 }
 
