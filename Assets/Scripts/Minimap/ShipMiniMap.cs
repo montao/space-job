@@ -10,6 +10,9 @@ public class ShipMiniMap : MonoBehaviour {
     public static Vector3 CAL_POINT_B_WORLD = new Vector3(15, 0, -14);
     public static Vector3 CAL_POINT_B_CANVAS = new Vector3(36.307f, -7.15f, 0);
 
+    public static Color m_AliveColor = new Color(0.4f, 1.0f, 0.4f);
+    public static Color m_DeadColor = new Color(1.0f, 0.4f, 0.4f);
+
     [SerializeField]
     private List<RectTransform> m_PlayerIcons = new List<RectTransform>();
     private List<TMP_Text> m_PlayerNames = new List<TMP_Text>();
@@ -33,6 +36,8 @@ public class ShipMiniMap : MonoBehaviour {
                 m_PlayerIcons[i].gameObject.SetActive(true);
                 m_PlayerIcons[i].localPosition = WorldToCanvas(ava.transform.position);
                 m_PlayerNames[i].text = pplayer.PlayerName;
+                bool alive = ava.m_Health.Value > 0;
+                m_PlayerNames[i].color = alive ? m_AliveColor : m_DeadColor;
                 ++i;
             }
         }
