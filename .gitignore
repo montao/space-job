@@ -102,3 +102,8 @@ Assets/Scenes/ShipScene/Lightmap*.png.meta
 Assets/Scenes/ShipScene/LightingData.asset
 Assets/Scenes/ShipScene/LightingData.asset.meta
 
+Assets/Scenes/Lobby/Lightmap*.png
+Assets/Scenes/Lobby/Lightmap*.png.meta
+Assets/Scenes/Lobby/LightingData.asset
+Assets/Scenes/Lobby/LightingData.asset.meta
+
