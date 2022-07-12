@@ -51,6 +51,12 @@ public class ControllerInputHelper : MonoBehaviour {
         text += "\n\nACTION MAP:  " + map;
         var scheme = GameManager.Instance.Input.currentControlScheme;
         text += "\n\nCONTROLE SCHEME:  " + scheme;
+        var players = PlayerManager.Instance?.Players;
+        text += "\n\nPLAYERS REGISTERED:  n=" + players.Count + "(";
+        foreach (var p in players) {
+            text += p.PlayerName + "; ";
+        }
+        text += ")";
 
         m_DebugText.text = text;
     }

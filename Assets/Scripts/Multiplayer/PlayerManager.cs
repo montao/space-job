@@ -134,10 +134,11 @@ public class PlayerManager : NetworkBehaviour {
         
     }
 
+    public void ClearPersistentPlayers() {
+        m_Players.Clear();
+    }
+
     public void RegisterPlayer(PersistentPlayer player, bool isLocal) {
-        if (isLocal == hasLocalPlayer) {
-            m_Players.Clear();   
-        }
         m_Players.Add(player);
 
         Debug.Log("Registered Player '" + player.PlayerName + "'");

@@ -47,6 +47,8 @@ public class PersistentPlayer : NetworkBehaviour {
     }
 
     public override void OnNetworkSpawn() {
+        base.OnNetworkSpawn();
+
         PlayerManager.Instance.RegisterPlayer(this, IsOwner);
 
         m_Avatar.OnValueChanged += AvatarChanged;
@@ -61,6 +63,7 @@ public class PersistentPlayer : NetworkBehaviour {
     }
 
     public override void OnNetworkDespawn() {
+        base.OnNetworkDespawn();
         m_Avatar.OnValueChanged -= AvatarChanged;
     }
 

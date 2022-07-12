@@ -77,6 +77,7 @@ public class LobbyMenu : NetworkBehaviour
                 mode = 0;
                 Resume();
                 PlayerManager.Instance.hudCanvas.SetActive(false);
+                PlayerManager.Instance.ClearPersistentPlayers();
                 NetworkManager.Singleton.Shutdown();
                 SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
             }
