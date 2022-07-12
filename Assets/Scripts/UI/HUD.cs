@@ -42,11 +42,11 @@ public class HUD : NetworkBehaviour
     }
 
     public void SetMesh(Mesh mesh, bool prim) {
+        // not necessary but a bit nicer
+        SetVisible(prim, false);
         speed = 0.0f;
         primObj.transform.Rotate(0.0f, 0.0f, 0.0f);
-        primObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         secObj.transform.Rotate(0.0f, 0.0f, 0.0f);
-        secObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         if (prim) {
             primObj.GetComponent<MeshFilter>().mesh = mesh;
         }
@@ -57,15 +57,16 @@ public class HUD : NetworkBehaviour
             float yscale = (prim) ? 0.5f : 0.3f;
             float fac = (1 / mesh.bounds.size.y) * yscale;
             if (prim) {
-                
-                Vector3 offset = primObj.transform.position - primObj.transform.TransformPoint(mesh.bounds.center); 
+                primObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+                //Vector3 offset = primObj.transform.TransformPoint(mesh.bounds.center); 
                 primObj.transform.localScale = new Vector3(fac, fac, fac);
-                primObj.transform.position = offset;       
+                //primObj.transform.position = offset;       
             }
             else {
-                Vector3 offset = secObj.transform.position - secObj.transform.TransformPoint(mesh.bounds.center); 
+                secObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+                //Vector3 offset = secObj.transform.position - secObj.transform.TransformPoint(mesh.bounds.center); 
                 secObj.transform.localScale = new Vector3(fac, fac, fac);
-                secObj.transform.position = offset + new Vector3(-0.4f, 0.15f, 0.0f);
+                secObj.transform.position = new Vector3(-0.4f, 0.15f, 0.0f);
             }      
         }
 
