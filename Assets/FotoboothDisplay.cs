@@ -9,7 +9,7 @@ public class FotoboothDisplay : TwoLevelInteractable {
     protected GameObject[] textureModels;
     private int index = 0;
     private Material selectedMaterial;
-    private NetworkVariable<int> m_textureInt = new NetworkVariable<int>(0);
+    private NetworkVariable<int> m_textureInt = new NetworkVariable<int>(0,NetworkVariableBase.DefaultReadPerm, NetworkVariableWritePermission.Owner);
 
 
 
