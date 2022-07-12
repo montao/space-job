@@ -361,15 +361,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8dcc1047539dd3d98270c4fa7a33a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
   Velocity: 100
-  PrimaryPos: {x: 0, y: 0, z: 0}
-  PrimaryRot: {x: 0, y: 0, z: 0}
-  SecondaryPos: {x: 0, y: 0, z: 0}
-  SecondaryRot: {x: 0, y: 0, z: 0}
+  PrimaryPos: {x: 0.166, y: 0.074, z: -0.352}
+  PrimaryRot: {x: 26.756634, y: 163.30429, z: 193.2324}
+  SecondaryPos: {x: 0.025, y: 0.166, z: -0.208}
+  SecondaryRot: {x: 351.34802, y: 304.49863, z: 97.51042}
   pickupSounds:
   - {fileID: 8300000, guid: f113628dbe2ca633b98cf5e1b01cf36e, type: 3}
   - {fileID: 8300000, guid: a1ab87f048c506a638c5d9a8243e2b29, type: 3}
