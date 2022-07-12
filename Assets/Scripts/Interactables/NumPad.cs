@@ -44,7 +44,7 @@ public class NumPad : TwoLevelInteractable
     }
     public void CheckInputText(){
         Debug.Log("Here is Number:" + InputDisplay.text);
-        if(InputDisplay.text == ">8619"){
+        if(InputDisplay.text == ">3619"){
             Debug.Log("Here is some: MetalPlate");
             SpawnItemServerRpc(VendingMashineItem.METALPLATE);
         }
