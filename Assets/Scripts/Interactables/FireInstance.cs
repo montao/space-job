@@ -65,7 +65,7 @@ public class FireInstance : RangedInteractableBase
                 m_CanJump = false;
             }
             else if(transform.localScale.x < m_MaxSize){
-                yield return new WaitForSeconds(Random.Range(0.5f, 1f));
+                yield return new WaitForSeconds(Random.Range(0.75f, 1.5f));
                 GrowFireClientRpc(1.05f);
                 if(transform.localScale.x >= m_MaxSize-0.1f){
                     
@@ -90,7 +90,7 @@ public class FireInstance : RangedInteractableBase
                     }
                 }
                 //yield return new WaitForSeconds(1f + Random.Range(0f, 2f));
-                yield return new WaitForSeconds(5f + Random.Range(0f, 30f));
+                yield return new WaitForSeconds(5f + Random.Range(10f, 30f));
                 if(m_CanJump){
                     m_Room.FireJumpOver(Neighbours);
                 }
