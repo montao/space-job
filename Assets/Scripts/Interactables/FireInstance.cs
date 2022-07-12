@@ -65,7 +65,7 @@ public class FireInstance : RangedInteractableBase
                 m_CanJump = false;
             }
             else if(transform.localScale.x < m_MaxSize){
-                yield return new WaitForSeconds(Random.Range(0.5f, 2f));
+                yield return new WaitForSeconds(Random.Range(0.5f, 1f));
                 GrowFireClientRpc(1.05f);
                 if(transform.localScale.x >= m_MaxSize-0.1f){
                     
@@ -84,7 +84,7 @@ public class FireInstance : RangedInteractableBase
                 List<Transform> Neighbours = new List<Transform>();
                 foreach(Transform spawn in m_Room.m_FireSpawnLocations){
                     float distance = (transform.position - spawn.position).magnitude;
-                    if(distance <= 2f * m_size){
+                    if(distance <= 2.5f * m_size){
                         //Debug.Log("distance: " + distance + ", Scale:" + m_size);
                         Neighbours.Add(spawn);
                     }
