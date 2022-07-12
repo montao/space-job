@@ -576,25 +576,30 @@ public class PlayerAvatar : NetworkBehaviour {
     /* ================== HIDE PLAYER ================== */
 
     public void HidePlayer(bool on){
-        if (!m_PlayerMesh) return; // too early
-
         var pri_rend = PrimaryItemDisplay.GetComponent<Renderer>();
         var sec_rend = SecondaryItemDisplay.GetComponent<Renderer>();
+
+        if (!m_PlayerMesh || !pri_rend || !sec_rend) {
+            return; // too early
+        }
 
         if(on) {
             m_PlayerMesh.sharedMaterial = transparentMaterial;
 
-            if (!m_IsHidden) {
-                m_PrimaryMaterials = pri_rend.materials;
-                m_SecondaryMaterials = sec_rend.materials;
+            if (!AllInventorySlotsEmpty()) {
+                if (!m_IsHidden) {
+                    m_PrimaryMaterials = pri_rend.materials;
+                    m_SecondaryMaterials = sec_rend.materials;
+                }
+                pri_rend.material = transparentMaterial;
+                sec_rend.material = transparentMaterial;
             }
-            pri_rend.material = transparentMaterial;
-            sec_rend.material = transparentMaterial;
-        }
-        else{
+        } else {
             m_PlayerMesh.sharedMaterial = normalMaterial;
-            pri_rend.materials = m_PrimaryMaterials;
-            sec_rend.materials = m_SecondaryMaterials;
+            if (!AllInventorySlotsEmpty() && m_PrimaryMaterials != null && m_SecondaryMaterials != null) {
+                pri_rend.materials = m_PrimaryMaterials;
+                sec_rend.materials = m_SecondaryMaterials;
+            }
         }
 
         m_IsHidden = on;
@@ -683,6 +688,10 @@ public class PlayerAvatar : NetworkBehaviour {
 
     public bool HasInventorySpace() {
         return HasInventorySpace(Slot.PRIMARY) || HasInventorySpace(Slot.SECONDARY);
+    }
+
+    public bool AllInventorySlotsEmpty() {
+        return HasInventorySpace(Slot.PRIMARY) && HasInventorySpace(Slot.SECONDARY);
     }
 
     public void AddToInventory(NetworkObject item) {
