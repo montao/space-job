@@ -43,7 +43,7 @@ public class MapCam : MonoBehaviour {
         Vector2 ship_pos = ShipManager.Instance.GetShipPosition();
         transform.position = Convert3(ship_pos, transform.position.y);
 
-        m_ShipIcon.localRotation = Quaternion.Euler(0, 0, ShipManager.Instance.GetShipAngle());
+        m_ShipIcon.localRotation = Quaternion.Euler(0, 0, ShipManager.Instance.GetShipAngle() + 90f);
 
         UpdateGoal();
     }
@@ -63,7 +63,7 @@ public class MapCam : MonoBehaviour {
 
         target_direction.Normalize();
         float angle_rad = Angle(target_direction);
-        m_DirectionIcon.localRotation = Quaternion.Euler(0, 0, angle_rad * 180f/Mathf.PI);
+        m_DirectionIcon.localRotation = Quaternion.Euler(0, 0, (angle_rad * 180f/Mathf.PI) + 90f);
 
     }
 
