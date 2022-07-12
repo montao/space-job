@@ -58,19 +58,10 @@ public class HUD : NetworkBehaviour
             float yscale = (prim) ? 0.4f : 0.25f;
             float fac = (1 / mesh.bounds.size.y) * yscale;
             if (prim) {
-                float test = primObj.GetComponent<MeshRenderer>().bounds.min.y;
-                Debug.Log("oh" + test);
-                //float height = 0.1f - test.y;
-                primObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-                primObj.transform.TransformPoint(0.0f, test, 0.0f);
-                //Vector3 offset = primObj.transform.TransformPoint(mesh.bounds.center); 
                 primObj.transform.localScale = new Vector3(fac, fac, fac);
-                primObj.transform.position = new Vector3(0.2f, 0.0f, 0.0f);
-                //primObj.transform.position = offset;       
+                primObj.transform.position = new Vector3(0.2f, 0.05f, 0.0f);
             }
             else {
-                secObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-                //Vector3 offset = secObj.transform.position - secObj.transform.TransformPoint(mesh.bounds.center); 
                 secObj.transform.localScale = new Vector3(fac, fac, fac);
                 secObj.transform.position = new Vector3(-0.3f, 0.15f, 0.0f);
             }      
