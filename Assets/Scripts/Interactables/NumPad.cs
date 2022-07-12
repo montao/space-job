@@ -42,23 +42,23 @@ public class NumPad : TwoLevelInteractable
     }
     public void CheckInputText(){
         Debug.Log("Here is Number:" + InputDisplay.text);
-        if(InputDisplay.text == ">0000"){
+        if(InputDisplay.text == ">8619"){
             Debug.Log("Here is some: MetalPlate");
             SpawnItemServerRpc(VendingMashineItem.METALPLATE);
         }
-        else if(InputDisplay.text == ">1111"){
+        else if(InputDisplay.text == ">0805"){
             Debug.Log("Here is some: Energy1");
             SpawnItemServerRpc(VendingMashineItem.ENERGY_ONE);
         }
-        else if(InputDisplay.text == ">2222"){
+        else if(InputDisplay.text == ">6755"){
             Debug.Log("Here is some: Energy2");
             SpawnItemServerRpc(VendingMashineItem.ENERGY_TWO);
         }
-        else if(InputDisplay.text == ">3333"){
+        else if(InputDisplay.text == ">1180"){
             Debug.Log("Here is some: Seed");
             SpawnItemServerRpc(VendingMashineItem.SEED);
         }
-        else if(InputDisplay.text == ">4444"){
+        else if(InputDisplay.text == ">2972"){
             Debug.Log("Here is some: Meetballs");
             SpawnItemServerRpc(VendingMashineItem.BALLS);
         }
