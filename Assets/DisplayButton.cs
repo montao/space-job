@@ -20,12 +20,12 @@ public class DisplayButton : InteractableBase {
             Debug.Log("Right Button");
         }
         if(buttonName == "Confirm"){
-            //display.Select();
+            display.Select();
             display.Test();
             Debug.Log("Confirm Button");
         }
         if(buttonName == "Cancel"){
-            //display.Back();
+            display.Back();
             display.Test();
             Debug.Log("Cancel Button");
         }
@@ -34,3 +34,13 @@ public class DisplayButton : InteractableBase {
         return buttonName;
     } 
 }
+
+/* 
+private Material selectedMaterial;
+
+selectedMaterial = PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<Renderer>().material;
+PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<Renderer>().material = textureModels[index].GetComponent<Renderer>().material;
+        selectedMaterial = PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<Renderer>().material;
+        Debug.Log(textureModels[index].GetComponent<Renderer>().material);
+
+ */
