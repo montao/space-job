@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 3255667283526710514}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 15.262841, y: 1.4, z: -15.888114}
-  m_LocalScale: {x: 0.030208701, y: 0.030208701, z: 0.030208701}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 131196341908398721}
   m_Father: {fileID: 0}
@@ -258,15 +258,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afbdbe788722b90d1b2f8178a50a336c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
   Velocity: 100
-  PrimaryPos: {x: 0, y: 0, z: 0}
-  PrimaryRot: {x: 0, y: 0, z: 0}
-  SecondaryPos: {x: 0, y: 0, z: 0}
-  SecondaryRot: {x: 0, y: 0, z: 0}
+  PrimaryPos: {x: -0.047, y: 0.086, z: -0.414}
+  PrimaryRot: {x: 351.34802, y: 304.49863, z: 104.117455}
+  SecondaryPos: {x: 0.0153, y: -0.1533, z: -0.0759}
+  SecondaryRot: {x: 12.916955, y: 144.90854, z: 183.797}
   pickupSounds: []
   interactionSounds: []
   interactionAudioSource: {fileID: 0}
