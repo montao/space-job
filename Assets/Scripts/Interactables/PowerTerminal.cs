@@ -21,7 +21,7 @@ public class PowerTerminal : TwoLevelInteractable
 
     }
     public void DisplayInputText(int input_number){
-        if(m_InCounter == 4){
+        if(m_InCounter == 6){
             CheckIfPowerIsResolvedServerRPC();
             ClearInput();
         }
