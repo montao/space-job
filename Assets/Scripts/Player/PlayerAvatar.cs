@@ -423,6 +423,7 @@ public class PlayerAvatar : NetworkBehaviour {
     } 
 
     public void OnTextureChanged(int previous, int current) {
+        m_PlayerMesh.sharedMaterial = m_TextureList[m_TextureInt.Value];
         normalMaterial = m_TextureList[m_TextureInt.Value];
 
         Debug.Log(m_TextureList[current]);
@@ -430,6 +431,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
     public void SetTexture(int textureInt) {
         m_TextureInt.Value = textureInt;
+        Debug.Log(m_TextureInt.Value);
     }
 
 
