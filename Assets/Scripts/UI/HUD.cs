@@ -10,6 +10,7 @@ public class HUD : NetworkBehaviour
 
 
     public GameObject primObj, secObj;
+    
 
     private Vector3 rotDir;
     private float speed;
@@ -57,7 +58,11 @@ public class HUD : NetworkBehaviour
             float yscale = (prim) ? 0.5f : 0.3f;
             float fac = (1 / mesh.bounds.size.y) * yscale;
             if (prim) {
+                float test = primObj.GetComponent<MeshRenderer>().bounds.min.y;
+                Debug.Log("oh" + test);
+                //float height = 0.1f - test.y;
                 primObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+                primObj.transform.TransformPoint(0.0f, test, 0.0f);
                 //Vector3 offset = primObj.transform.TransformPoint(mesh.bounds.center); 
                 primObj.transform.localScale = new Vector3(fac, fac, fac);
                 //primObj.transform.position = offset;       
