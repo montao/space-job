@@ -400,10 +400,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e81ec558d4fc4ef8d4d692edbf27e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
-  CanInteract: 1
+  CanInteract: 0
   Velocity: 100
   PrimaryPos: {x: 0.0328, y: -0.0025, z: -0.1049}
   PrimaryRot: {x: 8.679434, y: 90.89106, z: 87.97161}
