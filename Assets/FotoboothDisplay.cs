@@ -5,12 +5,16 @@ using UnityEngine;
 public class FotoboothDisplay : TwoLevelInteractable {
     [SerializeField]
     protected GameObject[] textureModels;
-    private int index;
+    private int index = 0;
+    private Material selectedMaterial;
+
 
 
     public override void Start() {
         base.Start();
-        index = PlayerPrefs.GetInt("CharacterSelected");
+        /* index = PlayerPrefs.GetInt("CharacterSelected"); */
+
+        selectedMaterial = PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<Renderer>().material;
 
         foreach(GameObject go in textureModels){
             go.SetActive(false);
@@ -23,6 +27,7 @@ public class FotoboothDisplay : TwoLevelInteractable {
     public override void Update()
     {
         base.Update();
+        Debug.Log(index);
 
     }
 
@@ -46,7 +51,9 @@ public class FotoboothDisplay : TwoLevelInteractable {
         
     }
     public void Select(){
-        PlayerPrefs.SetInt("CharacterSelected", index);
+        /* PlayerPrefs.SetInt("CharacterSelected", index); */
+        PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<Renderer>().material = textureModels[index].GetComponent<Renderer>().material;
+        selectedMaterial = PlayerManager.Instance.LocalPlayer.Avatar.GetComponent<Renderer>().material;
 /*         var characters = GameObject.FindGameObjectsWithTag("CharacterList"); */
         Debug.Log(textureModels[index].GetComponent<Renderer>().material);
 /*         for(int i = 0; i< characters[0].transform.childCount; i++){
