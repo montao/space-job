@@ -16,11 +16,14 @@ public class HUD : NetworkBehaviour
 
     public TMP_Text primName;
 
+    public Camera camera;
+
     // Start is called before the first frame update
     void Start()
     {
         rotDir = new Vector3(0.0f, 1.0f, 0.0f);
         speed = 20.0f;
+        camera.transform.position = new Vector3(0.0f, 0.0f, -2.0f);
     }
 
     // Update is called once per frame
@@ -38,17 +41,39 @@ public class HUD : NetworkBehaviour
         }
     }
 
-    public void setMesh(Mesh mesh, bool prim) {
-        SetVisible(prim, true);
+    public void SetMesh(Mesh mesh, bool prim) {
+        speed = 0.0f;
+        primObj.transform.Rotate(0.0f, 0.0f, 0.0f);
+        primObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        secObj.transform.Rotate(0.0f, 0.0f, 0.0f);
+        secObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         if (prim) {
             primObj.GetComponent<MeshFilter>().mesh = mesh;
         }
         else {
             secObj.GetComponent<MeshFilter>().mesh = mesh;
         }
+        if (mesh != null) {
+            float yscale = (prim) ? 0.5f : 0.3f;
+            float fac = (1 / mesh.bounds.size.y) * yscale;
+            if (prim) {
+                
+                Vector3 offset = primObj.transform.position - primObj.transform.TransformPoint(mesh.bounds.center); 
+                primObj.transform.localScale = new Vector3(fac, fac, fac);
+                primObj.transform.position = offset;       
+            }
+            else {
+                Vector3 offset = secObj.transform.position - secObj.transform.TransformPoint(mesh.bounds.center); 
+                secObj.transform.localScale = new Vector3(fac, fac, fac);
+                secObj.transform.position = offset + new Vector3(-0.4f, 0.15f, 0.0f);
+            }      
+        }
+
+        SetVisible(prim, true);            
+        speed = 20.0f;
     }
 
-    public void setName(string name) {
+    public void SetName(string name) {
         primName.text = name;
     }
 

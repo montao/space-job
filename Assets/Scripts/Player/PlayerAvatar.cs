@@ -616,8 +616,8 @@ public class PlayerAvatar : NetworkBehaviour {
         bool primary = hand == PrimaryItemDisplay;
         var handRendPos = primary ? interactable.PrimaryPos : interactable.SecondaryPos;
         var handRendRot = primary ? interactable.PrimaryRot : interactable.SecondaryRot;
-        if (primary) {
-            PlayerManager.Instance.hud.setName(interactable.FriendlyName());
+        if (primary && IsOwner) {
+            PlayerManager.Instance.hud.SetName(interactable.FriendlyName());
         }
         handRend.transform.localPosition = handRendPos;
         Quaternion rot = Quaternion.identity;
@@ -627,7 +627,9 @@ public class PlayerAvatar : NetworkBehaviour {
         // Make overall world scale of object in hand match the item's scale.
         float itemscale = SceneManager.GetActiveScene().name == "SampleScene" ? 0.4f: 1.0f;
         handRend.transform.localScale = Vector3.Scale(transform.localScale, item.transform.lossyScale) * itemscale;
-        PlayerManager.Instance.hud.setMesh(handRend.GetComponent<MeshFilter>().mesh, primary);
+        if (IsOwner) {
+            PlayerManager.Instance.hud.SetMesh(handRend.GetComponent<MeshFilter>().mesh, primary);
+        }
         handRend.enabled = true;
     }
     private void HideInventorySlot(Transform hand) {
@@ -639,8 +641,10 @@ public class PlayerAvatar : NetworkBehaviour {
     public void OnPrimaryItemChanged(NetworkObjectReference prev, NetworkObjectReference current) {
         if (Util.NetworkObjectReferenceIsEmpty(current)) {  // dropped item
             HideInventorySlot(PrimaryItemDisplay);
-            PlayerManager.Instance.hud.SetVisible(true, false);
-            PlayerManager.Instance.hud.setName("");
+            if (IsOwner) {
+                PlayerManager.Instance.hud.SetVisible(true, false);
+                PlayerManager.Instance.hud.SetName("");
+            }
         } else {  // picked up item
             ShowInInventory(PrimaryItemDisplay, current);
         }
@@ -649,8 +653,10 @@ public class PlayerAvatar : NetworkBehaviour {
     public void OnSecondaryItemChanged(NetworkObjectReference prev, NetworkObjectReference current) {
         if (Util.NetworkObjectReferenceIsEmpty(current)) {  // dropped item
             HideInventorySlot(SecondaryItemDisplay);
-            PlayerManager.Instance.hud.SetVisible(false, false);
-            PlayerManager.Instance.hud.setName("");
+            if (IsOwner) {
+                PlayerManager.Instance.hud.SetVisible(false, false);
+                PlayerManager.Instance.hud.SetName("");
+            }
         } else {  // picked up item
             ShowInInventory(SecondaryItemDisplay, current);
         }
@@ -757,8 +763,8 @@ public class PlayerAvatar : NetworkBehaviour {
                 ?.GetComponentInChildren<DroppableInteractable>()
                 ?.InvokeOnSlotChange(this, Slot.SECONDARY);
         NetworkObject o;
-        if (m_PrimaryItem.Value.TryGet(out o)) {
-            PlayerManager.Instance.hud.setName(o.GetComponentInChildren<DroppableInteractable>().FriendlyName());
+        if (m_PrimaryItem.Value.TryGet(out o) && IsOwner) {
+            PlayerManager.Instance.hud.SetName(o.GetComponentInChildren<DroppableInteractable>().FriendlyName());
         }
         if (m_IsHidden) {
             HidePlayer(true);  // update item materials
