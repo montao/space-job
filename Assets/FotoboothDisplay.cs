@@ -77,7 +77,17 @@ public class FotoboothDisplay : TwoLevelInteractable {
         Debug.Log("working");
     }
     public void OnStateChange(int previous, int current) {
-        PlayerManager.Instance.LocalPlayer.Avatar.normalMaterial = textureModels[current].GetComponent<Renderer>().material;
+        if(index == 0){
+            m_textureInt.Value = 0;
+        }
+        if(index == 1){
+            m_textureInt.Value = 1;
+        }
+        if(index == 2){
+            m_textureInt.Value = 2;
+        }
+        
+        PlayerManager.Instance.LocalPlayer.Avatar.normalMaterial = textureModels[m_textureInt.Value].GetComponent<Renderer>().material;
         selectedMaterial = PlayerManager.Instance.LocalPlayer.Avatar.normalMaterial;
     }
     public override void OnNetworkSpawn(){
