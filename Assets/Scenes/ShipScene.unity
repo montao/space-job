@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.040689424, g: 0.24331626, b: 0.3131782, a: 1}
+  m_IndirectSpecularColor: {r: 0.040689424, g: 0.24335492, b: 0.31316802, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: a21554c2abb84565181a70db6a68f1d2, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 46f805df119602f04abe56b0dce4d818, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: a5bf3daaf91197cb38f2c6d527bd1a88, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -953,7 +953,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70842671}
-  m_LocalRotation: {x: 0.17896946, y: -0.043198507, z: 0.007865921, w: 0.98287433}
+  m_LocalRotation: {x: 0.17896944, y: -0.043198522, z: 0.007865923, w: 0.98287433}
   m_LocalPosition: {x: -1.095, y: 2.628, z: -28.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -974,31 +974,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 90291987610743079, guid: 4d5102c616c2228ca9d0d825f2d8a7f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.24
+      value: -1.095
       objectReference: {fileID: 0}
     - target: {fileID: 90291987610743079, guid: 4d5102c616c2228ca9d0d825f2d8a7f5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.7
+      value: 2.628
       objectReference: {fileID: 0}
     - target: {fileID: 90291987610743079, guid: 4d5102c616c2228ca9d0d825f2d8a7f5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.08
+      value: -28.73
       objectReference: {fileID: 0}
     - target: {fileID: 90291987610743079, guid: 4d5102c616c2228ca9d0d825f2d8a7f5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.25544238
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 90291987610743079, guid: 4d5102c616c2228ca9d0d825f2d8a7f5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.030382983
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 90291987610743079, guid: 4d5102c616c2228ca9d0d825f2d8a7f5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.95958287
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 90291987610743079, guid: 4d5102c616c2228ca9d0d825f2d8a7f5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.114135295
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 90291987610743079, guid: 4d5102c616c2228ca9d0d825f2d8a7f5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1018,7 +1018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 90291987610743097, guid: 4d5102c616c2228ca9d0d825f2d8a7f5, type: 3}
       propertyPath: field of view
-      value: 12.8
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 90291987610743097, guid: 4d5102c616c2228ca9d0d825f2d8a7f5, type: 3}
       propertyPath: far clip plane
@@ -13328,7 +13328,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1602352833}
-  m_LocalRotation: {x: 0.1649126, y: -0.018996699, z: 0.0031768898, w: 0.9861201}
+  m_LocalRotation: {x: 0.16491261, y: -0.018996727, z: 0.0031768947, w: 0.9861201}
   m_LocalPosition: {x: -1.07, y: 2.7, z: 2.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -14902,7 +14902,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814098728}
-  m_LocalRotation: {x: 0.07421769, y: -0.3955203, z: 0.03208535, w: 0.91489124}
+  m_LocalRotation: {x: 0.074217685, y: -0.39552027, z: 0.032085344, w: 0.91489124}
   m_LocalPosition: {x: -1.095, y: 2.628, z: -28.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
