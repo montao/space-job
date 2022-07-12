@@ -55,8 +55,7 @@ public class FotoboothDisplay : TwoLevelInteractable {
     }
     public void Select(){
         /* PlayerPrefs.SetInt("CharacterSelected", index); */
-        /* m_textureInt.Value = index; */
-        OnStateChange(index,index);
+        m_textureInt.Value = index;
         /* PlayerManager.Instance.LocalPlayer.Avatar.normalMaterial = textureModels[index].GetComponent<Renderer>().material;
         selectedMaterial = PlayerManager.Instance.LocalPlayer.Avatar.normalMaterial; */
 /*         var characters = GameObject.FindGameObjectsWithTag("CharacterList"); */
