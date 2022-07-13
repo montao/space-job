@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 
 public class WinScreen : NetworkBehaviour {
+
+    public TMP_Text status;
+    
     [SerializeField]
     private TMP_Text m_ButtonText;
 
@@ -43,7 +46,8 @@ public class WinScreen : NetworkBehaviour {
         SetReadyServerRpc(NetworkManager.Singleton.LocalClientId);
     }
 
-    public void SetEnabled(bool enabled) {
+    public void SetEnabled(bool enabled, string message) {
+        status.text = message;
         if (m_Buttons != null) {
             foreach (var button in m_Buttons) {
                 if (button) {
