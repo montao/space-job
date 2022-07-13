@@ -29,7 +29,7 @@ public class DropPod : RangedInteractableBase {
         else{
             m_CanBeUsed = false;
         }
-        Debug.Log("m_CanBeUsed is: " + m_CanBeUsed);
+        //Debug.Log("m_CanBeUsed is: " + m_CanBeUsed);
         doorAnimator.SetBool("Open", m_CanBeUsed);
     }
 
