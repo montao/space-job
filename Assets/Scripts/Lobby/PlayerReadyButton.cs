@@ -57,8 +57,8 @@ public class PlayerReadyButton : Interactable<bool> {
             }
 
         }
-        var ava = PlayerManager.Instance.LocalPlayer.Avatar;
-        if (!ava.ready.Value && ava.name == PlayerAvatar.SPECTATOR_NAME) {
+        var ava = PlayerManager.Instance?.LocalPlayer?.Avatar;
+        if (ava != null && ava.ready != null&& !ava.ready.Value && ava.name == PlayerAvatar.SPECTATOR_NAME) {
             Interaction();
         }
     }
