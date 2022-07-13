@@ -71,7 +71,7 @@ public class NumPad : TwoLevelInteractable
             Debug.Log("Here is some: BBG");
             SpawnItemServerRpc(VendingMashineItem.BBG);
         }
-        else if(InputDisplay.text == ">0000"){
+        else if(InputDisplay.text == ">5436"){
             Debug.Log("Here is some: Syringe");
             SpawnItemServerRpc(VendingMashineItem.SYRINGE);
         }
