@@ -402,11 +402,16 @@ public class PlayerAvatar : NetworkBehaviour {
     IEnumerator SpeedBoostCoroutine() {
         float speed_prev = m_MovementSpeed;
         m_MovementSpeed *= 1.75f;
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(8f);
         m_MovementSpeed = speed_prev;
         m_SpeedBoostCoroutine = null;
     }
 
+    public void HealBoost() {
+        if (m_SpeedBoostCoroutine == null) {
+            m_SpeedBoostCoroutine = StartCoroutine(HealBoostCoroutine(15));
+        }
+    }
 
     /* ================== CHARACTER SELECT ================== */
 
@@ -490,6 +495,12 @@ public class PlayerAvatar : NetworkBehaviour {
         if (m_LungOxygen < 0.15f) {
             float dps = 0.04f;
             TakeDamage(dps * delta_time);
+        }
+    }
+    IEnumerator HealBoostCoroutine(int duration) {
+        for(int tic = 0; tic < duration; tic++){
+            m_Health.Value = Mathf.Clamp(m_Health.Value + 0.1f, 0f, 1f);;
+            yield return new WaitForSeconds(1f);
         }
     }
 
