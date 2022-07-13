@@ -31,6 +31,7 @@ public class ShipMiniMap : MonoBehaviour {
         int dead = 0;
         foreach (var pplayer in PlayerManager.Instance.Players) {
             if (pplayer.PlayerName == PlayerAvatar.SPECTATOR_NAME) {
+                dead += 1;
                 continue;
             }
             var ava = pplayer.Avatar;
@@ -52,7 +53,7 @@ public class ShipMiniMap : MonoBehaviour {
                 ++i;
             }
         }
-        if (dead == i && i != 0 && m_WinScreen != null) {
+        if (dead == i && i != 0) {
             m_WinScreen.SetEnabled(true, false);
         }
         while (i < m_PlayerIcons.Count) {

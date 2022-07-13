@@ -31,6 +31,7 @@ public class WinScreen : NetworkBehaviour {
         m_ButtonText.text = text;
 
         if (IsServer && n_ready >= n_total) {
+            ShipManager.Instance.SetWon();
             ShipManager.Instance.StartNewGameServerRpc();
         }
     }
