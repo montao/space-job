@@ -26,6 +26,7 @@ public class PlayerAvatar : NetworkBehaviour {
     private Coroutine m_DeathReviveCoroutine = null;
     public NetworkVariable<bool> Spawned =
             new NetworkVariable<bool>(false, default, NetworkVariableWritePermission.Owner);
+    public static string SPECTATOR_NAME = "Spectator";
 
     /* === INPUT === */
     [SerializeField]
@@ -220,6 +221,7 @@ public class PlayerAvatar : NetworkBehaviour {
 
     public override void OnNetworkSpawn() {
         base.OnNetworkSpawn();
+
         m_PrimaryItem.OnValueChanged += OnPrimaryItemChanged;
         m_SecondaryItem.OnValueChanged += OnSecondaryItemChanged;
         m_ActiveCharacter.OnValueChanged += OnCharacterChanged;

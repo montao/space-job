@@ -3,6 +3,7 @@ using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class PlayerManager : NetworkBehaviour {
 
@@ -171,6 +172,18 @@ public class PlayerManager : NetworkBehaviour {
         foreach (var avatar in avatars) {
             var spawn_location = PlayerSpawnLocation.GetSpawn();
             ulong client_id = avatar.OwnerClientId;
+
+            if (avatar.nameText.text == PlayerAvatar.SPECTATOR_NAME) {
+                var spec_spawn = FindObjectOfType<SpectatorSpawn>();
+                if (spec_spawn) {
+                    spawn_location = spec_spawn.transform;
+                    var spec_cam = spec_spawn.GetComponentInParent<CinemachineVirtualCamera>();
+                    if (spec_cam) {
+                        spec_cam.Priority = 10000;
+                    }
+                    hudCanvas.GetComponent<Canvas>().enabled = false;
+                }
+            }
 
             ClientRpcParams rpc_params = new ClientRpcParams{
                 Send = new ClientRpcSendParams{

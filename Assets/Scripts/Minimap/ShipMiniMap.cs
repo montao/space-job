@@ -27,6 +27,9 @@ public class ShipMiniMap : MonoBehaviour {
     void Update() {
         int i = 0;
         foreach (var pplayer in PlayerManager.Instance.Players) {
+            if (pplayer.PlayerName == PlayerAvatar.SPECTATOR_NAME) {
+                continue;
+            }
             var ava = pplayer.Avatar;
             if (i >= m_PlayerIcons.Count) {
                 Debug.LogWarning("More players than minimap icons!");

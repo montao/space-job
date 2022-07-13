@@ -57,6 +57,10 @@ public class PlayerReadyButton : Interactable<bool> {
             }
 
         }
+        var ava = PlayerManager.Instance.LocalPlayer.Avatar;
+        if (!ava.ready.Value && ava.name == PlayerAvatar.SPECTATOR_NAME) {
+            Interaction();
+        }
     }
 
     public void ShowCountdown(bool on) {
