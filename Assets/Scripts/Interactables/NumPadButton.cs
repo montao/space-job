@@ -20,7 +20,8 @@ public class NumPadButton : InteractableBase
             VendingNumPad.DisplayInputText(Number);
         }
         else if(IsPowerTerminal && !ShipManager.Instance.HasPower){
-            if(Number == 21){
+            ShipManager.Instance.ResolvePowerOutageEvent();
+/*             if(Number == 21){
                 PowerTerminal.ClearInput();
             }
             else if(Number == 99){
@@ -28,7 +29,7 @@ public class NumPadButton : InteractableBase
             }
             else{
                 PowerTerminal.DisplayInputText(Number);
-            }
+            } */
         }
     }
     public override float CooldownTime()

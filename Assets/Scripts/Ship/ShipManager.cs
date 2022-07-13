@@ -264,7 +264,7 @@ public class ShipManager : NetworkBehaviour {
             return false;
         }
     }
-    private void ResolvePowerOutageEvent() {
+    public void ResolvePowerOutageEvent() {
         m_Power.Value = HAS_POWER;
         audioSourceLamps.PlayOneShot(lampSound);
         m_LastPowerOutage = Time.fixedTime;
