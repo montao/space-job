@@ -7,7 +7,7 @@ using TMPro;
 public class WinScreen : NetworkBehaviour {
 
     public TMP_Text status;
-    
+
     [SerializeField]
     private TMP_Text m_ButtonText;
 
@@ -15,6 +15,9 @@ public class WinScreen : NetworkBehaviour {
     private Canvas m_Canvas;
     private NetworkVariable<int> m_ReadyCount = new NetworkVariable<int>(0);
     private List<ulong> m_Ready = new List<ulong>();
+
+    private string won = "Conratulations:\nYou Did It,\nEmployees!";
+    private string lost = "Mission Failed:\nUnfortunately All Employees Are MIA";
 
     void Start() {
         m_Canvas = GetComponent<Canvas>();
@@ -46,8 +49,8 @@ public class WinScreen : NetworkBehaviour {
         SetReadyServerRpc(NetworkManager.Singleton.LocalClientId);
     }
 
-    public void SetEnabled(bool enabled, string message) {
-        status.text = message;
+    public void SetEnabled(bool enabled, bool success) {
+        status.text = (success) ? won : lost;
         if (m_Buttons != null) {
             foreach (var button in m_Buttons) {
                 if (button) {

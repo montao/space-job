@@ -84,7 +84,7 @@ public class ShipManager : NetworkBehaviour {
     }
     protected void OnWinChange(bool prev, bool current) {
         if (m_WinScreen != null) {
-            m_WinScreen.SetEnabled(current, "Conratulations:\nYou Did It,\nEmployees!");
+            m_WinScreen.SetEnabled(current, true);
         }
     }
     public override void OnNetworkSpawn(){

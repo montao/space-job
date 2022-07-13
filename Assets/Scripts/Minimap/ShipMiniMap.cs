@@ -17,6 +17,8 @@ public class ShipMiniMap : MonoBehaviour {
     private List<RectTransform> m_PlayerIcons = new List<RectTransform>();
     private List<TMP_Text> m_PlayerNames = new List<TMP_Text>();
 
+    public WinScreen m_WinScreen;
+
     void Awake() {
         foreach (var icon in m_PlayerIcons) {
             // TODO!! handle re-joining players
@@ -26,6 +28,7 @@ public class ShipMiniMap : MonoBehaviour {
 
     void Update() {
         int i = 0;
+        int dead = 0;
         foreach (var pplayer in PlayerManager.Instance.Players) {
             if (pplayer.PlayerName == PlayerAvatar.SPECTATOR_NAME) {
                 continue;
@@ -39,10 +42,18 @@ public class ShipMiniMap : MonoBehaviour {
                 m_PlayerIcons[i].gameObject.SetActive(true);
                 m_PlayerIcons[i].localPosition = WorldToCanvas(ava.transform.position);
                 m_PlayerNames[i].text = pplayer.PlayerName;
-                bool alive = ava.m_Health.Value > 0;
-                m_PlayerNames[i].color = alive ? m_AliveColor : m_DeadColor;
+                if (ava.m_Health.Value > 0) {
+                    m_PlayerNames[i].color = m_AliveColor;
+                }
+                else {
+                    m_PlayerNames[i].color = m_DeadColor;
+                    dead++;
+                }
                 ++i;
             }
+        }
+        if (dead == i && i != 0 && m_WinScreen != null) {
+            m_WinScreen.SetEnabled(true, false);
         }
         while (i < m_PlayerIcons.Count) {
             m_PlayerIcons[i].gameObject.SetActive(false);
