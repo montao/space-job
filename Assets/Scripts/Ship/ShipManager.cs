@@ -295,9 +295,9 @@ public class ShipManager : NetworkBehaviour {
         if (!TriggerPowerOutageEvent()) {
             return;
         }
+        ShowAlertClientRpc("MULTIPLE SYSTEM FAILURE", green: false);
         int n_breaches = UnityEngine.Random.Range(1, 3);
         int n_fires = UnityEngine.Random.Range(1, 7);
-        ShowAlertClientRpc("MULTIPLE SYSTEM FAILURE", green: false);
         for (int i = 0; i < n_breaches; ++i) {
             TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
         }
@@ -369,7 +369,9 @@ public class ShipManager : NetworkBehaviour {
             ShowAlertClientRpc("Delivery Location reached", green: true);
         }
         if (!(new_dist <= WIN_DISTANCE_THRESHOLD) && m_DistanceToWin <= WIN_DISTANCE_THRESHOLD) {
-            ShowAlertClientRpc("Delivery Location left", green: false);
+            if (m_DistanceToWin != 0) {
+                ShowAlertClientRpc("Delivery Location left", green: false);
+            }
         }
         m_DistanceToWin = new_dist;
         if (m_DistanceToWin <= WIN_DISTANCE_THRESHOLD){
