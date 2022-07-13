@@ -29,6 +29,7 @@ public class Syringe : DroppableInteractable{
     public override PlayerAnimation SelfInteraction(PlayerAvatar avatar) {
         avatar.HealBoost();
         StartCoroutine(WaitForMouth(0.5f));
+        PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).Despawn();
         return PlayerAnimation.SPRAY;
     }
 
