@@ -307,10 +307,10 @@ MonoBehaviour:
   LastUse: 0
   CanInteract: 1
   Velocity: 100
-  PrimaryPos: {x: 0, y: 0, z: 0}
-  PrimaryRot: {x: 0, y: 0, z: 0}
-  SecondaryPos: {x: 0, y: 0, z: 0}
-  SecondaryRot: {x: 0, y: 0, z: 0}
+  PrimaryPos: {x: 0.014, y: -0.154, z: -0.062}
+  PrimaryRot: {x: 12.916955, y: 144.90854, z: 183.797}
+  SecondaryPos: {x: -0.024, y: 0.1, z: -0.306}
+  SecondaryRot: {x: 351.34802, y: 304.49863, z: 104.117455}
   pickupSounds:
   - {fileID: 8300000, guid: a675903fb254376d7a78b7c5230a369a, type: 3}
   interactionSounds: []
