@@ -40,7 +40,8 @@ public class HullBreachInstance : RangedInteractableBase {
             if (m_LocalPlayerHoldingPlate) {
                 var plate = Util.GetDroppableInteractable(ava.GetInventoryItem(PlayerAvatar.Slot.PRIMARY)).GetComponent<MetalPlate>();
                 if (plate != null) {
-                    plate.StickToWallServerRpc(transform.position, transform.rotation);
+                    plate.DespawnServerRpc();
+                    // plate.StickToWallServerRpc(transform.position, transform.rotation);
                 }
             }
             ava.ReleaseMovementLock(GetHashCode());
