@@ -49,7 +49,6 @@ public class ShipMiniMap : MonoBehaviour {
         int dead = 0;
         foreach (var pplayer in PlayerManager.Instance.Players) {
             if (pplayer.PlayerName == PlayerAvatar.SPECTATOR_NAME) {
-                dead += 1;
                 continue;
             }
             var ava = pplayer.Avatar;
