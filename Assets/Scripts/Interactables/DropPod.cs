@@ -11,7 +11,8 @@ public class DropPod : RangedInteractableBase {
     protected override void Interaction(){
         if (PlayerAvatar.IsHolding<MeetBalls>() && m_CanBeUsed) {
             FullFillOrderServerRpc();
-            PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).Despawn();
+            PlayerAvatar ava = PlayerManager.Instance.LocalPlayer.Avatar;
+            ava.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).GetComponent<MeetBalls>().DespawnServerRpc();
         }
     }
 

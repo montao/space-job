@@ -35,7 +35,7 @@ public class Energy : DroppableInteractable{
         avatar.SpeedBoost();
         StartCoroutine(WaitForMouth(0.5f));
         if(m_Usages == 3){
-            PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).Despawn();
+            DespawnServerRpc();
         }
         m_Usages ++;
         return PlayerAnimation.DRINK;

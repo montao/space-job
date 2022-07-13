@@ -65,7 +65,7 @@ public class HullBreachInstance : RangedInteractableBase {
         if (PlayerAvatar.IsHolding<BreachBeGone>()) {
             var ava = PlayerManager.Instance.LocalPlayer.Avatar;
             ava.AnimationController.TriggerAnimation(PlayerAnimation.SPRAY);
-            ava.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).Despawn();
+            ava.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).GetComponent<BreachBeGone>().DespawnServerRpc();
             ResolvedServerRpc();
         }
     }

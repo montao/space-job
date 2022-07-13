@@ -42,7 +42,7 @@ public class CoffeCup : DroppableInteractable{
         avatar.SpeedBoost();
         StartCoroutine(WaitForMouth(0.5f));
         if(m_Usages == 2){
-            PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).Despawn();
+            DespawnServerRpc();
         }
         return PlayerAnimation.DRINK;
     }
