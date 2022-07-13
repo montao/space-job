@@ -537,6 +537,7 @@ MonoBehaviour:
   - {fileID: 3965941493782156203}
   - {fileID: 8496052605297322974}
   - {fileID: 5640325150026470290}
+  textureModels: []
 --- !u!114 &2565026591686966456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,7 +600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6780464618843713117
 Transform:
   m_ObjectHideFlags: 0
