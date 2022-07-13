@@ -30,10 +30,23 @@ public class WinScreen : NetworkBehaviour {
         string text = "Return to Lobby (" + n_ready + "/" + n_total +")";
         m_ButtonText.text = text;
 
-        if (IsServer && n_ready >= n_total) {
-            ShipManager.Instance.SetWon();
-            ShipManager.Instance.StartNewGameServerRpc();
+        if (IsServer && n_ready >= n_total - 1) {
+            if (n_ready >= n_total) {
+                VoteSuccess();
+                return;
+            }
+            foreach (var pplayer in PlayerManager.Instance.Players) {
+                if (pplayer.PlayerName == PlayerAvatar.SPECTATOR_NAME) {
+                    VoteSuccess();    
+                    return;
+                }
+            }
         }
+    }
+
+    public void VoteSuccess() {
+        ShipManager.Instance.SetWon();
+        ShipManager.Instance.StartNewGameServerRpc();
     }
 
     [ServerRpc(RequireOwnership = false)]
