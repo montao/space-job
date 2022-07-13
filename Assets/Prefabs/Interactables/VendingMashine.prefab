@@ -506,6 +506,7 @@ MonoBehaviour:
   EnergyTwo: {fileID: 3387754479898786637, guid: d11c73cbe8de3a69b8f8ea8e542d6b17, type: 3}
   Balls: {fileID: 5023061960400236582, guid: e51338b90502c000b974772be44de87e, type: 3}
   Bbg: {fileID: 6193960833816435966, guid: 622e1d3c127e996bdb7d06064c0c565e, type: 3}
+  Syringe: {fileID: 3111719952670010352, guid: 1eb4c22a8d0419d8086465ba1de211f5, type: 3}
 --- !u!1 &1824027022868491407
 GameObject:
   m_ObjectHideFlags: 0

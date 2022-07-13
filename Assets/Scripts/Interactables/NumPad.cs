@@ -10,7 +10,8 @@ public enum VendingMashineItem {
     ENERGY_ONE,
     ENERGY_TWO,
     BALLS,
-    BBG
+    BBG,
+    SYRINGE
 }
 
 public class NumPad : TwoLevelInteractable
@@ -24,6 +25,8 @@ public class NumPad : TwoLevelInteractable
     public GameObject EnergyTwo;
     public GameObject Balls;
     public GameObject Bbg;
+    public GameObject Syringe;
+
     private int m_InCounter = 0;
 
     public override void Start() {
@@ -65,8 +68,12 @@ public class NumPad : TwoLevelInteractable
             SpawnItemServerRpc(VendingMashineItem.BALLS);
         }
         else if(InputDisplay.text == ">6969"){
-            Debug.Log("Here is some: Meetballs");
+            Debug.Log("Here is some: BBG");
             SpawnItemServerRpc(VendingMashineItem.BBG);
+        }
+        else if(InputDisplay.text == ">0000"){
+            Debug.Log("Here is some: Syringe");
+            SpawnItemServerRpc(VendingMashineItem.SYRINGE);
         }
     }
 
@@ -91,6 +98,9 @@ public class NumPad : TwoLevelInteractable
         }
         else if(VendingMashineItem.BBG == item){
             spawn_item = Instantiate(Bbg, DropPod.position, Quaternion.identity);
+        }
+        else if(VendingMashineItem.SYRINGE == item){
+            spawn_item = Instantiate(Syringe, DropPod.position, Quaternion.identity);
         }
         spawn_item.GetComponent<Rigidbody>().AddForce(yeet);
         spawn_item.GetComponent<NetworkObject>().Spawn();
