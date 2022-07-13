@@ -9,6 +9,7 @@ public class Energy : DroppableInteractable{
     private bool m_PickedUp = false;  // Server-Only
     [SerializeField]
     private AudioClip[] gulpSounds;
+    private int m_Usages = 0;
 
     public override void Awake() {
         base.Awake();
@@ -33,8 +34,11 @@ public class Energy : DroppableInteractable{
     public override PlayerAnimation SelfInteraction(PlayerAvatar avatar) {
         avatar.SpeedBoost();
         StartCoroutine(WaitForMouth(0.5f));
+        if(m_Usages == 3){
+            PlayerManager.Instance.LocalPlayer.Avatar.GetInventoryItem(PlayerAvatar.Slot.PRIMARY).Despawn();
+        }
+        m_Usages ++;
         return PlayerAnimation.DRINK;
-        
     }
 
     [ServerRpc(RequireOwnership = false)]

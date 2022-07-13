@@ -401,8 +401,8 @@ public class PlayerAvatar : NetworkBehaviour {
     }
     IEnumerator SpeedBoostCoroutine() {
         float speed_prev = m_MovementSpeed;
-        m_MovementSpeed *= 3f;
-        yield return new WaitForSeconds(4);
+        m_MovementSpeed *= 1.75f;
+        yield return new WaitForSeconds(8);
         m_MovementSpeed = speed_prev;
         m_SpeedBoostCoroutine = null;
     }
