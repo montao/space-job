@@ -87,14 +87,14 @@ public class Room : NetworkBehaviour {
             }
         }
     }
-    public void SpawnFire(){
+    public bool SpawnFire(){
         if (!IsServer) {
             Debug.LogWarning("Fire should only be called on server!");
-            return;       
+            return false;       
         }
         if (m_FireSpawnLocations.Count == 0) {
             Debug.Log("You're in luck(?), there's no places for fire in " + name);
-            return;
+            return false;
         }
         Transform location = Util.RandomChoice(m_FireSpawnLocations);
         m_FireSpawnLocations.Remove(location);
@@ -106,6 +106,7 @@ public class Room : NetworkBehaviour {
         fire.GetComponent<NetworkObject>().Spawn();
         fire.GetComponent<FireInstance>().Setup(this, location);
         m_Fires.Add(fire.GetComponent<FireInstance>());
+        return true;
     }
 
     public void FireJumpOver(List<Transform> spawnLocations){
@@ -136,16 +137,16 @@ public class Room : NetworkBehaviour {
         m_Fires.Add(fire.GetComponent<FireInstance>());
     }
 
-    public void SpawnHullBreach(EventParameters.HullBreachSize size) {
+    public bool SpawnHullBreach(EventParameters.HullBreachSize size) {
         if (!IsServer) {
             Debug.LogWarning("SpawnHullBreach should only be called on server!");
             Debug.Log("Spawned? " + IsSpawned);
             Debug.Log("Client? " + IsClient);
-            return;
+            return false;
         }
         if (m_HullBreachSpawnLocations.Count == 0) {
             Debug.Log("You're in luck(?), there's no places to spawn hull breaches in " + name);
-            return;
+            return false;
         }
         Transform location = Util.RandomChoice(m_HullBreachSpawnLocations);
         m_HullBreachSpawnLocations.Remove(location);
@@ -166,6 +167,8 @@ public class Room : NetworkBehaviour {
         breach.GetComponent<NetworkObject>().Spawn();
         breach.GetComponent<HullBreachInstance>().Setup(this, location);
         m_HullBreaches.Add(breach.GetComponent<HullBreachInstance>());
+
+        return true;
     }
 
     public void HullBreachResolved(HullBreachInstance breach, Transform freed_up_spawn_location) {

@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Unity.Netcode;
 
 [System.Serializable]
@@ -34,6 +34,8 @@ public class ShipManager : NetworkBehaviour {
     private float m_DistSinceLastBreadcrumb = 0;
     private Map m_Map;
     private float m_DistanceToWin;
+
+    private ShipMiniMap m_MiniMap = null;
 
     private List<Destination> m_Destinations = new List<Destination>();
 
@@ -253,6 +255,7 @@ public class ShipManager : NetworkBehaviour {
         ShipManager.Instance.Steering.SetTargetVelocityServerRpc(2);
         int error_idx = UnityEngine.Random.Range(0, ERROR_CODES.Length - 1);
         m_Power.Value = ERROR_CODES[error_idx];
+        ShowAlertClientRpc("Power Outage", green: false);
         return true;
     }
 
@@ -269,18 +272,23 @@ public class ShipManager : NetworkBehaviour {
         m_Power.Value = HAS_POWER;
         audioSourceLamps.PlayOneShot(lampSound);
         m_LastPowerOutage = Time.fixedTime;
+        ShowAlertClientRpc("Power Outage Resolved", green: true);
     }
 
     public void TriggerHullBreachEvent(EventParameters.HullBreachSize size) {
         Room room = Util.RandomChoice(Rooms);
         if (room != null) {
-            room.SpawnHullBreach(size);
+            if (room.SpawnHullBreach(size)) {
+                ShowAlertClientRpc("Hull Breach Detected", green: false);
+            }
         }
     }
 
     public void TriggerFireEvent() {
         Room room = Util.RandomChoice(Rooms);
-        room.SpawnFire();
+        if (room.SpawnFire()) {
+            ShowAlertClientRpc("Fire Detected", green: false);
+        }
     }
 
     public void TriggerSystemFailureEvent() {
@@ -289,6 +297,7 @@ public class ShipManager : NetworkBehaviour {
         }
         int n_breaches = UnityEngine.Random.Range(1, 3);
         int n_fires = UnityEngine.Random.Range(1, 7);
+        ShowAlertClientRpc("MULTIPLE SYSTEM FAILURE", green: false);
         for (int i = 0; i < n_breaches; ++i) {
             TriggerHullBreachEvent(EventParameters.HullBreachSize.SMALL);
         }
@@ -355,7 +364,14 @@ public class ShipManager : NetworkBehaviour {
 
 
     private void CheckWinCondition(){
-        m_DistanceToWin = (GetNearestDestination().pos - m_Position.Value).magnitude; 
+        var new_dist = (GetNearestDestination().pos - m_Position.Value).magnitude;
+        if (new_dist <= WIN_DISTANCE_THRESHOLD && !(m_DistanceToWin <= WIN_DISTANCE_THRESHOLD)) {
+            ShowAlertClientRpc("Delivery Location reached", green: true);
+        }
+        if (!(new_dist <= WIN_DISTANCE_THRESHOLD) && m_DistanceToWin <= WIN_DISTANCE_THRESHOLD) {
+            ShowAlertClientRpc("Delivery Location left", green: false);
+        }
+        m_DistanceToWin = new_dist;
         if (m_DistanceToWin <= WIN_DISTANCE_THRESHOLD){
             if (IsServer) {
                 //m_Won.Value = true;
@@ -364,6 +380,11 @@ public class ShipManager : NetworkBehaviour {
     }
 
     private void Update() {
+
+        if (m_MiniMap == null && SceneManager.GetActiveScene().name == "ShipScene") {
+            m_MiniMap = FindObjectOfType<ShipMiniMap>();
+        }
+
 #if !DISABLE_DEBUG_KEYS
         if(Input.GetKeyDown(KeyCode.P) && IsServer){
             if (HasPower) {
@@ -459,6 +480,7 @@ public class ShipManager : NetworkBehaviour {
         if (m_DistanceToWin <= (WIN_DISTANCE_THRESHOLD * 1.02f)) {
             var idx = m_Destinations.IndexOf(dest);
             MarkDestinationReachedClientRpc((uint)idx);
+            ShowAlertClientRpc("Delivery Complete. Good job!", green: true);
         }
     }
 
@@ -478,5 +500,10 @@ public class ShipManager : NetworkBehaviour {
         dest.reached = true;
         m_Destinations[(int)idx] = dest;
         Debug.Log("Marked destination #" + idx + " as reached.");
+    }
+
+    [ClientRpc]
+    public void ShowAlertClientRpc(string text, bool green, float duration_secs = 3f) {
+        m_MiniMap?.ShowAlert(text, green, duration_secs);
     }
 }

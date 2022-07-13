@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using TMPro;
 
@@ -18,6 +19,23 @@ public class ShipMiniMap : MonoBehaviour {
     private List<TMP_Text> m_PlayerNames = new List<TMP_Text>();
 
     public WinScreen m_WinScreen;
+
+    [SerializeField]
+    private TMP_Text m_AlertRed;
+    [SerializeField]
+    private TMP_Text m_AlertGreen;
+
+    public void ShowAlert(string text, bool green, float duration_secs = 3f) {
+        var t = green ? m_AlertGreen : m_AlertRed;
+        StartCoroutine(ShowAlertCoroutine(t, text, duration_secs));
+    }
+
+    private IEnumerator ShowAlertCoroutine(TMP_Text text, string message, float duration) {
+        string prev = text.text;
+        text.text += message + "\n";
+        yield return new WaitForSeconds(duration);
+        text.text = "";
+    }
 
     void Awake() {
         foreach (var icon in m_PlayerIcons) {
