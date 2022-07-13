@@ -258,13 +258,14 @@ public class ShipManager : NetworkBehaviour {
 
     public bool TryResolvePowerOutageEvent(int solution_attempt) {
         if (solution_attempt == m_Power.Value) {
-            ResolvePowerOutageEvent();
+            ResolvePowerOutageEventServerRpc();
             return true;
         } else {
             return false;
         }
     }
-    public void ResolvePowerOutageEvent() {
+    [ServerRpc(RequireOwnership = false)]
+    public void ResolvePowerOutageEventServerRpc() {
         m_Power.Value = HAS_POWER;
         audioSourceLamps.PlayOneShot(lampSound);
         m_LastPowerOutage = Time.fixedTime;
@@ -368,7 +369,7 @@ public class ShipManager : NetworkBehaviour {
             if (HasPower) {
                 TriggerPowerOutageEvent();
             } else {
-                ResolvePowerOutageEvent();
+                ResolvePowerOutageEventServerRpc();
             }
         }
         if(Input.GetKeyDown(KeyCode.U) && IsServer){

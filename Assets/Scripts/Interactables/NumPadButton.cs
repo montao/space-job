@@ -20,7 +20,7 @@ public class NumPadButton : InteractableBase
             VendingNumPad.DisplayInputText(Number);
         }
         else if(IsPowerTerminal && !ShipManager.Instance.HasPower){
-            ShipManager.Instance.ResolvePowerOutageEvent();
+            ShipManager.Instance.ResolvePowerOutageEventServerRpc();
 /*             if(Number == 21){
                 PowerTerminal.ClearInput();
             }
