@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.040637374, g: 0.24334216, b: 0.31317982, a: 1}
+  m_IndirectSpecularColor: {r: 0.040689424, g: 0.24335492, b: 0.31316802, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1014,7 +1014,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70842671}
-  m_LocalRotation: {x: 0.17896947, y: -0.043198477, z: 0.007865918, w: 0.98287433}
+  m_LocalRotation: {x: 0.17896946, y: -0.043198515, z: 0.007865924, w: 0.98287433}
   m_LocalPosition: {x: -1.095, y: 2.628, z: -28.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2995,6 +2995,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MedSign
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ca1a1f3e02f05a14aac4ccc890273e49, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca1a1f3e02f05a14aac4ccc890273e49, type: 3}
 --- !u!1 &241990283
@@ -3369,6 +3373,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3c8bf2955f74bad32ac479c62234d6e5, type: 3}
       propertyPath: m_Name
       value: MapSign
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3c8bf2955f74bad32ac479c62234d6e5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c8bf2955f74bad32ac479c62234d6e5, type: 3}
@@ -5693,6 +5701,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ad9100bb9e90f74f1ad55e502dd49c2d, type: 3}
       propertyPath: m_Name
       value: ElectroSign
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ad9100bb9e90f74f1ad55e502dd49c2d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad9100bb9e90f74f1ad55e502dd49c2d, type: 3}
@@ -8143,6 +8155,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 8905cb9670c2085638973aa489a0c92d, type: 3}
       propertyPath: m_Name
       value: FreezerSign
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8905cb9670c2085638973aa489a0c92d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8905cb9670c2085638973aa489a0c92d, type: 3}
@@ -12848,6 +12864,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CockpitSign
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c1c6d7e5e8a1fd3d9a00d1e5741e26cf, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1c6d7e5e8a1fd3d9a00d1e5741e26cf, type: 3}
 --- !u!4 &1330834999 stripped
@@ -13826,6 +13846,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 872ff6524671b8716a110e1f4abc6a1e, type: 3}
       propertyPath: m_Name
       value: DeliverySign
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 872ff6524671b8716a110e1f4abc6a1e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 872ff6524671b8716a110e1f4abc6a1e, type: 3}
@@ -18175,6 +18199,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c8100aa72c5735d169ad57bc9c4e53ff, type: 3}
       propertyPath: m_Name
       value: PlantSign
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c8100aa72c5735d169ad57bc9c4e53ff, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8100aa72c5735d169ad57bc9c4e53ff, type: 3}
