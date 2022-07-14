@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d8563c6dbf5e6c2947519126cc6a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeedsPower: 0
+  m_Mode: 0
+  NeedsPower: 1
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
@@ -239,7 +240,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d8563c6dbf5e6c2947519126cc6a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeedsPower: 0
+  m_Mode: 0
+  NeedsPower: 1
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
@@ -440,7 +442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d8563c6dbf5e6c2947519126cc6a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeedsPower: 0
+  m_Mode: 0
+  NeedsPower: 1
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
@@ -693,7 +696,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d8563c6dbf5e6c2947519126cc6a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeedsPower: 0
+  m_Mode: 0
+  NeedsPower: 1
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
@@ -803,7 +807,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b759d155a07f123cb092532c4e2972a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeedsPower: 0
+  m_Mode: 0
+  NeedsPower: 1
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
@@ -925,7 +930,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d8563c6dbf5e6c2947519126cc6a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeedsPower: 0
+  m_Mode: 0
+  NeedsPower: 1
   TriggeredAnimation: 2
   LastUse: 0
   CanInteract: 1
