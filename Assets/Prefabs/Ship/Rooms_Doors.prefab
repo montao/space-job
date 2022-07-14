@@ -801,13 +801,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1386461844784385221}
-  m_LocalRotation: {x: -0.67379814, y: -0.21446699, z: -0.21446699, w: 0.67379814}
-  m_LocalPosition: {x: -2.566, y: -0.092, z: 4.605}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 2.7680006, y: -1.054, z: 3.381}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7156504390952186335}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -35.312}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
 --- !u!114 &7605899932542655456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -930,13 +930,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508302844081185300}
-  m_LocalRotation: {x: -0.64061487, y: 0.29935372, z: 0.29935372, w: 0.64061487}
-  m_LocalPosition: {x: 2.87, y: 0.277, z: 1.879}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 2.733, y: -0.32700002, z: 2.503}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7156504390952186335}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 50.093}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
 --- !u!114 &507377486895495381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1242,6 +1242,7 @@ MonoBehaviour:
   - {fileID: 5390109685883851389}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_FireSpawnLocations: []
 --- !u!114 &7057665226988412654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1501,6 +1502,7 @@ MonoBehaviour:
   - {fileID: 2415840578354042175}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_FireSpawnLocations: []
 --- !u!114 &4700238586530719873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2062,6 +2064,7 @@ MonoBehaviour:
   - {fileID: 8903441496636967229}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_FireSpawnLocations: []
 --- !u!114 &2850231744276972331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2208,6 +2211,7 @@ MonoBehaviour:
   - {fileID: 886042086887888594}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_FireSpawnLocations: []
 --- !u!114 &2850231745715724016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2249,7 +2253,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2850231745837615954}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: -8.979689, y: 1.6299999, z: -2.1846962}
+  m_LocalPosition: {x: -8.226, y: 0.824, z: -2.185}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5968926636153170789}
@@ -2596,6 +2600,7 @@ MonoBehaviour:
   - {fileID: 5004190452881124542}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_FireSpawnLocations: []
 --- !u!114 &7425069000446144468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2815,6 +2820,7 @@ MonoBehaviour:
   - {fileID: 4704247278190610556}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_FireSpawnLocations: []
 --- !u!114 &1628122864496181065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3209,6 +3215,7 @@ MonoBehaviour:
   - {fileID: 7316815105889044647}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_FireSpawnLocations: []
 --- !u!114 &864945437767678893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4669,7 +4676,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6185809929907262164}
   m_LocalRotation: {x: -0.26627576, y: -0.65505517, z: -0.65505517, w: 0.2662757}
-  m_LocalPosition: {x: 1.82, y: 0.394, z: -2.48}
+  m_LocalPosition: {x: 1.492, y: 0.394, z: -2.624}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7427616913386556236}
@@ -5449,6 +5456,7 @@ MonoBehaviour:
   - {fileID: 3535531984132539243}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_FireSpawnLocations: []
 --- !u!114 &3092198356075696057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5535,6 +5543,7 @@ MonoBehaviour:
   - {fileID: 1365710470005482718}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_FireSpawnLocations: []
 --- !u!114 &8442990875437909177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5813,6 +5822,7 @@ MonoBehaviour:
   - {fileID: 5390109685883851389}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_FireSpawnLocations: []
 --- !u!114 &7984538467064334720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6162,6 +6172,7 @@ MonoBehaviour:
   - {fileID: 1521768565468819296}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_FireSpawnLocations: []
 --- !u!114 &6177532161437745585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6299,6 +6310,7 @@ MonoBehaviour:
   - {fileID: 4181072324525717967}
   m_RoomOxygen:
     m_InternalValue: 1
+  m_FireSpawnLocations: []
 --- !u!114 &3499947878943139966
 MonoBehaviour:
   m_ObjectHideFlags: 0
