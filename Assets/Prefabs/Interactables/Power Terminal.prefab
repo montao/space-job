@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0805cb897b172214a758f9a2301c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
@@ -268,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0805cb897b172214a758f9a2301c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
@@ -384,6 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0805cb897b172214a758f9a2301c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
@@ -593,6 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0805cb897b172214a758f9a2301c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
@@ -742,7 +746,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -162.50798, y: -45.81573, z: -224.09076, w: -99.86931}
+  m_margin: {x: -162.50798, y: -45.81573, z: -224.09076, w: -185.78696}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -843,6 +847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0805cb897b172214a758f9a2301c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
@@ -959,6 +964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0805cb897b172214a758f9a2301c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
@@ -1075,6 +1081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0805cb897b172214a758f9a2301c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
@@ -1191,6 +1198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0805cb897b172214a758f9a2301c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
@@ -1515,6 +1523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0805cb897b172214a758f9a2301c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
@@ -1780,6 +1789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd87e8410e4d0a0eb66cb487d738e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
@@ -2224,6 +2234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0805cb897b172214a758f9a2301c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
@@ -2433,6 +2444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0805cb897b172214a758f9a2301c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0
@@ -2549,6 +2561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0805cb897b172214a758f9a2301c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Mode: 0
   NeedsPower: 0
   TriggeredAnimation: 2
   LastUse: 0

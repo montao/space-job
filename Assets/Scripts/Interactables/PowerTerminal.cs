@@ -41,7 +41,7 @@ public class PowerTerminal : TwoLevelInteractable
         ShipManager.Instance.TryResolvePowerOutageEvent(number);
     }
 
-    public void DisplayError(int room) {
-        ErrorText.text = "" + room;
+    public void DisplayError(string placeholder /* int room */) {
+        ErrorText.text = "" + placeholder;
     }
 }

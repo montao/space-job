@@ -75,7 +75,12 @@ public class ShipManager : NetworkBehaviour {
 
 
         if (PowerTerminal != null) {
-            PowerTerminal.DisplayError(m_Power.Value);
+            if(m_Power.Value != -1){
+                PowerTerminal.DisplayError("any key" /* m_Power.Value */);
+            }
+            if(m_Power.Value == -1){
+                PowerTerminal.DisplayError(" ");
+            }
         }
 
         if (m_TransitionMaterial != null) {
