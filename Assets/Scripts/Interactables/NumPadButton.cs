@@ -37,6 +37,8 @@ public class NumPadButton : InteractableBase
         return 2.0f;
     }
     public override string FriendlyName() {
+        if (Number == 420) return "Enter";
+        if (Number == 69) return "Clear";
         return Number.ToString();
     }
 }
