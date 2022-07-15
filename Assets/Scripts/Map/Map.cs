@@ -37,9 +37,6 @@ public class Map : MonoBehaviour {
             state.risk = 1;
         } else {
             int y = Mathf.RoundToInt(pos.y);
-            if (!SystemInfo.graphicsUVStartsAtTop) {
-                y = MAX - y;
-            }
             Color color = MapTexture.GetPixel(Mathf.RoundToInt(pos.x), y);
             if(color.g >= DANGER_THRESHOLD){
                 state.spaceEvent = Event.POWER_OUTAGE;
