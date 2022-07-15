@@ -3,6 +3,8 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 public class WinScreen : NetworkBehaviour {
 
@@ -17,7 +19,7 @@ public class WinScreen : NetworkBehaviour {
     private List<ulong> m_Ready = new List<ulong>();
 
     private string won = "Conratulations:\nYou Did It,\nEmployees!";
-    private string lost = "Mission Failed:\nUnfortunately All Employees Are MIA";
+    private string lost = "Mission Failed:\nUnfortunately The Employees Seem To Not Be Working Anymore";
 
     void Start() {
         m_Canvas = GetComponent<Canvas>();
@@ -27,7 +29,7 @@ public class WinScreen : NetworkBehaviour {
     void Update() {
         int n_ready = m_ReadyCount.Value;
         int n_total = PlayerManager.Instance.ConnectedPlayerCount;
-        string text = "Return to Lobby (" + n_ready + "/" + n_total +")";
+        string text = "Return to Menu (" + n_ready + "/" + n_total +")";
         m_ButtonText.text = text;
 
         if (IsServer && n_ready >= n_total - 1) {
@@ -45,8 +47,11 @@ public class WinScreen : NetworkBehaviour {
     }
 
     public void VoteSuccess() {
-        ShipManager.Instance.SetWon();
-        ShipManager.Instance.StartNewGameServerRpc();
+        //ShipManager.Instance.SetWon();
+        //ShipManager.Instance.StartNewGameServerRpc();
+        PlayerManager.Instance.ClearPersistentPlayers();
+        NetworkManager.Singleton.Shutdown();
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);   
     }
 
     [ServerRpc(RequireOwnership = false)]
