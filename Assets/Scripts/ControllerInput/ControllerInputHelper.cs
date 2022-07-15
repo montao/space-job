@@ -148,7 +148,8 @@ public class ControllerInputHelper : MonoBehaviour {
 
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => {
-                if (interactable.m_Mode == InteractableBase.Mode.SINGLE_CLICK) {
+                if (interactable.m_Mode == InteractableBase.Mode.SINGLE_CLICK
+                        && (!interactable.NeedsPower || ShipManager.Instance.HasPower)) {
                     interactable.Invoke("Interaction", 0);  // irgh
                 }
         });
