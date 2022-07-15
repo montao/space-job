@@ -34,7 +34,7 @@ public class NumPadButton : InteractableBase
     }
     public override float CooldownTime()
     {
-        return 0.0f;
+        return 2.0f;
     }
     public override string FriendlyName() {
         return Number.ToString();

@@ -34,8 +34,7 @@ public class NumPad : TwoLevelInteractable
         ClearInput();   
     }
     public void DisplayInputText(int input_number){
-        if(m_InCounter == 4){
-            CheckInputText();
+        if(m_InCounter == 1){
             ClearInput();
         }
         InputDisplay.text += input_number;
@@ -47,31 +46,35 @@ public class NumPad : TwoLevelInteractable
     }
     public void CheckInputText(){
         Debug.Log("Here is Number:" + InputDisplay.text);
-        if(InputDisplay.text == ">3619"){
+        if(InputDisplay.text == ">2"){
             Debug.Log("Here is some: MetalPlate");
             SpawnItemServerRpc(VendingMashineItem.METALPLATE);
         }
-        else if(InputDisplay.text == ">0805"){
+        else if(InputDisplay.text == ">3"){
             Debug.Log("Here is some: Energy1");
             SpawnItemServerRpc(VendingMashineItem.ENERGY_ONE);
         }
-        else if(InputDisplay.text == ">6755"){
+        else if(InputDisplay.text == ">4"){
             Debug.Log("Here is some: Energy2");
             SpawnItemServerRpc(VendingMashineItem.ENERGY_TWO);
         }
-        else if(InputDisplay.text == ">1180"){
+        else if(InputDisplay.text == ">1"){
             Debug.Log("Here is some: Seed");
             SpawnItemServerRpc(VendingMashineItem.SEED);
         }
-        else if(InputDisplay.text == ">2972"){
+        else if(InputDisplay.text == ">5"){
             Debug.Log("Here is some: Meetballs");
             SpawnItemServerRpc(VendingMashineItem.BALLS);
         }
-        else if(InputDisplay.text == ">6969"){
+        else if(InputDisplay.text == ">6"){
             Debug.Log("Here is some: BBG");
             SpawnItemServerRpc(VendingMashineItem.BBG);
         }
+<<<<<<< HEAD
         else if(InputDisplay.text == ">5436"){
+=======
+        else if(InputDisplay.text == ">7"){
+>>>>>>> c8fe367 (untestet single digid vending mashine)
             Debug.Log("Here is some: Syringe");
             SpawnItemServerRpc(VendingMashineItem.SYRINGE);
         }
