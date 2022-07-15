@@ -48,13 +48,17 @@ public class MainMenu : MonoBehaviour {
         startClient.SetActive(false);
 
         serverAddress.text = MultiplayerUtil.GetLocalIPAddress();
-        var envvar = System.Environment.GetEnvironmentVariable("SPACEBULLAR_HOST");
-        if (envvar != null) {
-            serverAddress.text = envvar;
+        var envvar_host = System.Environment.GetEnvironmentVariable("SPACEBULLAR_HOST");
+        if (envvar_host != null) {
+            serverAddress.text = envvar_host;
         }
         ServerAddressChanged();
 
         playerName.text = "";
+        var envvar_name = System.Environment.GetEnvironmentVariable("SPACEBULLAR_NAME");
+        if (envvar_name != null) {
+            playerName.text = envvar_name;
+        }
         PlayerNameChanged();
 
         if (IsArgon()) {
