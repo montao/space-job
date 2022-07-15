@@ -70,11 +70,7 @@ public class NumPad : TwoLevelInteractable
             Debug.Log("Here is some: BBG");
             SpawnItemServerRpc(VendingMashineItem.BBG);
         }
-<<<<<<< HEAD
-        else if(InputDisplay.text == ">5436"){
-=======
         else if(InputDisplay.text == ">7"){
->>>>>>> c8fe367 (untestet single digid vending mashine)
             Debug.Log("Here is some: Syringe");
             SpawnItemServerRpc(VendingMashineItem.SYRINGE);
         }
