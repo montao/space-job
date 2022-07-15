@@ -280,11 +280,6 @@ MonoBehaviour:
   - {fileID: 7773678839524347773}
   - {fileID: 2032871286171005046}
   - {fileID: 8153025573930420615}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   m_ShipIndicator: {fileID: 3728314723302653536}
   m_DestinationButtonsParent: {fileID: 8983705618556800810}
 --- !u!114 &4913720390264512706
