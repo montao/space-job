@@ -7,7 +7,6 @@
 *-autosave.kra
 mono_crash.*
 
-.vscode
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
@@ -107,3 +106,6 @@ Assets/Scenes/Lobby/Lightmap*.png.meta
 Assets/Scenes/Lobby/LightingData.asset
 Assets/Scenes/Lobby/LightingData.asset.meta
 
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
